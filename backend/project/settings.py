@@ -54,10 +54,10 @@ DATA_URL = "data/"
 DATA_ROOT = os.path.join(BASE_DIR, "core", "data")
 
 STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "core", "static")
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "core", "static"),
+    # os.path.join(BASE_DIR, "core", "static"),
 ]
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, "core", "templates")
