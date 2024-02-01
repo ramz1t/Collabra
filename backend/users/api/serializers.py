@@ -10,11 +10,11 @@ User = get_user_model()
 
 
 class UserCreateSerializer(serializers.Serializer):
-    avatar = Base64ImageField(required=False)
     first_name = serializers.CharField(min_length=1, max_length=150)
     last_name = serializers.CharField(min_length=1, max_length=150)
     email = serializers.EmailField(min_length=5, max_length=254)
     password = serializers.CharField(style={"input_type": "password"}, write_only=True)
+    avatar = Base64ImageField(required=False)
     description = serializers.CharField(min_length=1, max_length=500, required=False)
     timezone = serializers.FloatField(required=False)
     links = serializers.ListSerializer(
@@ -32,5 +32,5 @@ class UserCreateSerializer(serializers.Serializer):
 
     def validate_timezone(self, timezone):
         if timezone not in (-10, -9, -8, -7, -6, -5, -4, -3.5, 0, 1, 2, 3, 8, 9.5, 10):
-            raise ValidationError(_("Invalid time zone format"))
+            raise ValidationError(_("Invalid timezone format"))
         return timezone

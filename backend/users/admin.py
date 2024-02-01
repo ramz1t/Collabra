@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import User
+from .models import User, GeneratedAvatar
 
 
 @admin.register(User)
@@ -17,5 +17,15 @@ class UserAdmin(admin.ModelAdmin):
         "email",
         "first_name",
         "last_name",
+    )
+    empty_value_display = "-empty-"
+
+
+@admin.register(GeneratedAvatar)
+class GeneratedAvatarAdmin(admin.ModelAdmin):
+    list_display = (
+        "pk",
+        "first_color",
+        "second_color",
     )
     empty_value_display = "-empty-"

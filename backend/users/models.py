@@ -36,8 +36,19 @@ class Link(models.Model):
         return str(self.link)[:30] if len(str(self.link)) > 30 else str(self.link)
 
 
+class GeneratedAvatar(models.Model):
+    first_color = models.CharField(max_length=6)
+    second_color = models.CharField(max_length=6)
+
+    def __str__(self):
+        return f"{self.first_color} {self.second_color}"
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     avatar = models.ImageField(upload_to="avatars/", null=True)
+    generated_avatar = models.ForeignKey(
+        GeneratedAvatar, on_delete=models.PROTECT, null=True
+    )
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     email = models.EmailField(max_length=254, unique=True)
