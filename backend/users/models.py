@@ -46,9 +46,7 @@ class GeneratedAvatar(models.Model):
 
 class User(AbstractBaseUser, PermissionsMixin):
     avatar = models.ImageField(upload_to="avatars/", null=True)
-    generated_avatar = models.ForeignKey(
-        GeneratedAvatar, on_delete=models.PROTECT, null=True
-    )
+    generated_avatar = models.ForeignKey(GeneratedAvatar, on_delete=models.PROTECT)
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     email = models.EmailField(max_length=254, unique=True)
