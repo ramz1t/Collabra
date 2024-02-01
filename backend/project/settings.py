@@ -108,16 +108,16 @@ else:
 
 AUTH_PASSWORD_VALIDATORS = [
     # {
-    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    #     "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     # },
     # {
-    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    #     "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     # },
     # {
-    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    #     "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     # },
     # {
-    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    #     "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     # },
 ]
 
@@ -161,32 +161,38 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.AnonRateThrottle",
         "rest_framework.throttling.UserRateThrottle",
     ],
-    "DEFAULT_THROTTLE_RATES": {"anon": ".../day", "user": ".../day"},
+    "DEFAULT_THROTTLE_RATES": {"anon": "100000/day", "user": "100000/day"},
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=0),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=0),
-    "UPDATE_LAST_LOGIN": ...,
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=100000),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=100000),
+    "UPDATE_LAST_LOGIN": False,
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
 
-# LOGGING = {
-#     "version": 1,
-#     "disable_existing_loggers": False,
-#     "formatters": {
-#         "console": {"format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"},
-#         "file": {"format": "%(asctime)s %(name)-12s %(levelname)-8s %(message)s"},
-#     },
-#     "handlers": {
-#         "console": {"class": "logging.StreamHandler", "formatter": "console"},
-#         "file": {
-#             "level": "DEBUG",
-#             "class": "logging.FileHandler",
-#             "formatter": "file",
-#             "filename": "logs.log",
-#         },
-#     },
-#     "loggers": {"": {"level": "DEBUG", "handlers": ["file"]}},
-# }
+AVATAR = {
+    "COLORS": [
+        "#fca5a5",
+        "#fdba74",
+        "#fcd34d",
+        "#bef264",
+        "#86efac",
+        "#5eead4",
+        "#67e8f9",
+        "#7dd3fc",
+        "#93c5fd",
+        "#a5b4fc",
+        "#c4b5fd",
+        "#f0abfc",
+        "#f9a8d4",
+        "#fda4af",
+    ],
+    "SIZE": (500, 500),
+    "FORMAT": "webp",
+    "FONT_URL": os.path.join(STATIC_ROOT, "fonts"),
+    "FONT_FILE_NAME": "arial_black.ttf",
+    "FONT_SIZE": 200,
+    "FONT_FILL": "#1C0606",
+}
