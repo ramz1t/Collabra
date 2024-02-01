@@ -8,7 +8,7 @@ const TeamsList = () => {
             {Array(10)
                 .fill(0)
                 .map((el, key) => (
-                    <TeamCard key={key} />
+                    <TeamCard key={key} team={{ id: key }} />
                 ))}
         </ul>
     )

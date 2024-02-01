@@ -1,11 +1,11 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const TeamCard = () => {
+const TeamCard = ({ team }) => {
     return (
         <div>
-            <p>Team Name</p>
-            <NavLink to="1">Open Space</NavLink>
+            <p>Team Name {team.id}</p>
+            <NavLink to={`${team.id}`}>Open Space</NavLink>
         </div>
     )
 }

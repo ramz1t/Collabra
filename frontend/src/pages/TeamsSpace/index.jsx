@@ -7,9 +7,7 @@ const TeamSpace = () => {
     const { setTeam } = useContext(TeamContext)
 
     useEffect(() => {
-        setTeam({ id: 1, color: '#FF00FF' })
-
-        return () => setTeam(null)
+        setTeam({ name: `Team Name ${teamId}`, id: teamId, color: '#FF00FF' })
     }, [])
 
     return (

@@ -7,6 +7,7 @@ import {
     IoCalendarOutline,
     IoEaselOutline,
 } from 'react-icons/io5'
+import { LiaUsersCogSolid } from 'react-icons/lia'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useParams } from 'react-router-dom'
 import Divider from '../Divider'
@@ -50,6 +51,11 @@ const TeamSpaceControls = () => {
                 href={`/teams/${team.id}/files`}
                 icon={<IoFolderOutline />}
                 title={t('files')}
+            />
+            <NavbarItem
+                href={`/teams/${team.id}/settings`}
+                icon={<LiaUsersCogSolid />}
+                title={team.name}
             />
         </>
     )
