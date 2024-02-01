@@ -8,6 +8,20 @@
     }
   },
   {
+    "model": "users.link",
+    "pk": 1,
+    "fields": {
+      "link": "https://youtube.com"
+    }
+  },
+  {
+    "model": "users.link",
+    "pk": 2,
+    "fields": {
+      "link": "https://yandex.ru"
+    }
+  },
+  {
     "model": "users.user",
     "pk": 1,
     "fields": {
@@ -26,7 +40,7 @@
       "date_joined": "2024-02-01T19:33:37.771Z",
       "groups": [],
       "user_permissions": [],
-      "links": []
+      "links": [1, 2]
     }
   }
 ]

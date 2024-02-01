@@ -8,6 +8,10 @@ from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
+_integer_timezones = [i for i in range(-12, 15)]
+_float_timezones = [-9.5, -3.5, 3.5, 4.5, 5.5, 5.75, 6.5, 8.75, 9.5, 10.5, 12.75]
+timezones = _integer_timezones + _float_timezones
+
 
 class UserCreateSerializer(serializers.Serializer):
     first_name = serializers.CharField(min_length=1, max_length=150)
@@ -31,6 +35,32 @@ class UserCreateSerializer(serializers.Serializer):
         return password
 
     def validate_timezone(self, timezone):
-        if timezone not in (-10, -9, -8, -7, -6, -5, -4, -3.5, 0, 1, 2, 3, 8, 9.5, 10):
+        if timezone not in timezones:
             raise ValidationError(_("Invalid timezone format"))
         return timezone
+
+
+class GeneratedAvatarSerializer(serializers.Serializer):
+    first_color = serializers.CharField()
+    second_color = serializers.CharField()
+
+
+class UserRetrieveSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    avatar = Base64ImageField()
+    generated_avatar = serializers.SerializerMethodField()
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    email = serializers.EmailField()
+    description = serializers.CharField()
+    timezone = serializers.FloatField()
+    links = serializers.SerializerMethodField()
+    date_joined = serializers.DateTimeField()
+
+    def get_generated_avatar(self, obj):
+        serializer = GeneratedAvatarSerializer(instance=obj.generated_avatar)
+        return serializer.data
+
+    def get_links(self, obj):
+        print(timezones)
+        return [link.link for link in obj.links.all()]
