@@ -1,16 +1,21 @@
-import { useTranslation } from 'react-i18next'
-import useScreenSize from './hooks/useScreenSize'
+import Navbar from './components/ui/Navbar'
+import { Route, Routes } from 'react-router-dom'
+import Teams from './pages/teams'
 
 const App = () => {
-    const { t } = useTranslation()
-    const { isTablet } = useScreenSize()
-
     return (
-        <>
-            <h1 className="text-3xl">{t('hello')}</h1>
-            <div className="text-red-500">Web Project Template</div>
-            {isTablet ? 'it is tablet size' : 'it is phone size'}
-        </>
+        <div className="">
+            <Navbar />
+            <div className="ml-[72px] p-5">
+                <Routes>
+                    <Route path="/" element="index" />
+                    <Route path="/profile/*" element="profile" />
+                    <Route path="/settings/*" element="settings" />
+                    <Route path="/teams/*" element={<Teams />} />
+                    <Route path="*" element="not found" />
+                </Routes>
+            </div>
+        </div>
     )
 }
 

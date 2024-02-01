@@ -1,3 +1,9 @@
 {
-    "hello": "Hello, World!"
+    "settings": "Settings",
+    "teams": "All Teams",
+    "tasks": "Tasks",
+    "files": "Files",
+    "chats": "Chats",
+    "calendar": "Calendar",
+    "dashboard": "Dashboard"
 }
