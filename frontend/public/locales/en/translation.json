@@ -5,5 +5,8 @@
     "files": "Files",
     "chats": "Chats",
     "calendar": "Calendar",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "login": "Log In",
+    "team_settings": "{{name}}'s Settings",
+    "profile": "Profile"
 }

@@ -1,17 +1,21 @@
 import Navbar from './components/ui/Navbar'
 import { Route, Routes } from 'react-router-dom'
-import Teams from './pages/teams'
+import { Login, Profile, Settings, Teams } from './pages'
+import { PrivateRoute } from './components'
 
 const App = () => {
     return (
         <div className="">
             <Navbar />
-            <div className="ml-[72px] p-5">
+            <div className="ml-[72px] px-5 pb-5 min-h-dvh max-h-dvh overflow-x-hidden overflow-y-auto">
                 <Routes>
                     <Route path="/" element="index" />
-                    <Route path="/profile/*" element="profile" />
-                    <Route path="/settings/*" element="settings" />
-                    <Route path="/teams/*" element={<Teams />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/settings/*" element={<Settings />} />
+                    <Route element={<PrivateRoute />}>
+                        <Route path="/teams/*" element={<Teams />} />
+                        <Route path="/profile/*" element={<Profile />} />
+                    </Route>
                     <Route path="*" element="not found" />
                 </Routes>
             </div>

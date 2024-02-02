@@ -3,7 +3,7 @@ import { Routes, Route, NavLink } from 'react-router-dom'
 import TeamsList from './TeamsList'
 import Title from '../../components/ui/Title'
 import { useTranslation } from 'react-i18next'
-import TeamSpace from '../TeamsSpace'
+import TeamSpace from '../TeamSpace'
 
 const Teams = () => {
     const { t } = useTranslation()
@@ -13,10 +13,10 @@ const Teams = () => {
             <Route
                 index
                 element={
-                    <>
+                    <div className="container mx-auto">
                         <Title>{t('teams')}</Title>
                         <TeamsList />
-                    </>
+                    </div>
                 }
             />
             <Route path="/:teamId/*" element={<TeamSpace />} />

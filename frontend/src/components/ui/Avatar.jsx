@@ -1,4 +1,4 @@
-import avatar from '../../../assets/images/default-avatar.png'
+import avatar from '../../assets/images/default-avatar.png'
 import cn from 'classnames'
 
 const Avatar = ({ src, href, w, h, classname }) => {
