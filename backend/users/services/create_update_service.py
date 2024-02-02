@@ -67,3 +67,32 @@ def create_user(**fields) -> User:
     if avatar is not None:
         user.avatar = _prepare_avatar(avatar, fields["email"])
         user.save()
+
+
+@transaction.atomic
+def update_user(user: User, **fields) -> User:
+    avatar: File | bool = fields.pop("avatar", False)
+    links: Optional[List[str]] = fields.pop("links", None)
+
+    print(avatar)
+
+    if fields.get("email", None) is not None:
+        if User.objects.filter(email=fields["email"]).exists():
+            raise ValidationError({"email": [_("User with this email already exists")]})
+
+    for field, value in fields.items():
+        setattr(user, field, value)
+
+    if links is not None:
+        user.links.all().delete()
+        if len(links) != 0:
+            user.links.set(_create_link_objects(links))
+
+    if avatar:
+        user.avatar = _prepare_avatar(avatar, user.email)
+    elif avatar is None:
+        user.avatar = None
+
+    user.full_clean()
+    user.save()
+    return user

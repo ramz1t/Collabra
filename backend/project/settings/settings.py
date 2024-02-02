@@ -3,6 +3,8 @@ from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 
+from .users import *
+
 load_dotenv(".env")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -169,26 +171,4 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=100000),
     "UPDATE_LAST_LOGIN": False,
     "AUTH_HEADER_TYPES": ("Bearer",),
-}
-
-
-AVATAR = {
-    "COLORS": [
-        "fca5a5",
-        "fdba74",
-        "fcd34d",
-        "bef264",
-        "86efac",
-        "5eead4",
-        "67e8f9",
-        "7dd3fc",
-        "93c5fd",
-        "a5b4fc",
-        "c4b5fd",
-        "f0abfc",
-        "f9a8d4",
-        "fda4af",
-    ],
-    "SIZE": (500, 500),
-    "FORMAT": "webp",
 }

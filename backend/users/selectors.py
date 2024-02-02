@@ -5,7 +5,7 @@ from rest_framework.exceptions import PermissionDenied
 User = get_user_model()
 
 
-def get_user_or_404(request_user_id: int, user_id: int, **fields) -> User:
-    if request_user_id != user_id:
+def get_user_or_404(request_user: User, user_id: int, **fields) -> User:
+    if request_user.id != user_id:
         raise PermissionDenied()
     return get_object_or_404(User, id=user_id, **fields)

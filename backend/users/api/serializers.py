@@ -5,25 +5,36 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions as django_exceptions
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 
 User = get_user_model()
 
-_integer_timezones = [i for i in range(-12, 15)]
-_float_timezones = [-9.5, -3.5, 3.5, 4.5, 5.5, 5.75, 6.5, 8.75, 9.5, 10.5, 12.75]
-timezones = _integer_timezones + _float_timezones
+
+class UserCreateUpdateBaseSerializer(serializers.Serializer):
+    avatar = Base64ImageField(required=False, allow_null=True)
+    description = serializers.CharField(min_length=1, max_length=500, required=False)
+    timezone = serializers.FloatField(required=False)
+    links = serializers.ListSerializer(
+        child=serializers.URLField(), max_length=10, required=False
+    )
+
+    def validate_timezone(self, timezone):
+        if timezone not in settings.TIMEZONES:
+            raise ValidationError(_("Invalid timezone format"))
+        return timezone
 
 
-class UserCreateSerializer(serializers.Serializer):
+class UserUpdateSerializer(UserCreateUpdateBaseSerializer):
+    first_name = serializers.CharField(min_length=1, max_length=150, required=False)
+    last_name = serializers.CharField(min_length=1, max_length=150, required=False)
+    email = serializers.EmailField(min_length=5, max_length=254, required=False)
+
+
+class UserCreateSerializer(UserCreateUpdateBaseSerializer):
     first_name = serializers.CharField(min_length=1, max_length=150)
     last_name = serializers.CharField(min_length=1, max_length=150)
     email = serializers.EmailField(min_length=5, max_length=254)
     password = serializers.CharField(style={"input_type": "password"}, write_only=True)
-    avatar = Base64ImageField(required=False)
-    description = serializers.CharField(min_length=1, max_length=500, required=False)
-    timezone = serializers.FloatField(required=False)
-    links = serializers.ListSerializer(
-        child=serializers.CharField(), min_length=1, max_length=10, required=False
-    )
 
     def validate_password(self, password):
         try:
@@ -33,11 +44,6 @@ class UserCreateSerializer(serializers.Serializer):
             raise serializers.ValidationError(serializer_error)
 
         return password
-
-    def validate_timezone(self, timezone):
-        if timezone not in timezones:
-            raise ValidationError(_("Invalid timezone format"))
-        return timezone
 
 
 class GeneratedAvatarSerializer(serializers.Serializer):
@@ -62,5 +68,4 @@ class UserRetrieveSerializer(serializers.Serializer):
         return serializer.data
 
     def get_links(self, obj):
-        print(timezones)
         return [link.link for link in obj.links.all()]
