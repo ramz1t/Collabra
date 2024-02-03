@@ -39,6 +39,7 @@ def _create_avatar_filename(email: str) -> str:
 
 
 def _prepare_avatar(avatar: File, email: str) -> File:
+    """"""
     filename = _create_avatar_filename(email)
     img = Image.open(avatar)
     img.convert("RGB")
@@ -73,8 +74,6 @@ def create_user(**fields) -> User:
 def update_user(user: User, **fields) -> User:
     avatar: File | bool = fields.pop("avatar", False)
     links: Optional[List[str]] = fields.pop("links", None)
-
-    print(avatar)
 
     if fields.get("email", None) is not None:
         if User.objects.filter(email=fields["email"]).exists():
