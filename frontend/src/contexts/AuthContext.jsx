@@ -20,10 +20,11 @@ export const AuthProvider = ({ children }) => {
             : null
     )
 
-    const [user, setUser] = useState(() =>
-        localStorage.getItem('authTokens')
-            ? jwtDecode(localStorage.getItem('authTokens'))
-            : null
+    const [user, setUser] = useState(
+        () =>
+            localStorage.getItem('authTokens')
+                ? jwtDecode(localStorage.getItem('authTokens'))
+                : {} // #TODO: change to null on prod or with server
     )
 
     const loginUser = async ({ email, password, redirectFrom }, setError) => {
