@@ -3,6 +3,8 @@ from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 
+from .users import *
+
 load_dotenv(".env")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -54,10 +56,10 @@ DATA_URL = "data/"
 DATA_ROOT = os.path.join(BASE_DIR, "core", "data")
 
 STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "core", "static")
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "core", "static"),
+    # os.path.join(BASE_DIR, "core", "static"),
 ]
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, "core", "templates")
@@ -108,16 +110,16 @@ else:
 
 AUTH_PASSWORD_VALIDATORS = [
     # {
-    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    #     "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     # },
     # {
-    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    #     "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     # },
     # {
-    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    #     "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     # },
     # {
-    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    #     "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     # },
 ]
 
@@ -161,32 +163,12 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.AnonRateThrottle",
         "rest_framework.throttling.UserRateThrottle",
     ],
-    "DEFAULT_THROTTLE_RATES": {"anon": ".../day", "user": ".../day"},
+    "DEFAULT_THROTTLE_RATES": {"anon": "100000/day", "user": "100000/day"},
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=0),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=0),
-    "UPDATE_LAST_LOGIN": ...,
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=100000),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=100000),
+    "UPDATE_LAST_LOGIN": False,
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
-
-
-# LOGGING = {
-#     "version": 1,
-#     "disable_existing_loggers": False,
-#     "formatters": {
-#         "console": {"format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"},
-#         "file": {"format": "%(asctime)s %(name)-12s %(levelname)-8s %(message)s"},
-#     },
-#     "handlers": {
-#         "console": {"class": "logging.StreamHandler", "formatter": "console"},
-#         "file": {
-#             "level": "DEBUG",
-#             "class": "logging.FileHandler",
-#             "formatter": "file",
-#             "filename": "logs.log",
-#         },
-#     },
-#     "loggers": {"": {"level": "DEBUG", "handlers": ["file"]}},
-# }

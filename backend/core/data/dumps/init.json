@@ -1,19 +1,46 @@
 [
   {
+    "model": "users.generatedavatar",
+    "pk": 1,
+    "fields": {
+      "first_color": "93c5fd",
+      "second_color": "bef264"
+    }
+  },
+  {
+    "model": "users.link",
+    "pk": 1,
+    "fields": {
+      "link": "https://youtube.com"
+    }
+  },
+  {
+    "model": "users.link",
+    "pk": 2,
+    "fields": {
+      "link": "https://yandex.ru"
+    }
+  },
+  {
     "model": "users.user",
     "pk": 1,
     "fields": {
-      "password": "pbkdf2_sha256$720000$1sQc6e2M3hQgGSSyiArsTt$/urxc3D3kmh4cMN67RHmXKVj2YoUchX+2xu9NTH0wb8=",
-      "last_login": null,
+      "password": "pbkdf2_sha256$720000$qjlEwT5EQxv902Fgi5DK7B$5Btl/lbssRBQ0LmNVIQjlzVbYpDDHd2i7bCq89X+cMQ=",
+      "last_login": "2024-02-01T19:33:50.939Z",
       "is_superuser": true,
+      "avatar": "",
+      "generated_avatar": 1,
       "first_name": "Aleksei",
       "last_name": "Zavadskii",
       "email": "a@a.com",
+      "description": null,
+      "timezone": null,
       "is_staff": true,
       "is_active": true,
-      "date_joined": "2024-01-24T11:19:54.554Z",
+      "date_joined": "2024-02-01T19:33:37.771Z",
       "groups": [],
-      "user_permissions": []
+      "user_permissions": [],
+      "links": [1, 2]
     }
   }
 ]

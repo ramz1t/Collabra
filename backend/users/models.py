@@ -1,8 +1,10 @@
+from urllib.parse import urlparse
+
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import PermissionsMixin, UserManager
 from django.db import models
-from django.utils import timezone
+from django.utils import timezone as djangotimezone
 
 
 class CustomUserManager(UserManager):
@@ -27,20 +29,35 @@ class CustomUserManager(UserManager):
         return self._create_user(email, password, **extra_fields)
 
 
+class Link(models.Model):
+    link = models.URLField()
+
+    def __str__(self):
+        return str(self.link)[:30] if len(str(self.link)) > 30 else str(self.link)
+
+
+class GeneratedAvatar(models.Model):
+    first_color = models.CharField(max_length=6)
+    second_color = models.CharField(max_length=6)
+
+    def __str__(self):
+        return f"{self.first_color} {self.second_color}"
+
+
 class User(AbstractBaseUser, PermissionsMixin):
-    first_name = models.CharField(
-        max_length=150,
-    )
-    last_name = models.CharField(
-        max_length=150,
-    )
-    email = models.EmailField(
-        max_length=254,
-        unique=True,
-    )
+    avatar = models.ImageField(upload_to="avatars/", null=True, blank=True)
+    generated_avatar = models.ForeignKey(GeneratedAvatar, on_delete=models.PROTECT)
+    first_name = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150)
+    email = models.EmailField(max_length=254, unique=True)
+    description = models.TextField(null=True, blank=True)
+    timezone = models.FloatField(null=True, blank=True)
+    links = models.ManyToManyField(Link, related_name="users")
     is_staff = models.BooleanField(verbose_name="staff status", default=False)
     is_active = models.BooleanField(verbose_name="active", default=True)
-    date_joined = models.DateTimeField(verbose_name="date joined", default=timezone.now)
+    date_joined = models.DateTimeField(
+        verbose_name="date joined", default=djangotimezone.now
+    )
 
     objects = CustomUserManager()
 
