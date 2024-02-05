@@ -6,5 +6,10 @@ COPY . /app
 
 RUN pip3 install -r requirements.txt --no-cache-dir
 
-RUN ["chmod", "+x", "/app/entrypoint.sh"]
+# Заменяем символы CRLF на LF
+RUN sed -i 's/\r//' /app/entrypoint.sh
+
+# Устанавливаем права выполнения
+RUN chmod +x /app/entrypoint.sh
+
 ENTRYPOINT ["/app/entrypoint.sh"]
