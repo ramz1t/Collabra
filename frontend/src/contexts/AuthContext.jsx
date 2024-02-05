@@ -24,50 +24,47 @@ export const AuthProvider = ({ children }) => {
         () =>
             localStorage.getItem('authTokens')
                 ? jwtDecode(localStorage.getItem('authTokens'))
-                : {} // #TODO: change to null on prod or with server
+                : null // #TODO: change to null on prod or with server
     )
 
     const loginUser = async ({ email, password, redirectFrom }, setError) => {
-        fetch(
-            '/api/v1/auth/jwt/create',
-            {
-                method: 'POST',
-                headers: {
-                    accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    'Accept-Language': i18n.resolvedLanguage,
-                },
+        if (email === '' || password === '') return
+
+        fetch('/api/v1/token/', {
+            method: 'POST',
+            headers: {
+                accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Accept-Language': i18n.resolvedLanguage,
             },
-            JSON.stringify({ email, password })
-        )
-            .then((res) => {
+            body: JSON.stringify({ email, password }),
+        }).then((res) => {
+            if (res.ok) {
                 setAuthTokens(res.data)
                 localStorage.setItem('authTokens', JSON.stringify(res.data))
                 navigate(redirectFrom)
-            })
-            .catch((err) => {
-                setError({
-                    status: err.response.status,
-                    message: err.response.data,
-                })
-                alert(err.response.status)
-            })
+            } else {
+                setError &&
+                    setError({
+                        status: res.status,
+                        message: res.data,
+                    })
+                alert(res.status)
+            }
+        })
     }
 
     const registerUser = (user, setError) => {
-        fetch(
-            '/api/v1/users/',
-            {
-                method: 'POST',
-                headers: {
-                    accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken'),
-                    'Accept-Language': i18n.resolvedLanguage,
-                },
+        fetch('/api/v1/users/', {
+            method: 'POST',
+            headers: {
+                accept: 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Accept-Language': i18n.resolvedLanguage,
             },
-            JSON.stringify(user)
-        )
+            body: JSON.stringify(user),
+        })
             .then((res) => {
                 notification(res.data.message)
                 loginUser({

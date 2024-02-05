@@ -1,7 +1,5 @@
 import React from 'react'
-import { Title } from '../../../components'
-import Twemoji from '../../../components/ui/Twemoji'
-import Spacer from '../../../components/ui/Spacer'
+import { Title, Twemoji, Spacer } from '../../../components'
 
 const Dashboard = () => {
     return (

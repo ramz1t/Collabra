@@ -3,11 +3,13 @@ import Teams from "./teams";
 import TeamSpace from "./TeamSpace";
 import Settings from "./Settings";
 import Profile from './Profile'
+import Landing from "./Landing";
 
 export {
     Login,
     Teams,
     TeamSpace,
     Settings,
-    Profile
+    Profile,
+    Landing
 }

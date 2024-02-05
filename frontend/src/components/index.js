@@ -1,11 +1,23 @@
-import PrivateRoute from "./PrivateRoute/PrivateRoute";
-import Avatar from "./ui/Avatar";
-import Navbar from "./ui/Navbar";
-import Title from "./ui/Title";
+import PrivateRoute from "./PrivateRoute";
+import Avatar from "./Avatar";
+import Navbar from "./Navbar";
+import Title from "./Title";
+import Spacer from "./Spacer";
+import Divider from "./Divider";
+import Twemoji from "./Twemoji";
+import Button from "./Button";
+import Form from "./Form";
+import Input from "./Input";
 
 export {
     PrivateRoute,
     Avatar,
     Navbar,
-    Title
+    Title,
+    Spacer,
+    Divider,
+    Twemoji,
+    Form,
+    Button,
+    Input
 }

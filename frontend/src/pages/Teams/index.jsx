@@ -1,7 +1,7 @@
 import React from 'react'
-import { Routes, Route, NavLink } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import TeamsList from './TeamsList'
-import Title from '../../components/ui/Title'
+import { Title } from '../../components'
 import { useTranslation } from 'react-i18next'
 import TeamSpace from '../TeamSpace'
 
