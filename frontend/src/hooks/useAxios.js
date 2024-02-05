@@ -6,7 +6,7 @@ import AuthContext from '../contexts/AuthProvider'
 import { useTranslation } from 'react-i18next'
 
 const useAxios = () => {
-    const { authTokens, setUser, setAuthTokens } = useContext(AuthContext)
+    const { authTokens, setUser, setAuthTokens, logoutUser } = useContext(AuthContext)
     const { i18n } = useTranslation()
 
     const axiosInstance = axios.create({
@@ -23,13 +23,18 @@ const useAxios = () => {
         const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1
 
         if (!isExpired) return req
-        const response = await fetch(`/api/v1/auth/jwt/refresh/`,
+        const response = await fetch(`/api/v1/token/refresh/`,
             {
                 method: "POST"
             },
             {
                 refresh: authTokens.refresh,
             })
+
+        if (response.status === 401) {
+            logoutUser()
+            return
+        }
 
         localStorage.setItem(
             'authTokens',

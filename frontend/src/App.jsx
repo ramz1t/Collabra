@@ -1,7 +1,6 @@
-import Navbar from './components/ui/Navbar'
 import { Route, Routes } from 'react-router-dom'
-import { Login, Profile, Settings, Teams } from './pages'
-import { PrivateRoute } from './components'
+import { Landing, Login, Profile, Register, Settings, Teams } from './pages'
+import { PrivateRoute, Navbar } from './components'
 
 const App = () => {
     return (
@@ -9,8 +8,9 @@ const App = () => {
             <Navbar />
             <div className="ml-[72px] px-5 pb-5 min-h-dvh max-h-dvh overflow-x-hidden overflow-y-auto">
                 <Routes>
-                    <Route path="/" element="index" />
+                    <Route path="/" element={<Landing />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
                     <Route path="/settings/*" element={<Settings />} />
                     <Route element={<PrivateRoute />}>
                         <Route path="/teams/*" element={<Teams />} />

@@ -12,7 +12,8 @@ export default {
       },
       colors: {
         accent: {
-          main: '#1B3F99',
+          DEFAULT: '#1B3F99',
+          dark: '#e3bb58'
         },
         navlink: {
           active: '#f1f5f9',

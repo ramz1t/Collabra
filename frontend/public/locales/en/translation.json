@@ -6,7 +6,14 @@
     "chats": "Chats",
     "calendar": "Calendar",
     "dashboard": "Dashboard",
-    "login": "Log In",
+    "login": "Sign In",
     "team_settings": "{{name}}'s Settings",
-    "profile": "Profile"
+    "profile": "Profile",
+    "email": "Email",
+    "password": "Password",
+    "login_header": "Sign In to Collabra",
+    "light": "Light",
+    "dark": "Dark",
+    "auto": "Auto",
+    "register": "Register"
 }
