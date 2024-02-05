@@ -5,9 +5,9 @@ const Divider = ({ vertical, horizontal, className }) => {
         <span
             className={cn(
                 vertical
-                    ? 'min-w-px bg-accent-main/30 h-full'
+                    ? 'min-w-px bg-accent/30 dark:bg-accent-dark/50 h-full'
                     : horizontal
-                    ? 'min-h-px bg-accent-main/30 w-full'
+                    ? 'min-h-px bg-accent/30 dark:bg-accent-dark/50 w-full'
                     : '',
                 className
             )}

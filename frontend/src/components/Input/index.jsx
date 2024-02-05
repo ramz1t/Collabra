@@ -34,7 +34,7 @@ const Input = ({
     }, [])
 
     return (
-        <div className="w-full">
+        <div className="w-full flex flex-col gap-1">
             <label className="pl-1" htmlFor={id}>
                 {title}
             </label>
@@ -52,7 +52,7 @@ const Input = ({
                 onFocus={() => onfocus && onfocus()}
                 disabled={disabled}
                 className={cn(
-                    'rounded-md border border-slate-600 focus:border-accent-main focus:shadow-sm focus:outline-none h-10 w-full px-2',
+                    'rounded-md border-slate-600 bg-slate-100 dark:bg-slate-600 focus:border-accent dark:focus:border-accent-dark focus:shadow-sm focus:border focus:outline-none h-10 w-full px-2',
                     className
                 )}
                 placeholder={placeholder}

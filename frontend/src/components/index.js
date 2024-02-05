@@ -8,6 +8,8 @@ import Twemoji from "./Twemoji";
 import Button from "./Button";
 import Form from "./Form";
 import Input from "./Input";
+import Dropdown from "./Dropdown";
+import DropdownItem from "./Dropdown/DropdownItem";
 
 export {
     PrivateRoute,
@@ -19,5 +21,7 @@ export {
     Twemoji,
     Form,
     Button,
-    Input
+    Input,
+    Dropdown,
+    DropdownItem
 }

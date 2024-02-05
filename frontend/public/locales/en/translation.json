@@ -11,5 +11,9 @@
     "profile": "Profile",
     "email": "Email",
     "password": "Password",
-    "login_header": "Sign In to Collabra"
+    "login_header": "Sign In to Collabra",
+    "light": "Light",
+    "dark": "Dark",
+    "auto": "Auto",
+    "register": "Register"
 }

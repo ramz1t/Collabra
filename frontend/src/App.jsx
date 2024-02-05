@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import { Landing, Login, Profile, Settings, Teams } from './pages'
+import { Landing, Login, Profile, Register, Settings, Teams } from './pages'
 import { PrivateRoute, Navbar } from './components'
 
 const App = () => {
@@ -10,6 +10,7 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<Landing />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
                     <Route path="/settings/*" element={<Settings />} />
                     <Route element={<PrivateRoute />}>
                         <Route path="/teams/*" element={<Teams />} />

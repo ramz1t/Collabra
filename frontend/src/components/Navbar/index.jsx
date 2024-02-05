@@ -17,7 +17,7 @@ const Navbar = () => {
     const { user } = useContext(AuthContext)
 
     return (
-        <nav className="flex flex-col gap-3 p-3 hover:px-5 w-fit min-h-dvh max-h-dvh fixed z-[99] bg-white top-0 group/navbar transition-all shadow-md hover:shadow-xl outline-1 duration-150 overflow-y-auto">
+        <nav className="flex flex-col gap-3 p-3 hover:px-5 w-fit min-h-dvh max-h-dvh fixed z-[99] bg-white dark:bg-slate-700 top-0 group/navbar transition-all shadow-md hover:shadow-xl outline-1 duration-150 overflow-y-auto">
             <NavbarItem
                 href="/"
                 className="!bg-transparent !hover:bg-transparent !p-0 !group-hover/navbar:pr-3 !pl-1 text-xl"
@@ -26,7 +26,7 @@ const Navbar = () => {
                         src={logo}
                         width={40}
                         height={40}
-                        className="min-w-10"
+                        className="min-w-10 dark:invert"
                     />
                 }
                 title="Collabra"
