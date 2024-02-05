@@ -20,7 +20,7 @@ const Login = () => {
     const { redirectFrom } = useParams()
 
     return (
-        <div className="grid md:grid-cols-[1fr_2fr] lg:grid-cols-[1fr] justify-items-center content-center mt-5 gap-7">
+        <div className="flex flex-col items-center mt-5">
             <h1 className="col-span-2 text-5xl mt-7 font-extrabold">
                 {t('login_header')}
             </h1>

@@ -38,10 +38,12 @@ export const AuthProvider = ({ children }) => {
                 'Accept-Language': i18n.resolvedLanguage,
             },
             body: JSON.stringify({ email, password }),
-        }).then((res) => {
+        }).then(async (res) => {
+            console.log(res)
             if (res.ok) {
-                setAuthTokens(res.data)
-                localStorage.setItem('authTokens', JSON.stringify(res.data))
+                const data = await res.json()
+                setAuthTokens(data)
+                localStorage.setItem('authTokens', JSON.stringify(data))
                 navigate(redirectFrom)
             } else {
                 setError &&
@@ -66,7 +68,7 @@ export const AuthProvider = ({ children }) => {
             body: JSON.stringify(user),
         }).then((res) => {
             if (res.ok) {
-                notification(res.data.message)
+                // notification(res.data.message)
                 loginUser({
                     email: user.email,
                     password: user.password,
