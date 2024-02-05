@@ -11,6 +11,7 @@ const Form = ({ onSubmit, children, className }) => {
                 'flex flex-col gap-3 md:gap-5 border dark:border-slate-600 p-7 rounded-sm',
                 className
             )}
+            noValidate
         >
             {children}
         </form>
