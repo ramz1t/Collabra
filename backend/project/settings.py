@@ -3,8 +3,6 @@ from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 
-from .users import *
-
 load_dotenv(".env")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -56,10 +54,10 @@ DATA_URL = "data/"
 DATA_ROOT = os.path.join(BASE_DIR, "core", "data")
 
 STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "core", "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 STATICFILES_DIRS = [
-    # os.path.join(BASE_DIR, "core", "static"),
+    os.path.join(BASE_DIR, "core", "static"),
 ]
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, "core", "templates")
@@ -172,3 +170,29 @@ SIMPLE_JWT = {
     "UPDATE_LAST_LOGIN": False,
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
+
+
+AVATAR = {
+    "COLORS": [
+        "fca5a5",
+        "fdba74",
+        "fcd34d",
+        "bef264",
+        "86efac",
+        "5eead4",
+        "67e8f9",
+        "7dd3fc",
+        "93c5fd",
+        "a5b4fc",
+        "c4b5fd",
+        "f0abfc",
+        "f9a8d4",
+        "fda4af",
+    ],
+    "SIZE": (500, 500),
+    "FORMAT": "webp",
+}
+
+_integer_timezones = [timezone for timezone in range(-12, 15)]
+_float_timezones = [-9.5, -3.5, 3.5, 4.5, 5.5, 5.75, 6.5, 8.75, 9.5, 10.5, 12.75]
+TIMEZONES = _integer_timezones + _float_timezones
