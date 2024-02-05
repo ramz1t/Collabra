@@ -38,7 +38,7 @@ const Login = () => {
                     })
                 }}
             >
-                <Input title={t('email')} instance={email} />
+                <Input title={t('email')} instance={email} type="email" />
                 <Input
                     title={t('password')}
                     instance={password}
@@ -53,13 +53,13 @@ const Login = () => {
                     <Divider horizontal />
                 </div>
                 <div className="flex justify-between gap-3">
-                    <Button style="secondary">
+                    <Button style="secondary" type="button">
                         <IoLogoApple />
                     </Button>
-                    <Button style="secondary">
+                    <Button style="secondary" type="button">
                         <IoLogoGithub />
                     </Button>
-                    <Button style="secondary">
+                    <Button style="secondary" type="button">
                         <IoLogoGoogle />
                     </Button>
                     <Link

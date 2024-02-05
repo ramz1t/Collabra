@@ -15,5 +15,8 @@
     "light": "Light",
     "dark": "Dark",
     "auto": "Auto",
-    "register": "Register"
+    "register": "Register",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "register_header": "Register New Account"
 }

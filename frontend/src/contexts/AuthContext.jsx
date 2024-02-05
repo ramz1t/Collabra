@@ -64,16 +64,19 @@ export const AuthProvider = ({ children }) => {
                 'Accept-Language': i18n.resolvedLanguage,
             },
             body: JSON.stringify(user),
-        })
-            .then((res) => {
+        }).then((res) => {
+            if (res.ok) {
                 notification(res.data.message)
                 loginUser({
                     email: user.email,
                     password: user.password,
-                    redirectFrom: '/users/me',
+                    redirectFrom: '/teams',
                 })
-            })
-            .catch((err) => setError(err))
+            } else {
+                // setError && setError(res)
+                alert(JSON.stringify(res), res.status)
+            }
+        })
     }
 
     const logoutUser = () => {
