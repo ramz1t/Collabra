@@ -33,6 +33,7 @@
       "first_name": "Aleksei",
       "last_name": "Zavadskii",
       "email": "a@a.com",
+      "username": "admin",
       "description": null,
       "timezone": null,
       "is_staff": true,

@@ -53,6 +53,7 @@ class GeneratedAvatarSerializer(serializers.Serializer):
 
 class UserRetrieveSerializer(serializers.Serializer):
     id = serializers.IntegerField()
+    username = serializers.CharField()
     avatar = Base64ImageField()
     generated_avatar = serializers.SerializerMethodField()
     first_name = serializers.CharField()

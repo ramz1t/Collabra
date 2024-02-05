@@ -5,9 +5,9 @@ from .models import User, GeneratedAvatar, Link
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ("pk", "is_staff", "email", "first_name", "last_name")
+    list_display = ("pk", "is_staff", "email", "first_name", "last_name", "username")
     list_filter = ("is_staff",)
-    search_fields = ("email", "first_name", "last_name")
+    search_fields = ("email", "first_name", "last_name", "username")
     empty_value_display = "-empty-"
 
 

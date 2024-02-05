@@ -1,10 +1,13 @@
-from urllib.parse import urlparse
-
+from autoslug import AutoSlugField
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import PermissionsMixin, UserManager
 from django.db import models
 from django.utils import timezone as djangotimezone
+
+
+def custom_username_slugify(value):
+    return value.replace(" ", "").replace("-", "").lower()
 
 
 class CustomUserManager(UserManager):
@@ -57,6 +60,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(verbose_name="active", default=True)
     date_joined = models.DateTimeField(
         verbose_name="date joined", default=djangotimezone.now
+    )
+    username = AutoSlugField(
+        unique=True,
+        populate_from="get_full_name",
+        slugify=custom_username_slugify,
+        unique_with=["first_name"],
     )
 
     objects = CustomUserManager()
