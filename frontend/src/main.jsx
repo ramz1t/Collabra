@@ -8,6 +8,7 @@ import { ThemeProvider } from './contexts/ThemeContext.jsx'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import { BrowserRouter } from 'react-router-dom'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { TeamProvider } from './contexts/TeamContext.jsx'
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -25,8 +26,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <QueryClientProvider client={queryClient}>
                 <AuthProvider>
                     <ThemeProvider>
-                        <App />
-                        <ReactQueryDevtools />
+                        <TeamProvider>
+                            <App />
+                            <ReactQueryDevtools />
+                        </TeamProvider>
                     </ThemeProvider>
                 </AuthProvider>
             </QueryClientProvider>

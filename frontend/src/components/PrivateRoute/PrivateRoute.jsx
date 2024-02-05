@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
-import AuthContext from '../../contexts/AuthProvider'
+import AuthContext from '../../contexts/AuthContext'
 
 const PrivateRoute = ({ children }) => {
     const { user } = useContext(AuthContext)

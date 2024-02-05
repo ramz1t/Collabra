@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
@@ -11,8 +12,12 @@ export default {
       },
       colors: {
         accent: {
-          red: '#FF1500',
+          main: '#1B3F99',
         },
+        navlink: {
+          active: '#f1f5f9',
+          hover: '#f8fafc'
+        }
       },
       keyframes: {
         spin: {
