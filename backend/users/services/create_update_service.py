@@ -39,7 +39,6 @@ def _create_avatar_filename(email: str) -> str:
 
 
 def _prepare_avatar(avatar: File, email: str) -> File:
-    """"""
     filename = _create_avatar_filename(email)
     img = Image.open(avatar)
     img.convert("RGB")
@@ -68,6 +67,8 @@ def create_user(**fields) -> User:
     if avatar is not None:
         user.avatar = _prepare_avatar(avatar, fields["email"])
         user.save()
+
+    return user
 
 
 @transaction.atomic

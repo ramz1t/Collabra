@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
 from django.utils.translation import gettext_lazy as _
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from . import mixins
 from .. import selectors
@@ -12,8 +13,13 @@ class UsersViewSet(mixins.UserMixin):
     def create(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        create_user(**serializer.validated_data)
-        data = {"message": _("Profile created")}
+        user = create_user(**serializer.validated_data)
+        refresh_token = RefreshToken.for_user(user)
+        data = {
+            "message": _("Profile created"),
+            "access": str(refresh_token.access_token),
+            "refresh": str(refresh_token),
+        }
         return Response(data, status=status.HTTP_201_CREATED)
 
     def retrieve(self, request, pk):
