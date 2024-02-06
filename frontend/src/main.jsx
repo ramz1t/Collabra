@@ -24,14 +24,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <BrowserRouter>
             <QueryClientProvider client={queryClient}>
-                <AuthProvider>
-                    <ThemeProvider>
-                        <TeamProvider>
+                <TeamProvider>
+                    <AuthProvider>
+                        <ThemeProvider>
                             <App />
                             <ReactQueryDevtools />
-                        </TeamProvider>
-                    </ThemeProvider>
-                </AuthProvider>
+                        </ThemeProvider>
+                    </AuthProvider>
+                </TeamProvider>
             </QueryClientProvider>
         </BrowserRouter>
     </React.StrictMode>
