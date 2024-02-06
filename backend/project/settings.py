@@ -193,6 +193,8 @@ AVATAR = {
     "FORMAT": "webp",
 }
 
-_integer_timezones = [timezone for timezone in range(-12, 15)]
-_float_timezones = [-9.5, -3.5, 3.5, 4.5, 5.5, 5.75, 6.5, 8.75, 9.5, 10.5, 12.75]
-TIMEZONES = _integer_timezones + _float_timezones
+INTEGER_TIMEZONES = [timezone for timezone in range(-12, 15)]
+FLOAT_TIMEZONES = [-9.5, -3.5, 3.5, 4.5, 5.5, 5.75, 6.5, 8.75, 9.5, 10.5, 12.75]
+TIMEZONES = INTEGER_TIMEZONES + FLOAT_TIMEZONES
+
+USERNAME_POSTFIX_RANGE = (10000, 99999)  # First is min value, second is max value

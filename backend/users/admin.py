@@ -1,6 +1,9 @@
 from django.contrib import admin
+from django.contrib.auth import get_user_model
 
-from .models import User, GeneratedAvatar, Link
+from .models import GeneratedAvatar, Link
+
+User = get_user_model()
 
 
 @admin.register(User)

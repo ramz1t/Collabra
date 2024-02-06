@@ -9,3 +9,7 @@ def get_user_or_404(request_user: User, user_id: int, **fields) -> User:
     if request_user.id != user_id:
         raise PermissionDenied()
     return get_object_or_404(User, id=user_id, **fields)
+
+
+def is_user_exists(**fields) -> bool:
+    return User.objects.filter(**fields).exists()
