@@ -11,6 +11,8 @@ import TeamSpaceControls from './TeamSpaceControls'
 import AuthContext from '../../contexts/AuthContext'
 import UserProfileLink from './UserProfileLink'
 import { Divider, Spacer } from '../'
+import ThemePicker from './ThemePicker'
+import LanguagePicker from './LanguagePicker'
 
 const Navbar = () => {
     const { t } = useTranslation()
@@ -46,11 +48,8 @@ const Navbar = () => {
             <TeamSpaceControls />
             <Spacer />
             <Divider horizontal />
-            <NavbarItem
-                href="/settings"
-                icon={<IoSettingsOutline />}
-                title={t('settings')}
-            />
+            <LanguagePicker />
+            <ThemePicker />
             {user ? (
                 <UserProfileLink />
             ) : (

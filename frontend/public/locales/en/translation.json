@@ -18,5 +18,14 @@
     "register": "Register",
     "first_name": "First Name",
     "last_name": "Last Name",
-    "register_header": "Register New Account"
+    "register_header": "Register New Account",
+    "feedback_1": "Found a bug?",
+    "feedback_2": "Send us a report!",
+    "send": "Send",
+    "learn_on_gh": "Learn more on Github",
+    "get_started": "Get Started",
+    "hero_title": "Collaboration tool to enrich your online business",
+    "our_team": "Our Team",
+    "about_team": "Anim aute id magna aliqua ad ad non deserunt sunt.\nQui irure qui lorem cupidatat commodo. Elit sunt",
+    "open_teams": "Open Teams"
 }

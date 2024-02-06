@@ -5,7 +5,13 @@ const Twemoji = ({ emoji, width, className }) => {
     if (!emoji) return
     const iconLink = parse(emoji)[0]?.url
 
-    return <img className={className} src={iconLink} width={width} />
+    return (
+        <img
+            className={className}
+            src={iconLink}
+            style={{ width: `${width}px`, minWidth: `${width}px` }}
+        />
+    )
 }
 
 export default Twemoji

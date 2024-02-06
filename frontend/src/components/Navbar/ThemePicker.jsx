@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import ThemeContext from '../../contexts/ThemeContext'
-import { Dropdown, DropdownItem } from '../../components'
+import { Button, Dropdown, DropdownItem } from '../../components'
 import { useTranslation } from 'react-i18next'
 import {
     IoSunnyOutline,
@@ -30,26 +30,21 @@ const ThemePicker = () => {
     }
 
     return (
-        <Dropdown
-            name="theme"
-            selectedItem={
-                <>
-                    {options[themeSetting].menuIcon}
-                    {options[themeSetting].title}
-                </>
-            }
+        <Button
+            action={() => {
+                const currIndex = Object.keys(options).indexOf(themeSetting)
+                const nextIndex = (currIndex + 1) % Object.keys(options).length
+                const nextCode = Object.keys(options)[nextIndex]
+                setThemeSetting(nextCode)
+            }}
+            className="flex gap-4 items-center px-3.5 py-3 rounded-md min-h-12 transition-all duration-150 max-w-12 overflow-clip group-hover/navbar:max-w-full !justify-start hover:bg-accent/[0.03] dark:hover:bg-accent-dark/5"
+            w_full
         >
-            {Object.keys(options).map((key) => (
-                <DropdownItem
-                    setter={setThemeSetting}
-                    value={options[key].code}
-                    active={themeSetting === options[key].code}
-                >
-                    {options[key].menuIcon}
-                    {options[key].title}
-                </DropdownItem>
-            ))}
-        </Dropdown>
+            <span className="text-lg">{options[themeSetting].menuIcon}</span>
+            <p className="block whitespace-nowrap">
+                {options[themeSetting].title}
+            </p>
+        </Button>
     )
 }
 
