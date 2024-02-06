@@ -1,9 +1,10 @@
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
 import { getCookie } from '../utils'
 import { useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
+import TeamContext from './TeamContext'
 
 const AuthContext = createContext()
 
@@ -13,6 +14,7 @@ export const AuthProvider = ({ children }) => {
     const { i18n } = useTranslation()
     const navigate = useNavigate()
     const queryClient = useQueryClient()
+    const { setTeam } = useContext(TeamContext)
 
     const [authTokens, setAuthTokens] = useState(() =>
         localStorage.getItem('authTokens')
@@ -27,6 +29,12 @@ export const AuthProvider = ({ children }) => {
                 : null // #TODO: change to null on prod or with server
     )
 
+    const authWithTokens = (tokens, redirectFrom) => {
+        setAuthTokens(tokens)
+        localStorage.setItem('authTokens', JSON.stringify(tokens))
+        navigate(redirectFrom ? redirectFrom : '/teams')
+    }
+
     const loginUser = async ({ email, password, redirectFrom }, setError) => {
         if (email === '' || password === '') return
 
@@ -39,12 +47,9 @@ export const AuthProvider = ({ children }) => {
             },
             body: JSON.stringify({ email, password }),
         }).then(async (res) => {
-            console.log(res)
             if (res.ok) {
                 const data = await res.json()
-                setAuthTokens(data)
-                localStorage.setItem('authTokens', JSON.stringify(data))
-                navigate(redirectFrom)
+                authWithTokens(data, redirectFrom)
             } else {
                 setError &&
                     setError({
@@ -66,17 +71,13 @@ export const AuthProvider = ({ children }) => {
                 'Accept-Language': i18n.resolvedLanguage,
             },
             body: JSON.stringify(user),
-        }).then((res) => {
+        }).then(async (res) => {
             if (res.ok) {
-                // notification(res.data.message)
-                loginUser({
-                    email: user.email,
-                    password: user.password,
-                    redirectFrom: '/teams',
-                })
+                const data = await res.json()
+                authWithTokens(data)
             } else {
                 // setError && setError(res)
-                alert(JSON.stringify(res), res.status)
+                alert(JSON.stringify(res.statusText))
             }
         })
     }
@@ -84,6 +85,7 @@ export const AuthProvider = ({ children }) => {
     const logoutUser = () => {
         setAuthTokens(null)
         setUser(null)
+        setTeam(null)
         queryClient.clear()
         localStorage.removeItem('authTokens')
         navigate('/login')
