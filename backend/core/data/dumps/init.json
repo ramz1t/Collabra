@@ -70,7 +70,7 @@
     "model": "users.user",
     "pk": 2,
     "fields": {
-      "password": "pbkdf2_sha256$720000$qjlEwT5EQxv902Fgi5DK7B$5Btl/lbssRBQ0LmNVIQjlzVbYpDDHd2i7bCq89X+cMQ=",
+      "password": "pbkdf2_sha256$720000$5UPZaZPzIhxAJW7Mcs23VY$Rkgp4wiCCNj8Cg4mOYecZTd93vlP3+773akoeF/SjYU=",
       "last_login": "2024-02-01T19:33:50.939Z",
       "is_superuser": true,
       "avatar": "",
