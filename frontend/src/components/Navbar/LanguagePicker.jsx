@@ -18,22 +18,22 @@ const LanguagePicker = () => {
         ru: {
             code: 'ru',
             flag: '🇷🇺',
-            name: 'Russian',
+            name: 'Русский',
         },
         se: {
             code: 'se',
             flag: '🇸🇪',
-            name: 'Swedish',
+            name: 'Svenska',
         },
         de: {
             code: 'de',
             flag: '🇩🇪',
-            name: 'Deutch',
+            name: 'Deutsch',
         },
         fr: {
             code: 'fr',
             flag: '🇫🇷',
-            name: 'French',
+            name: 'Français',
         },
     }
 
@@ -62,6 +62,10 @@ const LanguagePicker = () => {
                             key={key}
                             action={() => {
                                 i18n.changeLanguage(languages[key].code)
+                                localStorage.setItem(
+                                    'i18nextLng',
+                                    languages[key].code
+                                )
                                 document
                                     .querySelector('html')
                                     .setAttribute('lang', languages[key].code)
