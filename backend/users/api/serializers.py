@@ -1,13 +1,14 @@
+import re
+
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from drf_extra_fields.fields import Base64ImageField
-from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions as django_exceptions
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 
-User = get_user_model()
+from ..selectors import is_user_exists
 
 
 class UserCreateUpdateBaseSerializer(serializers.Serializer):
@@ -18,6 +19,27 @@ class UserCreateUpdateBaseSerializer(serializers.Serializer):
         child=serializers.URLField(), max_length=10, required=False
     )
 
+    def _validate_name(self, name) -> bool:
+        pattern = re.compile(r"^[a-zA-Z\s]+$")
+        return bool(pattern.match(name))
+
+    def validate_email(self, email):
+        if is_user_exists(email=email):
+            raise serializers.ValidationError(_("User with this email already exists"))
+        return email
+
+    def validate_first_name(self, first_name):
+        if not self._validate_name(first_name):
+            raise ValidationError(_("Name must contain only Latin letters or spaces"))
+        return first_name
+
+    def validate_last_name(self, last_name):
+        if not self._validate_name(last_name):
+            raise ValidationError(
+                _("Surname must contain only Latin letters or spaces")
+            )
+        return last_name
+
     def validate_timezone(self, timezone):
         if timezone not in settings.TIMEZONES:
             raise ValidationError(_("Invalid timezone format"))
@@ -25,14 +47,35 @@ class UserCreateUpdateBaseSerializer(serializers.Serializer):
 
 
 class UserUpdateSerializer(UserCreateUpdateBaseSerializer):
-    first_name = serializers.CharField(min_length=1, max_length=150, required=False)
-    last_name = serializers.CharField(min_length=1, max_length=150, required=False)
+    first_name = serializers.CharField(min_length=1, max_length=50, required=False)
+    last_name = serializers.CharField(min_length=1, max_length=50, required=False)
     email = serializers.EmailField(min_length=5, max_length=254, required=False)
+    username = serializers.CharField(min_length=5, max_length=50, required=False)
+
+    def validate_username(self, username):
+        prerepared_username = username.replace(" ", "_").replace("-", "_").lower()
+        print(prerepared_username)
+        prepared_username = re.sub(r"_+", "_", prerepared_username)
+
+        if is_user_exists(username=prepared_username):
+            raise ValidationError(_("User with this username already exists"))
+
+        print(prepared_username)
+
+        pattern = r"^[a-zA-Z0-9_]+$"
+        if not re.match(pattern, prepared_username):
+            raise ValidationError(
+                _(
+                    "Username must contain only Latin letters, space, hyphen and underscore"
+                )
+            )
+
+        return prepared_username
 
 
 class UserCreateSerializer(UserCreateUpdateBaseSerializer):
-    first_name = serializers.CharField(min_length=1, max_length=150)
-    last_name = serializers.CharField(min_length=1, max_length=150)
+    first_name = serializers.CharField(min_length=1, max_length=50)
+    last_name = serializers.CharField(min_length=1, max_length=50)
     email = serializers.EmailField(min_length=5, max_length=254)
     password = serializers.CharField(style={"input_type": "password"}, write_only=True)
 

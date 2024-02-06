@@ -7,8 +7,6 @@ from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.core.files import File
 from django.db.models import QuerySet
-from django.utils.translation import gettext_lazy as _
-from rest_framework.exceptions import ValidationError
 from PIL import Image
 
 from ..models import Link, GeneratedAvatar
@@ -49,17 +47,33 @@ def _prepare_avatar(avatar: File, email: str) -> File:
     return avatar
 
 
+def _generate_username(first_name: str, last_name: str) -> str:
+    def generate_postfix() -> str:
+        return str(
+            random.randint(
+                settings.USERNAME_POSTFIX_RANGE[0], settings.USERNAME_POSTFIX_RANGE[1]
+            )
+        )
+
+    joint_name = (first_name + last_name).replace(" ", "").lower()
+    postfix = generate_postfix()
+
+    while User.objects.filter(username=joint_name + postfix).exists():
+        postfix = generate_postfix()
+
+    return joint_name + postfix
+
+
 @transaction.atomic
 def create_user(**fields) -> User:
     avatar: Optional[File] = fields.pop("avatar", None)
     links: Optional[List[str]] = fields.pop("links", None)
 
-    if User.objects.filter(email=fields["email"]).exists():
-        raise ValidationError({"email": [_("User with this email already exists")]})
-
-    generated_avatar = _create_generated_avatar_object()
-
-    user = User.objects.create_user(generated_avatar=generated_avatar, **fields)
+    user = User.objects.create_user(
+        generated_avatar=_create_generated_avatar_object(),
+        username=_generate_username(fields["first_name"], fields["last_name"]),
+        **fields,
+    )
 
     if links is not None:
         user.links.set(_create_link_objects(links))
@@ -75,10 +89,6 @@ def create_user(**fields) -> User:
 def update_user(user: User, **fields) -> User:
     avatar: File | bool = fields.pop("avatar", False)
     links: Optional[List[str]] = fields.pop("links", None)
-
-    if fields.get("email", None) is not None:
-        if User.objects.filter(email=fields["email"]).exists():
-            raise ValidationError({"email": [_("User with this email already exists")]})
 
     for field, value in fields.items():
         setattr(user, field, value)

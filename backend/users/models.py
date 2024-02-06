@@ -6,10 +6,6 @@ from django.db import models
 from django.utils import timezone as djangotimezone
 
 
-def custom_username_slugify(value):
-    return value.replace(" ", "").replace("-", "").lower()
-
-
 class CustomUserManager(UserManager):
     def _create_user(self, email, password, **extra_fields):
         email = self.normalize_email(email)
@@ -53,6 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     email = models.EmailField(max_length=254, unique=True)
+    username = models.CharField(max_length=100, unique=True)
     description = models.TextField(null=True, blank=True)
     timezone = models.FloatField(null=True, blank=True)
     links = models.ManyToManyField(Link, related_name="users")
@@ -60,12 +57,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(verbose_name="active", default=True)
     date_joined = models.DateTimeField(
         verbose_name="date joined", default=djangotimezone.now
-    )
-    username = AutoSlugField(
-        unique=True,
-        populate_from="get_full_name",
-        slugify=custom_username_slugify,
-        unique_with=["first_name"],
     )
 
     objects = CustomUserManager()
