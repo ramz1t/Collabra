@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { useContext } from 'react'
 import dayjs from 'dayjs'
-import jwt_decode from 'jwt-decode'
-import AuthContext from '../contexts/AuthProvider'
+import { jwtDecode } from 'jwt-decode'
+import AuthContext from '../contexts/AuthContext'
 import { useTranslation } from 'react-i18next'
 
 const useAxios = () => {
@@ -19,7 +19,7 @@ const useAxios = () => {
 
     axiosInstance.interceptors.request.use(async (req) => {
         if (!authTokens) return req
-        const user = jwt_decode(authTokens.access)
+        const user = jwtDecode(authTokens.access)
         const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1
 
         if (!isExpired) return req
@@ -36,18 +36,20 @@ const useAxios = () => {
             return
         }
 
+        const data = await response.json()
+
         localStorage.setItem(
             'authTokens',
             JSON.stringify({
-                access: response.data.access,
+                access: data.access,
                 refresh: authTokens.refresh,
             })
         )
 
-        setAuthTokens({ ...authTokens, access: response.data.access })
-        setUser(jwt_decode(response.data.access))
+        setAuthTokens({ ...authTokens, access: data.access })
+        setUser(jwtDecode(data.access))
 
-        req.headers.Authorization = `Bearer ${response.data.access}`
+        req.headers.Authorization = `Bearer ${data.access}`
         return req
     })
 

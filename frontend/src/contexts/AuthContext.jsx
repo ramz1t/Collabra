@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
     const loginUser = async ({ email, password, redirectFrom }, setError) => {
         if (email === '' || password === '') return
 
-        fetch('/api/v1/token/', {
+        fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/token/`, {
             method: 'POST',
             headers: {
                 accept: 'application/json',
@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const registerUser = (user, setError) => {
-        fetch('/api/v1/users/', {
+        fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/`, {
             method: 'POST',
             headers: {
                 accept: 'application/json',

@@ -23,7 +23,7 @@ const Register = () => {
     return (
         <div className="flex flex-col items-center mt-5">
             <Form
-                className="w-full md:max-w-96 mt-20"
+                className="w-full md:max-w-96 mt-10 md:mt-20"
                 onSubmit={() => {
                     registerUser(
                         {
@@ -50,7 +50,7 @@ const Register = () => {
                         </Link>
                     </p>
                 </div>
-                <Input title={t('first_name')} instance={firstName} />
+                <Input title={t('first_name')} instance={firstName} autoRef />
                 <Input title={t('last_name')} instance={lastName} />
                 <Input title={t('email')} instance={email} type="email" />
                 <Input
@@ -75,7 +75,7 @@ const Register = () => {
                 {error && JSON.stringify(error)}
                 <div className="flex items-center gap-3 text-accent/50 dark:text-accent-dark/75 font-extralight">
                     <Divider horizontal />
-                    OR
+                    {t('or').toUpperCase()}
                     <Divider horizontal />
                 </div>
                 <div className="grid grid-cols-[1fr_1fr] gap-3">
