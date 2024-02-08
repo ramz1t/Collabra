@@ -15,3 +15,11 @@ export const error = (text) => {
     if (!text) text = 'Something went wrong'
     toast.error(text)
 }
+
+export const objectsDifference = (base, changed) => {
+    if (!base || !changed) return {}
+    const changedFields = Object.entries(changed).filter(
+        ([key, value]) => value !== base[key]
+    )
+    return Object.fromEntries(changedFields)
+}

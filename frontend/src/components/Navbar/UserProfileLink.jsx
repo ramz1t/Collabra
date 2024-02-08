@@ -16,7 +16,7 @@ const UserProfileLink = () => {
             href="/profile"
             className="!bg-transparent !hover:bg-transparent !p-0 !group-hover/navbar:pr-3 !pl-1.5 w-fit max-md:ml-auto"
             icon={<Avatar user={data} size="sidebar" />}
-            title={isTablet ? data.first_name : ''}
+            title={isTablet ? data?.first_name : ''}
             bold
             markerDisabled
         />

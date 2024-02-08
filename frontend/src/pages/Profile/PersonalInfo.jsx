@@ -1,11 +1,12 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import AuthContext from '../../contexts/AuthContext'
-import { useUser } from '../../api/user'
+import { useUpdateUser, useUser } from '../../api/user'
 import { Avatar, Button, Form, Input } from '../../components'
 import useInput from '../../hooks/useInput'
 import { Link } from 'react-router-dom'
 import { IoArrowForward } from 'react-icons/io5'
+import { objectsDifference } from '../../utils'
 
 const PersonalInfo = () => {
     const { t } = useTranslation()
@@ -16,6 +17,24 @@ const PersonalInfo = () => {
     const email = useInput('', { isEmpty: true })
     const username = useInput('', { isEmpty: true })
     const timezone = useInput(0)
+    const { mutate: updateUser } = useUpdateUser()
+
+    useEffect(() => {
+        if (!data) return
+        firstName.setValue(data.first_name)
+        lastName.setValue(data.last_name)
+        email.setValue(data.email)
+        username.setValue(data.username)
+        timezone.setValue(data.timezone)
+    }, [data])
+
+    const formData = {
+        first_name: firstName.value,
+        last_name: lastName.value,
+        email: email.value,
+        username: username.value,
+        timezone: timezone.value,
+    }
 
     return (
         <div className="grid md:grid-cols-[2fr_3fr] gap-10">
@@ -42,7 +61,22 @@ const PersonalInfo = () => {
                         </p>
                     </div>
                 </div>
-                <Form className="!gap-7 md:!gap-10">
+                <Form
+                    className="!gap-7 md:!gap-10"
+                    disabled={
+                        Object.keys(objectsDifference(data, formData))
+                            .length === 0 ||
+                        [firstName, lastName, email, username].some(
+                            (field) => !field.allValid
+                        )
+                    }
+                    onSubmit={() => {
+                        updateUser({
+                            userId: user.user_id,
+                            updates: objectsDifference(data, formData),
+                        })
+                    }}
+                >
                     <div className="grid md:grid-cols-[1fr_1fr] gap-7 md:gap-5">
                         <Input
                             title={t('first_name')}
@@ -72,7 +106,7 @@ const PersonalInfo = () => {
                         instance={timezone}
                         type="number"
                     />
-                    <Button style="primary" action="submit">
+                    <Button style="primary" type="submit">
                         {t('save')}
                     </Button>
                 </Form>

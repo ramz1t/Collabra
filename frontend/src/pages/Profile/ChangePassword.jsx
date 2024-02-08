@@ -21,10 +21,18 @@ const ChangePassword = () => {
             <Form
                 className="!gap-7 md:!gap-10 max-w-xl"
                 onSubmit={() => {
-                    changePasswordMutation.mutate({
-                        old_pass: oldPass.value.trim(),
-                        new_pass: newPass.value.trim(),
-                    })
+                    changePasswordMutation.mutate(
+                        {
+                            old_pass: oldPass.value.trim(),
+                            new_pass: newPass.value.trim(),
+                        },
+                        {
+                            onSuccess: () => {
+                                oldPass.setValue('')
+                                newPass.setValue('')
+                            },
+                        }
+                    )
                 }}
                 disabled={!oldPass.value.trim() || !newPass.value.trim()}
             >
