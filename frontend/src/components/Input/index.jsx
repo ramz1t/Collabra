@@ -7,23 +7,20 @@ const Input = ({
     id,
     type,
     instance,
-    deleteBtn,
     title,
     autoRef,
     disabled,
-    split,
-    large,
     must,
     containerClassName,
     ariaLabel,
-    boldTitle,
-    titleSize,
     name,
     hasError,
     autocomplete,
     onfocus,
     onblur,
     ref,
+    prefix,
+    hint,
 }) => {
     const inputRef = useRef()
 
@@ -35,29 +32,52 @@ const Input = ({
 
     return (
         <div className="w-full flex flex-col gap-1">
-            <label className="pl-1" htmlFor={id}>
+            <label
+                className={cn(
+                    'pl-1',
+                    must
+                        ? 'after:content-["*"] after:text-red-500 after:pl-0.5'
+                        : ''
+                )}
+                htmlFor={id}
+            >
                 {title}
             </label>
-            <input
-                aria-label={ariaLabel}
-                id={id}
-                type={type}
-                ref={ref ? ref : inputRef}
-                value={instance.value}
-                onChange={instance.checkValue}
-                onBlur={() => {
-                    instance.checkValue
-                    setTimeout(() => onblur && onblur(), 100)
-                }}
-                onFocus={() => onfocus && onfocus()}
-                disabled={disabled}
-                className={cn(
-                    'rounded-md border-slate-600 bg-slate-100 dark:bg-slate-600 focus:border-accent dark:focus:border-accent-dark focus:shadow-sm focus:border focus:outline-none h-10 w-full px-2',
-                    className
+            <div>
+                <div className="flex group/input">
+                    {prefix && (
+                        <div className="min-w-10 h-10 flex items-center justify-center border group-focus-within/input:border-r-0 rounded-l-md border-accent dark:border-accent-dark text-accent dark:text-accent-dark font-semibold">
+                            {prefix}
+                        </div>
+                    )}
+                    <input
+                        aria-label={ariaLabel}
+                        id={id}
+                        type={type}
+                        ref={ref ? ref : inputRef}
+                        value={instance.value}
+                        onChange={instance.checkValue}
+                        onBlur={() => {
+                            instance.checkValue
+                            setTimeout(() => onblur && onblur(), 100)
+                        }}
+                        onFocus={() => onfocus && onfocus()}
+                        disabled={disabled}
+                        className={cn(
+                            'border-slate-600 bg-slate-100 dark:bg-slate-600 focus:border-accent dark:focus:border-accent-dark focus:shadow-sm focus:border focus:outline-none h-10 w-full px-2',
+                            prefix ? 'rounded-r-md' : 'rounded-md',
+                            className
+                        )}
+                        placeholder={placeholder}
+                        autoComplete={autocomplete}
+                    />
+                </div>
+                {hint && (
+                    <p className="pl-2 text-gray-400 dark:text-gray-500 text-xs pt-1">
+                        {hint}
+                    </p>
                 )}
-                placeholder={placeholder}
-                autoComplete={autocomplete}
-            />
+            </div>
         </div>
     )
 }

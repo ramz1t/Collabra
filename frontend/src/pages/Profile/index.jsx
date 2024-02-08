@@ -1,17 +1,22 @@
 import React, { useContext } from 'react'
-import { Button, Title } from '../../components'
+import { Button, Divider, Title } from '../../components'
 import { useTranslation } from 'react-i18next'
 import AuthContext from '../../contexts/AuthContext'
+import PersonalInfo from './PersonalInfo'
+import DeleteProfile from './DeleteProfile'
+import ChangePassword from './ChangePassword'
 
 const Profile = () => {
     const { t } = useTranslation()
     const { logoutUser } = useContext(AuthContext)
     return (
-        <div>
-            <Title>{t('profile')}</Title>
-            <Button style="primary" action={logoutUser}>
-                {t('logout')}
-            </Button>
+        <div className="container mx-auto flex flex-col gap-10 md:gap-16 pb-10 md:pb-16 mt-20">
+            {/* <Button action={logoutUser}>logout</Button> */}
+            <PersonalInfo />
+            <Divider horizontal />
+            <ChangePassword />
+            <Divider horizontal />
+            <DeleteProfile />
         </div>
     )
 }

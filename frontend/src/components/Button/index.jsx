@@ -19,12 +19,15 @@ const Button = ({
                     ? 'bg-accent dark:bg-accent-dark border-accent dark:border-accent-dark text-white font-bold'
                     : '',
                 style === 'secondary'
-                    ? 'border-accent dark:border-accent-dark text-accent dark:text-accent-dark'
+                    ? 'border-accent dark:border-accent-dark text-accent hover:bg-accent/5 dark:text-accent-dark dark:hover:bg-accent-dark/5'
                     : '',
                 style === 'tetriary'
                     ? 'text-slate-600 dark:text-slate-300'
                     : '',
-                style === 'primary' || style === 'secondary'
+                style === 'desctructive'
+                    ? 'bg-red-600 border-red-600 text-white font-bold hover:bg-red-700 hover:border-red-700'
+                    : '',
+                ['primary', 'secondary', 'desctructive'].includes(style)
                     ? 'px-4 py-2 rounded-md border-2'
                     : '',
                 w_full ? 'w-full' : 'w-fit',

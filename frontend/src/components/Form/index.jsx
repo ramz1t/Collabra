@@ -5,12 +5,9 @@ const Form = ({ onSubmit, children, className }) => {
         <form
             onSubmit={(e) => {
                 e.preventDefault()
-                onSubmit()
+                onSubmit && onSubmit()
             }}
-            className={cn(
-                'flex flex-col gap-3 md:gap-5 p-7 rounded-sm',
-                className
-            )}
+            className={cn('flex flex-col gap-3 md:gap-5 rounded-sm', className)}
             noValidate
         >
             {children}

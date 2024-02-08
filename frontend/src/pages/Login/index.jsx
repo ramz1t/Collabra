@@ -23,7 +23,7 @@ const Login = () => {
     return (
         <div className="flex flex-col items-center mt-5">
             <Form
-                className="w-full md:max-w-96 mt-20"
+                className="w-full md:max-w-96 mt-10 md:mt-20"
                 onSubmit={() => {
                     loginUser({
                         email: email.value,
@@ -46,7 +46,12 @@ const Login = () => {
                         </Link>
                     </p>
                 </div>
-                <Input title={t('email')} instance={email} type="email" />
+                <Input
+                    title={t('email')}
+                    instance={email}
+                    type="email"
+                    autoRef
+                />
                 <Input
                     title={t('password')}
                     instance={password}
@@ -57,7 +62,7 @@ const Login = () => {
                 </Button>
                 <div className="flex items-center gap-3 text-accent/50 dark:text-accent-dark/75 font-extralight">
                     <Divider horizontal />
-                    OR
+                    {t('or').toUpperCase()}
                     <Divider horizontal />
                 </div>
                 <div className="grid grid-cols-[1fr_1fr] gap-3">
