@@ -48,5 +48,8 @@
     "delete": "Delete",
     "cancel": "Cancel",
     "delete_profile_hint": "Type password to submit",
-    "view_profile": "Look how others see my profile"
+    "view_profile": "Look how others see my profile",
+    "logout_head": "Sign out from the acccount",
+    "logout_desc": "This will end current session and you will need to sign in again",
+    "logout": "Sign out"
 }
