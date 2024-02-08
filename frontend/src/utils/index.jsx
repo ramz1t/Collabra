@@ -10,3 +10,8 @@ export const success = (text) => {
     if (!text) return
     toast.success(text)
 }
+
+export const error = (text) => {
+    if (!text) text = 'Something went wrong'
+    toast.error(text)
+}

@@ -27,6 +27,7 @@ const DeleteProfile = () => {
                 onSubmit={() => {
                     deleteUserMutation.mutate(user.user_id)
                 }}
+                autoComplete="off"
             >
                 {initialState ? (
                     <Button
