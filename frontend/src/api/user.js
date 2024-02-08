@@ -23,3 +23,10 @@ export const useDeleteUser = () => {
         }
     })
 }
+
+export const useChangePassword = () => {
+    const api = useAxios()
+    return useMutation({
+        mutationFn: (data) => api.post(`${prefix}/users/set_password`, data)
+    })
+}
