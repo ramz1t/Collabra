@@ -12,7 +12,7 @@ const DeleteProfile = () => {
     const { user, logoutUser } = useContext(AuthContext)
     const [initialState, setInitialState] = useState(true)
     const password = useInput('')
-    const deleteUserMutation = useDeleteUser()
+    const { mutate: deleteUser, isLoading } = useDeleteUser()
 
     return (
         <div className="grid md:grid-cols-[2fr_3fr] gap-10">
@@ -25,9 +25,10 @@ const DeleteProfile = () => {
             <Form
                 className="!gap-7 md:!gap-10 max-w-xl"
                 onSubmit={() => {
-                    deleteUserMutation.mutate(user.user_id)
+                    deleteUser(user.user_id)
                 }}
                 autoComplete="off"
+                disabled={isLoading}
             >
                 {initialState ? (
                     <Button
