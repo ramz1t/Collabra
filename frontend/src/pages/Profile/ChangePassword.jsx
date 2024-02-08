@@ -2,11 +2,13 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import useInput from '../../hooks/useInput'
 import { Form, Input, Button } from '../../components'
+import { useChangePassword } from '../../api/user'
 
 const ChangePassword = () => {
     const { t } = useTranslation()
-    const oldPass = useInput()
-    const newPass = useInput()
+    const oldPass = useInput('')
+    const newPass = useInput('')
+    const changePasswordMutation = useChangePassword()
 
     return (
         <div className="grid md:grid-cols-[2fr_3fr] gap-10">
@@ -16,7 +18,16 @@ const ChangePassword = () => {
                     {t('change_pass_desc')}
                 </p>
             </div>
-            <Form className="!gap-7 md:!gap-10 max-w-xl">
+            <Form
+                className="!gap-7 md:!gap-10 max-w-xl"
+                onSubmit={() => {
+                    changePasswordMutation.mutate({
+                        old_pass: oldPass.value.trim(),
+                        new_pass: newPass.value.trim(),
+                    })
+                }}
+                disabled={!oldPass.value.trim() || !newPass.value.trim()}
+            >
                 <Input
                     title={t('old_pass')}
                     instance={oldPass}
@@ -27,7 +38,7 @@ const ChangePassword = () => {
                     instance={newPass}
                     type="password"
                 />
-                <Button style="primary" action="submit">
+                <Button style="primary" type="submit">
                     {t('change')}
                 </Button>
             </Form>

@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
-import { getCookie } from '../utils'
+import { getCookie, success } from '../utils'
 import { useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import TeamContext from './TeamContext'
@@ -22,11 +22,10 @@ export const AuthProvider = ({ children }) => {
             : null
     )
 
-    const [user, setUser] = useState(
-        () =>
-            localStorage.getItem('authTokens')
-                ? jwtDecode(localStorage.getItem('authTokens'))
-                : null // #TODO: change to null on prod or with server
+    const [user, setUser] = useState(() =>
+        localStorage.getItem('authTokens')
+            ? jwtDecode(localStorage.getItem('authTokens'))
+            : null
     )
 
     const authWithTokens = (tokens, redirectFrom) => {
@@ -74,6 +73,7 @@ export const AuthProvider = ({ children }) => {
         }).then(async (res) => {
             if (res.ok) {
                 const data = await res.json()
+                success(data.message)
                 authWithTokens(data)
             } else {
                 // setError && setError(res)
