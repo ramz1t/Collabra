@@ -4,6 +4,8 @@ import dayjs from 'dayjs'
 import { jwtDecode } from 'jwt-decode'
 import AuthContext from '../contexts/AuthContext'
 import { useTranslation } from 'react-i18next'
+import toast from 'react-hot-toast'
+import { error, success } from '../utils'
 
 const useAxios = () => {
     const { authTokens, setUser, setAuthTokens, logoutUser } = useContext(AuthContext)
@@ -52,6 +54,17 @@ const useAxios = () => {
         req.headers.Authorization = `Bearer ${data.access}`
         return req
     })
+
+    axiosInstance.interceptors.response.use(
+        (res) => {
+            success(res.data?.message)
+            return res;
+        },
+        (err) => {
+            error(err?.data?.message)
+            return Promise.reject(err);
+        }
+    );
 
     return axiosInstance
 }
