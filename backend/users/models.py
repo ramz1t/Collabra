@@ -1,4 +1,5 @@
-from autoslug import AutoSlugField
+from urllib.parse import urlparse
+
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import PermissionsMixin, UserManager
@@ -28,11 +29,12 @@ class CustomUserManager(UserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class Link(models.Model):
+class UserLink(models.Model):
     link = models.URLField()
+    user = models.ForeignKey("User", on_delete=models.CASCADE, related_name="links")
 
     def __str__(self):
-        return str(self.link)[:30] if len(str(self.link)) > 30 else str(self.link)
+        return f"{self.id}, user: {self.user.id}," + urlparse(str(self.link)).netloc
 
 
 class GeneratedAvatar(models.Model):
@@ -52,7 +54,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=100, unique=True)
     description = models.TextField(null=True, blank=True)
     timezone = models.FloatField(null=True, blank=True)
-    links = models.ManyToManyField(Link, related_name="users")
     is_staff = models.BooleanField(verbose_name="staff status", default=False)
     is_active = models.BooleanField(verbose_name="active", default=True)
     date_joined = models.DateTimeField(
