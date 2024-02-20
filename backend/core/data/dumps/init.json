@@ -8,17 +8,19 @@
     }
   },
   {
-    "model": "users.link",
+    "model": "users.userlink",
     "pk": 1,
     "fields": {
-      "link": "https://youtube.com"
+      "link": "https://youtube.com",
+      "user": 1
     }
   },
   {
-    "model": "users.link",
+    "model": "users.userlink",
     "pk": 2,
     "fields": {
-      "link": "https://yandex.ru"
+      "link": "https://yandex.ru",
+      "user": 1
     }
   },
   {
@@ -40,8 +42,7 @@
       "is_active": true,
       "date_joined": "2024-02-01T19:33:37.771Z",
       "groups": [],
-      "user_permissions": [],
-      "links": [1, 2]
+      "user_permissions": []
     }
   },
   {
@@ -53,17 +54,19 @@
     }
   },
   {
-    "model": "users.link",
+    "model": "users.userlink",
     "pk": 3,
     "fields": {
-      "link": "https://youtube.com"
+      "link": "https://youtube.com",
+      "user": 2
     }
   },
   {
-    "model": "users.link",
+    "model": "users.userlink",
     "pk": 4,
     "fields": {
-      "link": "https://yandex.ru"
+      "link": "https://yandex.ru",
+      "user": 2
     }
   },
   {
@@ -84,8 +87,7 @@
       "is_active": true,
       "date_joined": "2024-02-01T19:33:37.771Z",
       "groups": [],
-      "user_permissions": [],
-      "links": [3, 4]
+      "user_permissions": []
     }
   }
 ]

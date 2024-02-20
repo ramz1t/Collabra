@@ -5,8 +5,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from . import mixins
 from .. import selectors
-from ..services.create_update_service import create_user, update_user
-from ..services.delete_service import delete_user
+from ..services.create import create_user
+from ..services.update import update_user
+from ..services.delete import delete_user
 
 
 class UsersViewSet(mixins.UserMixin):

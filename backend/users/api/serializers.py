@@ -8,7 +8,12 @@ from django.core import exceptions as django_exceptions
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 
-from ..selectors import is_user_exists
+from ..selectors import is_user_exists, get_user_links
+
+
+class GeneratedAvatarSerializer(serializers.Serializer):
+    first_color = serializers.CharField()
+    second_color = serializers.CharField()
 
 
 class UserCreateUpdateBaseSerializer(serializers.Serializer):
@@ -23,11 +28,6 @@ class UserCreateUpdateBaseSerializer(serializers.Serializer):
         pattern = re.compile(r"^[a-zA-Z\s]+$")
         return bool(pattern.match(name))
 
-    def validate_email(self, email):
-        if is_user_exists(email=email):
-            raise serializers.ValidationError(_("User with this email already exists"))
-        return email
-
     def validate_first_name(self, first_name):
         if not self._validate_name(first_name):
             raise ValidationError(_("Name must contain only Latin letters or spaces"))
@@ -39,6 +39,11 @@ class UserCreateUpdateBaseSerializer(serializers.Serializer):
                 _("Surname must contain only Latin letters or spaces")
             )
         return last_name
+
+    def validate_email(self, email):
+        if is_user_exists(email=email):
+            raise serializers.ValidationError(_("User with this email already exists"))
+        return email
 
     def validate_timezone(self, timezone):
         if timezone not in settings.TIMEZONES:
@@ -53,24 +58,20 @@ class UserUpdateSerializer(UserCreateUpdateBaseSerializer):
     username = serializers.CharField(min_length=5, max_length=50, required=False)
 
     def validate_username(self, username):
-        prerepared_username = username.replace(" ", "_").replace("-", "_").lower()
-        print(prerepared_username)
-        prepared_username = re.sub(r"_+", "_", prerepared_username)
+        prepared_username = username.replace(" ", "_").replace("-", "_").lower()
+        cleaned_username = re.sub(r"_+", "_", prepared_username)
 
-        if is_user_exists(username=prepared_username):
+        if is_user_exists(username=cleaned_username):
             raise ValidationError(_("User with this username already exists"))
 
-        print(prepared_username)
-
-        pattern = r"^[a-zA-Z0-9_]+$"
-        if not re.match(pattern, prepared_username):
+        if not re.match(r"^[a-zA-Z0-9_]+$", cleaned_username):
             raise ValidationError(
                 _(
                     "Username must contain only Latin letters, space, hyphen and underscore"
                 )
             )
 
-        return prepared_username
+        return cleaned_username
 
 
 class UserCreateSerializer(UserCreateUpdateBaseSerializer):
@@ -87,11 +88,6 @@ class UserCreateSerializer(UserCreateUpdateBaseSerializer):
             raise serializers.ValidationError(serializer_error)
 
         return password
-
-
-class GeneratedAvatarSerializer(serializers.Serializer):
-    first_color = serializers.CharField()
-    second_color = serializers.CharField()
 
 
 class UserRetrieveSerializer(serializers.Serializer):
@@ -112,4 +108,4 @@ class UserRetrieveSerializer(serializers.Serializer):
         return serializer.data
 
     def get_links(self, obj):
-        return [link.link for link in obj.links.all()]
+        return get_user_links(obj)

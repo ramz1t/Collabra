@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 
-from .models import GeneratedAvatar, Link
+from .models import GeneratedAvatar, UserLink
 
 User = get_user_model()
 
@@ -20,8 +20,8 @@ class GeneratedAvatarAdmin(admin.ModelAdmin):
     empty_value_display = "-empty-"
 
 
-@admin.register(Link)
-class LinkAdmin(admin.ModelAdmin):
-    list_display = ("pk", "link")
+@admin.register(UserLink)
+class UserLinkAdmin(admin.ModelAdmin):
+    list_display = ("pk", "user", "link")
     search_fields = ("link",)
     empty_value_display = "-empty-"
