@@ -5,7 +5,7 @@ import backend from 'i18next-http-backend'
 i18n.use(backend)
     .use(initReactI18next)
     .init({
-        lng: localStorage.getItem('i18nextLng') || 'en',
+        lng: localStorage.getItem('i18nextLng'),
         fallbackLng: 'en',
         interpolation: {
             escapeValue: false,

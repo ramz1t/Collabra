@@ -22,11 +22,8 @@ const Register = () => {
 
     return (
         <div className="flex flex-col items-center mt-5">
-            <h1 className="font-extrabold text-5xl text-center mt-7">
-                {t('register_header')}
-            </h1>
             <Form
-                className="w-full md:max-w-96 mt-20"
+                className="w-full md:max-w-96 mt-10 md:mt-20"
                 onSubmit={() => {
                     registerUser(
                         {
@@ -39,7 +36,21 @@ const Register = () => {
                     )
                 }}
             >
-                <Input title={t('first_name')} instance={firstName} />
+                <div>
+                    <p className="font-bold text-2xl text-gray-900 dark:text-gray-100">
+                        {t('register_link')}
+                    </p>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm pt-2">
+                        {t('login_text')}{' '}
+                        <Link
+                            to="/login"
+                            className="text-accent dark:text-accent-dark font-semibold hover:underline pl-1"
+                        >
+                            {t('login')}
+                        </Link>
+                    </p>
+                </div>
+                <Input title={t('first_name')} instance={firstName} autoRef />
                 <Input title={t('last_name')} instance={lastName} />
                 <Input title={t('email')} instance={email} type="email" />
                 <Input
@@ -57,32 +68,41 @@ const Register = () => {
                         email.value,
                         password.value,
                     ].includes('')}
+                    className="my-3"
                 >
                     {t('register')}
                 </Button>
                 {error && JSON.stringify(error)}
                 <div className="flex items-center gap-3 text-accent/50 dark:text-accent-dark/75 font-extralight">
                     <Divider horizontal />
-                    OR
+                    {t('or').toUpperCase()}
                     <Divider horizontal />
                 </div>
-                <div className="flex justify-between gap-3">
-                    <Button style="secondary" type="button">
-                        <IoLogoApple />
-                    </Button>
-                    <Button style="secondary" type="button">
-                        <IoLogoGithub />
-                    </Button>
-                    <Button style="secondary" type="button">
-                        <IoLogoGoogle />
-                    </Button>
-                    <Link
-                        className="flex text-accent dark:text-accent-dark items-center border-2 border-accent dark:border-accent-dark gap-3 rounded-md px-3 hover:opacity-75 duration-75 font-bold"
-                        to="/login"
+                <div className="grid grid-cols-[1fr_1fr] gap-3">
+                    <Button
+                        type="button"
+                        w_full
+                        className="!border hover:bg-accent/5 dark:hover:bt-accent-dark/10 rounded-md min-h-10"
                     >
-                        <IoLogIn />
-                        {t('login')}
-                    </Link>
+                        <IoLogoApple />
+                        Apple
+                    </Button>
+                    <Button
+                        type="button"
+                        w_full
+                        className="!border hover:bg-accent/5 dark:hover:bt-accent-dark/10 rounded-md min-h-10"
+                    >
+                        <IoLogoGithub />
+                        GitHub
+                    </Button>
+                    <Button
+                        type="button"
+                        w_full
+                        className="!border hover:bg-accent/5 dark:hover:bt-accent-dark/10 rounded-md min-h-10"
+                    >
+                        <IoLogoGoogle />
+                        Google
+                    </Button>
                 </div>
             </Form>
         </div>

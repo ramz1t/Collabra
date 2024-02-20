@@ -4,10 +4,12 @@ import Twemoji from '../Twemoji'
 import Button from '../Button'
 import cn from 'classnames'
 import { IoChevronDown, IoChevronUp } from 'react-icons/io5'
+import useScreenSize from '../../hooks/useScreenSize'
 
 const LanguagePicker = () => {
     const { t, i18n } = useTranslation()
     const [isOpen, setIsOpen] = useState(false)
+    const { isTablet } = useScreenSize()
 
     const languages = {
         en: {
@@ -18,28 +20,31 @@ const LanguagePicker = () => {
         ru: {
             code: 'ru',
             flag: '🇷🇺',
-            name: 'Russian',
+            name: 'Русский',
         },
         se: {
             code: 'se',
             flag: '🇸🇪',
-            name: 'Swedish',
+            name: 'Svenska',
         },
         de: {
             code: 'de',
             flag: '🇩🇪',
-            name: 'Deutch',
+            name: 'Deutsch',
         },
         fr: {
             code: 'fr',
             flag: '🇫🇷',
-            name: 'French',
+            name: 'Français',
         },
     }
 
     return (
         <div
-            className="flex gap-4 items-center px-3.5 py-3 rounded-md min-h-12 transition-all duration-150 max-w-12 group-hover/navbar:max-w-full !justify-start hover:bg-accent/[0.03] dark:hover:bg-accent-dark/5 relative overflow-clip hover:overflow-visible"
+            className={cn(
+                'flex gap-4 items-center px-3.5 py-3 rounded-md min-h-12 transition-all duration-150 md:max-w-12 group-hover/navbar:max-w-full !justify-start hover:bg-accent/[0.03] dark:hover:bg-accent-dark/5 relative overflow-clip hover:overflow-visible',
+                isOpen ? 'overflow-visible' : 'overflow-clip'
+            )}
             onClick={() => setIsOpen((isOpen) => !isOpen)}
             onMouseLeave={() => setIsOpen(false)}
         >
@@ -52,16 +57,20 @@ const LanguagePicker = () => {
             <p className="block whitespace-nowrap">
                 {languages[i18n.resolvedLanguage].name}
             </p>
-            <span>
+            <span className="md:ml-auto">
                 <IoChevronUp />
             </span>
             {isOpen && (
-                <ul className="absolute h-fit min-h-12 grid grid-cols-[1fr_1fr_1fr] gap-1 bg-white dark:bg-slate-700 border dark:border-slate-600 bottom-0 left-0 z-[999] p-1 rounded-md w-full">
+                <ul className="absolute min-h-12 grid grid-cols-[1fr_1fr_1fr] gap-1 bg-white dark:bg-slate-700 border dark:border-slate-600 bottom-0 left-0 z-[999] p-1 rounded-md w-full">
                     {Object.keys(languages).map((key) => (
                         <Button
                             key={key}
                             action={() => {
                                 i18n.changeLanguage(languages[key].code)
+                                localStorage.setItem(
+                                    'i18nextLng',
+                                    languages[key].code
+                                )
                                 document
                                     .querySelector('html')
                                     .setAttribute('lang', languages[key].code)
@@ -76,6 +85,11 @@ const LanguagePicker = () => {
                             <Twemoji emoji={languages[key].flag} width={24} />
                         </Button>
                     ))}
+                    {!isTablet && (
+                        <span className="min-h-10 w-full flex items-center justify-center">
+                            <IoChevronDown />
+                        </span>
+                    )}
                 </ul>
             )}
         </div>

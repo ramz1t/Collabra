@@ -1,17 +1,16 @@
 import cn from 'classnames'
 
-const Form = ({ onSubmit, children, className }) => {
+const Form = ({ onSubmit, children, className, autoComplete, disabled }) => {
     return (
         <form
             onSubmit={(e) => {
                 e.preventDefault()
-                onSubmit()
+                if (disabled) return
+                onSubmit && onSubmit()
             }}
-            className={cn(
-                'flex flex-col gap-3 md:gap-5 border dark:border-slate-600 p-7 rounded-sm',
-                className
-            )}
+            className={cn('flex flex-col gap-3 md:gap-5 rounded-sm', className)}
             noValidate
+            autoComplete={autoComplete}
         >
             {children}
         </form>

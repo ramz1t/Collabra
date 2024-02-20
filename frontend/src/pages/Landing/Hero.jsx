@@ -22,7 +22,7 @@ const Hero = () => {
                         }}
                     ></div>
                 </div>
-                <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
+                <div className="mx-auto max-w-2xl py-14 sm:py-48 lg:py-56">
                     {/* <div className="hidden sm:mb-8 sm:flex sm:justify-center">
                         <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 dark:text-gray-400 ring-1 ring-gray-900/10 dark:ring-gray-100/20 hover:ring-gray-900/20 dark:hover:ring-gray-100/30">
                             Announcing our next round of funding.{' '}
@@ -47,7 +47,7 @@ const Hero = () => {
                             Qui irure qui lorem cupidatat commodo. Elit sunt
                             amet fugiat veniam occaecat fugiat aliqua.
                         </p>
-                        <div className="mt-10 flex items-center justify-center gap-x-6">
+                        <div className="mt-10 max-md:flex-col gap-y-6 flex items-center justify-center gap-x-6">
                             <Link
                                 to={user ? '/teams' : '/login'}
                                 className="rounded-md bg-accent dark:bg-accent-dark px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-accent/90 transition-colors duration-75 dark:hover:bg-accent-dark/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

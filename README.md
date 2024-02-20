@@ -1,18 +1,18 @@
 <div align="center">
 
   <img src="frontend/src/assets/images/logo.png" alt="logo" width="150" height="auto" />
-  <h1>Web Project Template</h1>
+  <h1>Collabra</h1>
   <p>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at pretium urna. Sed velit ante, blandit sollicitudin interdum nec, mattis sit amet ipsum. Duis maximus vel odio et auctor. Mauris sagittis dolor quam, vel cursus lacus viverra id. Proin euismod urna non rutrum semper. 
   </p>
   
 <!-- Badges -->
 <p>
-  <a href="https://github.com/user/repo/graphs/contributors">
-    <img src="https://img.shields.io/github/contributors/user/repo" alt="contributors" />
+  <a href="https://github.com/alexzawadsky/Collabra/graphs/contributors">
+    <img src="https://img.shields.io/github/contributors/alexzawadsky/Collabra" alt="contributors" />
   </a>
-  <a href="https://github.com/user/repo/commits/master">
-    <img src="https://img.shields.io/github/last-commit/user/repo" alt="last update" />
+  <a href="https://github.com/alexzawadsky/Collabra/commits/master">
+    <img src="https://img.shields.io/github/last-commit/alexzawadsky/Collabra" alt="last update" />
   </a>
 </p>
 
@@ -92,7 +92,8 @@
 
 | Color         | Hex                                                              |
 | ------------- | ---------------------------------------------------------------- |
-| Primary Color | ![#FFFFFF](https://via.placeholder.com/10/FFFFFF?text=+) #FFFFFF |
+| Primary Color | ![#1B3F99](https://via.placeholder.com/10/1B3F99?text=+) #1B3F99 |
+| Primary Color Dark | ![#e3bb58](https://via.placeholder.com/10/e3bb58?text=+) #e3bb58 |
 
 <!-- Env Variables -->
 

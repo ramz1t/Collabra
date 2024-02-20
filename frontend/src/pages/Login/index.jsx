@@ -11,6 +11,7 @@ import useInput from '../../hooks/useInput'
 import loginImg from '../../assets/images/login.jpg'
 import AuthContext from '../../contexts/AuthContext'
 import { Link, useParams } from 'react-router-dom'
+import logo from '../../assets/images/logo.png'
 
 const Login = () => {
     const { t } = useTranslation()
@@ -21,15 +22,8 @@ const Login = () => {
 
     return (
         <div className="flex flex-col items-center mt-5">
-            <h1 className="col-span-2 text-5xl mt-7 font-extrabold">
-                {t('login_header')}
-            </h1>
-            {/* <div class="grid-item lg:col-span-1 flex items-center justify-center">
-                <img src={loginImg} />
-            </div> */}
-
             <Form
-                className="w-full md:max-w-96 mt-20"
+                className="w-full md:max-w-96 mt-10 md:mt-20"
                 onSubmit={() => {
                     loginUser({
                         email: email.value,
@@ -38,37 +32,64 @@ const Login = () => {
                     })
                 }}
             >
-                <Input title={t('email')} instance={email} type="email" />
+                <div>
+                    <p className="font-bold text-2xl text-gray-900 dark:text-gray-100">
+                        {t('login_header')}
+                    </p>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm pt-2">
+                        {t('not_member')}{' '}
+                        <Link
+                            to="/register"
+                            className="text-accent dark:text-accent-dark font-semibold hover:underline pl-1"
+                        >
+                            {t('register_link')}
+                        </Link>
+                    </p>
+                </div>
+                <Input
+                    title={t('email')}
+                    instance={email}
+                    type="email"
+                    autoRef
+                />
                 <Input
                     title={t('password')}
                     instance={password}
                     type="password"
                 />
-                <Button style="primary" type="submit" w_full>
+                <Button style="primary" type="submit" w_full className="my-3">
                     {t('login')}
                 </Button>
                 <div className="flex items-center gap-3 text-accent/50 dark:text-accent-dark/75 font-extralight">
                     <Divider horizontal />
-                    OR
+                    {t('or').toUpperCase()}
                     <Divider horizontal />
                 </div>
-                <div className="flex justify-between gap-3">
-                    <Button style="secondary" type="button">
-                        <IoLogoApple />
-                    </Button>
-                    <Button style="secondary" type="button">
-                        <IoLogoGithub />
-                    </Button>
-                    <Button style="secondary" type="button">
-                        <IoLogoGoogle />
-                    </Button>
-                    <Link
-                        className="flex text-accent dark:text-accent-dark items-center border-2 border-accent dark:border-accent-dark gap-3 rounded-md px-3 hover:opacity-75 duration-75 font-bold"
-                        to="/register"
+                <div className="grid grid-cols-[1fr_1fr] gap-3">
+                    <Button
+                        type="button"
+                        w_full
+                        className="!border hover:bg-accent/5 dark:hover:bt-accent-dark/10 rounded-md min-h-10"
                     >
-                        <IoPersonAdd />
-                        {t('register')}
-                    </Link>
+                        <IoLogoApple />
+                        Apple
+                    </Button>
+                    <Button
+                        type="button"
+                        w_full
+                        className="!border hover:bg-accent/5 dark:hover:bt-accent-dark/10 rounded-md min-h-10"
+                    >
+                        <IoLogoGithub />
+                        GitHub
+                    </Button>
+                    <Button
+                        type="button"
+                        w_full
+                        className="!border hover:bg-accent/5 dark:hover:bt-accent-dark/10 rounded-md min-h-10"
+                    >
+                        <IoLogoGoogle />
+                        Google
+                    </Button>
                 </div>
             </Form>
         </div>
