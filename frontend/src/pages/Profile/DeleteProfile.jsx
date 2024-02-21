@@ -32,7 +32,7 @@ const DeleteProfile = () => {
             >
                 {initialState ? (
                     <Button
-                        style="desctructive"
+                        style="destructive"
                         type="button"
                         action={() => setInitialState(false)}
                     >
@@ -48,7 +48,7 @@ const DeleteProfile = () => {
                         />
                         <div className="flex gap-5">
                             <Button
-                                style="desctructive"
+                                style="destructive"
                                 type="submit"
                                 disabled={password.value === ''}
                             >

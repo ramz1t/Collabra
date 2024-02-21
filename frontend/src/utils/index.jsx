@@ -19,7 +19,7 @@ export const error = (text) => {
 export const objectsDifference = (base, changed) => {
     if (!base || !changed) return {}
     const changedFields = Object.entries(changed).filter(
-        ([key, value]) => value !== base[key]
+        ([key, value]) => JSON.stringify(value) !== JSON.stringify(base[key])
     )
     return Object.fromEntries(changedFields)
 }

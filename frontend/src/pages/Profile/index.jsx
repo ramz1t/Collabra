@@ -6,7 +6,7 @@ import Logout from './Logout'
 
 const Profile = () => {
     return (
-        <div className="container mx-auto flex flex-col gap-10 md:gap-16 pb-10 md:pb-16 mt-20">
+        <div className="container mx-auto flex flex-col gap-10 md:gap-16 my-10 md:my-16">
             <Logout />
             <Divider horizontal />
             <PersonalInfo />
