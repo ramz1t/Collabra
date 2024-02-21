@@ -21,7 +21,7 @@ const NavbarItem = ({
                     'before:absolute before:left-0 before:md:left-3 before:bg-accent dark:before:bg-accent-dark before:w-1 before:rounded-r-lg before:transition-all',
                     bold ? 'font-bold' : '',
                     isActive && !markerDisabled
-                        ? 'bg-accent/5 dark:bg-accent-dark/10 before:h-6 group-hover/navbar:before:rounded-l-lg'
+                        ? 'bg-accent/5 dark:bg-accent-dark/10 before:h-6 group-hover/navbar:md:before:rounded-l-lg'
                         : 'hover:bg-accent/[0.03] dark:hover:bg-accent-dark/5 before:h-0',
                     className
                 )

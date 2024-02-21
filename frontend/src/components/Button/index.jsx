@@ -24,11 +24,11 @@ const Button = ({
                 style === 'tetriary'
                     ? 'text-slate-600 dark:text-slate-300'
                     : '',
-                style === 'desctructive'
+                style === 'destructive'
                     ? 'bg-red-600 border-red-600 text-white font-bold hover:bg-red-700 hover:border-red-700'
                     : '',
-                ['primary', 'secondary', 'desctructive'].includes(style)
-                    ? 'px-4 py-2 rounded-md border-2'
+                ['primary', 'secondary', 'destructive'].includes(style)
+                    ? 'px-4 min-h-11 rounded-md border-2'
                     : '',
                 w_full ? 'w-full' : 'w-fit',
                 className

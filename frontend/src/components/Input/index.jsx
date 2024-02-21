@@ -11,16 +11,14 @@ const Input = ({
     autoRef,
     disabled,
     must,
-    containerClassName,
     ariaLabel,
-    name,
-    hasError,
     autocomplete,
     onfocus,
     onblur,
     ref,
     prefix,
     hint,
+    onChange,
 }) => {
     const inputRef = useRef()
 
@@ -46,7 +44,7 @@ const Input = ({
             <div>
                 <div className="flex group/input">
                     {prefix && (
-                        <div className="min-w-10 h-10 flex items-center justify-center border group-focus-within/input:border-r-0 rounded-l-md border-accent dark:border-accent-dark text-accent dark:text-accent-dark font-semibold">
+                        <div className="min-w-10 h-10 flex items-center justify-center border border-accent dark:border-accent-dark group-focus-within/input:border-0 group-focus-within/input:ring-1 group-focus-within/input:bord rounded-l-md ring-accent dark:ring-accent-dark text-accent dark:text-accent-dark font-semibold">
                             {prefix}
                         </div>
                     )}
@@ -56,7 +54,10 @@ const Input = ({
                         type={type}
                         ref={ref ? ref : inputRef}
                         value={instance.value}
-                        onChange={instance.checkValue}
+                        onChange={(e) => {
+                            onChange && onChange(e)
+                            instance.checkValue(e)
+                        }}
                         onBlur={() => {
                             instance.checkValue
                             setTimeout(() => onblur && onblur(), 100)
@@ -64,7 +65,7 @@ const Input = ({
                         onFocus={() => onfocus && onfocus()}
                         disabled={disabled}
                         className={cn(
-                            'border-slate-600 bg-slate-100 dark:bg-slate-600 focus:border-accent dark:focus:border-accent-dark focus:shadow-sm focus:border focus:outline-none h-10 w-full px-2',
+                            'bg-slate-100 dark:bg-slate-600 focus:ring-accent dark:focus:ring-accent-dark focus:shadow-sm focus:ring-1 focus:outline-none h-10 w-full px-2',
                             prefix ? 'rounded-r-md' : 'rounded-md',
                             className
                         )}

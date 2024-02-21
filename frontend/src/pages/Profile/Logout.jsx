@@ -1,11 +1,7 @@
-import React, { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import useInput from '../../hooks/useInput'
-import { Form, Input, Button } from '../../components'
+import { Form, Button } from '../../components'
 import AuthContext from '../../contexts/AuthContext'
-import toast from 'react-hot-toast'
-import useAxios from '../../hooks/useAxios'
-import { useDeleteUser } from '../../api/user'
 
 const Logout = () => {
     const { t } = useTranslation()
@@ -20,7 +16,7 @@ const Logout = () => {
                 </p>
             </div>
             <Form className="!gap-7 md:!gap-10 max-w-xl" onSubmit={logoutUser}>
-                <Button style="desctructive" type="submit">
+                <Button style="destructive" type="submit">
                     {t('logout')}
                 </Button>
             </Form>

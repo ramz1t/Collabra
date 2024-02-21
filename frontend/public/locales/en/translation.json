@@ -51,5 +51,6 @@
     "view_profile": "Look how others see my profile",
     "logout_head": "Sign out from the account",
     "logout_desc": "This will end current session and you will need to sign in again",
-    "logout": "Sign out"
+    "logout": "Sign out",
+    "links": "Links"
 }
