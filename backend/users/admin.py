@@ -8,8 +8,15 @@ User = get_user_model()
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ("pk", "is_staff", "email", "first_name", "last_name", "username")
-    list_filter = ("is_staff",)
+    list_display = (
+        "pk",
+        "is_superuser",
+        "email",
+        "first_name",
+        "last_name",
+        "username",
+    )
+    list_filter = ("is_superuser",)
     search_fields = ("email", "first_name", "last_name", "username")
     empty_value_display = "-empty-"
 
