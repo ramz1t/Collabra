@@ -53,6 +53,14 @@
     }
   },
   {
+    "model": "users.generatedavatar",
+    "pk": 3,
+    "fields": {
+      "first_color": "93c512",
+      "second_color": "bef2aa"
+    }
+  },
+  {
     "model": "users.userlink",
     "pk": 3,
     "fields": {
@@ -69,6 +77,14 @@
     }
   },
   {
+    "model": "users.userlink",
+    "pk": 5,
+    "fields": {
+      "link": "https://ya.ru",
+      "user": 3
+    }
+  },
+  {
     "model": "users.user",
     "pk": 2,
     "fields": {
@@ -81,6 +97,27 @@
       "last_name": "Ramazanov",
       "username": "ramz1",
       "email": "timur@mail.ru",
+      "description": null,
+      "timezone": null,
+      "date_joined": "2024-02-01T19:33:37.771Z",
+      "is_staff": true,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$fCSkDzxUf7AH0RQdfCqT4l$vtSQMKLOe4aHjlwQRybWBKSdQd0dYxyycvGMLKO+iP0=",
+      "last_login": "2024-02-01T19:33:50.939Z",
+      "is_superuser": true,
+      "avatar": "",
+      "generated_avatar": 3,
+      "first_name": "Leonid",
+      "last_name": "Prokopev",
+      "username": "leonidprokopev17764",
+      "email": "laprokopev@altr3s.ru",
       "description": null,
       "timezone": null,
       "date_joined": "2024-02-01T19:33:37.771Z",
