@@ -3,7 +3,7 @@ import re
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from drf_extra_fields.fields import Base64ImageField
-from django.contrib.auth.password_validation import django_validate_password
+from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions as django_exceptions
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
@@ -13,7 +13,7 @@ from ..selectors import is_user_exists, get_user_links
 
 def validate_new_password(field: str, password):
     try:
-        django_validate_password(password)
+        validate_password(password)
     except django_exceptions.ValidationError as e:
         serializer_error = serializers.as_serializer_error(e)
         raise serializers.ValidationError({field, serializer_error})
