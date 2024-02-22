@@ -3,6 +3,7 @@ import re
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from drf_extra_fields.fields import Base64ImageField
+from timezone_field.rest_framework import TimeZoneSerializerField
 from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions as django_exceptions
 from django.utils.translation import gettext_lazy as _
@@ -50,7 +51,7 @@ class GeneratedAvatarSerializer(serializers.Serializer):
 class UserCreateUpdateBaseSerializer(serializers.Serializer):
     avatar = Base64ImageField(required=False, allow_null=True)
     description = serializers.CharField(min_length=1, max_length=500, required=False)
-    timezone = serializers.FloatField(required=False)
+    timezone = TimeZoneSerializerField(use_pytz=True, required=False)
     links = serializers.ListSerializer(
         child=serializers.URLField(), max_length=10, required=False
     )
@@ -76,10 +77,10 @@ class UserCreateUpdateBaseSerializer(serializers.Serializer):
             raise serializers.ValidationError(_("User with this email already exists"))
         return email
 
-    def validate_timezone(self, timezone):
-        if timezone not in settings.TIMEZONES:
-            raise ValidationError(_("Invalid timezone format"))
-        return timezone
+    # def validate_timezone(self, timezone):
+    #     if timezone not in settings.TIMEZONES:
+    #         raise ValidationError(_("Invalid timezone format"))
+    #     return timezone
 
 
 class UserUpdateSerializer(UserCreateUpdateBaseSerializer):
@@ -125,7 +126,7 @@ class UserRetrieveSerializer(serializers.Serializer):
     last_name = serializers.CharField()
     email = serializers.EmailField()
     description = serializers.CharField()
-    timezone = serializers.FloatField()
+    timezone = TimeZoneSerializerField(use_pytz=True)
     links = serializers.SerializerMethodField()
     date_joined = serializers.DateTimeField()
 
