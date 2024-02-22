@@ -173,21 +173,22 @@ SIMPLE_JWT = {
 
 
 AVATAR = {
-    "COLORS": [
-        "fca5a5",
-        "fdba74",
-        "fcd34d",
-        "bef264",
-        "86efac",
-        "5eead4",
-        "67e8f9",
-        "7dd3fc",
-        "93c5fd",
-        "a5b4fc",
-        "c4b5fd",
-        "f0abfc",
-        "f9a8d4",
-        "fda4af",
+    "GRADIENTS": [
+        ("a18cd1", "fbc2eb"),
+        ("ff9a9e", "fecfef"),
+        ("f6d365", "fda085"),
+        ("d4fc79", "96e6a1"),
+        ("84fab0", "8fd3f4"),
+        ("fccb90", "d57eeb"),
+        ("f093fb", "f5576c"),
+        ("30cfd0", "330867"),
+        ("a8edea", "fed6e3"),
+        ("5ee7df", "b490ca"),
+        ("d299c2", "fef9d7"),
+        ("9890e3", "b1f4cf"),
+        ("96fbc4", "f9f586"),
+        ("2af598", "009efd"),
+        ("74ebd5", "9face6"),
     ],
     "SIZE": (500, 500),
     "FORMAT": "webp",
@@ -197,4 +198,4 @@ INTEGER_TIMEZONES = [timezone for timezone in range(-12, 15)]
 FLOAT_TIMEZONES = [-9.5, -3.5, 3.5, 4.5, 5.5, 5.75, 6.5, 8.75, 9.5, 10.5, 12.75]
 TIMEZONES = INTEGER_TIMEZONES + FLOAT_TIMEZONES
 
-USERNAME_POSTFIX_RANGE = (10000, 99999)  # First is min value, second is max value
+USERNAME_POSTFIX_RANGE = (10000, 99999)

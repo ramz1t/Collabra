@@ -49,8 +49,9 @@ class UsersViewSet(mixins.UserMixin):
     def update(self, request):
         serializer = UserUpdateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        update_user(request.user, **serializer.validated_data)
-        data = {"message": _("Profile updated")}
+        user = update_user(request.user, **serializer.validated_data)
+        response_serializer = UserRetrieveSerializer(instance=user)
+        data = {"message": _("Profile updated"), **response_serializer.data}
         return Response(data, status=status.HTTP_200_OK)
 
     def me(self, request):

@@ -30,10 +30,9 @@ def _generate_username(first_name: str, last_name: str) -> str:
 
 
 def _create_generated_avatar() -> GeneratedAvatar:
-    first_color = random.choice(settings.AVATAR["COLORS"])
-    second_color = random.choice(settings.AVATAR["COLORS"])
+    gradient = random.choice(settings.AVATAR["GRADIENTS"])
     return GeneratedAvatar.objects.create(
-        first_color=first_color, second_color=second_color
+        first_color=gradient[0], second_color=gradient[1]
     )
 
 
@@ -42,8 +41,11 @@ def create_user(**fields) -> User:
     avatar: Optional[File] = fields.pop("avatar", None)
     links: Optional[List[str]] = fields.pop("links", None)
 
+    if avatar is not None:
+        avatar = prepare_avatar(avatar, fields["email"])
+
     user = User.objects.create_user(
-        avatar=prepare_avatar(avatar, fields["email"]),
+        avatar=avatar,
         generated_avatar=_create_generated_avatar(),
         username=_generate_username(fields["first_name"], fields["last_name"]),
         **fields,
