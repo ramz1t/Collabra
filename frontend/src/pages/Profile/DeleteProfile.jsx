@@ -1,15 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useInput from '../../hooks/useInput'
 import { Form, Input, Button } from '../../components'
-import AuthContext from '../../contexts/AuthContext'
-import toast from 'react-hot-toast'
-import useAxios from '../../hooks/useAxios'
 import { useDeleteUser } from '../../api/user'
 
 const DeleteProfile = () => {
     const { t } = useTranslation()
-    const { user, logoutUser } = useContext(AuthContext)
     const [initialState, setInitialState] = useState(true)
     const password = useInput('')
     const { mutate: deleteUser, isLoading } = useDeleteUser()
@@ -24,9 +20,7 @@ const DeleteProfile = () => {
             </div>
             <Form
                 className="!gap-7 md:!gap-10 max-w-xl"
-                onSubmit={() => {
-                    deleteUser(user.user_id)
-                }}
+                onSubmit={() => deleteUser({ old_password: password.value })}
                 autoComplete="off"
                 disabled={isLoading}
             >

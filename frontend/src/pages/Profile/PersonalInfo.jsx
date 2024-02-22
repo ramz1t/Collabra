@@ -12,12 +12,12 @@ import LinkCell from './LinkCell'
 const PersonalInfo = () => {
     const { t } = useTranslation()
     const { user } = useContext(AuthContext)
-    const { data, isLoading } = useUser(user.user_id)
-    const firstName = useInput('', { isEmpty: true })
+    const { data, isLoading } = useUser('me')
+    const firstName = useInput(data?.first_name, { isEmpty: true })
     const lastName = useInput('', { isEmpty: true })
     const email = useInput('', { isEmpty: true })
     const username = useInput('', { isEmpty: true })
-    const newLink = useInput('', { isEmpty: true })
+    const newLink = useInput('')
     const [hasChanges, setHasChages] = useState(false)
     const timezone = useInput(0)
     const [links, setLinks] = useState([])
@@ -63,96 +63,100 @@ const PersonalInfo = () => {
                     <IoArrowForward />
                 </Link>
             </div>
-            <div className="flex flex-col gap-10 max-w-xl">
-                <div className="flex gap-5 md:gap-10 items-center">
-                    <Avatar user={data} size="profile" square />
-                    <div>
-                        <Button style="secondary">{t('change_avatar')}</Button>
-                        <p className="pt-3 font-semibold text-sm text-gray-600 dark:text-gray-400">
-                            JPG, PNG {t('or')} GIF
-                        </p>
+            {!isLoading && (
+                <div className="flex flex-col gap-10 max-w-xl">
+                    <div className="flex gap-5 md:gap-10 items-center">
+                        <Avatar user={data} size="profile" square />
+                        <div>
+                            <Button style="secondary">
+                                {t('change_avatar')}
+                            </Button>
+                            <p className="pt-3 font-semibold text-sm text-gray-600 dark:text-gray-400">
+                                JPG, PNG {t('or')} GIF
+                            </p>
+                        </div>
                     </div>
+                    <Form
+                        className="!gap-7 md:!gap-10"
+                        disabled={
+                            !hasChanges ||
+                            [firstName, lastName, email, username].some(
+                                (field) => !field.allValid
+                            )
+                        }
+                        onSubmit={() => {
+                            updateUser(objectsDifference(data, formData))
+                        }}
+                    >
+                        <div className="grid md:grid-cols-[1fr_1fr] gap-7 md:gap-5">
+                            <Input
+                                title={t('first_name')}
+                                instance={firstName}
+                                must
+                            />
+                            <Input
+                                title={t('last_name')}
+                                instance={lastName}
+                                must
+                            />
+                        </div>
+                        <Input
+                            title={t('email')}
+                            instance={email}
+                            type="email"
+                            must
+                        />
+                        <Input
+                            title={t('username')}
+                            instance={username}
+                            prefix="@"
+                            must
+                        />
+                        <Input
+                            title={t('timezone')}
+                            instance={timezone}
+                            type="number"
+                        />
+                        <div>
+                            <p className="pl-1">{t('links')}</p>
+                            <ul
+                                className="flex gap-5 flex-col"
+                                key={links.length}
+                            >
+                                {links.map((_, key) => (
+                                    <LinkCell
+                                        links={links}
+                                        index={key}
+                                        key={key}
+                                        setLinks={setLinks}
+                                    />
+                                ))}
+                                <div className="flex gap-5 items-center">
+                                    <Input instance={newLink} />
+                                    <Button
+                                        style="secondary"
+                                        className="min-w-10 !min-h-10 !p-0"
+                                        action={() => {
+                                            if (newLink.value === '') return
+                                            setLinks((links) => [
+                                                ...links,
+                                                newLink.value,
+                                            ])
+                                            newLink.setValue('')
+                                        }}
+                                        type="button"
+                                    >
+                                        <IoCheckmarkSharp />
+                                    </Button>
+                                </div>
+                            </ul>
+                        </div>
+                        <Button style="primary" type="submit">
+                            {t('save')}
+                        </Button>
+                    </Form>
                 </div>
-                <Form
-                    className="!gap-7 md:!gap-10"
-                    disabled={
-                        !hasChanges ||
-                        [firstName, lastName, email, username].some(
-                            (field) => !field.allValid
-                        )
-                    }
-                    onSubmit={() => {
-                        updateUser({
-                            userId: user.user_id,
-                            updates: objectsDifference(data, formData),
-                        })
-                    }}
-                >
-                    <div className="grid md:grid-cols-[1fr_1fr] gap-7 md:gap-5">
-                        <Input
-                            title={t('first_name')}
-                            instance={firstName}
-                            must
-                        />
-                        <Input
-                            title={t('last_name')}
-                            instance={lastName}
-                            must
-                        />
-                    </div>
-                    <Input
-                        title={t('email')}
-                        instance={email}
-                        type="email"
-                        must
-                    />
-                    <Input
-                        title={t('username')}
-                        instance={username}
-                        prefix="@"
-                        must
-                    />
-                    <Input
-                        title={t('timezone')}
-                        instance={timezone}
-                        type="number"
-                    />
-                    <div>
-                        <p className="pl-1">{t('links')}</p>
-                        <ul className="flex gap-5 flex-col" key={links.length}>
-                            {links.map((_, key) => (
-                                <LinkCell
-                                    links={links}
-                                    index={key}
-                                    key={key}
-                                    setLinks={setLinks}
-                                />
-                            ))}
-                            <div className="flex gap-3 items-center">
-                                <Input instance={newLink} />
-                                <Button
-                                    style="secondary"
-                                    className="min-w-10 !min-h-10 !p-0"
-                                    action={() => {
-                                        if (newLink.isEmpty) return
-                                        setLinks((links) => [
-                                            ...links,
-                                            newLink.value,
-                                        ])
-                                        newLink.setValue('')
-                                    }}
-                                    type="button"
-                                >
-                                    <IoCheckmarkSharp />
-                                </Button>
-                            </div>
-                        </ul>
-                    </div>
-                    <Button style="primary" type="submit">
-                        {t('save')}
-                    </Button>
-                </Form>
-            </div>
+            )}
         </div>
     )
 }

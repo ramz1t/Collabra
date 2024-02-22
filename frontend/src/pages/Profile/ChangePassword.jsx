@@ -6,8 +6,8 @@ import { useChangePassword } from '../../api/user'
 
 const ChangePassword = () => {
     const { t } = useTranslation()
-    const oldPass = useInput('')
-    const newPass = useInput('')
+    const oldPassword = useInput('')
+    const newPassword = useInput('')
     const changePasswordMutation = useChangePassword()
 
     return (
@@ -23,27 +23,29 @@ const ChangePassword = () => {
                 onSubmit={() => {
                     changePasswordMutation.mutate(
                         {
-                            old_pass: oldPass.value.trim(),
-                            new_pass: newPass.value.trim(),
+                            old_password: oldPassword.value.trim(),
+                            new_password: newPassword.value.trim(),
                         },
                         {
                             onSuccess: () => {
-                                oldPass.setValue('')
-                                newPass.setValue('')
+                                oldPassword.setValue('')
+                                newPassword.setValue('')
                             },
                         }
                     )
                 }}
-                disabled={!oldPass.value.trim() || !newPass.value.trim()}
+                disabled={
+                    !oldPassword.value.trim() || !newPassword.value.trim()
+                }
             >
                 <Input
                     title={t('old_pass')}
-                    instance={oldPass}
+                    instance={oldPassword}
                     type="password"
                 />
                 <Input
                     title={t('new_pass')}
-                    instance={newPass}
+                    instance={newPassword}
                     type="password"
                 />
                 <Button style="primary" type="submit">

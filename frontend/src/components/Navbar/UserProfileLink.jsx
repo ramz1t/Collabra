@@ -1,13 +1,10 @@
-import React, { useContext } from 'react'
-import AuthContext from '../../contexts/AuthContext'
 import NavbarItem from './NavbarItem'
 import { Avatar } from '../'
 import { useUser } from '../../api/user'
 import useScreenSize from '../../hooks/useScreenSize'
 
 const UserProfileLink = () => {
-    const { user } = useContext(AuthContext)
-    const { data, isLoading } = useUser(user.user_id)
+    const { data, isLoading } = useUser('me')
     const { isTablet } = useScreenSize()
     if (isLoading) return
 

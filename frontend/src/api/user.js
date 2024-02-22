@@ -17,17 +17,15 @@ export const useDeleteUser = () => {
     const api = useAxios()
     const { logoutUser } = useContext(AuthContext)
     return useMutation({
-        mutationFn: (userId) => api.delete(`${prefix}/users/${userId}/`),
-        onSuccess: () => {
-            logoutUser()
-        }
+        mutationFn: (data) => api.delete(`${prefix}/users/me/`, { data: data }),
+        onSuccess: () => logoutUser()
     })
 }
 
 export const useChangePassword = () => {
     const api = useAxios()
     return useMutation({
-        mutationFn: (data) => api.post(`${prefix}/users/set_password/`, data)
+        mutationFn: (data) => api.post(`${prefix}/users/me/change-password/`, data)
     })
 }
 
@@ -35,7 +33,7 @@ export const useUpdateUser = () => {
     const api = useAxios()
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: (data) => api.patch(`${prefix}/users/${data.userId}/`, data.updates),
+        mutationFn: (data) => api.patch(`${prefix}/users/me/`, data),
         onSuccess: () => queryClient.invalidateQueries({
             queryKey: ['users', { userId: 'me' }]
         })
