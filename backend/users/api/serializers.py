@@ -3,12 +3,43 @@ import re
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from drf_extra_fields.fields import Base64ImageField
-from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.password_validation import django_validate_password
 from django.core import exceptions as django_exceptions
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 
 from ..selectors import is_user_exists, get_user_links
+
+
+def validate_new_password(field: str, password):
+    try:
+        django_validate_password(password)
+    except django_exceptions.ValidationError as e:
+        serializer_error = serializers.as_serializer_error(e)
+        raise serializers.ValidationError({field, serializer_error})
+
+
+def validate_old_password(user, old_password):
+    if not user.check_password(old_password):
+        raise ValidationError({"old_password": _("Password is incorrect")})
+
+
+class UserRemoveSerializer(serializers.Serializer):
+    old_password = serializers.CharField(style={"input_type": "password"})
+
+    def validate(self, attrs):
+        validate_old_password(self.context["request"].user, attrs["old_password"])
+        return attrs
+
+
+class UserChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(style={"input_type": "password"})
+    new_password = serializers.CharField(style={"input_type": "password"})
+
+    def validate(self, attrs):
+        validate_new_password("new_password", attrs["new_password"])
+        validate_old_password(self.context["request"].user, attrs["old_password"])
+        return attrs
 
 
 class GeneratedAvatarSerializer(serializers.Serializer):
@@ -78,15 +109,10 @@ class UserCreateSerializer(UserCreateUpdateBaseSerializer):
     first_name = serializers.CharField(min_length=1, max_length=50)
     last_name = serializers.CharField(min_length=1, max_length=50)
     email = serializers.EmailField(min_length=5, max_length=254)
-    password = serializers.CharField(style={"input_type": "password"}, write_only=True)
+    password = serializers.CharField(style={"input_type": "password"})
 
     def validate_password(self, password):
-        try:
-            validate_password(password)
-        except django_exceptions.ValidationError as e:
-            serializer_error = serializers.as_serializer_error(e)
-            raise serializers.ValidationError(serializer_error)
-
+        validate_new_password("password", password)
         return password
 
 

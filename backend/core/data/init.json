@@ -38,9 +38,8 @@
       "username": "admin",
       "description": null,
       "timezone": null,
-      "is_staff": true,
-      "is_active": true,
       "date_joined": "2024-02-01T19:33:37.771Z",
+      "is_staff": true,
       "groups": [],
       "user_permissions": []
     }
@@ -83,9 +82,8 @@
       "email": "timur@mail.ru",
       "description": null,
       "timezone": null,
-      "is_staff": true,
-      "is_active": true,
       "date_joined": "2024-02-01T19:33:37.771Z",
+      "is_staff": true,
       "groups": [],
       "user_permissions": []
     }

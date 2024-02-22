@@ -48,7 +48,6 @@ def create_user(**fields) -> User:
         username=_generate_username(fields["first_name"], fields["last_name"]),
         **fields,
     )
-
     if links is not None:
         create_links(user, links)
 

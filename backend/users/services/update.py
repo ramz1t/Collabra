@@ -3,6 +3,7 @@ from typing import Optional, List
 from django.core.files import File
 from django.db import transaction
 from django.contrib.auth import get_user_model
+from django.core.exceptions import PermissionDenied
 
 from .common import create_links
 from .images import prepare_avatar
