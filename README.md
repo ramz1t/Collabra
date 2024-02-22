@@ -3,7 +3,7 @@
   <img src="frontend/src/assets/images/logo.png" alt="logo" width="150" height="auto" />
   <h1>Collabra</h1>
   <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at pretium urna. Sed velit ante, blandit sollicitudin interdum nec, mattis sit amet ipsum. Duis maximus vel odio et auctor. Mauris sagittis dolor quam, vel cursus lacus viverra id. Proin euismod urna non rutrum semper. 
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at pretium urna. Sed velit ante, blandit sollicitudin interdum nec, mattis sit amet ipsum. Duis maximus vel odio et auctor. Mauris sagittis dolor quam, vel cursus lacus viverra id. Proin euismod urna non rutrum semper test. 
   </p>
   
 <!-- Badges -->
