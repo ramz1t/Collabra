@@ -22,6 +22,7 @@ const PersonalInfo = () => {
     const { mutate: updateUser, isLoading: mutationLoading } = useUpdateUser()
 
     useEffect(() => {
+        console.log(data)
         if (!data) return
         firstName.setValue(data.first_name)
         lastName.setValue(data.last_name)
