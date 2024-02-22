@@ -11,7 +11,6 @@ import LinkCell from './LinkCell'
 
 const PersonalInfo = () => {
     const { t } = useTranslation()
-    const { user } = useContext(AuthContext)
     const { data, isLoading } = useUser('me')
     const firstName = useInput(data?.first_name, { isEmpty: true })
     const lastName = useInput('', { isEmpty: true })
