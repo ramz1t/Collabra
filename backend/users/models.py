@@ -6,10 +6,13 @@ from django.contrib.auth.models import PermissionsMixin, UserManager
 from django.db import models
 from django.utils import timezone as djangotimezone
 
+from timezone_field import TimeZoneField
+
 
 class CustomUserManager(UserManager):
     def create_user(self, email, password=None, **extra_fields):
         extra_fields.setdefault("is_superuser", False)
+        extra_fields.setdefault("is_staff", False)
         email = self.normalize_email(email)
         user = User(email=email, **extra_fields)
         user.password = make_password(password)
@@ -18,7 +21,9 @@ class CustomUserManager(UserManager):
 
     def create_superuser(self, email, password=None, **extra_fields):
         extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_staff", True)
         assert extra_fields["is_superuser"]
+        assert extra_fields["is_staff"]
         return self._create_user(email, password, **extra_fields)
 
 
@@ -46,7 +51,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=254, unique=True)
     username = models.CharField(max_length=100, unique=True)
     description = models.TextField(null=True, blank=True)
-    timezone = models.FloatField(null=True, blank=True)
+    timezone = TimeZoneField(use_pytz=True, null=True, blank=True)
     date_joined = models.DateTimeField(
         verbose_name="date joined", default=djangotimezone.now
     )
