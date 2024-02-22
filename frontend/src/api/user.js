@@ -8,7 +8,7 @@ const prefix = '/api/v1'
 export const useUser = (userId) => {
     const api = useAxios()
     return useQuery({
-        queryKey: ['user', { userId: userId }],
+        queryKey: ['users', { userId: userId }],
         queryFn: () => api.get(`${prefix}/users/${userId}`).then((res) => res.data)
     })
 }
@@ -25,7 +25,7 @@ export const useDeleteUser = () => {
 export const useChangePassword = () => {
     const api = useAxios()
     return useMutation({
-        mutationFn: (data) => api.post(`${prefix}/users/me/change-password/`, data)
+        mutationFn: (data) => api.patch(`${prefix}/users/me/change-password/`, data)
     })
 }
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useUpdateUser, useUser } from '../../api/user'
 import { Avatar, Button, Form, Input } from '../../components'
@@ -19,7 +19,7 @@ const PersonalInfo = () => {
     const [hasChanges, setHasChages] = useState(false)
     const timezone = useInput(0)
     const [links, setLinks] = useState([])
-    const { mutate: updateUser } = useUpdateUser()
+    const { mutate: updateUser, isLoading: mutationLoading } = useUpdateUser()
 
     useEffect(() => {
         if (!data) return
@@ -149,8 +149,13 @@ const PersonalInfo = () => {
                                 </div>
                             </ul>
                         </div>
-                        <Button style="primary" type="submit">
-                            {t('save')}
+                        {mutationLoading && 'loading'}
+                        <Button
+                            style="primary"
+                            type="submit"
+                            disabled={mutationLoading}
+                        >
+                            {mutationLoading ? t('loading') : t('save')}
                         </Button>
                     </Form>
                 </div>
