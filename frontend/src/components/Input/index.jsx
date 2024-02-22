@@ -27,7 +27,7 @@ const Input = ({
             inputRef.current.focus()
         }
     }, [])
-
+    console.log(instance)
     return (
         <div className="w-full flex flex-col gap-1">
             <label
@@ -67,6 +67,9 @@ const Input = ({
                         className={cn(
                             'bg-slate-100 dark:bg-slate-600 focus:ring-accent dark:focus:ring-accent-dark focus:shadow-sm focus:ring-1 focus:outline-none h-10 w-full px-2',
                             prefix ? 'rounded-r-md' : 'rounded-md',
+                            instance.allValid
+                                ? ''
+                                : '!ring-red-500 !text-red-500 !bg-red-50 dark:!bg-red-900/30',
                             className
                         )}
                         placeholder={placeholder}
