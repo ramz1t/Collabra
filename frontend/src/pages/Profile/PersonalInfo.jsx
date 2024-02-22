@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import AuthContext from '../../contexts/AuthContext'
 import { useUpdateUser, useUser } from '../../api/user'
 import { Avatar, Button, Form, Input } from '../../components'
 import useInput from '../../hooks/useInput'
