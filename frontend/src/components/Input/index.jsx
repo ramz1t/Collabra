@@ -65,7 +65,7 @@ const Input = ({
                         onFocus={() => onfocus && onfocus()}
                         disabled={disabled}
                         className={cn(
-                            'bg-slate-100 dark:bg-slate-600 focus:ring-accent dark:focus:ring-accent-dark focus:shadow-sm focus:ring-1 focus:outline-none h-10 w-full px-2',
+                            'bg-slate-100 caret-accent dark:caret-accent-dark dark:bg-slate-600 focus:ring-accent dark:focus:ring-accent-dark focus:shadow-sm focus:ring-1 focus:outline-none h-10 w-full px-2',
                             prefix ? 'rounded-r-md' : 'rounded-md',
                             instance.allValid
                                 ? ''
