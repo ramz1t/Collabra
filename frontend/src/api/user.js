@@ -28,3 +28,14 @@ export const useChangePassword = () => {
         mutationFn: (data) => api.post(`${prefix}/users/me/change-password/`, data)
     })
 }
+
+export const useUpdateUser = () => {
+    const api = useAxios()
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (data) => api.patch(`${prefix}/users/me/`, data),
+        onSuccess: () => queryClient.invalidateQueries({
+            queryKey: ['users', { userId: 'me' }]
+        })
+    })
+}
