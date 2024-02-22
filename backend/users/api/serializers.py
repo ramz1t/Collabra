@@ -62,14 +62,14 @@ class UserCreateUpdateBaseSerializer(serializers.Serializer):
     def validate_first_name(self, first_name):
         if not self._validate_name(first_name):
             raise ValidationError(_("Name must contain only Latin letters or spaces"))
-        return first_name
+        return first_name.capitalize()
 
     def validate_last_name(self, last_name):
         if not self._validate_name(last_name):
             raise ValidationError(
                 _("Surname must contain only Latin letters or spaces")
             )
-        return last_name
+        return last_name.capitalize()
 
     def validate_email(self, email):
         if is_user_exists(email=email):
