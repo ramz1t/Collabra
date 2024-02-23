@@ -10,6 +10,7 @@ urlpatterns = [
     path("api/v1/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/v1/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/v1/users/", include("users.urls", namespace="users")),
+    path("api/v1/teams/", include("teams.urls", namespace="teams")),
 ]
 
 handler500 = "rest_framework.exceptions.server_error"
