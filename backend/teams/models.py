@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from autoslug import AutoSlugField
 
 User = get_user_model()
 
@@ -32,12 +33,12 @@ class Member(models.Model):
 
 
 class Team(models.Model):
-    image = models.ImageField(upload_to="team_images", null=True, blank=True)
+    image = models.ImageField(upload_to="team_images", null=True)
     title = models.CharField(max_length=150)
-    slug = models.SlugField(unique=True)
-    color = models.CharField(max_length=6, default="ffffff")
+    slug = AutoSlugField(populate_from="title", unique=True)
+    color = models.CharField(max_length=6)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="teams")
-    description = models.TextField()
+    description = models.TextField(null=True)
 
     def __str__(self):
-        return f"Team<{self.id}:{self.owner.email}:{self.title}>"
+        return f"{self.id}:{self.owner.email}:{self.title}"

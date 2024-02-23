@@ -195,8 +195,25 @@ AVATAR = {
     "FORMAT": "webp",
 }
 
-INTEGER_TIMEZONES = [timezone for timezone in range(-12, 15)]
-FLOAT_TIMEZONES = [-9.5, -3.5, 3.5, 4.5, 5.5, 5.75, 6.5, 8.75, 9.5, 10.5, 12.75]
-TIMEZONES = INTEGER_TIMEZONES + FLOAT_TIMEZONES
-
 USERNAME_POSTFIX_RANGE = (10000, 99999)
+
+
+DEFAULT_TEAM_COLOR = "ffffff"
+
+DEFAULT_ROLES = [
+    {
+        "title": "Admin",
+        "color": "ff2400",
+        "actions": ["admin_actions", "member_actions", "inspector_actions"],
+    },
+    {
+        "title": "Member",
+        "color": "4285b4",
+        "actions": ["member_actions", "inspector_actions"],
+    },
+    {
+        "title": "Inspector",
+        "color": "ffcf40",
+        "actions": ["inspector_actions"],
+    },
+]

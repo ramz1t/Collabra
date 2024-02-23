@@ -7,7 +7,6 @@ from timezone_field.rest_framework import TimeZoneSerializerField
 from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions as django_exceptions
 from django.utils.translation import gettext_lazy as _
-from django.conf import settings
 
 from ..selectors import is_user_exists, get_user_links
 

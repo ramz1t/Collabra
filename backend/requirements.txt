@@ -13,6 +13,7 @@ Django==5.0.2
 django-autoslug==1.9.9
 django-dump-load-utf8==0.0.4
 django-modeltranslation==0.18.11
+django-timezone-field==6.1.0
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.3.1
 drf-extra-fields==3.7.0
