@@ -1,78 +1,65 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
+import { Button, Divider, Form, Input } from '../../components/index.js'
 import { useTranslation } from 'react-i18next'
-import { Form, Title, Divider, Button, Input } from '../../components'
 import {
-    IoLogoApple,
     IoLogoGoogle,
+    IoLogoApple,
     IoLogoGithub,
-    IoLogIn,
+    IoPersonAdd,
 } from 'react-icons/io5'
-import { Link } from 'react-router-dom'
-import useInput from '../../hooks/useInput'
-import AuthContext from '../../contexts/AuthContext'
+import useInput from '../../hooks/useInput.js'
+import loginImg from '../../assets/images/login.jpg'
+import AuthContext from '../../contexts/AuthContext.jsx'
+import { Link, useParams } from 'react-router-dom'
+import logo from '../../assets/images/logo.png'
 
-const Register = () => {
+const Login = () => {
     const { t } = useTranslation()
     const email = useInput('')
     const password = useInput('')
-    const firstName = useInput('')
-    const lastName = useInput('')
-    const [error, setError] = useState(null)
-    const { registerUser } = useContext(AuthContext)
+    const { loginUser } = useContext(AuthContext)
+    const { redirectFrom } = useParams()
 
     return (
         <div className="flex flex-col items-center mt-5">
             <Form
                 className="w-full md:max-w-96 mt-10 md:mt-20"
                 onSubmit={() => {
-                    registerUser(
-                        {
-                            first_name: firstName.value,
-                            last_name: lastName.value,
-                            email: email.value,
-                            password: password.value,
-                        },
-                        setError
-                    )
+                    loginUser({
+                        email: email.value,
+                        password: password.value,
+                        redirectFrom,
+                    })
                 }}
             >
                 <div>
                     <p className="font-bold text-2xl text-gray-900 dark:text-gray-100">
-                        {t('register_link')}
+                        {t('login_header')}
                     </p>
                     <p className="text-gray-600 dark:text-gray-400 text-sm pt-2">
-                        {t('login_text')}{' '}
+                        {t('not_member')}{' '}
                         <Link
-                            to="/login"
+                            to="/register"
                             className="text-accent dark:text-accent-dark font-semibold hover:underline pl-1"
                         >
-                            {t('login')}
+                            {t('register_link')}
                         </Link>
                     </p>
                 </div>
-                <Input title={t('first_name')} instance={firstName} autoRef />
-                <Input title={t('last_name')} instance={lastName} />
-                <Input title={t('email')} instance={email} type="email" />
+                <Input
+                    title={t('email')}
+                    instance={email}
+                    type="email"
+                    autoRef
+                />
                 <Input
                     title={t('password')}
                     instance={password}
                     type="password"
                 />
-                <Button
-                    style="primary"
-                    type="submit"
-                    w_full
-                    disabled={[
-                        firstName.value,
-                        lastName.value,
-                        email.value,
-                        password.value,
-                    ].includes('')}
-                    className="my-3"
-                >
-                    {t('register')}
+                <Button style="primary" type="submit" w_full className="my-3">
+                    {t('login')}
                 </Button>
-                {error && JSON.stringify(error)}
                 <div className="flex items-center gap-3 text-accent/50 dark:text-accent-dark/75 font-extralight">
                     <Divider horizontal />
                     {t('or').toUpperCase()}
@@ -109,4 +96,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default Login

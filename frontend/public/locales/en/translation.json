@@ -52,5 +52,15 @@
     "logout_head": "Sign out from the account",
     "logout_desc": "This will end current session and you will need to sign in again",
     "logout": "Sign out",
-    "links": "Links"
+    "links": "Links",
+    "team_stats_tasks": "Assigned tasks",
+    "team_stats_messages": "Unread messages",
+    "team_stats_users": "Members",
+    "create_team": "Create team",
+    "create": "Create",
+    "team_name": "Team name",
+    "team_name_desc": "Keep it short and informative. Use abbreviations if needed",
+    "team_color": "Team color",
+    "team_color_desc": "Team color is used in navbar and team image if you do not upload a photo",
+    "back": "Back"
 }

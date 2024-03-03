@@ -2,7 +2,7 @@ import avatar from '../../assets/images/default-avatar.png'
 import cn from 'classnames'
 import GeneratedAvatar from './GeneratedAvatar'
 
-const Avatar = ({ className, user, size, square }) => {
+const Avatar = ({ className, user, size, square, style }) => {
     let w
     switch (size) {
         case 'sidebar':
@@ -25,7 +25,10 @@ const Avatar = ({ className, user, size, square }) => {
         return (
             <img
                 src={user.avatar}
-                className={square ? 'rounded-xl' : 'rounded-full'}
+                className={cn(
+                    square ? 'rounded-xl' : 'rounded-full',
+                    className
+                )}
                 style={{
                     width: w,
                     height: w,
@@ -33,6 +36,7 @@ const Avatar = ({ className, user, size, square }) => {
                     minHeight: w,
                     maxWidth: w,
                     maxHeight: w,
+                    ...style,
                 }}
             />
         )
@@ -46,6 +50,8 @@ const Avatar = ({ className, user, size, square }) => {
             endColor={user.generated_avatar.second_color}
             size={size}
             square={square}
+            style={style}
+            className={className}
         />
     )
 }

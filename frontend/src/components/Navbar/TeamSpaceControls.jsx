@@ -50,11 +50,13 @@ const TeamSpaceControls = () => {
                 title={t('calendar')}
             />
             <NavbarItem
+                color={team.color}
                 href={`/teams/${team.id}/files`}
                 icon={<IoFolderOutline />}
                 title={t('files')}
             />
             <NavbarItem
+                color={team.color}
                 href={`/teams/${team.id}/settings`}
                 icon={<LiaUsersCogSolid />}
                 title={team.name}
