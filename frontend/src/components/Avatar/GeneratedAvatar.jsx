@@ -7,6 +7,8 @@ const GeneratedAvatar = ({
     endColor,
     size,
     square,
+    style,
+    className,
 }) => {
     let w, font
 
@@ -32,7 +34,8 @@ const GeneratedAvatar = ({
         <div
             className={cn(
                 `rounded-full flex items-center justify-center font-extrabold text-black cursor-default select-none`,
-                square ? 'rounded-xl' : 'rounded-full'
+                square ? 'rounded-xl' : 'rounded-full',
+                className
             )}
             style={{
                 fontSize: font,
@@ -43,6 +46,7 @@ const GeneratedAvatar = ({
                 maxWidth: w,
                 maxHeight: w,
                 background: `linear-gradient(90deg, #${startColor} 0%, #${endColor} 100%)`,
+                ...style,
             }}
         >
             <span className="h-8/10">
