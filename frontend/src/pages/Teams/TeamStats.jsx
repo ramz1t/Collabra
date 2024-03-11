@@ -6,7 +6,7 @@ const TeamStats = ({ team }) => {
     const { t } = useTranslation()
 
     return (
-        <ul className="flex flex-col gap-1 pt-2 text-sm text-gray-600 dark:text-gray-400">
+        <ul className="flex flex-col gap-2 pt-2 text-sm text-gray-600 dark:text-gray-400">
             <li className="flex items-center gap-1.5">
                 <IoCheckboxOutline />
                 {t('team_stats_tasks')} - 1
@@ -15,10 +15,15 @@ const TeamStats = ({ team }) => {
                 <IoMailUnreadOutline />
                 {t('team_stats_messages')} - 12
             </li>
-            <li className="flex items-center">
+            <li className="flex items-center gap-1.5">
                 <MembersAvatars members={team.members} />
-                <p className="-translate-x-3">{t('team_stats_users')} - 13</p>
+                <p>{t('team_stats_users')} - 13</p>
             </li>
+            {/*<li className="flex items-center gap-1.5">*/}
+            {/*    <p className="text-red-500">*/}
+            {/*        Next task deadline - Tomorrow 18PM*/}
+            {/*    </p>*/}
+            {/*</li>*/}
         </ul>
     )
 }

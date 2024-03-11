@@ -1,9 +1,9 @@
 :root {
-  --custom-accent: #808080;
+  --custom-accent: rgb(227 187 88);
   --body-fg: white;
-  --body-bg: rgb(33, 33, 33);
-  --primary-fg: rgb(53, 53, 53);
-  --darkened-bg: rgb(53, 53, 53);
+  --body-bg: rgb(30 41 59);
+  --primary-fg: rgb(51 65 85);
+  --darkened-bg: var(--primary-fg);
   --primary: var(--custom-accent);
   --link-hover-color: rgb(159, 159, 159);
   --link-fg: white;
@@ -16,6 +16,9 @@
   --object-tools-bg: var(--custom-accent);
   --selected-bg: gray;
   --accent: var(--custom-accent);
+  --breadcrumbs-bg: var(--custom-accent);
+  --header-bg: var(--custom-accent);
+  --header-link-color: white;
 }
 
 @font-face {
@@ -54,8 +57,7 @@ caption {
 }
 
 #site-name > a {
-  /* color: var(--custom-accent) !important; */
-  color: white !important;
+   color: var(--custom-accent) !important;
   font-family: nunito-sans-bold-italic;
   font-size: 1.875rem;
   line-height: 2.25rem;
@@ -83,13 +85,13 @@ caption {
   color: red;
 }
 
-tr:nth-child(2n) {
-  border-bottom: 2px solid var(--darkened-bg);
-}
+/*tr:nth-child(2n) {*/
+/*  border-bottom: 2px solid var(--darkened-bg);*/
+/*}*/
 
-tr:nth-child(2n + 1) {
-  border-bottom: 2px solid var(--body-bg);
-}
+/*tr:nth-child(2n + 1) {*/
+/*  border-bottom: 2px solid var(--body-bg);*/
+/*}*/
 
 input:focus {
   outline: none !important;
@@ -98,7 +100,7 @@ input:focus {
 input:not([type="submit"]),
 select,
 textarea {
-  background-color: rgb(72, 72, 72) !important;
+  background-color: var(--primary-fg) !important;
   color: white !important;
 }
 
@@ -168,5 +170,5 @@ input.default {
 }
 
 tr.current-model {
-  border: 2px solid white !important;
+  /*border: 2px solid white !important;*/
 }

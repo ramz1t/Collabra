@@ -50,7 +50,7 @@ const NavbarItem = ({
                     bold ? 'font-bold' : '',
                     isActive && !markerDisabled
                         ? 'before:h-6 group-hover/navbar:md:before:rounded-l-lg'
-                        : 'pacity-0 hover:pacity-[0.03] dark:hover:pacity-5 before:h-0',
+                        : 'before:h-0',
                     className
                 )
             }

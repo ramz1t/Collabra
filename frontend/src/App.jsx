@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import { Landing, Login, Profile, Register, Teams } from './pages'
+import { Landing, Login, Profile, Register, TeamInvite, Teams } from './pages'
 import { PrivateRoute, Navbar } from './components'
 
 const App = () => {
@@ -14,6 +14,7 @@ const App = () => {
                     <Route element={<PrivateRoute />}>
                         <Route path="/teams/*" element={<Teams />} />
                         <Route path="/profile/*" element={<Profile />} />
+                        <Route path="/join" element={<TeamInvite />} />
                     </Route>
                     <Route path="*" element="not found" />
                 </Routes>
