@@ -11,6 +11,8 @@ import Input from './Input'
 import Dropdown from './Dropdown'
 import DropdownItem from './Dropdown/DropdownItem'
 import MembersAvatars from './MembersAvatars/MembersAvatars.jsx'
+import BackgroundGradient from './BackgroundGradient/index.jsx'
+import TeamImage from './TeamImage/index.jsx'
 
 export {
     PrivateRoute,
@@ -26,4 +28,6 @@ export {
     Dropdown,
     DropdownItem,
     MembersAvatars,
+    BackgroundGradient,
+    TeamImage,
 }

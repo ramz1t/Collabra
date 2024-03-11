@@ -2,13 +2,12 @@ import { Avatar } from '../index.js'
 
 const MembersAvatars = ({ members }) => {
     return (
-        <div className="flex overflow-x-scroll scrollbar-hide">
+        <div className="flex -space-x-2 overflow-hidden flex-wrap">
             {members.map((member, key) => (
                 <Avatar
                     user={member}
                     size="task"
-                    className="border-2 border-white dark:border-slate-800"
-                    style={{ transform: `translate(${-10 * key}px, 0)` }}
+                    className="outline outline-white dark:outline-slate-800 first:outline-none"
                 />
             ))}
         </div>

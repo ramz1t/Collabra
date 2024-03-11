@@ -62,5 +62,8 @@
     "team_name_desc": "Keep it short and informative. Use abbreviations if needed",
     "team_color": "Team color",
     "team_color_desc": "Team color is used in navbar and team image if you do not upload a photo",
-    "back": "Back"
+    "back": "Back",
+    "invite_head": "You have been invited to",
+    "join": "Join",
+    "search_team": "Search team"
 }

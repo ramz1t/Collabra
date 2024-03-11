@@ -12,21 +12,7 @@ const Teams = () => {
 
     return (
         <Routes>
-            <Route
-                index
-                element={
-                    <div>
-                        {/*<Title position="left">{t('teams')}</Title>*/}
-
-                        <Button to="create" style="primary" className="mt-5">
-                            <IoDuplicateOutline />
-                            {t('create_team')}
-                        </Button>
-
-                        <TeamsList />
-                    </div>
-                }
-            />
+            <Route index element={<TeamsList />} />
             <Route path="/:teamId/*" element={<TeamSpace />} />
             <Route path="/create" element={<CreateTeam />} />
         </Routes>
