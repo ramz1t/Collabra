@@ -25,6 +25,7 @@
     "react-icons": "^5.0.1",
     "react-responsive": "^9.0.2",
     "react-router-dom": "^6.21.3",
+    "react-timezone-select": "^3.2.3",
     "twemoji-parser": "^14.0.0"
   },
   "devDependencies": {

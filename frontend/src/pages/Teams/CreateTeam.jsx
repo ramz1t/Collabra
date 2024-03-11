@@ -77,8 +77,12 @@ const CreateTeam = () => {
                     ))}
                 </ul>
                 <Divider horizontal />
-                <span></span>
-                <Button style="primary" type="submit" disabled={!allValid}>
+                <Button
+                    style="primary"
+                    type="submit"
+                    disabled={!allValid}
+                    className="col-start-2"
+                >
                     {t('create')}
                 </Button>
             </Form>

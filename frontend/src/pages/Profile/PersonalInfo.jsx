@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom'
 import { IoArrowForward, IoCheckmarkSharp } from 'react-icons/io5'
 import { objectsDifference } from '../../utils'
 import LinkCell from './LinkCell'
+import TimezoneSelect from 'react-timezone-select'
+import cn from 'classnames'
 
 const PersonalInfo = () => {
     const { t } = useTranslation()
@@ -16,19 +18,18 @@ const PersonalInfo = () => {
     const email = useInput('', { isEmpty: true })
     const username = useInput('', { isEmpty: true })
     const newLink = useInput('')
-    const [hasChanges, setHasChages] = useState(false)
-    const timezone = useInput(0)
+    const [hasChanges, setHasChanges] = useState(false)
+    const [timezone, setTimezone] = useState('')
     const [links, setLinks] = useState([])
     const { mutate: updateUser, isLoading: mutationLoading } = useUpdateUser()
 
     useEffect(() => {
-        console.log(data)
         if (!data) return
         firstName.setValue(data.first_name)
         lastName.setValue(data.last_name)
         email.setValue(data.email)
         username.setValue(data.username)
-        timezone.setValue(data.timezone)
+        setTimezone(data.timezone)
         setLinks([...data.links])
     }, [data])
 
@@ -37,12 +38,12 @@ const PersonalInfo = () => {
         last_name: lastName.value,
         email: email.value,
         username: username.value,
-        timezone: timezone.value,
+        timezone: timezone,
         links: links,
     }
 
     useEffect(() => {
-        setHasChages(
+        setHasChanges(
             Object.keys(objectsDifference(data, formData)).length !== 0
         )
     }, [formData, JSON.stringify(links)])
@@ -111,11 +112,45 @@ const PersonalInfo = () => {
                             prefix="@"
                             must
                         />
-                        <Input
-                            title={t('timezone')}
-                            instance={timezone}
-                            type="number"
-                        />
+                        <div className="flex flex-col gap-1">
+                            <p className="pl-1">{t('timezone')}</p>
+                            <TimezoneSelect
+                                value={timezone}
+                                onChange={setTimezone}
+                                // className="[&>div]:min-h-10 [&>div]:border-none [&>div]:bg-slate-100 dark:[&>div]:bg-slate-600 dark:[&>div>div>div]:text-white"
+                                classNames={{
+                                    control: (state) =>
+                                        cn(
+                                            state.isFocused
+                                                ? 'ring-1 ring-accent dark:ring-accent-dark !shadow-none'
+                                                : '',
+                                            '!min-h-10 !border-none !bg-slate-100 dark:!bg-slate-600'
+                                        ),
+                                    singleValue: () => 'dark:!text-white',
+                                    menu: () =>
+                                        '!bg-slate-100 dark:!bg-slate-600 !border-accent dark:!border-accent-dark',
+                                    option: (state) =>
+                                        cn(
+                                            state.isSelected
+                                                ? '!bg-accent dark:!bg-accent-dark'
+                                                : 'hover:!bg-accent/20 dark:hover:!bg-accent-dark/20',
+                                            ''
+                                        ),
+                                }}
+                            />
+                            <Button
+                                type="button"
+                                className="text-accent hover:text-accent/90 dark:text-accent-dark dark:hover:text-accent-dark/90 pl-1"
+                                action={() =>
+                                    setTimezone(
+                                        Intl.DateTimeFormat().resolvedOptions()
+                                            .timeZone
+                                    )
+                                }
+                            >
+                                {t('select_auto_time')}
+                            </Button>
+                        </div>
                         <div>
                             <p className="pl-1">{t('links')}</p>
                             <ul
