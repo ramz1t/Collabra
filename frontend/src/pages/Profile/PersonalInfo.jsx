@@ -19,9 +19,19 @@ const PersonalInfo = () => {
     const username = useInput('', { isEmpty: true })
     const newLink = useInput('')
     const [hasChanges, setHasChanges] = useState(false)
-    const [timezone, setTimezone] = useState('')
+    const [selectedTimezone, setSelectedTimezone] = useState('')
+    const [timezoneValue, setTimezoneValue] = useState('')
     const [links, setLinks] = useState([])
     const { mutate: updateUser, isLoading: mutationLoading } = useUpdateUser()
+
+    const formData = {
+        first_name: firstName.value,
+        last_name: lastName.value,
+        email: email.value,
+        username: username.value,
+        timezone: timezoneValue,
+        links: links,
+    }
 
     useEffect(() => {
         if (!data) return
@@ -29,18 +39,13 @@ const PersonalInfo = () => {
         lastName.setValue(data.last_name)
         email.setValue(data.email)
         username.setValue(data.username)
-        setTimezone(data.timezone)
+        setTimezoneValue(data.timezone)
         setLinks([...data.links])
     }, [data])
 
-    const formData = {
-        first_name: firstName.value,
-        last_name: lastName.value,
-        email: email.value,
-        username: username.value,
-        timezone: timezone,
-        links: links,
-    }
+    useEffect(() => {
+        if (selectedTimezone) setTimezoneValue(selectedTimezone.value)
+    }, [selectedTimezone])
 
     useEffect(() => {
         setHasChanges(
@@ -115,9 +120,8 @@ const PersonalInfo = () => {
                         <div className="flex flex-col gap-1">
                             <p className="pl-1">{t('timezone')}</p>
                             <TimezoneSelect
-                                value={timezone}
-                                onChange={setTimezone}
-                                // className="[&>div]:min-h-10 [&>div]:border-none [&>div]:bg-slate-100 dark:[&>div]:bg-slate-600 dark:[&>div>div>div]:text-white"
+                                value={timezoneValue}
+                                onChange={setSelectedTimezone}
                                 classNames={{
                                     control: (state) =>
                                         cn(
@@ -142,7 +146,7 @@ const PersonalInfo = () => {
                                 type="button"
                                 className="text-accent hover:text-accent/90 dark:text-accent-dark dark:hover:text-accent-dark/90 pl-1"
                                 action={() =>
-                                    setTimezone(
+                                    setTimezoneValue(
                                         Intl.DateTimeFormat().resolvedOptions()
                                             .timeZone
                                     )

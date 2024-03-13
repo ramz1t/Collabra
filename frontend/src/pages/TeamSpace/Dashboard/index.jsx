@@ -3,7 +3,7 @@ import { Title, Twemoji, Spacer } from '../../../components'
 
 const Dashboard = () => {
     return (
-        <div className="max-h-dvh grow flex flex-col pt-5">
+        <div className="max-h-dvh grow flex flex-col">
             <Title className="pt-0 pb-5">
                 <Twemoji emoji="☀️" width={24} />
                 Good Morning, Timur
