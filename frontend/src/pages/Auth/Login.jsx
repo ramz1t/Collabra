@@ -1,17 +1,10 @@
 import React, { useContext } from 'react'
 import { Button, Divider, Form, Input } from '../../components/index.js'
 import { useTranslation } from 'react-i18next'
-import {
-    IoLogoGoogle,
-    IoLogoApple,
-    IoLogoGithub,
-    IoPersonAdd,
-} from 'react-icons/io5'
+import { IoLogoGoogle, IoLogoApple, IoLogoGithub } from 'react-icons/io5'
 import useInput from '../../hooks/useInput.js'
-import loginImg from '../../assets/images/login.jpg'
 import AuthContext from '../../contexts/AuthContext.jsx'
 import { Link, useParams } from 'react-router-dom'
-import logo from '../../assets/images/logo.png'
 
 const Login = () => {
     const { t } = useTranslation()

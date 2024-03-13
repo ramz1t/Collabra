@@ -32,29 +32,28 @@ const Input = ({
 
     const inner = (
         <>
-            {title ||
-                (hint && (
-                    <div className="flex flex-col gap-3">
-                        <label
-                            className={cn(
-                                split ? 'font-bold text-3xl' : 'pl-1',
-                                must
-                                    ? 'after:content-["*"] after:text-red-500 after:pl-0.5'
-                                    : '',
+            {(title || hint) && (
+                <div className="flex flex-col gap-3">
+                    <label
+                        className={cn(
+                            split ? 'font-bold text-3xl' : 'pl-1',
+                            must
+                                ? 'after:content-["*"] after:text-red-500 after:pl-0.5'
+                                : '',
 
-                                titleClassname
-                            )}
-                            htmlFor={id}
-                        >
-                            {title}
-                        </label>
-                        {hint && split && (
-                            <p className="text-gray-600 dark:text-gray-400">
-                                {hint}
-                            </p>
+                            titleClassname
                         )}
-                    </div>
-                ))}
+                        htmlFor={id}
+                    >
+                        {title}
+                    </label>
+                    {hint && split && (
+                        <p className="text-gray-600 dark:text-gray-400">
+                            {hint}
+                        </p>
+                    )}
+                </div>
+            )}
             <div>
                 <div className="flex group/input">
                     {prefix && (

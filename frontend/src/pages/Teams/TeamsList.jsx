@@ -17,21 +17,26 @@ const TeamsList = () => {
 
     return (
         <div className="pt-5">
-            <div className="flex items-center gap-5">
-                <Button to="create" style="primary">
+            <div className="flex md:items-center gap-3 md:gap-5 flex-col-reverse md:flex-row items-start max-md:flex-wrap">
+                <Button to="create" style="primary" className="max-md:w-full">
                     <IoDuplicateOutline />
                     {t('create_team')}
                 </Button>
-                <Input
-                    instance={search}
-                    placeholder={t('search_team')}
-                    className="px-3"
-                />
-                {search.value !== null && (
-                    <Button style="tetriary" action={() => search.setValue('')}>
-                        {t('cancel')}
-                    </Button>
-                )}
+                <div className="flex gap-5 items-center w-full">
+                    <Input
+                        instance={search}
+                        placeholder={t('search_team')}
+                        className="px-3"
+                    />
+                    {search.value !== null && (
+                        <Button
+                            style="tetriary"
+                            action={() => search.setValue('')}
+                        >
+                            {t('cancel')}
+                        </Button>
+                    )}
+                </div>
             </div>
 
             {teams && (
