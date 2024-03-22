@@ -7,7 +7,7 @@ export const useCreateTeam = () => {
     const api = useAxios()
     return useMutation({
         mutationFn: (data) => {
-            api.post(`${prefix}/teams/`, data)
+            return api.post(`${prefix}/teams/`, data)
         },
     })
 }

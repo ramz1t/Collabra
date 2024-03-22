@@ -47,7 +47,7 @@ const Features = () => {
                 <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
                     {featuresData.map((feature, key) => {
                         return (
-                            <div className="relative pl-16">
+                            <div className="relative pl-16" key={key}>
                                 <dt className="text-base font-semibold leading-7 text-gray-900 dark:text-gray-100">
                                     <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-accent dark:bg-accent-dark">
                                         <span className="text-white">
