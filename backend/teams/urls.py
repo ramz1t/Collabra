@@ -5,5 +5,6 @@ from .api.views import TeamViewSet
 app_name = "teams"
 
 urlpatterns = [
-    path("", TeamViewSet.as_view({"post": "create"})),
+    path("", TeamViewSet.as_view({"post": "create", "get": "list"})),
+    path("<int:pk>/", TeamViewSet.as_view({"delete": "remove"})),
 ]

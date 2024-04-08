@@ -5,8 +5,8 @@ from .models import Team, Member, Role, Action
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ("pk", "title", "owner", "color", "slug")
-    search_fields = ("title", "slug", "description")
+    list_display = ("pk", "title", "owner", "color")
+    search_fields = ("title", "description")
     empty_value_display = "-empty-"
 
 
