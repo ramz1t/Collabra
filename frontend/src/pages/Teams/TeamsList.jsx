@@ -5,11 +5,13 @@ import { IoDuplicateOutline } from 'react-icons/io5'
 import { useTranslation } from 'react-i18next'
 import useInput from '../../hooks/useInput.js'
 import { useTeams } from '../../api/team.js'
+import useDebounce from '../../hooks/useDebounce.js'
 
 const TeamsList = () => {
     const { t } = useTranslation()
     const search = useInput(null)
-    const { data: teams } = useTeams(search.value)
+    const debouncedSearch = useDebounce(search.value, 250)
+    const { data: teams } = useTeams(debouncedSearch)
 
     useEffect(() => {
         if (search.value === '') search.setValue(null)

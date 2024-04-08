@@ -19,7 +19,6 @@ const PersonalInfo = () => {
     const username = useInput('', { isEmpty: true })
     const newLink = useInput('')
     const [hasChanges, setHasChanges] = useState(false)
-    const [selectedTimezone, setSelectedTimezone] = useState('')
     const [timezoneValue, setTimezoneValue] = useState('')
     const [links, setLinks] = useState([])
     const { mutate: updateUser, isLoading: mutationLoading } = useUpdateUser()
@@ -29,7 +28,7 @@ const PersonalInfo = () => {
         last_name: lastName.value,
         email: email.value,
         username: username.value,
-        timezone: timezoneValue,
+        timezone: timezoneValue?.value ?? timezoneValue,
         links: links,
     }
 
@@ -42,10 +41,6 @@ const PersonalInfo = () => {
         setTimezoneValue(data.timezone)
         setLinks([...data.links])
     }, [data])
-
-    useEffect(() => {
-        if (selectedTimezone) setTimezoneValue(selectedTimezone.value)
-    }, [selectedTimezone])
 
     useEffect(() => {
         setHasChanges(
@@ -120,8 +115,8 @@ const PersonalInfo = () => {
                         <div className="flex flex-col gap-1">
                             <p className="pl-1">{t('timezone')}</p>
                             <TimezoneSelect
-                                value={timezoneValue}
-                                onChange={setSelectedTimezone}
+                                value={timezoneValue ?? ''}
+                                onChange={setTimezoneValue}
                                 classNames={{
                                     control: (state) =>
                                         cn(

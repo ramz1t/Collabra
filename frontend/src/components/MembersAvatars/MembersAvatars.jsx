@@ -8,6 +8,7 @@ const MembersAvatars = ({ members }) => {
                     user={member}
                     size="task"
                     className="outline outline-white dark:outline-slate-800 first:outline-none"
+                    key={key}
                 />
             ))}
         </div>
