@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Team, Member, Role, Action
+from .models import Team, Member
 
 
 @admin.register(Team)
@@ -12,20 +12,6 @@ class TeamAdmin(admin.ModelAdmin):
 
 @admin.register(Member)
 class MemberAdmin(admin.ModelAdmin):
-    list_display = ("pk", "user", "role", "team")
-    empty_value_display = "-empty-"
-
-
-@admin.register(Role)
-class RoleAdmin(admin.ModelAdmin):
-    list_display = ("pk", "title", "team", "is_custom")
-    list_filter = ("is_custom",)
-    search_fields = ("title",)
-    empty_value_display = "-empty-"
-
-
-@admin.register(Action)
-class ActionAdmin(admin.ModelAdmin):
-    list_display = ("pk", "key")
-    search_fields = ("key",)
+    list_display = ("pk", "user", "team", "is_admin")
+    list_filter = ("is_admin",)
     empty_value_display = "-empty-"

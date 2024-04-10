@@ -7,7 +7,7 @@ from rest_framework.exceptions import ValidationError
 
 class TeamListSerializer(serializers.Serializer):
     id = serializers.IntegerField()
-    uuid = serializers.UUIDField()
+    slug = serializers.SlugField()
     title = serializers.CharField()
     image = Base64ImageField()
 

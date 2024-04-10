@@ -125,26 +125,5 @@
       "groups": [],
       "user_permissions": []
     }
-  },
-  {
-    "model": "teams.action",
-    "pk": 1,
-    "fields": {
-      "key": "admin_actions"
-    }
-  },
-  {
-    "model": "teams.action",
-    "pk": 2,
-    "fields": {
-      "key": "member_actions"
-    }
-  },
-  {
-    "model": "teams.action",
-    "pk": 3,
-    "fields": {
-      "key": "inspector_actions"
-    }
   }
 ]

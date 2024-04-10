@@ -1,14 +1,14 @@
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
-from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 
 from .pagination import TeamPagination
 
 
 class TeamMixin(GenericViewSet):
     pagination_class = TeamPagination
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = {"title": ["exact", "contains"]}
+    filter_backends = [SearchFilter]
+    search_fields = ["title"]
 
     def get_permissions(self):
         if self.action in ("create",):
