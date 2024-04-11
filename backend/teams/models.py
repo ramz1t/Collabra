@@ -1,8 +1,22 @@
+import uuid
+
+
 from autoslug import AutoSlugField
 from django.db import models
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
+
+
+class Invitation(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    team = models.ForeignKey(
+        "Team", on_delete=models.CASCADE, related_name="invitations"
+    )
+    users = models.ManyToManyField(User, related_name="invitations")
+
+    def __str__(self):
+        return f"{self.id}:team {self.team.id}"
 
 
 class Member(models.Model):
