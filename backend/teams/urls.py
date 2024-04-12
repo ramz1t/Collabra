@@ -18,5 +18,5 @@ urlpatterns = [
         "<int:pk>/remove-from-invited/",
         TeamViewSet.as_view({"patch": "remove_from_invited"}),
     ),
-    path("<int:pk>/join/<str:key>/", TeamViewSet.as_view({"post": "join"})),
+    path("<str:slug>/join/<str:key>/", TeamViewSet.as_view({"post": "join"})),
 ]

@@ -5,7 +5,12 @@ from django.utils.translation import gettext_lazy as _
 
 from . import mixins
 from . import serializers
-from ..selectors import get_team_or_404, get_teams, is_user_admin_by_team
+from ..selectors import (
+    get_team_or_404,
+    get_teams,
+    is_user_admin_by_team,
+    is_user_member_by_team,
+)
 from ..services.create import create_team
 from ..services.delete import delete_team
 from ..services.join import refresh_join_keys, invite, remove_from_invited, join
@@ -38,7 +43,7 @@ class TeamViewSet(mixins.TeamMixin):
 
     def retrieve(self, request, slug):
         team = get_team_or_404(slug=slug)
-        if team.owner != request.user:
+        if is_user_member_by_team(team, request.user):
             raise PermissionDenied()
 
         serializer = serializers.TeamDetailSerializer(instance=team)
@@ -103,8 +108,8 @@ class TeamViewSet(mixins.TeamMixin):
 
         return Response(status=status.HTTP_200_OK)
 
-    def join(self, request, pk, key):
-        team = get_team_or_404(id=pk)
+    def join(self, request, slug, key):
+        team = get_team_or_404(slug=slug)
 
         request.data["key"] = str(key)
         serializer = serializers.TeamJoinSerializer(
