@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import useInput from '../../hooks/useInput'
-import { Form, Input, Button } from '../../components'
-import { useDeleteUser } from '../../api/user'
+import useInput from '../../../hooks/useInput.js'
+import {
+    Form,
+    Input,
+    Button,
+    SettingsSection,
+} from '../../../components/index.js'
+import { useDeleteUser } from '../../../api/user.js'
 
 const DeleteProfile = () => {
     const { t } = useTranslation()
@@ -11,15 +16,12 @@ const DeleteProfile = () => {
     const { mutate: deleteUser, isLoading } = useDeleteUser()
 
     return (
-        <div className="grid md:grid-cols-[2fr_3fr] gap-10">
-            <div>
-                <p className="font-bold text-3xl">{t('delete_profile_head')}</p>
-                <p className="text-gray-600 dark:text-gray-400 pt-3">
-                    {t('delete_profile_desc')}
-                </p>
-            </div>
+        <SettingsSection
+            title={t('delete_profile_head')}
+            description={t('delete_profile_desc')}
+        >
             <Form
-                className="!gap-7 md:!gap-10 max-w-xl"
+                className="!gap-7 md:!gap-10"
                 onSubmit={() => deleteUser({ old_password: password.value })}
                 autoComplete="off"
                 disabled={isLoading}
@@ -59,7 +61,7 @@ const DeleteProfile = () => {
                     </div>
                 )}
             </Form>
-        </div>
+        </SettingsSection>
     )
 }
 

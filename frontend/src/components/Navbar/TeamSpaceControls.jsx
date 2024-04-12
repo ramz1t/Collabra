@@ -26,40 +26,40 @@ const TeamSpaceControls = () => {
             <Divider horizontal />
             <NavbarItem
                 color={team.color}
-                href={`/teams/${team.id}`}
+                href={`/teams/${team.slug}`}
                 icon={<IoEaselOutline />}
                 title={t('dashboard')}
                 end
             />
             <NavbarItem
                 color={team.color}
-                href={`/teams/${team.id}/chats`}
+                href={`/teams/${team.slug}/chats`}
                 icon={<IoChatboxOutline />}
                 title={t('chats')}
             />
             <NavbarItem
                 color={team.color}
-                href={`/teams/${team.id}/tasks`}
+                href={`/teams/${team.slug}/tasks`}
                 icon={<IoFileTrayFullOutline />}
                 title={t('tasks')}
             />
             <NavbarItem
                 color={team.color}
-                href={`/teams/${team.id}/calendar`}
+                href={`/teams/${team.slug}/calendar`}
                 icon={<IoCalendarOutline />}
                 title={t('calendar')}
             />
             <NavbarItem
                 color={team.color}
-                href={`/teams/${team.id}/files`}
+                href={`/teams/${team.slug}/files`}
                 icon={<IoFolderOutline />}
                 title={t('files')}
             />
             <NavbarItem
                 color={team.color}
-                href={`/teams/${team.id}/settings`}
+                href={`/teams/${team.slug}/settings`}
                 icon={<LiaUsersCogSolid />}
-                title={team.name}
+                title={t('settings')}
             />
         </>
     )

@@ -1,5 +1,5 @@
 {
-    "teams": "All Teams",
+    "teams": "All teams",
     "tasks": "Tasks",
     "files": "Files",
     "chats": "Chats",
@@ -66,5 +66,25 @@
     "invite_head": "You have been invited to",
     "join": "Join",
     "search_team": "Search team",
-    "select_auto_time": "Select automatically"
+    "select_auto_time": "Select automatically",
+    "add_team_members": "Add team members",
+    "add_team_members_desc": "Add new invitees to the list. They can later join your team using selective join link down below",
+    "new_member_email": "New member's email or username",
+    "add_to_invites": "Add to invites",
+    "manage_invitations_head": "Manage team invitations",
+    "manage_invitations_desc": "Add users to waiting list so that they can join your team later. Public link allows everyone to go in. Refresh them at any time if you lost a link or it was compromised by unauthorized people",
+    "refresh_join_links": "Refresh join links",
+    "settings": "Settings",
+    "copy_public_link": "Copy public link",
+    "copy_selective_link": "Copy selective link",
+    "link_copy_success": "Link has been copied",
+    "delete_team_head": "Delete team",
+    "delete_team_desc": "When you delete a team you delete all content related to it. No content recovery option is available, be careful",
+    "delete_team": "Delete team",
+    "delete_team_pass": "Type password to submit",
+    "updating": "Updating",
+    "invited_members": "Invited users",
+    "found_users": "Found users",
+    "already_in_team": "Already in the team",
+    "user_invited": "Invited"
 }

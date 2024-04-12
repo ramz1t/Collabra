@@ -19,8 +19,8 @@ export const useDeleteUser = () => {
     const api = useAxios()
     const { logoutUser } = useContext(AuthContext)
     return useMutation({
-        mutationFn: (data) => {
-            api.delete(`${prefix}/users/me/`, { data: data })
+        mutationFn: async (data) => {
+            await api.delete(`${prefix}/users/me/`, { data: data })
         },
         onSuccess: () => logoutUser(),
     })
@@ -29,8 +29,8 @@ export const useDeleteUser = () => {
 export const useChangePassword = () => {
     const api = useAxios()
     return useMutation({
-        mutationFn: (data) => {
-            api.patch(`${prefix}/users/me/change-password/`, data)
+        mutationFn: async (data) => {
+            await api.patch(`${prefix}/users/me/change-password/`, data)
         },
     })
 }

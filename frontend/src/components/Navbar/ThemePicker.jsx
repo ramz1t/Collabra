@@ -2,11 +2,7 @@ import React, { useContext } from 'react'
 import ThemeContext from '../../contexts/ThemeContext'
 import { Button, Dropdown, DropdownItem } from '../../components'
 import { useTranslation } from 'react-i18next'
-import {
-    IoSunnyOutline,
-    IoMoonOutline,
-    IoPartlySunnyOutline,
-} from 'react-icons/io5'
+import { IoSunnyOutline, IoMoonOutline, IoInvertMode } from 'react-icons/io5'
 
 const ThemePicker = () => {
     const { isDark, setThemeSetting, themeSetting } = useContext(ThemeContext)
@@ -24,7 +20,7 @@ const ThemePicker = () => {
         },
         auto: {
             title: t('auto'),
-            menuIcon: <IoPartlySunnyOutline />,
+            menuIcon: <IoInvertMode />,
             code: 'auto',
         },
     }

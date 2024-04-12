@@ -1,8 +1,13 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import useInput from '../../hooks/useInput'
-import { Form, Input, Button } from '../../components'
-import { useChangePassword } from '../../api/user'
+import useInput from '../../../hooks/useInput.js'
+import {
+    Form,
+    Input,
+    Button,
+    SettingsSection,
+} from '../../../components/index.js'
+import { useChangePassword } from '../../../api/user.js'
 
 const ChangePassword = () => {
     const { t } = useTranslation()
@@ -11,15 +16,12 @@ const ChangePassword = () => {
     const changePasswordMutation = useChangePassword()
 
     return (
-        <div className="grid md:grid-cols-[2fr_3fr] gap-10">
-            <div>
-                <p className="font-bold text-3xl">{t('change_pass_head')}</p>
-                <p className="text-gray-600 dark:text-gray-400 pt-3">
-                    {t('change_pass_desc')}
-                </p>
-            </div>
+        <SettingsSection
+            title={t('change_pass_head')}
+            description={t('change_pass_desc')}
+        >
             <Form
-                className="!gap-7 md:!gap-10 max-w-xl"
+                className="!gap-7 md:!gap-10"
                 onSubmit={() => {
                     changePasswordMutation.mutate(
                         {
@@ -52,7 +54,7 @@ const ChangePassword = () => {
                     {t('change')}
                 </Button>
             </Form>
-        </div>
+        </SettingsSection>
     )
 }
 

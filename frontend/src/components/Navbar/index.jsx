@@ -42,12 +42,13 @@ const Navbar = () => {
 
     useEffect(() => {
         setOpen(false)
+        window.scrollTo(0, 0)
     }, [location.pathname])
 
     return (
         <nav
             className={cn(
-                'navbar-area grid w-fit hover:md:max-w-[300px] md:max-w-[72px] max-md:w-full grid-cols-[1fr_1fr] md:flex flex-col gap-3 p-3 hover:md:px-5 md:min-h-dvh md:max-h-dvh fixed z-[99] bg-white dark:bg-slate-700 top-0 group/navbar transition-all shadow-md hover:md:shadow-xl outline-1 duration-150 overflow-x-hidden overflow-y-hidden md:overflow-y-auto',
+                'navbar-area grid w-fit max-w-full hover:md:max-w-[300px] md:max-w-[72px] max-md:w-full grid-cols-[1fr_1fr] md:flex flex-col gap-3 p-3 hover:md:px-5 md:min-h-dvh md:max-h-dvh fixed z-[99] bg-white dark:bg-slate-700 top-0 group/navbar transition-all shadow-md hover:md:shadow-xl outline-1 duration-150 overflow-x-hidden overflow-y-hidden md:overflow-y-auto',
                 open ? 'max-md:max-h-full' : 'max-md:max-h-[72px]'
             )}
         >

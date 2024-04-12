@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useUpdateUser, useUser } from '../../api/user'
-import { Avatar, Button, Form, Input } from '../../components'
-import useInput from '../../hooks/useInput'
+import { useUpdateUser, useUser } from '../../../api/user.js'
+import {
+    Avatar,
+    Button,
+    Form,
+    SettingsSection,
+    Input,
+} from '../../../components/index.js'
+import useInput from '../../../hooks/useInput.js'
 import { Link } from 'react-router-dom'
 import { IoArrowForward, IoCheckmarkSharp } from 'react-icons/io5'
-import { objectsDifference } from '../../utils'
-import LinkCell from './LinkCell'
+import { objectsDifference } from '../../../utils/index.jsx'
+import LinkCell from './LinkCell.jsx'
 import TimezoneSelect from 'react-timezone-select'
 import cn from 'classnames'
 
@@ -49,12 +55,10 @@ const PersonalInfo = () => {
     }, [formData, JSON.stringify(links)])
 
     return (
-        <div className="grid md:grid-cols-[2fr_3fr] gap-10">
-            <div className="flex flex-col gap-3">
-                <p className="font-bold text-3xl">{t('personal_info_head')}</p>
-                <p className="text-gray-600 dark:text-gray-400">
-                    {t('personal_info_desc')}
-                </p>
+        <SettingsSection
+            title={t('personal_info_head')}
+            description={t('personal_info_desc')}
+            extraBlock={
                 <Link
                     to="/users/me"
                     className="text-accent dark:text-accent-dark font-semibold text-lg flex items-center gap-3 hover:gap-5 transition-all w-fit"
@@ -62,9 +66,10 @@ const PersonalInfo = () => {
                     {t('view_profile')}
                     <IoArrowForward />
                 </Link>
-            </div>
+            }
+        >
             {!isLoading && (
-                <div className="flex flex-col gap-10 max-w-xl">
+                <div className="flex flex-col gap-10">
                     <div className="flex gap-5 md:gap-10 items-center">
                         <Avatar user={data} size="profile" square />
                         <div>
@@ -195,7 +200,7 @@ const PersonalInfo = () => {
                     </Form>
                 </div>
             )}
-        </div>
+        </SettingsSection>
     )
 }
 

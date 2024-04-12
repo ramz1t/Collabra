@@ -1,8 +1,8 @@
 import { Divider } from '../../components'
-import PersonalInfo from './PersonalInfo'
-import DeleteProfile from './DeleteProfile'
-import ChangePassword from './ChangePassword'
-import Logout from './Logout'
+import PersonalInfo from './Settings/PersonalInfo.jsx'
+import DeleteProfile from './Settings/DeleteProfile.jsx'
+import ChangePassword from './Settings/ChangePassword.jsx'
+import Logout from './Settings/Logout.jsx'
 
 const Profile = () => {
     return (

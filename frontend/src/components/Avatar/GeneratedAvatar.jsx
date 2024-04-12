@@ -33,7 +33,7 @@ const GeneratedAvatar = ({
     return (
         <div
             className={cn(
-                `rounded-full flex items-center justify-center font-extrabold text-black cursor-default select-none`,
+                `rounded-full flex items-center justify-center font-extrabold text-black pointer-events-none select-none`,
                 square ? 'rounded-xl' : 'rounded-full',
                 className
             )}

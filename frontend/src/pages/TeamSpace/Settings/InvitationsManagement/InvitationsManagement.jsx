@@ -1,0 +1,77 @@
+import {
+    Button,
+    Form,
+    SettingsSection,
+    Input,
+} from '../../../../components/index.js'
+import { useTranslation } from 'react-i18next'
+import { IoPeopleOutline } from 'react-icons/io5'
+import useInput from '../../../../hooks/useInput.js'
+import InvitedUsersList from './InvitedUsersList.jsx'
+import TeamJoinLinks from './TeamJoinLinks.jsx'
+import useScreenSize from '../../../../hooks/useScreenSize.js'
+import { IoAdd } from 'react-icons/io5'
+import JoinLink from './JoinLink.jsx'
+import { useRefreshTeamKeys, useTeamInvites } from '../../../../api/invites.js'
+import { useParams } from 'react-router-dom'
+
+const InvitationsManagement = () => {
+    const { t } = useTranslation()
+    const { isTablet } = useScreenSize()
+    const userInfo = useInput()
+    const { isPending: linksUpdating } = useRefreshTeamKeys()
+    const { teamSlug } = useParams()
+    const { data: teamInvitesData, isLoading } = useTeamInvites(teamSlug)
+
+    return (
+        <SettingsSection
+            title={t('manage_invitations_head')}
+            description={t('manage_invitations_desc')}
+            extraBlock={<TeamJoinLinks />}
+        >
+            <div className="w-full">
+                <div className="flex flex-col items-center w-full gap-3">
+                    <span className="text-accent dark:text-accent-dark">
+                        <IoPeopleOutline size="3em" />
+                    </span>
+                    <p className="text-xl font-bold">{t('add_team_members')}</p>
+                    <p className="text-gray-600 dark:text-gray-400 md:px-16 text-center text-sm">
+                        {t('add_team_members_desc')}
+                    </p>
+                    <Form className="flex gap-2 md:gap-5 w-full items-center !flex-row mt-5">
+                        <Input
+                            instance={userInfo}
+                            placeholder={t('new_member_email')}
+                        />
+                        <Button
+                            style="primary"
+                            className="!min-h-10"
+                            action="submit"
+                        >
+                            {isTablet ? t('add_to_invites') : <IoAdd />}
+                        </Button>
+                    </Form>
+                </div>
+            </div>
+            <InvitedUsersList searchInfo={userInfo.value} />
+            {!linksUpdating && (
+                <div className="flex gap-3 flex-wrap mt-3">
+                    <JoinLink
+                        title={t('copy_public_link')}
+                        slug={teamSlug}
+                        joinKey={teamInvitesData?.join_key_common}
+                        isLoading={isLoading}
+                    />
+                    <JoinLink
+                        title={t('copy_selective_link')}
+                        slug={teamSlug}
+                        joinKey={teamInvitesData?.join_key_selective}
+                        isLoading={isLoading}
+                    />
+                </div>
+            )}
+        </SettingsSection>
+    )
+}
+
+export default InvitationsManagement
