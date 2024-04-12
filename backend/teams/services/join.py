@@ -3,6 +3,7 @@ import secrets
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
+from django.db import transaction
 
 from ..models import Team, Member
 
@@ -26,6 +27,7 @@ def remove_from_invited(team: Team, user_id: int) -> None:
     team.invited_people.remove(user)
 
 
+@transaction.atomic
 def join(team: Team, key: str, user: User) -> None:
     if (
         key == team.join_key_selective
@@ -34,3 +36,4 @@ def join(team: Team, key: str, user: User) -> None:
         raise PermissionDenied()
 
     Member.objects.create(team=team, user=user)
+    team.invited_people.remove(user)

@@ -90,3 +90,18 @@ class TeamJoinSerializer(serializers.Serializer):
             raise ValidationError(_("You are already on this team"))
 
         return attrs
+
+
+class UserToInviteSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    avatar = Base64ImageField()
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    is_invited = serializers.SerializerMethodField()
+    is_member = serializers.SerializerMethodField()
+
+    def get_is_invited(self, user):
+        return is_user_invited(user.id, self.context["team"])
+
+    def get_is_member(self, user):
+        return is_user_member_by_team(self.context["team"], user)

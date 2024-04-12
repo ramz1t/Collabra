@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Subquery, OuterRef, Q
 
-from .models import Team
+from .models import Team, Member
 
 
 User = get_user_model()
@@ -26,3 +26,7 @@ def is_user_member_by_team(team: Team, user: User) -> bool:
 
 def is_user_invited(user_id: int, team: Team) -> bool:
     return team.invited_people.filter(id=user_id).exists()
+
+
+def get_users_to_invite(info: str) -> User:
+    return User.objects.filter(Q(email__iexact=info) | Q(username__iexact=info))

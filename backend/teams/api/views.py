@@ -10,6 +10,7 @@ from ..selectors import (
     get_teams,
     is_user_admin_by_team,
     is_user_member_by_team,
+    get_users_to_invite,
 )
 from ..services.create import create_team
 from ..services.delete import delete_team
@@ -120,3 +121,16 @@ class TeamViewSet(mixins.TeamMixin):
         join(team, key, request.user)
 
         return Response(status=status.HTTP_200_OK)
+
+    def get_users_to_invite(self, request, pk, info):
+        team = get_team_or_404(id=pk)
+        if not is_user_admin_by_team(request.user, team):
+            raise PermissionDenied()
+
+        users = get_users_to_invite(info)
+
+        serializer = serializers.UserToInviteSerializer(
+            instance=users, many=True, context={"team": team}
+        )
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
