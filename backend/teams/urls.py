@@ -7,6 +7,7 @@ app_name = "teams"
 urlpatterns = [
     path("", TeamViewSet.as_view({"post": "create", "get": "list"})),
     path("<int:pk>/", TeamViewSet.as_view({"delete": "remove"})),
+    path("<str:slug>/", TeamViewSet.as_view({"get": "retrieve"})),
     path("<int:pk>/get-join-keys/", TeamViewSet.as_view({"get": "get_join_keys"})),
     path(
         "<int:pk>/refresh-join-keys/",

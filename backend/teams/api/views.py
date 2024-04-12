@@ -22,7 +22,7 @@ class TeamViewSet(mixins.TeamMixin):
         return Response(data, status=status.HTTP_201_CREATED)
 
     def remove(self, request, pk):
-        team = get_team_or_404(pk)
+        team = get_team_or_404(id=pk)
         if team.owner != request.user:
             raise PermissionDenied()
 
@@ -35,6 +35,15 @@ class TeamViewSet(mixins.TeamMixin):
 
         data = {"message": _("Team deleted")}
         return Response(data, status=status.HTTP_200_OK)
+
+    def retrieve(self, request, slug):
+        team = get_team_or_404(slug=slug)
+        if team.owner != request.user:
+            raise PermissionDenied()
+
+        serializer = serializers.TeamDetailSerializer(instance=team)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def list(self, request):
         queryset = self.filter_queryset(get_teams(owner=self.request.user))
@@ -49,7 +58,7 @@ class TeamViewSet(mixins.TeamMixin):
         return Response(status.HTTP_200_OK, serializer.data)
 
     def get_join_keys(self, request, pk):
-        team = get_team_or_404(pk)
+        team = get_team_or_404(id=pk)
         if not is_user_admin_by_team(request.user, team):
             raise PermissionDenied()
 
@@ -58,7 +67,7 @@ class TeamViewSet(mixins.TeamMixin):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def refresh_join_keys(self, request, pk):
-        team = get_team_or_404(pk)
+        team = get_team_or_404(id=pk)
         if not is_user_admin_by_team(request.user, team):
             raise PermissionDenied()
 
@@ -67,7 +76,7 @@ class TeamViewSet(mixins.TeamMixin):
         return Response(status=status.HTTP_200_OK)
 
     def invite(self, request, pk):
-        team = get_team_or_404(pk)
+        team = get_team_or_404(id=pk)
         if not is_user_admin_by_team(request.user, team):
             raise PermissionDenied()
 
@@ -81,7 +90,7 @@ class TeamViewSet(mixins.TeamMixin):
         return Response(status=status.HTTP_200_OK)
 
     def remove_from_invited(self, request, pk):
-        team = get_team_or_404(pk)
+        team = get_team_or_404(id=pk)
         if not is_user_admin_by_team(request.user, team):
             raise PermissionDenied()
 
@@ -95,7 +104,7 @@ class TeamViewSet(mixins.TeamMixin):
         return Response(status=status.HTTP_200_OK)
 
     def join(self, request, pk, key):
-        team = get_team_or_404(pk)
+        team = get_team_or_404(id=pk)
 
         request.data["key"] = str(key)
         serializer = serializers.TeamJoinSerializer(

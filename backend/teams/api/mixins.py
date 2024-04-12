@@ -20,6 +20,7 @@ class TeamMixin(GenericViewSet):
             "refresh_join_keys",
             "invite",
             "remove_from_invited",
+            "retrieve",
         ):
             self.permission_classes = (IsAuthenticated,)
         return super().get_permissions()

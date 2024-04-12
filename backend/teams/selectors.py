@@ -12,8 +12,8 @@ def get_teams(**fields) -> QuerySet[Team]:
     return Team.objects.filter(**fields)
 
 
-def get_team_or_404(team_id: int, **fields) -> Team:
-    return get_object_or_404(Team, id=team_id, **fields)
+def get_team_or_404(**fields) -> Team:
+    return get_object_or_404(Team, **fields)
 
 
 def is_user_admin_by_team(user: User, team: Team) -> bool:

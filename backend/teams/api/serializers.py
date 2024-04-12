@@ -14,6 +14,15 @@ class TeamListSerializer(serializers.Serializer):
     image = Base64ImageField()
 
 
+class TeamDetailSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    slug = serializers.SlugField()
+    image = Base64ImageField()
+    title = serializers.CharField()
+    color = serializers.CharField()
+    description = serializers.CharField()
+
+
 class TeamCreateSerializer(serializers.Serializer):
     image = Base64ImageField(required=False)
     title = serializers.CharField(max_length=100)

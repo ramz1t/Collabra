@@ -1,8 +1,8 @@
 import secrets
 
-from autoslug import AutoSlugField
 from django.db import models
 from django.contrib.auth import get_user_model
+from autoslug import AutoSlugField
 
 User = get_user_model()
 
@@ -17,7 +17,7 @@ class Member(models.Model):
 
 
 class Team(models.Model):
-    slug = AutoSlugField(populate_from="title", unique=True)
+    slug = AutoSlugField(max_length=200, unique=True, populate_from="title")
     image = models.ImageField(upload_to="team_images", null=True)
     title = models.CharField(max_length=150)
     color = models.CharField(max_length=6)
