@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Team, Member, Invitation
+from .models import Team, Member
 
 
 @admin.register(Team)
@@ -14,11 +14,4 @@ class TeamAdmin(admin.ModelAdmin):
 class MemberAdmin(admin.ModelAdmin):
     list_display = ("pk", "user", "team", "is_admin")
     list_filter = ("is_admin",)
-    empty_value_display = "-empty-"
-
-
-@admin.register(Invitation)
-class InvitationAdmin(admin.ModelAdmin):
-    list_display = ("pk", "team")
-    search_fields = ("team__title", "user__username")
     empty_value_display = "-empty-"
