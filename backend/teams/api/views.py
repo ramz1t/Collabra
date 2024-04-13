@@ -17,9 +17,9 @@ class TeamViewSet(mixins.TeamMixin):
         serializer = serializers.TeamCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        create_team(request.user, **serializer.validated_data)
+        team = create_team(request.user, **serializer.validated_data)
 
-        data = {"message": _("Team created")}
+        data = {"message": _("Team created"), "slug": team.slug}
         return Response(data, status=status.HTTP_201_CREATED)
 
     def remove(self, request, pk):
