@@ -21,6 +21,13 @@ class TeamRetrieveSerializer(serializers.Serializer):
     description = serializers.CharField()
 
 
+class TeamShortRetrieveSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    slug = serializers.SlugField()
+    image = Base64ImageField()
+    title = serializers.CharField()
+
+
 class TeamCreateSerializer(serializers.Serializer):
     image = Base64ImageField(required=False)
     title = serializers.CharField(max_length=100)

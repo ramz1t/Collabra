@@ -46,6 +46,13 @@ class TeamViewSet(mixins.TeamMixin):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def retrieve_short(self, request, slug):
+        team = selectors.get_team_or_404(slug=slug)
+
+        serializer = serializers.TeamShortRetrieveSerializer(instance=team)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     def list(self, request):
         queryset = self.filter_queryset(selectors.get_teams(owner=self.request.user))
 
