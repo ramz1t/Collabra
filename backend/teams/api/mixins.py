@@ -11,7 +11,7 @@ class TeamMixin(GenericViewSet):
     search_fields = ["title"]
 
     def get_permissions(self):
-        if self.action in ("create",):
+        if self.action in ("create", "retrieve_short"):
             self.permission_classes = (AllowAny,)
         else:
             self.permission_classes = (IsAuthenticated,)
