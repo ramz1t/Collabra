@@ -10,6 +10,7 @@ const DeleteTeam = () => {
     const { t } = useTranslation()
     const password = useInput()
     const { teamSlug } = useParams()
+    const { team } = useContext(TeamContext)
     const { setTeam } = useContext(TeamContext)
     const { mutate: deleteTeam } = useDeleteTeam()
 
@@ -30,7 +31,7 @@ const DeleteTeam = () => {
                     className="!min-h-10"
                     action={() =>
                         deleteTeam(
-                            { id: teamSlug, password: password.value },
+                            { id: team.id, password: password.value },
                             { onSuccess: () => setTeam(null) }
                         )
                     }

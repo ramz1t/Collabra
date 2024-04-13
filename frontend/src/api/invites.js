@@ -4,61 +4,80 @@ import { useNavigate } from 'react-router-dom'
 
 const prefix = '/api/v1'
 
-export const useUsersToInvite = (teamSlug, info) => {
+export const useUsersToInvite = (teamId, info) => {
     const api = useAxios()
     return useQuery({
-        queryKey: ['users-to-invite', { team: teamSlug, info: info }],
+        queryKey: ['users-to-invite', { team: teamId, info: info }],
         queryFn: () => {
             return api
-                .get(`${prefix}/teams/${teamSlug}/get-users-to-invite/${info}`)
+                .get(`${prefix}/teams/${teamId}/get-users-to-invite/${info}`)
                 .then((res) => res.data)
         },
     })
 }
 
-export const useAddInvite = () => {
+export const useAddInvite = (teamId) => {
     const api = useAxios()
+    const queryClient = useQueryClient()
     return useMutation({
         mutationFn: (data) =>
             api.patch(`${prefix}/teams/${data.teamId}/invite/`, {
                 user: data.userId,
             }),
-        onSuccess: () => {},
+        onSuccess: (res) => {
+            const queryKey = ['team-invites', { team: teamId }]
+            const queryData = queryClient.getQueryData(queryKey)
+            queryClient.setQueryData(queryKey, {
+                ...queryData,
+                invited_people: [...queryData.invited_people, res.data.user],
+            })
+        },
     })
 }
 
-export const useRemoveInvite = () => {
+export const useRemoveInvite = (removedInviteeId, teamId) => {
     const api = useAxios()
+    const queryClient = useQueryClient()
     return useMutation({
         mutationFn: (data) =>
             api.patch(`${prefix}/teams/${data.teamId}/remove-from-invited/`, {
                 user: data.userId,
             }),
-        onSuccess: () => {},
+        onSuccess: () => {
+            const queryKey = ['team-invites', { team: teamId }]
+            const queryData = queryClient.getQueryData(queryKey)
+            const filteredUsers = queryData.invited_people.filter(
+                (user) => user.id !== removedInviteeId
+            )
+            queryClient.setQueryData(queryKey, {
+                ...queryData,
+                invited_people: filteredUsers,
+            })
+        },
     })
 }
 
-export const useTeamInvites = (teamSlug) => {
+export const useTeamInvites = (teamId) => {
     const api = useAxios()
     return useQuery({
-        queryKey: ['team-invites', { slug: teamSlug }],
+        queryKey: ['team-invites', { team: teamId }],
         queryFn: () => {
             return api
-                .get(`${prefix}/teams/${teamSlug}/get-join-keys`)
+                .get(`${prefix}/teams/${teamId}/get-join-keys`)
                 .then((res) => res.data)
         },
     })
 }
 
-export const useRefreshTeamKeys = () => {
+export const useRefreshTeamKeys = (teamId) => {
     const api = useAxios()
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: (teamId) =>
             api.patch(`${prefix}/teams/${teamId}/refresh-join-keys/`),
-        onSuccess: (res) =>
+        onSuccess: () =>
             queryClient.refetchQueries({
-                queryKey: ['team-invites', { slug: res.data.slug }],
+                queryKey: ['team-invites', { teamId: teamId }],
             }),
     })
 }

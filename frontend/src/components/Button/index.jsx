@@ -27,7 +27,7 @@ const Button = ({
                 ? 'bg-red-600 border-red-600 text-white font-bold hover:bg-red-700 hover:border-red-700'
                 : '',
             ['primary', 'secondary', 'destructive'].includes(style)
-                ? 'px-4 min-h-11 rounded-md'
+                ? 'px-4 min-h-10 rounded-md'
                 : '',
             w_full ? 'w-full' : 'w-fit',
             className

@@ -7,18 +7,16 @@ import Tasks from './Tasks'
 import Files from './Files'
 import Chats from './Chats'
 import Calendar from './Calendar'
+import { useTeam } from '../../api/team.js'
 
 const TeamSpace = () => {
     const { teamSlug } = useParams()
     const { team, setTeam } = useContext(TeamContext)
+    const { data: teamData } = useTeam(teamSlug)
 
     useEffect(() => {
-        setTeam({
-            name: `Team Name ${teamSlug}`,
-            slug: teamSlug,
-            color: '#c20000',
-        })
-    }, [])
+        if (teamData) setTeam(teamData)
+    }, [teamData])
 
     return (
         <div className="grow flex flex-col">
