@@ -1,5 +1,5 @@
-import useInput from '../../hooks/useInput'
-import { Button, Input } from '../../components'
+import useInput from '../../../hooks/useInput.js'
+import { Button, Input } from '../../../components/index.js'
 import { IoTrashOutline } from 'react-icons/io5'
 
 const LinkCell = ({ links, setLinks, index }) => {

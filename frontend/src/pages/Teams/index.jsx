@@ -13,7 +13,7 @@ const Teams = () => {
     return (
         <Routes>
             <Route index element={<TeamsList />} />
-            <Route path="/:teamId/*" element={<TeamSpace />} />
+            <Route path="/:teamSlug/*" element={<TeamSpace />} />
             <Route path="/create" element={<CreateTeam />} />
         </Routes>
     )

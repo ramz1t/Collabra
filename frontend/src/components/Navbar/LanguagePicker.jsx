@@ -42,7 +42,7 @@ const LanguagePicker = () => {
     return (
         <div
             className={cn(
-                'flex gap-4 items-center px-3.5 py-3 rounded-md min-h-12 transition-all duration-150 md:max-w-12 group-hover/navbar:max-w-full !justify-start hover:bg-accent/[0.03] dark:hover:bg-accent-dark/5 relative overflow-clip hover:overflow-visible',
+                'flex gap-4 items-center hover:cursor-pointer px-3.5 py-3 rounded-md min-h-12 transition-all duration-150 md:max-w-12 group-hover/navbar:max-w-full !justify-start hover:bg-accent/[0.03] dark:hover:bg-accent-dark/5 relative overflow-clip hover:overflow-visible',
                 isOpen ? 'overflow-visible' : 'overflow-clip'
             )}
             onClick={() => setIsOpen((isOpen) => !isOpen)}

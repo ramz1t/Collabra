@@ -7,9 +7,12 @@ const useDebounce = (value, delay) => {
     useEffect(() => {
         clearTimeout(timeoutRef.current)
 
-        timeoutRef.current = setTimeout(() => {
-            setDebouncedValue(value)
-        }, delay)
+        timeoutRef.current = setTimeout(
+            () => {
+                setDebouncedValue(value)
+            },
+            value ? delay : 0
+        )
 
         return () => clearTimeout(timeoutRef.current)
     }, [value, delay])

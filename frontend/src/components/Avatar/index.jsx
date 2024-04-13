@@ -46,8 +46,8 @@ const Avatar = ({ className, user, size, square, style }) => {
         <GeneratedAvatar
             firstName={user.first_name}
             lastName={user.last_name}
-            startColor={user.generated_avatar.first_color}
-            endColor={user.generated_avatar.second_color}
+            startColor={user?.generated_avatar?.first_color || '999999'}
+            endColor={user?.generated_avatar?.second_color || '999999'}
             size={size}
             square={square}
             style={style}

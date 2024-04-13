@@ -24,7 +24,10 @@ export default {
                 },
             },
             animation: {
-                spin: 'spin 15s linear infinite',
+                spin15: 'spin 15s linear infinite',
+                spin10: 'spin 10s linear infinite',
+                spin5: 'spin 5s linear infinite',
+                spin: 'spin 1s linear infinite',
             },
         },
     },

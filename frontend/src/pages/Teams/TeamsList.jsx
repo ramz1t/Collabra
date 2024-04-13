@@ -6,12 +6,13 @@ import { useTranslation } from 'react-i18next'
 import useInput from '../../hooks/useInput.js'
 import { useTeams } from '../../api/team.js'
 import useDebounce from '../../hooks/useDebounce.js'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const TeamsList = () => {
     const { t } = useTranslation()
     const search = useInput(null)
     const debouncedSearch = useDebounce(search.value, 250)
-    const { data: teams } = useTeams(debouncedSearch)
+    const { data: teams } = useTeams({ name: debouncedSearch })
 
     useEffect(() => {
         if (search.value === '') search.setValue(null)
@@ -24,20 +25,31 @@ const TeamsList = () => {
                     <IoDuplicateOutline />
                     {t('create_team')}
                 </Button>
-                <div className="flex gap-5 items-center w-full">
+                <div className="flex items-center w-full">
                     <Input
                         instance={search}
                         placeholder={t('search_team')}
                         className="px-3"
                     />
-                    {search.value !== null && (
-                        <Button
-                            style="tetriary"
-                            action={() => search.setValue('')}
-                        >
-                            {t('cancel')}
-                        </Button>
-                    )}
+                    <AnimatePresence>
+                        {search.value !== null && (
+                            <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: 'fit-content' }}
+                                exit={{ width: 0 }}
+                                transition={{ duration: 0.075 }}
+                                className="overflow-hidden"
+                            >
+                                <Button
+                                    style="tetriary"
+                                    action={() => search.setValue('')}
+                                    className={search.value ? 'mx-5' : 'mx-0'}
+                                >
+                                    {t('cancel')}
+                                </Button>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             </div>
 

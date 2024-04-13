@@ -7,24 +7,32 @@ import Tasks from './Tasks'
 import Files from './Files'
 import Chats from './Chats'
 import Calendar from './Calendar'
+import { useTeam } from '../../api/team.js'
 
 const TeamSpace = () => {
-    const { teamId } = useParams()
-    const { setTeam } = useContext(TeamContext)
+    const { teamSlug } = useParams()
+    const { team, setTeam } = useContext(TeamContext)
+    const { data: teamData } = useTeam(teamSlug)
 
     useEffect(() => {
-        setTeam({ name: `Team Name ${teamId}`, id: teamId, color: '#c20000' })
-    }, [])
+        if (teamData) setTeam(teamData)
+    }, [teamData])
 
     return (
-        <Routes>
-            <Route index element={<Dashboard />} />
-            <Route path="settings" element={<Settings />} />
-            <Route path="tasks" element={<Tasks />} />
-            <Route path="files" element={<Files />} />
-            <Route path="chats" element={<Chats />} />
-            <Route path="calendar" element={<Calendar />} />
-        </Routes>
+        <div className="grow flex flex-col">
+            {team ? (
+                <Routes>
+                    <Route index element={<Dashboard />} />
+                    <Route path="settings" element={<Settings />} />
+                    <Route path="tasks" element={<Tasks />} />
+                    <Route path="files" element={<Files />} />
+                    <Route path="chats" element={<Chats />} />
+                    <Route path="calendar" element={<Calendar />} />
+                </Routes>
+            ) : (
+                'team space is loading'
+            )}
+        </div>
     )
 }
 
