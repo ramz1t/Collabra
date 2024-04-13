@@ -75,7 +75,7 @@ class TeamViewSet(mixins.TeamMixin):
         refresh_join_keys(team)
 
         data = {"message": _("Keys refreshed")}
-        return Response(status=status.HTTP_200_OK)
+        return Response(data, status=status.HTTP_200_OK)
 
     def invite(self, request, pk):
         team = selectors.get_team_or_404(id=pk)
@@ -109,8 +109,8 @@ class TeamViewSet(mixins.TeamMixin):
 
         remove_from_invited(team, user_id)
 
-        data = {"message": _("User removed from invited")}
-        return Response({"id": user_id}, status=status.HTTP_200_OK)
+        data = {"message": _("User removed from invited"), "id": user_id}
+        return Response(data, status=status.HTTP_200_OK)
 
     def join(self, request, slug, key):
         team = selectors.get_team_or_404(slug=slug)
@@ -124,7 +124,7 @@ class TeamViewSet(mixins.TeamMixin):
         join(team, key, request.user)
 
         data = {"message": _("You joined")}
-        return Response(status=status.HTTP_200_OK)
+        return Response(data, status=status.HTTP_200_OK)
 
     def get_users_to_invite(self, request, pk, info):
         team = selectors.get_team_or_404(id=pk)
