@@ -8,12 +8,15 @@ import TeamContext from '../../../../contexts/TeamContext.jsx'
 
 const FoundInvitees = ({ info, clearSearch }) => {
     const { team } = useContext(TeamContext)
-    const { data: foundUsers } = useUsersToInvite(team.id, info)
-    return foundUsers
-        ? foundUsers?.map((user) => (
-              <Invitee user={user} key={user.id} onSuccess={clearSearch} />
-          ))
-        : 'no users found: ' + info
+    const { data: foundUsers, isLoading } = useUsersToInvite(team.id, info)
+    const { t } = useTranslation()
+    return isLoading
+        ? t('loading_users')
+        : foundUsers?.length
+          ? foundUsers?.map((user) => (
+                <Invitee user={user} key={user.id} onSuccess={clearSearch} />
+            ))
+          : t('no_users_found')
 }
 
 const InvitedUsersList = ({ searchInfo, clearSearch }) => {
@@ -22,8 +25,6 @@ const InvitedUsersList = ({ searchInfo, clearSearch }) => {
     const { t } = useTranslation()
     const debouncedInfo = useDebounce(searchInfo, 250)
 
-    if (isLoading) return 'loading'
-
     return (
         <div className="flex flex-col">
             <p className="font-semibold pb-1 pt-5 text-gray-600 dark:text-gray-400 text-sm">
@@ -31,7 +32,9 @@ const InvitedUsersList = ({ searchInfo, clearSearch }) => {
             </p>
             <Divider horizontal className="bg-gray-200" />
             <ul className="mt-3 grid lg:grid-cols-2 gap-3 max-h-[40dvh] overflow-y-auto">
-                {!debouncedInfo ? (
+                {isLoading ? (
+                    t('fetching_invited_users')
+                ) : !debouncedInfo ? (
                     invitesData.invited_people.map((user) => (
                         <Invitee
                             key={user.id}

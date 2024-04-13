@@ -86,5 +86,8 @@
     "invited_members": "Invited users",
     "found_users": "Found users",
     "already_in_team": "Already in the team",
-    "user_invited": "Invited"
+    "user_invited": "Invited",
+    "no_users_found": "No users found",
+    "fetching_invited_users": "Fetching invited users",
+    "loading_users": "Loading users"
 }
