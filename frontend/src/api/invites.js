@@ -91,3 +91,15 @@ export const useJoinTeam = () => {
         onSuccess: (res) => navigate(`/teams/${res.data.slug}`),
     })
 }
+
+export const useJoinInfo = (teamSlug) => {
+    const api = useAxios()
+    return useQuery({
+        queryKey: ['join-info', { teamSlug: teamSlug }],
+        queryFn: () => {
+            return api
+                .get(`${prefix}/teams/${teamSlug}/join-info`)
+                .then((res) => res.data)
+        },
+    })
+}

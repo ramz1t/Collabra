@@ -7,7 +7,7 @@ import {
 } from '../../components/index.js'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTeam } from '../../api/team.js'
-import { useJoinTeam } from '../../api/invites.js'
+import { useJoinInfo, useJoinTeam } from '../../api/invites.js'
 
 const membersMock = [
     {
@@ -42,7 +42,7 @@ const membersMock = [
 const InvitePage = () => {
     const { t } = useTranslation()
     const { teamSlug, joinKey } = useParams()
-    const { data: team } = useTeam(teamSlug)
+    const { data: team } = useJoinInfo(teamSlug)
     const { mutate: joinTeam } = useJoinTeam()
     const navigate = useNavigate()
 
@@ -56,12 +56,12 @@ const InvitePage = () => {
                         <h1 className="text-gray-600 dark:text-gray-400">
                             {t('invite_head')}
                         </h1>
-                        <p className="font-bold text-2xl">{team?.name}</p>
+                        <p className="font-bold text-2xl">{team?.title}</p>
                         {team?.description && <p>{team.description}</p>}
-                        <div className="flex gap-3">
-                            <MembersAvatars members={membersMock} />
-                            <p className="whitespace-nowrap">12 members</p>
-                        </div>
+                        {/*<div className="flex gap-3">*/}
+                        {/*    <MembersAvatars members={membersMock} />*/}
+                        {/*    <p className="whitespace-nowrap">12 members</p>*/}
+                        {/*</div>*/}
                         <div className="flex gap-5 mt-5">
                             <Button
                                 style="primary"
