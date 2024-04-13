@@ -43,13 +43,13 @@ const CreateTeam = () => {
                     className="flex flex-col md:flex-row gap-5 p-5 border dark:border-slate-700 !rounded-2xl max-w-2xl bg-white dark:bg-slate-800 shadow-sm mt-2"
                     onSubmit={() =>
                         createTeam({
-                            name: name.value,
+                            title: name.value,
                         })
                     }
                 >
                     <TeamImage
                         team={{
-                            name: name.value,
+                            title: name.value,
                         }}
                     />
                     <div className="grid gap-3">

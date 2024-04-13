@@ -12,7 +12,7 @@ const TeamsList = () => {
     const { t } = useTranslation()
     const search = useInput(null)
     const debouncedSearch = useDebounce(search.value, 250)
-    const { data: teams } = useTeams({ name: debouncedSearch })
+    const { data } = useTeams({ name: debouncedSearch })
 
     useEffect(() => {
         if (search.value === '') search.setValue(null)
@@ -53,9 +53,9 @@ const TeamsList = () => {
                 </div>
             </div>
 
-            {teams && (
+            {data?.results && (
                 <ul className="grid gap-5 md:grid-cols-2 xl:grid-cols-2 pt-5 pr-5">
-                    {teams.map((team, key) => (
+                    {data.results.map((team, key) => (
                         <TeamCard key={key} team={team} />
                     ))}
                 </ul>

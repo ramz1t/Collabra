@@ -8,7 +8,7 @@ import { TeamImage } from '../../components/index.js'
 const TeamCard = ({ team }) => {
     const { t } = useTranslation()
     return (
-        <li style={{ '--team-color': team.color }}>
+        <li>
             <NavLink
                 to={team.slug}
                 className="rounded-lg hover:shadow-sm hover:shadow-accent/30 h-fit overflow-hidden border dark:border-gray-700 hover:!border-accent hover:dark:!border-accent-dark transition-all duration-75 flex items-center gap-5 p-7"
@@ -16,7 +16,7 @@ const TeamCard = ({ team }) => {
                 <TeamImage team={team} />
                 <div className="p-3">
                     <p className="text-2xl font-bold line-clamp-1">
-                        {team.name}
+                        {team.title}
                     </p>
                     <TeamStats team={team} />
                 </div>
