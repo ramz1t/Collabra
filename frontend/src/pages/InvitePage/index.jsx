@@ -5,7 +5,7 @@ import {
     MembersAvatars,
     TeamImage,
 } from '../../components/index.js'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useTeam } from '../../api/team.js'
 import { useJoinTeam } from '../../api/invites.js'
 
@@ -44,6 +44,7 @@ const InvitePage = () => {
     const { teamSlug, joinKey } = useParams()
     const { data: team } = useTeam(teamSlug)
     const { mutate: joinTeam } = useJoinTeam()
+    const navigate = useNavigate()
 
     return (
         <div className="grow relative flex items-center justify-center">
@@ -56,7 +57,7 @@ const InvitePage = () => {
                             {t('invite_head')}
                         </h1>
                         <p className="font-bold text-2xl">{team?.name}</p>
-                        <p>{team?.description}</p>
+                        {team?.description && <p>{team.description}</p>}
                         <div className="flex gap-3">
                             <MembersAvatars members={membersMock} />
                             <p className="whitespace-nowrap">12 members</p>
@@ -72,9 +73,13 @@ const InvitePage = () => {
                                     })
                                 }
                             >
-                                {t('join')}
+                                {t('join_team')}
                             </Button>
-                            <Button style="secondary" w_full>
+                            <Button
+                                style="secondary"
+                                w_full
+                                action={() => navigate('/teams')}
+                            >
                                 {t('cancel')}
                             </Button>
                         </div>

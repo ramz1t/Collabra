@@ -14,12 +14,14 @@ import { IoAdd } from 'react-icons/io5'
 import JoinLink from './JoinLink.jsx'
 import { useRefreshTeamKeys, useTeamInvites } from '../../../../api/invites.js'
 import { useParams } from 'react-router-dom'
+import { AnimatePresence, motion } from 'framer-motion'
+import React from 'react'
+import { info } from 'autoprefixer'
 
 const InvitationsManagement = () => {
     const { t } = useTranslation()
     const { isTablet } = useScreenSize()
-    const userInfo = useInput()
-    const { isPending: linksUpdating } = useRefreshTeamKeys()
+    const userInfo = useInput('')
     const { teamSlug } = useParams()
     const { data: teamInvitesData, isLoading } = useTeamInvites(teamSlug)
 
@@ -38,23 +40,40 @@ const InvitationsManagement = () => {
                     <p className="text-gray-600 dark:text-gray-400 md:px-16 text-center text-sm">
                         {t('add_team_members_desc')}
                     </p>
-                    <Form className="flex gap-2 md:gap-5 w-full items-center !flex-row mt-5">
+                    <div className="flex gap-2 md:gap-5 w-full items-center !flex-row mt-5">
                         <Input
                             instance={userInfo}
                             placeholder={t('new_member_email')}
                         />
-                        <Button
-                            style="primary"
-                            className="!min-h-10"
-                            action="submit"
-                        >
-                            {isTablet ? t('add_to_invites') : <IoAdd />}
-                        </Button>
-                    </Form>
+                        <AnimatePresence>
+                            {userInfo.value !== '' && (
+                                <motion.div
+                                    initial={{ width: 0 }}
+                                    animate={{ width: 'fit-content' }}
+                                    exit={{ width: 0 }}
+                                    transition={{ duration: 0.05 }}
+                                    className="overflow-hidden"
+                                >
+                                    <Button
+                                        style="tetriary"
+                                        action={() => userInfo.setValue('')}
+                                        className={
+                                            userInfo.value ? 'pr-2' : 'pr-0'
+                                        }
+                                    >
+                                        {t('cancel')}
+                                    </Button>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
                 </div>
             </div>
-            <InvitedUsersList searchInfo={userInfo.value} />
-            {!linksUpdating && (
+            <InvitedUsersList
+                searchInfo={userInfo.value}
+                clearSearch={() => userInfo.setValue('')}
+            />
+            {!isLoading && (
                 <div className="flex gap-3 flex-wrap mt-3">
                     <JoinLink
                         title={t('copy_public_link')}

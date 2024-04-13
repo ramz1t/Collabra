@@ -1,11 +1,17 @@
 import { Avatar, Button } from '../../../../components/index.js'
 import { IoRemoveOutline, IoAdd } from 'react-icons/io5'
 import { useTranslation } from 'react-i18next'
+import { useAddInvite, useRemoveInvite } from '../../../../api/invites.js'
+import { useParams } from 'react-router-dom'
 
-const Invitee = ({ user }) => {
+const Invitee = ({ user, onSuccess = () => {} }) => {
     const { t } = useTranslation()
+    const { teamSlug } = useParams()
+    const { mutate: addInvite } = useAddInvite()
+    const { mutate: removeInvite } = useRemoveInvite()
+
     return (
-        <li className="flex gap-3 items-center rounded-full border dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700 px-1.5 py-1 transition-all duration-75">
+        <li className="flex gap-3 items-center rounded-full border dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700 px-2.5 py-2 transition-all duration-75">
             <Avatar user={user} />
             <div>
                 <p className="leading-[1.1]">
@@ -28,11 +34,27 @@ const Invitee = ({ user }) => {
 
             {!user?.is_member ? (
                 user?.is_invited ? (
-                    <Button className="text-gray-600 hover:text-red-500 ml-auto p-3 hover:scale-105 ">
+                    <Button
+                        className="text-gray-600 hover:text-red-500 ml-auto p-3 hover:scale-105 rounded-full"
+                        action={() =>
+                            removeInvite(
+                                { teamId: teamSlug, userId: user.id },
+                                { onSuccess: onSuccess }
+                            )
+                        }
+                    >
                         <IoRemoveOutline />
                     </Button>
                 ) : (
-                    <Button className="text-gray-600 hover:text-green-600 ml-auto p-3 hover:scale-110">
+                    <Button
+                        className="text-gray-600 hover:text-green-600 ml-auto p-3 hover:scale-110 rounded-full"
+                        action={() =>
+                            addInvite(
+                                { teamId: teamSlug, userId: user.id },
+                                { onSuccess: onSuccess }
+                            )
+                        }
+                    >
                         <IoAdd />
                     </Button>
                 )

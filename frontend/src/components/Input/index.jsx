@@ -32,7 +32,7 @@ const Input = ({
 
     const inner = (
         <>
-            {(title || hint) && (
+            {(title || (hint && split)) && (
                 <div className="flex flex-col gap-3">
                     <label
                         className={cn(

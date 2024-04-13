@@ -14,7 +14,7 @@ const Button = ({
 }) => {
     const componentProps = {
         className: cn(
-            'flex items-center justify-center gap-3 transition-all duration-75 active:hover:opacity-80 h-fit whitespace-nowrap',
+            'flex items-center focus-visible:ring-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none justify-center gap-3 transition-all duration-75 active:hover:opacity-80 h-fit whitespace-nowrap',
             'disabled:cursor-not-allowed disabled:bg-gray-100 disabled:dark:bg-slate-700 disabled:dark:border-slate-500 disabled:dark:bg-transparent disabled:!text-slate-500',
             style === 'primary'
                 ? 'bg-accent dark:bg-accent-dark border-accent dark:border-accent-dark text-white font-bold hover:bg-accent/90 dark:hover:bg-accent-dark/90'

@@ -12,6 +12,7 @@ const NavbarItem = ({
 }) => {
     return (
         <NavLink
+            tabIndex={0}
             to={href}
             className={({ isActive }) =>
                 cn(
