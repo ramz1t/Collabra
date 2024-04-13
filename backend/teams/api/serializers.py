@@ -4,7 +4,7 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import ValidationError
 
-from ..selectors import is_user_invited, is_user_member_by_team
+from .. import selectors
 
 
 class TeamListSerializer(serializers.Serializer):
@@ -14,21 +14,17 @@ class TeamListSerializer(serializers.Serializer):
     image = Base64ImageField()
 
 
-class TeamDetailSerializer(serializers.Serializer):
+class TeamRetrieveSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     slug = serializers.SlugField()
     image = Base64ImageField()
     title = serializers.CharField()
-    color = serializers.CharField()
     description = serializers.CharField()
 
 
 class TeamCreateSerializer(serializers.Serializer):
     image = Base64ImageField(required=False)
     title = serializers.CharField(max_length=100)
-    color = serializers.CharField(
-        min_length=6, max_length=6, default=settings.DEFAULT_TEAM_COLOR
-    )
     description = serializers.CharField(max_length=1000, required=False)
 
 
@@ -40,43 +36,53 @@ class TeamDeleteSerializer(serializers.Serializer):
             raise ValidationError(_("Password is incorrect"))
 
 
-class TeamPeopleToJoinListSerializer(serializers.Serializer):
+class GeneratedAvatarRetrieveSerializer(serializers.Serializer):
+    first_color = serializers.CharField()
+    second_color = serializers.CharField()
+
+
+class InvitedUserListSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     avatar = Base64ImageField()
+    generated_avatar = serializers.SerializerMethodField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
+    username = serializers.CharField()
+
+    def get_generated_avatar(self, user):
+        return GeneratedAvatarRetrieveSerializer(instance=user.generated_avatar).data
 
 
-class TeamJoinKeysRetrieveSerializer(serializers.Serializer):
+class JoinKeysRetrieveSerializer(serializers.Serializer):
     join_key_common = serializers.CharField()
     join_key_selective = serializers.CharField()
     invited_people = serializers.SerializerMethodField()
 
     def get_invited_people(self, team):
-        return TeamPeopleToJoinListSerializer(team.invited_people, many=True).data
+        return InvitedUserListSerializer(team.invited_people, many=True).data
 
 
-class TeamInviteSerializer(serializers.Serializer):
+class InviteSerializer(serializers.Serializer):
     user = serializers.IntegerField()
 
     def validate_user(self, user_id):
-        if is_user_invited(user_id, self.context["team"]):
+        if selectors.is_user_invited(user_id, self.context["team"]):
             raise ValidationError(_("User already invited"))
         if self.context["user"].id == user_id:
             raise ValidationError(_("You can't invite yourself"))
         return user_id
 
 
-class TeamRemoveFromInvitedSerializer(serializers.Serializer):
+class RemoveFromInvitedSerializer(serializers.Serializer):
     user = serializers.IntegerField()
 
     def validate_user(self, user_id):
-        if not is_user_invited(user_id, self.context["team"]):
+        if not selectors.is_user_invited(user_id, self.context["team"]):
             raise ValidationError(_("User has not yet been invited"))
         return user_id
 
 
-class TeamJoinSerializer(serializers.Serializer):
+class JoinSerializer(serializers.Serializer):
     key = serializers.CharField(max_length=32, min_length=32)
 
     def validate(self, attrs):
@@ -86,22 +92,27 @@ class TeamJoinSerializer(serializers.Serializer):
 
         if key != team.join_key_common and key != team.join_key_selective:
             raise ValidationError(_("Invalid key"))
-        if is_user_member_by_team(team, user):
+        if selectors.is_user_member_by_team(team, user):
             raise ValidationError(_("You are already on this team"))
 
         return attrs
 
 
-class UserToInviteSerializer(serializers.Serializer):
+class UserToInviteListSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     avatar = Base64ImageField()
+    generated_avatar = serializers.SerializerMethodField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
+    username = serializers.CharField()
     is_invited = serializers.SerializerMethodField()
     is_member = serializers.SerializerMethodField()
 
     def get_is_invited(self, user):
-        return is_user_invited(user.id, self.context["team"])
+        return selectors.is_user_invited(user.id, self.context["team"])
 
     def get_is_member(self, user):
-        return is_user_member_by_team(self.context["team"], user)
+        return selectors.is_user_member_by_team(self.context["team"], user)
+
+    def get_generated_avatar(self, user):
+        return GeneratedAvatarRetrieveSerializer(instance=user.generated_avatar).data

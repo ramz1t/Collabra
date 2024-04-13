@@ -30,3 +30,7 @@ def is_user_invited(user_id: int, team: Team) -> bool:
 
 def get_users_to_invite(info: str) -> User:
     return User.objects.filter(Q(email__iexact=info) | Q(username__iexact=info))
+
+
+def get_user_or_404(**fields) -> User:
+    return get_object_or_404(User, **fields)

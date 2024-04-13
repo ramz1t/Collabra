@@ -20,7 +20,6 @@ class Team(models.Model):
     slug = AutoSlugField(max_length=200, unique=True, populate_from="title")
     image = models.ImageField(upload_to="team_images", null=True)
     title = models.CharField(max_length=150)
-    color = models.CharField(max_length=6)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="teams")
     description = models.TextField(null=True)
     join_key_common = models.CharField(

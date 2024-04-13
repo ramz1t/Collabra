@@ -13,14 +13,6 @@ class TeamMixin(GenericViewSet):
     def get_permissions(self):
         if self.action in ("create",):
             self.permission_classes = (AllowAny,)
-        if self.action in (
-            "remove",
-            "list",
-            "get_join_keys",
-            "refresh_join_keys",
-            "invite",
-            "remove_from_invited",
-            "retrieve",
-        ):
+        else:
             self.permission_classes = (IsAuthenticated,)
         return super().get_permissions()
