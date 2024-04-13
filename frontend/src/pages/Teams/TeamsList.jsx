@@ -12,7 +12,7 @@ const TeamsList = () => {
     const { t } = useTranslation()
     const search = useInput(null)
     const debouncedSearch = useDebounce(search.value, 250)
-    const { data } = useTeams({ name: debouncedSearch })
+    const { data } = useTeams({ search: debouncedSearch })
 
     useEffect(() => {
         if (search.value === '') search.setValue(null)

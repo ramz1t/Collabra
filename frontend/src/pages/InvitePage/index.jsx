@@ -43,7 +43,7 @@ const InvitePage = () => {
     const { t } = useTranslation()
     const { teamSlug, joinKey } = useParams()
     const { data: team } = useJoinInfo(teamSlug)
-    const { mutate: joinTeam } = useJoinTeam()
+    const { mutate: joinTeam } = useJoinTeam(teamSlug)
     const navigate = useNavigate()
 
     return (

@@ -8,14 +8,15 @@ import toast from 'react-hot-toast'
 import { error, success } from '../utils'
 
 const useAxios = () => {
-    const { authTokens, setUser, setAuthTokens, logoutUser } = useContext(AuthContext)
+    const { authTokens, setUser, setAuthTokens, logoutUser } =
+        useContext(AuthContext)
     const { i18n } = useTranslation()
 
     const axiosInstance = axios.create({
         baseURL: import.meta.env.VITE_API_URL || '',
         headers: {
             Authorization: authTokens ? `Bearer ${authTokens?.access}` : null,
-            'Accept-Language': i18n.resolvedLanguage
+            'Accept-Language': i18n.resolvedLanguage,
         },
     })
 
@@ -25,13 +26,15 @@ const useAxios = () => {
         const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1
 
         if (!isExpired) return req
-        const response = await fetch(`/api/v1/token/refresh/`,
+        const response = await fetch(
+            `/api/v1/token/refresh/`,
             {
-                method: "POST"
+                method: 'POST',
             },
             {
                 refresh: authTokens.refresh,
-            })
+            }
+        )
 
         if (response.status === 401) {
             logoutUser()
@@ -58,13 +61,17 @@ const useAxios = () => {
     axiosInstance.interceptors.response.use(
         (res) => {
             success(res.data?.message)
-            return res;
+            return res
         },
         (err) => {
-            error(err?.data?.message)
-            return Promise.reject(err);
+            if (err.response.data?.non_field_errors) {
+                error(err.response.data?.non_field_errors.join('\n'))
+            } else {
+                error(err?.data?.message)
+            }
+            return Promise.reject(err)
         }
-    );
+    )
 
     return axiosInstance
 }

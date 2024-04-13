@@ -82,13 +82,13 @@ export const useRefreshTeamKeys = (teamId) => {
     })
 }
 
-export const useJoinTeam = () => {
+export const useJoinTeam = (teamSlug) => {
     const api = useAxios()
     const navigate = useNavigate()
     return useMutation({
         mutationFn: (data) =>
             api.post(`${prefix}/teams/${data.teamSlug}/join/${data.teamKey}/`),
-        onSuccess: (res) => navigate(`/teams/${res.data.slug}`),
+        onSuccess: (res) => navigate(`/teams/${teamSlug}`),
     })
 }
 

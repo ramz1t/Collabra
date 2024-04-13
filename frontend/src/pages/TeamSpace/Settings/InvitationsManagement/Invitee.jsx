@@ -38,7 +38,7 @@ const Invitee = ({ user, onSuccess = () => {} }) => {
             {!user?.is_member ? (
                 user?.is_invited ? (
                     <Button
-                        className="text-gray-600 hover:text-red-500 ml-auto p-3 hover:scale-105 rounded-full"
+                        className="text-gray-600 hover:text-red-500 ml-auto min-h-10 min-w-10 hover:scale-105 rounded-full"
                         action={() =>
                             removeInvite(
                                 { teamId: team.id, userId: user.id }
@@ -50,7 +50,7 @@ const Invitee = ({ user, onSuccess = () => {} }) => {
                     </Button>
                 ) : (
                     <Button
-                        className="text-gray-600 hover:text-green-600 ml-auto p-3 hover:scale-110 rounded-full"
+                        className="text-gray-600 hover:text-green-600 ml-auto min-h-10 min-w-10 hover:scale-110 rounded-full"
                         action={() =>
                             addInvite(
                                 { teamId: team.id, userId: user.id },
@@ -61,7 +61,9 @@ const Invitee = ({ user, onSuccess = () => {} }) => {
                         <IoAdd />
                     </Button>
                 )
-            ) : null}
+            ) : (
+                <span className="min-h-10"></span>
+            )}
         </li>
     )
 }

@@ -11,7 +11,7 @@ const JoinLink = ({ slug = '', joinKey = '', isLoading, title }) => {
 
     return (
         <Button
-            className=" border-gray-600 dark:bg-slate-700 dark:hover:bg-slate-600 dark:border-gray-700 rounded-md px-3 py-1 flex items-center bg-gray-100 hover:bg-gray-200 transition-all duration-75 !gap-2 text-gray-800 dark:text-slate-300"
+            className="border-gray-600 dark:bg-slate-700 dark:hover:bg-slate-600 dark:border-gray-700 rounded-md px-3 py-1 flex items-center bg-gray-100 hover:bg-gray-200 transition-all duration-75 !gap-2 text-gray-800 dark:text-slate-300"
             action={() => {
                 navigator.clipboard
                     .writeText(link)
