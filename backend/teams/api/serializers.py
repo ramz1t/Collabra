@@ -47,6 +47,7 @@ class InvitedUserListSerializer(serializers.Serializer):
     first_name = serializers.CharField()
     last_name = serializers.CharField()
     username = serializers.CharField()
+    is_invited = serializers.SerializerMethodField()
 
     def get_is_invited(self, user):
         return True
