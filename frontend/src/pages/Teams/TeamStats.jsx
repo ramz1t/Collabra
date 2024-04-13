@@ -19,11 +19,11 @@ const TeamStats = ({ team }) => {
                 <MembersAvatars members={team.members} />
                 <p>{t('team_stats_users')} - 13</p>
             </li>
-            {/*<li className="flex items-center gap-1.5">*/}
-            {/*    <p className="text-red-500">*/}
-            {/*        Next task deadline - Tomorrow 18PM*/}
-            {/*    </p>*/}
-            {/*</li>*/}
+            <li className="flex items-center gap-1.5">
+                <p className="text-red-500">
+                    Next task deadline - Tomorrow 18PM
+                </p>
+            </li>
         </ul>
     )
 }
