@@ -18,7 +18,7 @@ const TeamCard = ({ team }) => {
                     <p className="text-2xl font-bold line-clamp-1">
                         {team.title}
                     </p>
-                    <TeamStats team={team} />
+                    {/*<TeamStats team={team} />*/}
                 </div>
             </NavLink>
         </li>
