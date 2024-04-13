@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from drf_extra_fields.fields import Base64ImageField
-from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import ValidationError
 
@@ -48,6 +47,9 @@ class InvitedUserListSerializer(serializers.Serializer):
     first_name = serializers.CharField()
     last_name = serializers.CharField()
     username = serializers.CharField()
+
+    def get_is_invited(self, user):
+        return True
 
     def get_generated_avatar(self, user):
         return GeneratedAvatarRetrieveSerializer(instance=user.generated_avatar).data
