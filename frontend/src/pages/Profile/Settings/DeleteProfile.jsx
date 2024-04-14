@@ -27,7 +27,6 @@ const DeleteProfile = () => {
                 <div className="flex max-md:flex-col gap-5">
                     <Input
                         instance={password}
-                        autoRef
                         hint={t('delete_profile_hint')}
                         type="password"
                     />

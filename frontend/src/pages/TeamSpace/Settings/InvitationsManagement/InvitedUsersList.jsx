@@ -35,13 +35,17 @@ const InvitedUsersList = ({ searchInfo, clearSearch }) => {
                 {isLoading ? (
                     t('fetching_invited_users')
                 ) : !debouncedInfo ? (
-                    invitesData.invited_people.map((user) => (
-                        <Invitee
-                            key={user.id}
-                            user={user}
-                            onSuccess={clearSearch}
-                        />
-                    ))
+                    invitesData.invited_people?.length ? (
+                        invitesData.invited_people.map((user) => (
+                            <Invitee
+                                key={user.id}
+                                user={user}
+                                onSuccess={clearSearch}
+                            />
+                        ))
+                    ) : (
+                        t('no_invited_users')
+                    )
                 ) : (
                     <FoundInvitees
                         clearSearch={clearSearch}
