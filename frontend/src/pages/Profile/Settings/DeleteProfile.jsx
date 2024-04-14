@@ -27,7 +27,9 @@ const DeleteProfile = () => {
                 <div className="flex max-md:flex-col gap-5">
                     <Input
                         instance={password}
-                        hint={t('delete_profile_hint')}
+                        hint={t('pass_to_submit', {
+                            action: t('delete_profile').toLowerCase(),
+                        })}
                         type="password"
                     />
                     <div className="flex gap-5">

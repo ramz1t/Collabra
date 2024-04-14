@@ -66,7 +66,7 @@ const Input = ({
                         id={id}
                         type={type}
                         ref={ref ? ref : inputRef}
-                        value={instance.value}
+                        value={instance.rawValue}
                         onChange={(e) => {
                             onChange && onChange(e)
                             instance.checkValue(e)

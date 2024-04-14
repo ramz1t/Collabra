@@ -60,3 +60,25 @@ export const useDeleteTeam = () => {
         },
     })
 }
+
+export const useLeaveTeam = () => {
+    const api = useAxios()
+    const navigate = useNavigate()
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (data) => {
+            return api.post(`${prefix}/teams/${data.id}/leave`, {
+                password: data.password,
+            })
+        },
+        onSuccess: async (res) => {
+            let teamsList = queryClient.getQueryData(['teams', { name: null }])
+            if (teamsList) {
+                await queryClient.invalidateQueries('teams')
+                teamsList = teamsList.filter((el) => el.id !== res.data.id)
+                queryClient.setQueryData(['teams', { name: null }], teamsList)
+            }
+            navigate('/teams')
+        },
+    })
+}

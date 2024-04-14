@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { Routes, useParams, Route } from 'react-router-dom'
 import TeamContext from '../../contexts/TeamContext'
 import Dashboard from './Dashboard'
-import Settings from './Settings'
+import TeamSettings from './Settings'
 import Tasks from './Tasks'
 import Files from './Files'
 import Chats from './Chats'
@@ -23,7 +23,7 @@ const TeamSpace = () => {
             {team ? (
                 <Routes>
                     <Route index element={<Dashboard />} />
-                    <Route path="settings" element={<Settings />} />
+                    <Route path="settings" element={<TeamSettings />} />
                     <Route path="tasks" element={<Tasks />} />
                     <Route path="files" element={<Files />} />
                     <Route path="chats" element={<Chats />} />

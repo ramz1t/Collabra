@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import { useDeleteTeam } from '../../../api/team.js'
 import { useContext } from 'react'
 import TeamContext from '../../../contexts/TeamContext.jsx'
+import { UserRole } from '../../../hooks/useIsAllowed.js'
 
 const DeleteTeam = () => {
     const { t } = useTranslation()
@@ -18,11 +19,14 @@ const DeleteTeam = () => {
         <SettingsSection
             title={t('delete_team_head')}
             description={t('delete_team_desc')}
+            allowedRoles={[UserRole.Owner]}
         >
             <div className="flex gap-5">
                 <Input
                     instance={password}
-                    hint={t('delete_team_pass')}
+                    hint={t('pass_to_submit', {
+                        action: t('delete_team').toLowerCase(),
+                    })}
                     type="password"
                 />
                 <Button
