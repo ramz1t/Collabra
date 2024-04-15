@@ -13,7 +13,6 @@ def get_teams(**fields) -> QuerySet[Team]:
 
 
 def get_team_or_404(**fields) -> Team:
-    print(fields)
     return get_object_or_404(Team, **fields)
 
 
