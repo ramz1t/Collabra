@@ -37,3 +37,8 @@ def join(team: Team, key: str, user: User) -> None:
 
     Member.objects.create(team=team, user=user)
     team.invited_people.remove(user)
+
+
+def exit_team(team: Team, user: User) -> None:
+    member = Member.objects.get(team=team, user=user)
+    member.delete()
