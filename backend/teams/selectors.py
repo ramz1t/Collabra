@@ -24,6 +24,10 @@ def is_user_member_by_team(team: Team, user: User) -> bool:
     return team.members.filter(user=user).exists()
 
 
+def is_user_owner_by_team(team: Team, user: User) -> bool:
+    return team.owner == user
+
+
 def is_user_invited(user_id: int, team: Team) -> bool:
     return team.invited_people.filter(id=user_id).exists()
 

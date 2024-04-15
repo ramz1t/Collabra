@@ -34,6 +34,12 @@ class TeamCreateSerializer(serializers.Serializer):
     description = serializers.CharField(max_length=1000, required=False)
 
 
+class TeamUpdateSerializer(serializers.Serializer):
+    image = Base64ImageField(required=False)
+    title = serializers.CharField(max_length=100, required=False)
+    description = serializers.CharField(max_length=1000, required=False)
+
+
 class TeamDeleteSerializer(serializers.Serializer):
     password = serializers.CharField(style={"input_type": "password"})
 
