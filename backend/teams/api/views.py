@@ -1,5 +1,4 @@
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
 from django.utils.translation import gettext_lazy as _
@@ -9,7 +8,13 @@ from . import serializers
 from .. import selectors
 from ..services.create import create_team
 from ..services.delete import delete_team
-from ..services.join import refresh_join_keys, invite, remove_from_invited, join
+from ..services.join import (
+    refresh_join_keys,
+    invite,
+    remove_from_invited,
+    join,
+    exit_team,
+)
 
 
 class TeamViewSet(mixins.TeamMixin):
@@ -24,7 +29,7 @@ class TeamViewSet(mixins.TeamMixin):
 
     def remove(self, request, pk):
         team = selectors.get_team_or_404(id=pk)
-        if team.owner != request.user:
+        if not selectors.is_user_owner_by_team(team, request.user):
             raise PermissionDenied()
 
         serializer = serializers.TeamDeleteSerializer(
@@ -39,7 +44,7 @@ class TeamViewSet(mixins.TeamMixin):
 
     def retrieve(self, request, slug):
         team = selectors.get_team_or_404(slug=slug)
-        if not selectors.is_user_member_by_team(team, self.request.user):
+        if not selectors.is_user_member_by_team(team, request.user):
             raise PermissionDenied()
 
         serializer = serializers.TeamRetrieveSerializer(instance=team)
@@ -145,3 +150,14 @@ class TeamViewSet(mixins.TeamMixin):
         )
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def exit(self, request, pk):
+        team = selectors.get_team_or_404(id=pk)
+        if not selectors.is_user_member_by_team(
+            team, request.user
+        ) or selectors.is_user_owner_by_team(team, request.user):
+            raise PermissionDenied()
+
+        exit_team(team, request.user)
+
+        return Response(status=status.HTTP_200_OK)

@@ -24,4 +24,5 @@ urlpatterns = [
         "<int:pk>/get-users-to-invite/<str:info>/",
         TeamViewSet.as_view({"get": "get_users_to_invite"}),
     ),
+    path("<int:pk>/exit/", TeamViewSet.as_view({"delete": "exit"})),
 ]
