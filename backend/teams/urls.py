@@ -6,7 +6,10 @@ app_name = "teams"
 
 urlpatterns = [
     path("", TeamViewSet.as_view({"post": "create", "get": "list"})),
-    path("<int:pk>/", TeamViewSet.as_view({"delete": "remove"})),
+    path(
+        "<int:pk>/",
+        TeamViewSet.as_view({"delete": "remove", "patch": "partial_update"}),
+    ),
     path("<str:slug>/", TeamViewSet.as_view({"get": "retrieve"})),
     path("<str:slug>/join-info/", TeamViewSet.as_view({"get": "retrieve_short"})),
     path("<int:pk>/get-join-keys/", TeamViewSet.as_view({"get": "get_join_keys"})),
