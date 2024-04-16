@@ -13,7 +13,7 @@ const TeamCard = ({ team }) => {
                 to={team.slug}
                 className="rounded-lg hover:shadow-sm hover:shadow-accent/30 h-fit overflow-hidden border dark:border-gray-700 hover:!border-accent hover:dark:!border-accent-dark transition-all duration-75 flex items-center gap-5 p-7"
             >
-                <TeamImage team={team} />
+                <TeamImage team={team} size="list" />
                 <div className="p-3">
                     <p className="text-2xl font-bold line-clamp-1">
                         {team.title}

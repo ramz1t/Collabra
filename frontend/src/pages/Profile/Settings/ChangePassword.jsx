@@ -13,7 +13,7 @@ const ChangePassword = () => {
     const { t } = useTranslation()
     const oldPassword = useInput('')
     const newPassword = useInput('')
-    const changePasswordMutation = useChangePassword()
+    const { mutate: changePassword, isPending } = useChangePassword()
 
     return (
         <SettingsSection
@@ -23,7 +23,7 @@ const ChangePassword = () => {
             <Form
                 className="!gap-7 md:!gap-10"
                 onSubmit={() => {
-                    changePasswordMutation.mutate(
+                    changePassword(
                         {
                             old_password: oldPassword.value.trim(),
                             new_password: newPassword.value.trim(),
@@ -50,7 +50,7 @@ const ChangePassword = () => {
                     instance={newPassword}
                     type="password"
                 />
-                <Button style="primary" type="submit">
+                <Button style="primary" type="submit" isLoading={isPending}>
                     {t('change')}
                 </Button>
             </Form>

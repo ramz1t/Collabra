@@ -37,6 +37,23 @@ export const useTeam = (slug) => {
     })
 }
 
+export const useUpdateTeam = (slug, id) => {
+    const api = useAxios()
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (data) => {
+            return api.patch(`${prefix}/teams/${id}/`, data).then((res) => res)
+        },
+        onSuccess: (res) => {
+            console.log(res)
+            queryClient.setQueryData(
+                ['team', { slug: res.data.slug }],
+                res.data
+            )
+        },
+    })
+}
+
 export const useDeleteTeam = () => {
     const api = useAxios()
     const navigate = useNavigate()
@@ -44,6 +61,30 @@ export const useDeleteTeam = () => {
     return useMutation({
         mutationFn: (data) => {
             return api.delete(`${prefix}/teams/${data.id}`, {
+                data: {
+                    password: data.password,
+                },
+            })
+        },
+        onSuccess: async (res) => {
+            let teamsList = queryClient.getQueryData(['teams', { name: null }])
+            if (teamsList) {
+                await queryClient.invalidateQueries('teams')
+                teamsList = teamsList.filter((el) => el.id !== res.data.id)
+                queryClient.setQueryData(['teams', { name: null }], teamsList)
+            }
+            navigate('/teams')
+        },
+    })
+}
+
+export const useLeaveTeam = () => {
+    const api = useAxios()
+    const navigate = useNavigate()
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (data) => {
+            return api.delete(`${prefix}/teams/${data.id}/exit/`, {
                 data: {
                     password: data.password,
                 },

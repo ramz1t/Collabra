@@ -6,7 +6,13 @@ import useScreenSize from '../../hooks/useScreenSize'
 const UserProfileLink = () => {
     const { data, isLoading } = useUser('me')
     const { isTablet } = useScreenSize()
-    if (isLoading) return
+
+    if (isLoading)
+        return (
+            <div className="w-12 h-12 max-md:ml-auto">
+                <div className="bg-gray-100 transition-colors animate-pulse rounded-full w-9 h-9 ml-1.5 mt-1"></div>
+            </div>
+        )
 
     return (
         <NavbarItem

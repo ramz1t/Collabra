@@ -1,12 +1,11 @@
-import React, { useRef, useEffect } from 'react'
 import cn from 'classnames'
+import React, { useEffect, useRef } from 'react'
 
-const Input = ({
+const TextField = ({
     className,
     titleClassname,
     placeholder,
     id,
-    type,
     instance,
     title,
     autoRef,
@@ -20,16 +19,15 @@ const Input = ({
     prefix,
     hint,
     onChange,
-    innerIcon,
+    minHeight,
 }) => {
-    const inputRef = useRef()
+    const textareaRef = useRef()
 
     useEffect(() => {
-        if (inputRef.current && autoRef) {
-            inputRef.current.focus()
+        if (textareaRef.current && autoRef) {
+            textareaRef.current.focus()
         }
     }, [])
-
     return (
         <div className="w-full flex flex-col gap-1">
             {title && (
@@ -53,40 +51,34 @@ const Input = ({
                             {prefix}
                         </div>
                     )}
-                    <div
+
+                    <textarea
+                        aria-label={ariaLabel}
+                        id={id}
+                        ref={ref ? ref : textareaRef}
+                        value={instance.rawValue}
+                        onChange={(e) => {
+                            onChange && onChange(e)
+                            instance.checkValue(e)
+                        }}
+                        onBlur={() => {
+                            instance.checkValue
+                            setTimeout(() => onblur && onblur(), 100)
+                        }}
                         className={cn(
-                            'flex gap-2 items-center bg-slate-100 caret-accent dark:caret-accent-dark dark:bg-slate-600 focus-within:ring-accent dark:focus-within:ring-accent-dark focus-within:shadow-sm focus-within:ring-1 focus-within:outline-none h-10 w-full px-2',
+                            'flex gap-2 items-center bg-slate-100 caret-accent dark:caret-accent-dark dark:bg-slate-600 focus-within:ring-accent dark:focus-within:ring-accent-dark focus-within:shadow-sm focus-within:ring-1 focus-within:outline-none h-10 w-full p-2',
                             prefix ? 'rounded-r-md' : 'rounded-md',
                             instance.allValid
                                 ? ''
                                 : '!ring-red-500 !text-red-500 !bg-red-50 dark:!bg-red-900/30 !caret-red-500',
                             className
                         )}
-                    >
-                        {innerIcon && (
-                            <span className="text-gray-400">{innerIcon}</span>
-                        )}
-                        <input
-                            aria-label={ariaLabel}
-                            id={id}
-                            type={type}
-                            ref={ref ? ref : inputRef}
-                            value={instance.rawValue}
-                            onChange={(e) => {
-                                onChange && onChange(e)
-                                instance.checkValue(e)
-                            }}
-                            onBlur={() => {
-                                instance.checkValue
-                                setTimeout(() => onblur && onblur(), 100)
-                            }}
-                            className="bg-transparent w-full focus:border-none focus:outline-none placeholder:text-gray-400"
-                            onFocus={() => onfocus && onfocus()}
-                            disabled={disabled}
-                            placeholder={placeholder}
-                            autoComplete={autocomplete}
-                        />
-                    </div>
+                        onFocus={() => onfocus && onfocus()}
+                        disabled={disabled}
+                        placeholder={placeholder}
+                        autoComplete={autocomplete}
+                        style={{ minHeight: minHeight || 80 }}
+                    />
                 </div>
                 {hint && (
                     <p className="pl-2 text-gray-400 dark:text-gray-500 text-xs pt-1">
@@ -98,4 +90,4 @@ const Input = ({
     )
 }
 
-export default Input
+export default TextField

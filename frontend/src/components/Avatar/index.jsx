@@ -9,7 +9,7 @@ const Avatar = ({ className, user, size, square, style }) => {
             w = 36
             break
         case 'profile':
-            w = 120
+            w = 230
             break
         case 'task':
             w = 24
@@ -23,13 +23,14 @@ const Avatar = ({ className, user, size, square, style }) => {
 
     if (user?.avatar) {
         return (
-            <img
-                src={user.avatar}
+            <div
                 className={cn(
+                    'bg-cover bg-center',
                     square ? 'rounded-xl' : 'rounded-full',
                     className
                 )}
                 style={{
+                    backgroundImage: `url(${user.avatar})`,
                     width: w,
                     height: w,
                     minWidth: w,
@@ -49,6 +50,7 @@ const Avatar = ({ className, user, size, square, style }) => {
             startColor={user?.generated_avatar?.first_color || '999999'}
             endColor={user?.generated_avatar?.second_color || '999999'}
             size={size}
+            w={w}
             square={square}
             style={style}
             className={className}

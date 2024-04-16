@@ -1,50 +1,46 @@
-import { useTranslation } from 'react-i18next'
 import {
     Button,
     Form,
     Input,
     SettingsSection,
 } from '../../../components/index.js'
+import { useTranslation } from 'react-i18next'
 import useInput from '../../../hooks/useInput.js'
-import { useDeleteTeam } from '../../../api/team.js'
+import { useLeaveTeam } from '../../../api/team.js'
 import { useContext } from 'react'
 import TeamContext from '../../../contexts/TeamContext.jsx'
 
-const DeleteTeam = () => {
+const LeaveTeam = () => {
     const { t } = useTranslation()
-    const password = useInput()
+    const password = useInput('')
     const { team } = useContext(TeamContext)
-    const { setTeam } = useContext(TeamContext)
-    const { mutate: deleteTeam, isPending } = useDeleteTeam()
+    const { mutate: leaveTeam, isPending } = useLeaveTeam()
 
     return (
         <SettingsSection
-            title={t('delete_team_head')}
-            description={t('delete_team_desc')}
+            title={t('leave_team_head')}
+            description={t('leave_team_desc')}
         >
             <Form
                 onSubmit={() =>
-                    deleteTeam(
-                        { id: team.id, password: password.value },
-                        { onSuccess: () => setTeam(null) }
-                    )
+                    leaveTeam({ id: team.id, password: password.value })
                 }
             >
                 <div className="flex gap-5">
                     <Input
                         instance={password}
                         hint={t('pass_to_submit', {
-                            action: t('delete_team').toLowerCase(),
+                            action: t('leave_team').toLowerCase(),
                         })}
                         type="password"
                     />
                     <Button
-                        disabled={!password.value}
-                        isLoading={isPending}
                         style="destructive"
-                        className="!min-h-10"
+                        disabled={!password.value}
+                        type="submit"
+                        isLoading={isPending}
                     >
-                        {t('delete_team')}
+                        {t('leave_team')}
                     </Button>
                 </div>
             </Form>
@@ -52,4 +48,4 @@ const DeleteTeam = () => {
     )
 }
 
-export default DeleteTeam
+export default LeaveTeam

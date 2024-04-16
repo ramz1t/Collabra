@@ -3,5 +3,11 @@ WORKDIR /react
 COPY package.json .
 RUN npm i --legacy-peer-deps
 COPY . .
-RUN npm run build
-CMD ["npm", "run", "preview"]
+
+# Заменяем символы CRLF на LF
+RUN sed -i "s/\r//" /react/entrypoint.sh
+
+# Устанавливаем права выполнения
+RUN chmod +x /react/entrypoint.sh
+
+ENTRYPOINT /bin/sh "/react/entrypoint.sh"

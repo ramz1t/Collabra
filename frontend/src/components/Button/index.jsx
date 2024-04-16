@@ -1,6 +1,6 @@
-import classNames from 'classnames'
 import cn from 'classnames'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const Button = ({
     style,
@@ -11,7 +11,9 @@ const Button = ({
     w_full,
     disabled,
     to,
+    isLoading,
 }) => {
+    const { t } = useTranslation()
     const componentProps = {
         className: cn(
             'flex items-center focus-visible:ring-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none justify-center gap-3 transition-all duration-75 active:hover:opacity-80 h-fit whitespace-nowrap',
@@ -22,23 +24,23 @@ const Button = ({
             style === 'secondary'
                 ? 'border-accent border-2 dark:border-accent-dark text-accent hover:bg-accent/5 dark:text-accent-dark dark:hover:bg-accent-dark/5'
                 : '',
-            style === 'tetriary' ? 'text-slate-600 dark:text-slate-300' : '',
+            style === 'tetriary' ? 'text-slate-600 dark:text-slate-400' : '',
             style === 'destructive'
                 ? 'bg-red-600 border-red-600 text-white font-bold hover:bg-red-700 hover:border-red-700'
                 : '',
             ['primary', 'secondary', 'destructive'].includes(style)
                 ? 'px-4 min-h-10 rounded-md'
-                : '',
+                : 'hover:opacity-80',
             w_full ? 'w-full' : 'w-fit',
             className
         ),
         type: type,
-        disabled: disabled,
+        disabled: disabled || isLoading,
     }
 
     return to ? (
         <Link to={to} {...componentProps}>
-            {children}
+            {isLoading ? t('loading') : children}
         </Link>
     ) : (
         <button
@@ -47,7 +49,7 @@ const Button = ({
                 action && action()
             }}
         >
-            {children}
+            {isLoading ? t('loading') : children}
         </button>
     )
 }

@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
+import useDebounce from './useDebounce.js'
 
-const useInput = (initialValue, validations) => {
-    const [value, setValue] = useState(initialValue)
+const useInput = (initialValue = '', validations = {}, debounce = 0) => {
+    const [rawValue, setValue] = useState(initialValue)
+    const value = useDebounce(rawValue, debounce)
     const [isDirty, setIsDirty] = useState(false)
     const valid = useValidation(value, validations)
     const allValid = Object.values(valid).every((item) => !item)
@@ -17,6 +19,7 @@ const useInput = (initialValue, validations) => {
 
     return {
         value,
+        rawValue,
         setValue,
         isDirty,
         checkValue,
@@ -90,7 +93,7 @@ const useValidation = (value, validations) => {
         emailError,
         intError,
         floatError,
-        maxLengthError
+        maxLengthError,
     }
 }
 
