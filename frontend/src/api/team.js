@@ -37,6 +37,23 @@ export const useTeam = (slug) => {
     })
 }
 
+export const useUpdateTeam = (slug, id) => {
+    const api = useAxios()
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (data) => {
+            return api.patch(`${prefix}/teams/${id}/`, data).then((res) => res)
+        },
+        onSuccess: (res) => {
+            console.log(res)
+            queryClient.setQueryData(
+                ['team', { slug: res.data.slug }],
+                res.data
+            )
+        },
+    })
+}
+
 export const useDeleteTeam = () => {
     const api = useAxios()
     const navigate = useNavigate()
@@ -67,8 +84,10 @@ export const useLeaveTeam = () => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: (data) => {
-            return api.post(`${prefix}/teams/${data.id}/leave`, {
-                password: data.password,
+            return api.delete(`${prefix}/teams/${data.id}/exit/`, {
+                data: {
+                    password: data.password,
+                },
             })
         },
         onSuccess: async (res) => {

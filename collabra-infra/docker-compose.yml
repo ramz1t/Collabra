@@ -15,9 +15,9 @@ services:
     environment:
       - DOCKER_ENV=1
     volumes:
-      # - data_value:/app/data/
+#      - data_value:/app/data/
       - static_value:/app/static/
-      - media_value:/app/media/
+      - media_value:/app/core/data/media/
     depends_on:
       - db
     env_file:
@@ -48,5 +48,5 @@ services:
 volumes:
   static_value:
   media_value:
-  # data_value:
+#  data_value:
   react_build:

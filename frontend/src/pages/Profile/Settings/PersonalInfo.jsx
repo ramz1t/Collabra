@@ -7,6 +7,7 @@ import {
     Form,
     SettingsSection,
     Input,
+    ImageEditor,
 } from '../../../components/index.js'
 import useInput from '../../../hooks/useInput.js'
 import { Link } from 'react-router-dom'
@@ -15,19 +16,25 @@ import { objectsDifference } from '../../../utils/index.jsx'
 import LinkCell from './LinkCell.jsx'
 import TimezoneSelect from 'react-timezone-select'
 import cn from 'classnames'
+import TextField from '../../../components/TextField/index.jsx'
 
 const PersonalInfo = () => {
     const { t } = useTranslation()
-    const { data, isLoading } = useUser('me')
-    const firstName = useInput(data?.first_name, { isEmpty: true })
+    const { data: user, isLoading } = useUser('me')
+    const firstName = useInput('', { isEmpty: true })
     const lastName = useInput('', { isEmpty: true })
+    const bio = useInput('')
     const email = useInput('', { isEmpty: true })
     const username = useInput('', { isEmpty: true })
     const newLink = useInput('')
     const [hasChanges, setHasChanges] = useState(false)
     const [timezoneValue, setTimezoneValue] = useState('')
     const [links, setLinks] = useState([])
-    const { mutate: updateUser, isLoading: mutationLoading } = useUpdateUser()
+    const {
+        mutate: updateUser,
+        isPending: mutationLoading,
+        mutateAsync: updateUserAsync,
+    } = useUpdateUser()
 
     const formData = {
         first_name: firstName.value,
@@ -36,21 +43,23 @@ const PersonalInfo = () => {
         username: username.value,
         timezone: timezoneValue?.value ?? timezoneValue,
         links: links,
+        description: bio.value,
     }
 
     useEffect(() => {
-        if (!data) return
-        firstName.setValue(data.first_name)
-        lastName.setValue(data.last_name)
-        email.setValue(data.email)
-        username.setValue(data.username)
-        setTimezoneValue(data.timezone)
-        setLinks([...data.links])
-    }, [data])
+        if (!user) return
+        firstName.setValue(user?.first_name)
+        lastName.setValue(user?.last_name)
+        email.setValue(user?.email)
+        username.setValue(user?.username)
+        setTimezoneValue(user?.timezone)
+        setLinks([...user.links])
+        bio.setValue(user?.description)
+    }, [user])
 
     useEffect(() => {
         setHasChanges(
-            Object.keys(objectsDifference(data, formData)).length !== 0
+            Object.keys(objectsDifference(user, formData)).length !== 0
         )
     }, [formData, JSON.stringify(links)])
 
@@ -61,7 +70,7 @@ const PersonalInfo = () => {
             extraBlock={
                 <Link
                     to="/users/me"
-                    className="text-accent dark:text-accent-dark font-semibold text-lg flex items-center gap-3 hover:gap-5 transition-all w-fit"
+                    className="text-accent hover:text-accent/90 dark:text-accent-dark dark:hover:bg-accent-accent/90 font-semibold text-lg flex items-center gap-3 hover:gap-5 transition-all w-fit"
                 >
                     {t('view_profile')}
                     <IoArrowForward />
@@ -70,17 +79,14 @@ const PersonalInfo = () => {
         >
             {!isLoading && (
                 <div className="flex flex-col gap-10">
-                    <div className="flex gap-5 md:gap-10 items-center">
-                        <Avatar user={data} size="profile" square />
-                        <div>
-                            <Button style="secondary">
-                                {t('change_avatar')}
-                            </Button>
-                            <p className="pt-3 font-semibold text-sm text-gray-600 dark:text-gray-400">
-                                JPG, PNG {t('or')} GIF
-                            </p>
-                        </div>
-                    </div>
+                    <ImageEditor
+                        initialImageComponent={
+                            <Avatar user={user} size="profile" square />
+                        }
+                        initialImageExists={user?.avatar !== null}
+                        onSaveField="avatar"
+                        onSave={updateUserAsync}
+                    />
                     <Form
                         className="!gap-7 md:!gap-10"
                         disabled={
@@ -90,7 +96,7 @@ const PersonalInfo = () => {
                             )
                         }
                         onSubmit={() => {
-                            updateUser(objectsDifference(data, formData))
+                            updateUser(objectsDifference(user, formData))
                         }}
                     >
                         <div className="grid md:grid-cols-[1fr_1fr] gap-7 md:gap-5">
@@ -155,6 +161,11 @@ const PersonalInfo = () => {
                                 {t('select_auto_time')}
                             </Button>
                         </div>
+                        <TextField
+                            instance={bio}
+                            title={t('bio')}
+                            minHeight={180}
+                        />
                         <div>
                             <p className="pl-1">{t('links')}</p>
                             <ul
@@ -189,13 +200,12 @@ const PersonalInfo = () => {
                                 </div>
                             </ul>
                         </div>
-                        {mutationLoading && 'loading'}
                         <Button
                             style="primary"
                             type="submit"
-                            disabled={mutationLoading}
+                            isLoading={mutationLoading}
                         >
-                            {mutationLoading ? t('loading') : t('save')}
+                            {t('save')}
                         </Button>
                     </Form>
                 </div>

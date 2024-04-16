@@ -41,8 +41,8 @@ const Invitee = ({ user, onSuccess = () => {} }) => {
                         className="text-gray-600 hover:text-red-500 ml-auto min-h-10 min-w-10 hover:scale-105 rounded-full"
                         action={() =>
                             removeInvite(
-                                { teamId: team.id, userId: user.id }
-                                // { onSuccess: onSuccess }
+                                { teamId: team.id, userId: user.id },
+                                { onSuccess: onSuccess }
                             )
                         }
                     >

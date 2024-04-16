@@ -9,7 +9,6 @@ import { useTeamInvites } from '../../../../api/invites.js'
 import { useParams } from 'react-router-dom'
 import React, { useContext } from 'react'
 import TeamContext from '../../../../contexts/TeamContext.jsx'
-import { UserRole } from '../../../../hooks/useIsAllowed.js'
 
 const InvitationsManagement = () => {
     const { t } = useTranslation()
@@ -23,7 +22,6 @@ const InvitationsManagement = () => {
             title={t('manage_invitations_head')}
             description={t('manage_invitations_desc')}
             extraBlock={<RefreshKeysButton />}
-            allowedRoles={[UserRole.Admin, UserRole.Owner]}
         >
             <div className="w-full">
                 <div className="flex flex-col items-center w-full gap-1">

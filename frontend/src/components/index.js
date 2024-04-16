@@ -16,6 +16,8 @@ import TeamImage from './TeamImage/index.jsx'
 import SettingsSection from './Settings/SettingsSection.jsx'
 import SettingsContainer from './Settings/SettingsContainer.jsx'
 import SearchBar from './SearchBar/index.jsx'
+import PrivateComponent from './PrivateComponent/index.js.jsx'
+import ImageEditor from './ImageEditor/index.jsx'
 
 export {
     PrivateRoute,
@@ -36,4 +38,6 @@ export {
     SettingsSection,
     SettingsContainer,
     SearchBar,
+    PrivateComponent,
+    ImageEditor,
 }

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import TeamContext from '../contexts/TeamContext.jsx'
 
 const UserRole = {
@@ -16,6 +16,9 @@ const useIsAllowed = (allowedRoles = []) => {
           ? 'admin'
           : 'member'
     return allowedRoles.some((role) => role === userRole)
+
+    // !!!DEBUG ONLY!!!
+    // return true
 }
 
 export default useIsAllowed

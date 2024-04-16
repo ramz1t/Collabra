@@ -29,6 +29,9 @@ export default {
                 spin5: 'spin 5s linear infinite',
                 spin: 'spin 1s linear infinite',
             },
+            backgroundImage: {
+                'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+            },
         },
     },
     plugins: [],

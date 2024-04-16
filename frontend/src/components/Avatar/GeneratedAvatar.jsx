@@ -9,24 +9,21 @@ const GeneratedAvatar = ({
     square,
     style,
     className,
+    w,
 }) => {
-    let w, font
+    let font
 
     switch (size) {
         case 'sidebar':
-            w = 36
             font = 16
             break
         case 'profile':
-            w = 120
-            font = 50
+            font = 80
             break
         case 'task':
-            w = 24
             font = 11
             break
         default:
-            w = 36
             font = 16
             break
     }
@@ -49,10 +46,8 @@ const GeneratedAvatar = ({
                 ...style,
             }}
         >
-            <span className="h-8/10">
-                {firstName && firstName[0]}
-                {lastName && lastName[0]}
-            </span>
+            {firstName && firstName[0]}
+            {lastName && lastName[0]}
         </div>
     )
 }

@@ -11,7 +11,7 @@ import { useDeleteUser } from '../../../api/user.js'
 const DeleteProfile = () => {
     const { t } = useTranslation()
     const password = useInput('')
-    const { mutate: deleteUser, isLoading } = useDeleteUser()
+    const { mutate: deleteUser, isPending } = useDeleteUser()
 
     return (
         <SettingsSection
@@ -22,7 +22,6 @@ const DeleteProfile = () => {
                 className="!gap-7 md:!gap-10"
                 onSubmit={() => deleteUser({ old_password: password.value })}
                 autoComplete="off"
-                disabled={isLoading}
             >
                 <div className="flex max-md:flex-col gap-5">
                     <Input
@@ -36,7 +35,8 @@ const DeleteProfile = () => {
                         <Button
                             style="destructive"
                             type="submit"
-                            disabled={password.value === ''}
+                            disabled={!password.value}
+                            isLoading={isPending}
                         >
                             {t('delete')}
                         </Button>

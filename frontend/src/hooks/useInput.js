@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import useDebounce from './useDebounce.js'
 
-const useInput = (initialValue, validations, debounce = 0) => {
+const useInput = (initialValue = '', validations = {}, debounce = 0) => {
     const [rawValue, setValue] = useState(initialValue)
     const value = useDebounce(rawValue, debounce)
     const [isDirty, setIsDirty] = useState(false)
-    const valid = useValidation(initialValue, validations)
+    const valid = useValidation(value, validations)
     const allValid = Object.values(valid).every((item) => !item)
 
     const checkValue = (e) => {

@@ -85,11 +85,11 @@ const LanguagePicker = () => {
                             <Twemoji emoji={languages[key].flag} width={24} />
                         </Button>
                     ))}
-                    {!isTablet && (
-                        <span className="min-h-10 w-full flex items-center justify-center">
-                            <IoChevronDown />
-                        </span>
-                    )}
+                    {/*{!isTablet && (*/}
+                    {/*    <span className="min-h-10 w-full flex items-center justify-center">*/}
+                    {/*        <IoChevronDown />*/}
+                    {/*    </span>*/}
+                    {/*)}*/}
                 </ul>
             )}
         </div>
