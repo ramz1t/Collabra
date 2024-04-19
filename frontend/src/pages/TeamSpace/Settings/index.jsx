@@ -4,25 +4,30 @@ import DeleteTeam from './DeleteTeam.jsx'
 import LeaveGroup from './LeaveTeam.jsx'
 import GeneralInfo from './GeneralInfo.jsx'
 import { UserRole } from '../../../hooks/useIsAllowed.js'
+import TransferOwnership from './TransferOwnership/TransferOwnership.jsx'
 
 const TeamSettings = () => {
     return (
         <SettingsContainer>
             <PrivateComponent
                 component={<GeneralInfo />}
-                allowedRoles={[UserRole.Admin, UserRole.Owner]}
+                allowedRoles={[UserRole.ADMIN, UserRole.OWNER]}
             />
             <PrivateComponent
                 component={<InvitationsManagement />}
-                allowedRoles={[UserRole.Admin, UserRole.Owner]}
+                allowedRoles={[UserRole.ADMIN, UserRole.OWNER]}
             />
             <PrivateComponent
                 component={<LeaveGroup />}
-                allowedRoles={[UserRole.Member, UserRole.Admin]}
+                allowedRoles={[UserRole.MEMBER, UserRole.ADMIN]}
+            />
+            <PrivateComponent
+                component={<TransferOwnership />}
+                allowedRoles={[UserRole.OWNER]}
             />
             <PrivateComponent
                 component={<DeleteTeam />}
-                allowedRoles={[UserRole.Owner]}
+                allowedRoles={[UserRole.OWNER]}
             />
         </SettingsContainer>
     )

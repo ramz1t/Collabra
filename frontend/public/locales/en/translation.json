@@ -106,5 +106,12 @@
     "general_info_head": "General info",
     "general_info_desc": "This info is accessible by everyone in the group. It is also seen in the invitation box for new members",
     "loading": "Loading...",
-    "description": "Description"
+    "description": "Description",
+    "transfer_ownership_head": "Transfer ownership",
+    "transfer_ownership_desc": "You can transfer ownership of this group to any member. You will lose owners's functionality after that",
+    "transfer_ownership_searchbox": "Email of the user to transfer ownership",
+    "selected_user": "Selected user",
+    "select": "Select",
+    "transfer": "Transfer",
+    "transfer_ownership": "Transfer ownership"
 }

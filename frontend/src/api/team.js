@@ -60,7 +60,7 @@ export const useDeleteTeam = () => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: (data) => {
-            return api.delete(`${prefix}/teams/${data.id}`, {
+            return api.delete(`${prefix}/teams/${data.id}/`, {
                 data: {
                     password: data.password,
                 },
@@ -98,6 +98,36 @@ export const useLeaveTeam = () => {
                 queryClient.setQueryData(['teams', { name: null }], teamsList)
             }
             navigate('/teams')
+        },
+    })
+}
+
+export const useTransferOwnership = (teamSlug) => {
+    const api = useAxios()
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (data) => {
+            return api.post(
+                `${prefix}/teams/${data.teamId}/transfer-ownership/`,
+                {
+                    user: data.user,
+                    password: data.password,
+                }
+            )
+        },
+        onSuccess: () =>
+            queryClient.invalidateQueries(['team', { slug: teamSlug }]),
+    })
+}
+
+export const useTeamMember = (teamId, info) => {
+    const api = useAxios()
+    return useQuery({
+        queryKey: ['team-member', { teamId: teamId, info: info }],
+        queryFn: () => {
+            return api
+                .get(`${prefix}/teams/${teamId}/users/${info}`)
+                .then((res) => res.data)
         },
     })
 }

@@ -1,18 +1,9 @@
 import useInput from '../../hooks/useInput.js'
-import {
-    BackgroundGradient,
-    Button,
-    Divider,
-    Form,
-    Input,
-    TeamImage,
-    Title,
-} from '../../components/index.js'
+import { Button, Form, Input, TeamImage } from '../../components/index.js'
 import { IoChevronBackOutline } from 'react-icons/io5'
 import { useTranslation } from 'react-i18next'
 import { useCreateTeam } from '../../api/team.js'
 import React, { useEffect, useState } from 'react'
-import cn from 'classnames'
 import { Link } from 'react-router-dom'
 
 const CreateTeam = () => {
@@ -51,8 +42,9 @@ const CreateTeam = () => {
                         team={{
                             title: name.value,
                         }}
+                        size="list"
                     />
-                    <div className="grid gap-3">
+                    <div className="grid gap-3 h-fit">
                         <Input instance={name} title={'Team name'} must />
                         <Button
                             style="primary"

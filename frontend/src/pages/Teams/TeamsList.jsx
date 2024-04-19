@@ -31,7 +31,7 @@ const TeamsList = () => {
             </div>
 
             {data?.results && (
-                <ul className="grid gap-5 md:grid-cols-2 xl:grid-cols-2 pt-5">
+                <ul className="grid gap-5 md:grid-cols-2 xl:grid-cols-3 pt-5">
                     {data.results.map((team, key) => (
                         <TeamCard key={key} team={team} />
                     ))}

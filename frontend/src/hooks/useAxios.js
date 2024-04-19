@@ -27,7 +27,7 @@ const useAxios = () => {
 
         if (!isExpired) return req
         const response = await fetch(
-            `/api/v1/token/refresh/`,
+            `${import.meta.env.VITE_API_URL || ''}/api/v1/token/refresh/`,
             {
                 method: 'POST',
             },

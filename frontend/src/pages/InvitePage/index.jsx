@@ -58,10 +58,10 @@ const InvitePage = () => {
                         </h1>
                         <p className="font-bold text-2xl">{team?.title}</p>
                         {team?.description && <p>{team.description}</p>}
-                        {/*<div className="flex gap-3">*/}
-                        {/*    <MembersAvatars members={membersMock} />*/}
-                        {/*    <p className="whitespace-nowrap">12 members</p>*/}
-                        {/*</div>*/}
+                        <div className="flex gap-3">
+                            <MembersAvatars members={membersMock} />
+                            <p className="whitespace-nowrap">12 members</p>
+                        </div>
                         <div className="flex gap-5 mt-5">
                             <Button
                                 style="primary"
