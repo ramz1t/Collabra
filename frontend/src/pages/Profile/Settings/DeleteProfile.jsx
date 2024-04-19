@@ -1,16 +1,9 @@
 import { useTranslation } from 'react-i18next'
-import useInput from '../../../hooks/useInput.js'
-import {
-    Form,
-    Input,
-    Button,
-    SettingsSection,
-} from '../../../components/index.js'
+import { SettingsSection, PasswordSubmit } from '../../../components/index.js'
 import { useDeleteUser } from '../../../api/user.js'
 
 const DeleteProfile = () => {
     const { t } = useTranslation()
-    const password = useInput('')
     const { mutate: deleteUser, isPending } = useDeleteUser()
 
     return (
@@ -18,31 +11,12 @@ const DeleteProfile = () => {
             title={t('delete_profile_head')}
             description={t('delete_profile_desc')}
         >
-            <Form
-                className="!gap-7 md:!gap-10"
-                onSubmit={() => deleteUser({ old_password: password.value })}
-                autoComplete="off"
-            >
-                <div className="flex max-md:flex-col gap-5">
-                    <Input
-                        instance={password}
-                        hint={t('pass_to_submit', {
-                            action: t('delete_profile').toLowerCase(),
-                        })}
-                        type="password"
-                    />
-                    <div className="flex gap-5">
-                        <Button
-                            style="destructive"
-                            type="submit"
-                            disabled={!password.value}
-                            isLoading={isPending}
-                        >
-                            {t('delete')}
-                        </Button>
-                    </div>
-                </div>
-            </Form>
+            <PasswordSubmit
+                submitFn={deleteUser}
+                actionText={t('delete_profile')}
+                buttonText={t('delete')}
+                isLoading={isPending}
+            />
         </SettingsSection>
     )
 }

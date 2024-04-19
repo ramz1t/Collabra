@@ -1,4 +1,5 @@
 import cn from 'classnames'
+import { IoPawOutline } from 'react-icons/io5'
 
 const TeamImage = ({ team, size, className }) => {
     let font, w
@@ -9,7 +10,7 @@ const TeamImage = ({ team, size, className }) => {
             font = 80
             break
         case 'list':
-            w = 110
+            w = 140
             font = 36
             break
         default:
@@ -46,10 +47,14 @@ const TeamImage = ({ team, size, className }) => {
                 maxHeight: w,
             }}
         >
-            {team.title
-                .split(' ')
-                .slice(0, 3)
-                .map((part) => part[0]?.toUpperCase())}
+            {team.title ? (
+                team.title
+                    .split(' ')
+                    .slice(0, 3)
+                    .map((part) => part[0]?.toUpperCase())
+            ) : (
+                <IoPawOutline />
+            )}
         </p>
     )
 }

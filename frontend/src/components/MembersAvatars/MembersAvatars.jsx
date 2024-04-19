@@ -2,14 +2,9 @@ import { Avatar } from '../index.js'
 
 const MembersAvatars = ({ members }) => {
     return (
-        <div className="flex -space-x-2 overflow-hidden flex-wrap">
+        <div className="flex -space-x-2 flex-wrap">
             {members.map((member, key) => (
-                <Avatar
-                    user={member}
-                    size="task"
-                    className="outline outline-white dark:outline-slate-800 first:outline-none"
-                    key={key}
-                />
+                <Avatar user={member} size="task" key={key} />
             ))}
         </div>
     )

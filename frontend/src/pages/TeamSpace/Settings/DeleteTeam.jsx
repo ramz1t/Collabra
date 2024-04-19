@@ -1,18 +1,11 @@
 import { useTranslation } from 'react-i18next'
-import {
-    Button,
-    Form,
-    Input,
-    SettingsSection,
-} from '../../../components/index.js'
-import useInput from '../../../hooks/useInput.js'
+import { PasswordSubmit, SettingsSection } from '../../../components/index.js'
 import { useDeleteTeam } from '../../../api/team.js'
 import { useContext } from 'react'
 import TeamContext from '../../../contexts/TeamContext.jsx'
 
 const DeleteTeam = () => {
     const { t } = useTranslation()
-    const password = useInput()
     const { team } = useContext(TeamContext)
     const { setTeam } = useContext(TeamContext)
     const { mutate: deleteTeam, isPending } = useDeleteTeam()
@@ -22,32 +15,13 @@ const DeleteTeam = () => {
             title={t('delete_team_head')}
             description={t('delete_team_desc')}
         >
-            <Form
-                onSubmit={() =>
-                    deleteTeam(
-                        { id: team.id, password: password.value },
-                        { onSuccess: () => setTeam(null) }
-                    )
-                }
-            >
-                <div className="flex gap-5">
-                    <Input
-                        instance={password}
-                        hint={t('pass_to_submit', {
-                            action: t('delete_team').toLowerCase(),
-                        })}
-                        type="password"
-                    />
-                    <Button
-                        disabled={!password.value}
-                        isLoading={isPending}
-                        style="destructive"
-                        className="!min-h-10"
-                    >
-                        {t('delete_team')}
-                    </Button>
-                </div>
-            </Form>
+            <PasswordSubmit
+                submitData={{ id: team.id }}
+                options={{ onSuccess: () => setTeam(null) }}
+                isLoading={isPending}
+                submitFn={deleteTeam}
+                actionText={t('delete_team')}
+            />
         </SettingsSection>
     )
 }

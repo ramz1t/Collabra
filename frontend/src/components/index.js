@@ -18,6 +18,7 @@ import SettingsContainer from './Settings/SettingsContainer.jsx'
 import SearchBar from './SearchBar/index.jsx'
 import PrivateComponent from './PrivateComponent/index.js.jsx'
 import ImageEditor from './ImageEditor/index.jsx'
+import PasswordSubmit from './PasswordSubmit/index.jsx'
 
 export {
     PrivateRoute,
@@ -40,4 +41,5 @@ export {
     SearchBar,
     PrivateComponent,
     ImageEditor,
+    PasswordSubmit,
 }

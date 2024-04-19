@@ -11,7 +11,7 @@ const App = () => {
         <div className="">
             <Navbar />
             <Suspense>
-                <div className="md:ml-[72px] max-md:mt-[72px] px-5 pb-5 grow md:min-h-dvh overflow-x-hidden overflow-y-auto flex flex-col">
+                <div className="md:ml-[72px] max-md:mt-[72px] px-5 pb-5 grow md:min-h-dvh overflow-x-hidden grid">
                     <Routes>
                         <Route path="/" element={<Landing />} />
                         <Route path="/login" element={<Login />} />
