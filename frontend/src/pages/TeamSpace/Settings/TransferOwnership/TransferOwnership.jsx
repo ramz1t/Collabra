@@ -42,14 +42,14 @@ const TransferOwnership = () => {
                     </>
                 ) : (
                     <div>
-                        <div className="flex items-center gap-5">
+                        <div className="flex items-center gap-5 text-gray-800 dark:text-gray-100">
                             <p>{t('selected_user')}:</p>
                             <p className="font-semibold">
                                 {selectedUser.first_name}{' '}
                                 {selectedUser.last_name}
                             </p>
                             <Button
-                                className=" rounded-md bg-gray-100 hover:bg-gray-200 text-gray-800 px-2 py-1 text-sm"
+                                className=" rounded-md bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 hover:dark:bg-slate-600 text-gray-800 dark:text-slate-300 px-2 py-1 text-sm"
                                 action={() => {
                                     setSelectedUser(null)
                                 }}
@@ -58,6 +58,7 @@ const TransferOwnership = () => {
                             </Button>
                         </div>
                         <PasswordSubmit
+                            autoRef
                             className="mt-3"
                             actionText={t('transfer_ownership')}
                             buttonText={t('transfer')}

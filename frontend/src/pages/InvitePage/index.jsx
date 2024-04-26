@@ -47,11 +47,10 @@ const InvitePage = () => {
     const navigate = useNavigate()
 
     return (
-        <div className="grow relative flex items-center justify-center">
-            <BackgroundGradient />
+        <div className="grid place-items-center">
             {team && (
-                <div className="border dark:border-slate-700 rounded-2xl p-10 shadow-sm flex flex-col md:flex-row gap-10 bg-white dark:bg-slate-800 max-w-xl">
-                    <TeamImage team={team} />
+                <div className="border dark:border-slate-700 rounded-2xl p-10 md:shadow-2xl max-md:mt-5 flex flex-col md:flex-row gap-10 bg-white dark:bg-slate-800 max-w-xl">
+                    <TeamImage size="list" team={team} />
                     <div className="flex flex-col gap-3">
                         <h1 className="text-gray-600 dark:text-gray-400">
                             {t('invite_head')}

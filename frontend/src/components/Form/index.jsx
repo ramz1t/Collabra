@@ -8,7 +8,7 @@ const Form = ({ onSubmit, children, className, autoComplete, disabled }) => {
                 if (disabled) return
                 onSubmit && onSubmit()
             }}
-            className={cn('flex flex-col gap-3 md:gap-5 rounded-sm', className)}
+            className={cn('flex flex-col gap-3 md:gap-5', className)}
             noValidate
             autoComplete={autoComplete}
         >

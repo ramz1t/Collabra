@@ -49,9 +49,11 @@ const TeamImage = ({ team, size, className }) => {
         >
             {team.title ? (
                 team.title
+                    .replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '')
+                    .toUpperCase()
                     .split(' ')
                     .slice(0, 3)
-                    .map((part) => part[0]?.toUpperCase())
+                    .map((part) => part[0])
             ) : (
                 <IoPawOutline />
             )}

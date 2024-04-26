@@ -61,9 +61,7 @@ const Invitee = ({ user, onSuccess = () => {} }) => {
                         <IoAdd />
                     </Button>
                 )
-            ) : (
-                <span className="min-h-10"></span>
-            )}
+            ) : null}
         </li>
     )
 }

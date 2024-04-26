@@ -11,6 +11,7 @@ const PasswordSubmit = ({
     buttonText,
     isLoading,
     options = {},
+    autoRef = false,
 }) => {
     const password = useInput('')
     const { t } = useTranslation()
@@ -22,6 +23,7 @@ const PasswordSubmit = ({
             className={cn('!flex-row gap-5', className)}
         >
             <Input
+                autoRef={autoRef}
                 type="password"
                 instance={password}
                 hint={t('pass_to_submit', { action: actionText.toLowerCase() })}

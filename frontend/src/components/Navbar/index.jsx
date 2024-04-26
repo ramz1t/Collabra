@@ -63,7 +63,7 @@ const Navbar = () => {
                 )}
                 <NavbarItem
                     href="/"
-                    className="!bg-transparent !hover:bg-transparent !p-0 !group-hover/navbar:pr-3 !pl-1 text-xl max-md:w-fit max-md:gap-2"
+                    className="!bg-transparent !hover:bg-transparent !p-0 !group-hover/navbar:pr-3 !pl-1 text-xl w-fit md:w-full max-md:gap-2"
                     icon={
                         <img
                             src={logo}

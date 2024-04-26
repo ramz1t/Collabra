@@ -55,7 +55,7 @@ const Input = ({
                     )}
                     <div
                         className={cn(
-                            'flex gap-2 items-center bg-slate-100 caret-accent dark:caret-accent-dark dark:bg-slate-600 focus-within:ring-accent dark:focus-within:ring-accent-dark focus-within:shadow-sm focus-within:ring-1 focus-within:outline-none h-10 w-full px-2',
+                            'flex items-center bg-slate-100 caret-accent dark:caret-accent-dark dark:bg-slate-600 focus-within:ring-accent dark:focus-within:ring-accent-dark focus-within:shadow-sm focus-within:ring-1 focus-within:outline-none h-10 w-full',
                             prefix ? 'rounded-r-md' : 'rounded-md',
                             instance.allValid
                                 ? ''
@@ -64,7 +64,9 @@ const Input = ({
                         )}
                     >
                         {innerIcon && (
-                            <span className="text-gray-400">{innerIcon}</span>
+                            <span className="text-gray-400 px-2">
+                                {innerIcon}
+                            </span>
                         )}
                         <input
                             aria-label={ariaLabel}
@@ -80,7 +82,10 @@ const Input = ({
                                 instance.checkValue
                                 setTimeout(() => onblur && onblur(), 100)
                             }}
-                            className="bg-transparent w-full focus:border-none focus:outline-none placeholder:text-gray-400"
+                            className={cn(
+                                'bg-transparent w-full h-full focus:border-none focus:outline-none placeholder:text-gray-400',
+                                !innerIcon ? 'px-2' : 'pr-2'
+                            )}
                             onFocus={() => onfocus && onfocus()}
                             disabled={disabled}
                             placeholder={placeholder}

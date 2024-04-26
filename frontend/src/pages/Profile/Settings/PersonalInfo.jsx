@@ -167,7 +167,7 @@ const PersonalInfo = () => {
                             minHeight={180}
                         />
                         <div>
-                            <p className="pl-1">{t('links')}</p>
+                            <p className="pl-1 mb-1">{t('links')}</p>
                             <ul
                                 className="flex gap-5 flex-col"
                                 key={links.length}

@@ -29,7 +29,7 @@ const NavbarItem = ({
             end={end}
         >
             <span className="text-lg">{icon}</span>
-            <p className="block whitespace-nowrap truncate">{title}</p>
+            <p className="block whitespace-nowrap max-md:truncate">{title}</p>
         </NavLink>
     )
 }
