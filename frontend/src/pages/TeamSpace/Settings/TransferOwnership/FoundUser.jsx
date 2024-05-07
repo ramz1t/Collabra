@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Avatar, Button } from '../../../../components/index.js'
+import { Avatar, Button, Spacer } from '../../../../components/index.js'
 import { useTeamMember } from '../../../../api/team.js'
 import { useContext } from 'react'
 import TeamContext from '../../../../contexts/TeamContext.jsx'
@@ -13,7 +13,7 @@ const FoundUser = ({ info, selectUser }) => {
     if (!user) return t('no_user_found')
 
     return (
-        <div className="p-2.5 flex items-center rounded-full border hover:bg-gray-50 gap-3 w-fit">
+        <div className="p-2.5 flex items-center rounded-full border hover:bg-gray-50 gap-3 md:w-fit">
             <Avatar user={user} />
             <div>
                 <p className="leading-[1.1]">
@@ -23,8 +23,9 @@ const FoundUser = ({ info, selectUser }) => {
                     {user?.username}
                 </p>
             </div>
+            <Spacer />
             <Button
-                className="ml-10 px-2"
+                className="px-2"
                 style="tetriary"
                 action={() => selectUser(user)}
             >

@@ -19,6 +19,9 @@ import SearchBar from './SearchBar/index.jsx'
 import PrivateComponent from './PrivateComponent/index.js.jsx'
 import ImageEditor from './ImageEditor/index.jsx'
 import PasswordSubmit from './PasswordSubmit/index.jsx'
+import BackButton from './BackButton/index.jsx'
+import LoadingState from './LoadingState/index.jsx'
+import CookiesModal from './CookiesModal/index.jsx'
 
 export {
     PrivateRoute,
@@ -42,4 +45,7 @@ export {
     PrivateComponent,
     ImageEditor,
     PasswordSubmit,
+    BackButton,
+    LoadingState,
+    CookiesModal,
 }

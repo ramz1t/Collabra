@@ -13,21 +13,6 @@ const Hero = () => {
             <div className="relative isolate px-6 pt-7 lg:px-8">
                 <BackgroundGradient />
                 <div className="mx-auto max-w-2xl py-14 sm:py-48 lg:py-56">
-                    {/* <div className="hidden sm:mb-8 sm:flex sm:justify-center">
-                        <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 dark:text-gray-400 ring-1 ring-gray-900/10 dark:ring-gray-100/20 hover:ring-gray-900/20 dark:hover:ring-gray-100/30">
-                            Announcing our next round of funding.{' '}
-                            <a
-                                href="#"
-                                className="font-semibold text-accent dark:text-accent-dark"
-                            >
-                                <span
-                                    className="absolute inset-0"
-                                    aria-hidden="true"
-                                ></span>
-                                Read more <span aria-hidden="true">&rarr;</span>
-                            </a>
-                        </div>
-                    </div> */}
                     <div className="text-center">
                         <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-6xl">
                             {t('hero_title')}
@@ -46,7 +31,7 @@ const Hero = () => {
                             </Link>
                             <Link
                                 to="https://github.com/alexzawadsky/Collabra"
-                                className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-200"
+                                className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-200 hover:opacity-70 transition-all duration-75"
                                 target="_blank"
                             >
                                 {t('learn_on_gh')}{' '}

@@ -76,7 +76,7 @@ const LanguagePicker = () => {
                                     .setAttribute('lang', languages[key].code)
                             }}
                             className={cn(
-                                'w-full min-h-10 rounded-sm',
+                                'w-full min-h-10 rounded-sm hover:!opacity-100',
                                 languages[key].code === i18n.resolvedLanguage
                                     ? 'bg-slate-100 dark:bg-accent-dark/10'
                                     : 'hover:bg-slate-50 dark:hover:bg-accent-dark/5'

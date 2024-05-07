@@ -20,16 +20,15 @@ const SearchBar = ({ placeholder, inputInstance, className }) => {
                         initial={{ width: 0, paddingRight: 0, opacity: 0 }}
                         animate={{
                             width: 'fit-content',
-                            paddingRight: '12px',
                             opacity: 1,
                         }}
-                        exit={{ width: 0, paddingRight: '12px', opacity: 0 }}
+                        exit={{ width: 0, opacity: 0 }}
                         transition={{ duration: 0.05 }}
-                        className="overflow-hidden h-10 pl-5 flex items-center"
+                        className="overflow-hidden h-10 flex items-center justify-center"
                     >
                         <Button
                             style="tetriary"
-                            className="hover:text-accent rounded-md"
+                            className="hover:text-accent rounded-md px-7 h-full"
                             action={() => inputInstance.clear()}
                         >
                             {t('cancel')}
