@@ -1,4 +1,8 @@
-import { SettingsSection, SearchBar } from '../../../../components/index.js'
+import {
+    SettingsSection,
+    SearchBar,
+    RichHeader,
+} from '../../../../components/index.js'
 import { useTranslation } from 'react-i18next'
 import { IoPeopleOutline } from 'react-icons/io5'
 import useInput from '../../../../hooks/useInput.js'
@@ -24,15 +28,11 @@ const InvitationsManagement = () => {
             extraBlock={<RefreshKeysButton />}
         >
             <div className="w-full">
-                <div className="flex flex-col items-center w-full gap-1">
-                    <span className="text-accent dark:text-accent-dark mb-2">
-                        <IoPeopleOutline size="3em" />
-                    </span>
-                    <p className="text-xl font-bold">{t('add_team_members')}</p>
-                    <p className="text-gray-600 dark:text-gray-400 md:px-16 text-center text-sm">
-                        {t('add_team_members_desc')}
-                    </p>
-                </div>
+                <RichHeader
+                    icon={<IoPeopleOutline />}
+                    title={t('add_team_members')}
+                    description={t('add_team_members_desc')}
+                />
                 <SearchBar
                     placeholder={t('new_member_info')}
                     inputInstance={userInfo}

@@ -19,14 +19,6 @@ class TeamRetrieveSerializer(serializers.Serializer):
     image = Base64ImageField()
     title = serializers.CharField()
     description = serializers.CharField()
-
-
-class TeamShortRetrieveSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    slug = serializers.SlugField()
-    image = Base64ImageField()
-    title = serializers.CharField()
-    description = serializers.CharField()
     is_admin = serializers.SerializerMethodField()
     is_owner = serializers.SerializerMethodField()
 
@@ -35,6 +27,14 @@ class TeamShortRetrieveSerializer(serializers.Serializer):
 
     def get_is_owner(self, team):
         return selectors.is_user_owner_by_team(team, self.context["request"].user)
+
+
+class TeamShortRetrieveSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    slug = serializers.SlugField()
+    image = Base64ImageField()
+    title = serializers.CharField()
+    description = serializers.CharField()
 
 
 class TeamCreateSerializer(serializers.Serializer):
@@ -148,6 +148,7 @@ class UserSerializer(serializers.Serializer):
     first_name = serializers.CharField()
     last_name = serializers.CharField()
     username = serializers.CharField()
+    email = serializers.CharField()
 
     def get_generated_avatar(self, user):
         return GeneratedAvatarRetrieveSerializer(instance=user.generated_avatar).data

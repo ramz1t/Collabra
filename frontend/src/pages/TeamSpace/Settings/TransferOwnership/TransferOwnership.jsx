@@ -11,10 +11,10 @@ import FoundUser from './FoundUser.jsx'
 import { useTransferOwnership } from '../../../../api/team.js'
 import { useParams } from 'react-router-dom'
 import TeamContext from '../../../../contexts/TeamContext.jsx'
+import AdminsList from './AdminsList.jsx'
 
 const TransferOwnership = () => {
     const { t } = useTranslation()
-    const search = useInput('', {}, 250)
     const { teamSlug } = useParams()
     const { team } = useContext(TeamContext)
     const [selectedUser, setSelectedUser] = useState(null)
@@ -28,18 +28,7 @@ const TransferOwnership = () => {
         >
             <div className="grid gap-3">
                 {!selectedUser ? (
-                    <>
-                        <SearchBar
-                            inputInstance={search}
-                            placeholder={t('transfer_ownership_searchbar')}
-                        />
-                        {search.value && (
-                            <FoundUser
-                                info={search.value}
-                                selectUser={setSelectedUser}
-                            />
-                        )}
-                    </>
+                    <AdminsList setSelectedUser={setSelectedUser} />
                 ) : (
                     <div>
                         <div className="flex items-center gap-5 text-gray-800 dark:text-gray-100">

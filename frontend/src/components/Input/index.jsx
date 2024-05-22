@@ -64,7 +64,14 @@ const Input = ({
                         )}
                     >
                         {innerIcon && (
-                            <span className="text-gray-400 px-2">
+                            <span
+                                className="text-gray-400 px-2 h-full flex items-center"
+                                onClick={() =>
+                                    ref
+                                        ? ref.current.click()
+                                        : inputRef.current.focus()
+                                }
+                            >
                                 {innerIcon}
                             </span>
                         )}

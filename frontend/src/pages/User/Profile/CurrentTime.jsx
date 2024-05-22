@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const TimezoneClock = ({ timezone }) => {
+    if (!timezone) return
     const [counter, setCounter] = useState(0)
     // const { t } = useTranslation()
     // const localTime = new Date()

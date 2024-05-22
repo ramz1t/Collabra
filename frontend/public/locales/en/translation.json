@@ -105,7 +105,7 @@
     "loading": "Loading...",
     "description": "Description",
     "transfer_ownership_head": "Transfer ownership",
-    "transfer_ownership_desc": "You can transfer ownership of this group to any member. You will lose owners's functionality after that",
+    "transfer_ownership_desc": "You can transfer ownership of this group to any admin. You will lose owners's functionality after that",
     "transfer_ownership_searchbar": "Email of the user to transfer ownership",
     "selected_user": "Selected user",
     "select": "Select",
@@ -115,5 +115,8 @@
     "accept": "Accept",
     "decline": "Decline",
     "about": "About",
-    "edit": "Edit"
+    "edit": "Edit",
+    "search_admin": "Search admin",
+    "no_access": "No access",
+    "login_to_access": "Log in to your account to see this page"
 }

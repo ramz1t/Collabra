@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { IoLogoGoogle, IoLogoApple, IoLogoGithub } from 'react-icons/io5'
 import useInput from '../../hooks/useInput.js'
 import AuthContext from '../../contexts/AuthContext.jsx'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
 import SocialLogin from './SocialLogin.jsx'
 
 const Login = () => {
@@ -12,7 +12,7 @@ const Login = () => {
     const email = useInput('')
     const password = useInput('')
     const { loginUser } = useContext(AuthContext)
-    const { redirectFrom } = useParams()
+    const [searchParams, _] = useSearchParams()
 
     return (
         <div className="flex flex-col items-center mt-5">
@@ -22,7 +22,7 @@ const Login = () => {
                     loginUser({
                         email: email.value,
                         password: password.value,
-                        redirectFrom,
+                        redirectFrom: searchParams.get('redirectFrom'),
                     })
                 }}
             >

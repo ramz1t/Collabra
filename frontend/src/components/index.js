@@ -22,6 +22,7 @@ import PasswordSubmit from './PasswordSubmit/index.jsx'
 import BackButton from './BackButton/index.jsx'
 import LoadingState from './LoadingState/index.jsx'
 import CookiesModal from './CookiesModal/index.jsx'
+import RichHeader from './RichHeader/RichHeader.jsx'
 
 export {
     PrivateRoute,
@@ -48,4 +49,5 @@ export {
     BackButton,
     LoadingState,
     CookiesModal,
+    RichHeader,
 }

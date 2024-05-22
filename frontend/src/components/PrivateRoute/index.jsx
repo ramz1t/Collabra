@@ -1,9 +1,13 @@
 import React, { useContext } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import AuthContext from '../../contexts/AuthContext'
+import { useTranslation } from 'react-i18next'
+import { Button, RichHeader } from '../index.js'
+import { IoBan } from 'react-icons/io5'
 
 const PrivateRoute = ({ children }) => {
     const { user } = useContext(AuthContext)
+    const { t } = useTranslation()
 
     return (
         <>
@@ -14,13 +18,20 @@ const PrivateRoute = ({ children }) => {
                     <Outlet />
                 )
             ) : (
-                <div className="flex h-full flex-col items-center justify-center gap-5">
-                    No access to route without active auth
-                    <NavLink
-                        to={`/login?redirectFrom=${window.location.pathname}`}
-                    >
-                        Login
-                    </NavLink>
+                <div className="grow flex items-center justify-center">
+                    <RichHeader
+                        icon={<IoBan />}
+                        title={t('no_access')}
+                        description={t('login_to_access')}
+                        actions={
+                            <Button
+                                to={`/login?redirectFrom=${window.location.pathname}`}
+                                style="primary"
+                            >
+                                {t('login')}
+                            </Button>
+                        }
+                    />
                 </div>
             )}
         </>

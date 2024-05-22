@@ -107,26 +107,23 @@ export const useTransferOwnership = (teamSlug) => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: (data) => {
-            return api.post(
-                `${prefix}/teams/${data.teamId}/transfer-ownership/`,
-                {
-                    user: data.user,
-                    password: data.password,
-                }
-            )
+            return api.patch(`${prefix}/teams/${data.teamId}/transfer/`, {
+                user: data.user,
+                password: data.password,
+            })
         },
         onSuccess: () =>
             queryClient.invalidateQueries(['team', { slug: teamSlug }]),
     })
 }
 
-export const useTeamMember = (teamId, info) => {
+export const useTeamMembers = (teamId, params) => {
     const api = useAxios()
     return useQuery({
-        queryKey: ['team-member', { teamId: teamId, info: info }],
+        queryKey: ['team-member', { teamId: teamId, ...params }],
         queryFn: () => {
             return api
-                .get(`${prefix}/teams/${teamId}/users/${info}`)
+                .get(`${prefix}/teams/${teamId}/members/`, { params: params })
                 .then((res) => res.data)
         },
     })
