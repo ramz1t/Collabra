@@ -49,7 +49,9 @@ class GeneratedAvatarSerializer(serializers.Serializer):
 
 class UserCreateUpdateBaseSerializer(serializers.Serializer):
     avatar = Base64ImageField(required=False, allow_null=True)
-    description = serializers.CharField(min_length=1, max_length=500, required=False)
+    description = serializers.CharField(
+        min_length=1, max_length=500, required=False, allow_null=True
+    )
     timezone = TimeZoneSerializerField(use_pytz=True, required=False)
     links = serializers.ListSerializer(
         child=serializers.URLField(), max_length=10, required=False

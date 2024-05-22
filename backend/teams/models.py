@@ -26,7 +26,9 @@ class Team(models.Model):
         default=secrets.token_hex(16), unique=True, max_length=32
     )
     join_key_selective = models.CharField(
-        default=secrets.token_hex(16), unique=True, max_length=32
+        default=secrets.token_hex(16),
+        unique=True,
+        max_length=32,
     )
     invited_people = models.ManyToManyField(User, related_name="teams_invited_to")
 

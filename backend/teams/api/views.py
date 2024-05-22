@@ -9,6 +9,7 @@ from .. import selectors
 from ..services.create import create_team
 from ..services.delete import delete_team
 from ..services.update import update_team
+from ..services.transfer import transfer_team
 from ..services.join import (
     refresh_join_keys,
     invite,
@@ -68,7 +69,9 @@ class TeamViewSet(mixins.TeamMixin):
     def retrieve_short(self, request, slug):
         team = selectors.get_team_or_404(slug=slug)
 
-        serializer = serializers.TeamShortRetrieveSerializer(instance=team)
+        serializer = serializers.TeamShortRetrieveSerializer(
+            instance=team, context={"user": request.user}
+        )
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -83,6 +86,24 @@ class TeamViewSet(mixins.TeamMixin):
         serializer = serializers.TeamListSerializer(queryset, many=True)
 
         return Response(status.HTTP_200_OK, serializer.data)
+
+    def get_members(self, request, pk):
+        team = selectors.get_team_or_404(pk=pk)
+        if not selectors.is_user_member_by_team(team, request.user):
+            raise PermissionDenied()
+
+        is_admin = request.query_params.get("is_admin", None)
+        if is_admin is not None and is_admin.lower() in ("true", "false"):
+            is_admin = is_admin.lower() == "true"
+            members = selectors.get_team_members(team, is_admin=is_admin)
+        else:
+            members = selectors.get_team_members(team)
+
+        serializer = serializers.MemberListSerializer(
+            members, many=True, context={"team": team}
+        )
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def get_join_keys(self, request, pk):
         team = selectors.get_team_or_404(id=pk)
@@ -174,4 +195,20 @@ class TeamViewSet(mixins.TeamMixin):
 
         exit_team(team, request.user)
 
-        return Response(status=status.HTTP_200_OK)
+        data = {"message": _("You exited")}
+        return Response(data, status=status.HTTP_200_OK)
+
+    def transfer(self, request, pk):
+        team = selectors.get_team_or_404(id=pk)
+        if not selectors.is_user_owner_by_team(team, request.user):
+            raise PermissionDenied()
+
+        serializer = serializers.TransferSerializer(
+            data=request.data, context={"team": team, "user": request.user}
+        )
+        serializer.is_valid(raise_exception=True)
+
+        transfer_team(team, serializer.validated_data["user"])
+
+        data = {"message": _("Team transferred")}
+        return Response(data, status=status.HTTP_200_OK)

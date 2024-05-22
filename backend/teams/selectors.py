@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
-from django.db.models import QuerySet, Subquery, OuterRef, Q
+from django.db.models import QuerySet, Q
 
 from .models import Team, Member
 
@@ -14,6 +14,10 @@ def get_teams(**fields) -> QuerySet[Team]:
 
 def get_team_or_404(**fields) -> Team:
     return get_object_or_404(Team, **fields)
+
+
+def get_team_members(team, **fields) -> QuerySet[Member]:
+    return team.members.filter(**fields)
 
 
 def is_user_admin_by_team(user: User, team: Team) -> bool:
