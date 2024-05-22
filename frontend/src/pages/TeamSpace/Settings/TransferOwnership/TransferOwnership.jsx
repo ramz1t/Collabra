@@ -31,7 +31,7 @@ const TransferOwnership = () => {
                     <>
                         <SearchBar
                             inputInstance={search}
-                            placeholder={t('transfer_ownership_searchbox')}
+                            placeholder={t('transfer_ownership_searchbar')}
                         />
                         {search.value && (
                             <FoundUser

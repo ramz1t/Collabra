@@ -40,23 +40,23 @@ const Team = () => {
             ],
             image: '/images/alex.jpg',
         },
-        {
-            name: 'Leonid Prokopev',
-            role: 'Backend Developer',
-            location: 'Moscow, Russia',
-            flag: '🇷🇺',
-            links: [
-                {
-                    icon: <IoLogoGithub />,
-                    href: '',
-                },
-                {
-                    icon: <IoLogoInstagram />,
-                    href: '',
-                },
-            ],
-            image: '/images/leonid.jpg',
-        },
+        // {
+        //     name: 'Leonid Prokopev',
+        //     role: 'Backend Developer',
+        //     location: 'Moscow, Russia',
+        //     flag: '🇷🇺',
+        //     links: [
+        //         {
+        //             icon: <IoLogoGithub />,
+        //             href: '',
+        //         },
+        //         {
+        //             icon: <IoLogoInstagram />,
+        //             href: '',
+        //         },
+        //     ],
+        //     image: '/images/leonid.jpg',
+        // },
     ]
     return (
         <div className="mt-24 md:mt-32">
@@ -64,7 +64,7 @@ const Team = () => {
             <pre className="text-gray-600 dark:text-gray-400 font-primary text-lg">
                 {t('about_team')}
             </pre>
-            <ul className="grid md:grid-cols-[1fr_1fr_1fr] pt-16 gap-10">
+            <ul className="grid md:grid-cols-[1fr_1fr] pt-16 gap-10">
                 {people.map((person, key) => {
                     return (
                         <li key={key} className="flex flex-col">

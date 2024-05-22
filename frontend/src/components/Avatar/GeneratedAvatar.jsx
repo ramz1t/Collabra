@@ -18,6 +18,9 @@ const GeneratedAvatar = ({
             font = 16
             break
         case 'profile':
+            font = 60
+            break
+        case 'settings':
             font = 80
             break
         case 'task':

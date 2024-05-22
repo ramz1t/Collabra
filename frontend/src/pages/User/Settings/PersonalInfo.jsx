@@ -81,7 +81,7 @@ const PersonalInfo = () => {
                 <div className="flex flex-col gap-10">
                     <ImageEditor
                         initialImageComponent={
-                            <Avatar user={user} size="profile" square />
+                            <Avatar user={user} size="settings" square />
                         }
                         initialImageExists={user?.avatar !== null}
                         onSaveField="avatar"

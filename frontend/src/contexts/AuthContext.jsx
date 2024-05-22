@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
-import { getCookie, success } from '../utils'
+import { error, getCookie, success } from '../utils'
 import { useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import TeamContext from './TeamContext'
@@ -52,12 +52,8 @@ export const AuthProvider = ({ children }) => {
                 const data = await res.json()
                 authWithTokens(data, redirectFrom)
             } else {
-                setError &&
-                    setError({
-                        status: res.status,
-                        message: res.data,
-                    })
-                alert(res.status)
+                const data = await res.json()
+                error(data.detail)
             }
         })
     }
