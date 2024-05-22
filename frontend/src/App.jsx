@@ -1,24 +1,37 @@
 import { Route, Routes } from 'react-router-dom'
 import { lazily } from 'react-lazily'
-const { Landing, Login, Profile, Register, InvitePage, Teams } = lazily(
-    () => import('./pages/index.js')
-)
-import { PrivateRoute, Navbar } from './components'
+const {
+    Landing,
+    Login,
+    Register,
+    InvitePage,
+    Teams,
+    UserSettings,
+    UserProfile,
+} = lazily(() => import('./pages/index.js'))
+import { PrivateRoute, Navbar, CookiesModal } from './components'
 import { Suspense } from 'react'
 
 const App = () => {
     return (
-        <div className="">
+        <>
             <Navbar />
             <Suspense>
-                <div className="md:ml-[72px] max-md:mt-[72px] px-5 pb-5 grow md:min-h-dvh overflow-x-hidden grid">
+                <div className="md:ml-[72px] max-md:mt-[72px] px-5 pb-5 grow md:min-h-dvh grid">
                     <Routes>
                         <Route path="/" element={<Landing />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
+                        <Route
+                            path="/users/:userId"
+                            element={<UserProfile />}
+                        />
                         <Route element={<PrivateRoute />}>
                             <Route path="/teams/*" element={<Teams />} />
-                            <Route path="/profile/*" element={<Profile />} />
+                            <Route
+                                path="/users/me/settings"
+                                element={<UserSettings />}
+                            />
                             <Route
                                 path="/join/:teamSlug/:joinKey"
                                 element={<InvitePage />}
@@ -28,7 +41,8 @@ const App = () => {
                     </Routes>
                 </div>
             </Suspense>
-        </div>
+            <CookiesModal />
+        </>
     )
 }
 

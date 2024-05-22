@@ -1,10 +1,10 @@
-import { Divider, SettingsContainer } from '../../../components/index.js'
+import { SettingsContainer } from '../../../components/index.js'
 import PersonalInfo from './PersonalInfo.jsx'
 import DeleteProfile from './DeleteProfile.jsx'
 import ChangePassword from './ChangePassword.jsx'
 import Logout from './Logout.jsx'
 
-const Profile = () => {
+const UserSettings = () => {
     return (
         <SettingsContainer>
             <Logout />
@@ -15,4 +15,4 @@ const Profile = () => {
     )
 }
 
-export default Profile
+export default UserSettings

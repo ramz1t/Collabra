@@ -34,7 +34,7 @@ const TeamImage = ({ team, size, className }) => {
     ) : (
         <p
             className={cn(
-                'text-black font-extrabold flex items-center justify-center rounded-md bg-gradient-radial from-gray-200 to-gray-400 dark:from-gray-400 dark:to-gray-600',
+                'text-black font-extrabold flex items-center justify-center rounded-md bg-gradient-radial from-gray-200 to-gray-400 dark:from-gray-400 dark:to-gray-600 pointer-events-none select-none',
                 className
             )}
             style={{

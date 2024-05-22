@@ -16,7 +16,18 @@ const useLocalStorage = (key, initialValue) => {
 
     useEffect(() => {
         localStorage.setItem(key, JSON.stringify(value))
+        window.dispatchEvent(
+            new CustomEvent('storage', { detail: { key, value } })
+        )
     }, [value])
+
+    useEffect(() => {
+        const listener = (e) => {
+            if (e.detail.key === key) setValue(e.detail.value)
+        }
+        window.addEventListener('storage', listener)
+        return () => window.removeEventListener('storage', listener)
+    }, [])
 
     return [value, setValue]
 }

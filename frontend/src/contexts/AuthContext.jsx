@@ -1,10 +1,11 @@
 import { createContext, useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
-import { getCookie, success } from '../utils'
+import { error, getCookie, success } from '../utils'
 import { useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import TeamContext from './TeamContext'
+import useLocalStorage from '../hooks/useLocalStorage.js'
 
 const AuthContext = createContext()
 
@@ -27,6 +28,7 @@ export const AuthProvider = ({ children }) => {
             ? jwtDecode(localStorage.getItem('authTokens'))
             : null
     )
+    const [_, setCookiesAccepted] = useLocalStorage('cookiesAccepted', false)
 
     const authWithTokens = (tokens, redirectFrom) => {
         setAuthTokens(tokens)
@@ -50,12 +52,8 @@ export const AuthProvider = ({ children }) => {
                 const data = await res.json()
                 authWithTokens(data, redirectFrom)
             } else {
-                setError &&
-                    setError({
-                        status: res.status,
-                        message: res.data,
-                    })
-                alert(res.status)
+                const data = await res.json()
+                error(data.detail)
             }
         })
     }
@@ -88,6 +86,7 @@ export const AuthProvider = ({ children }) => {
         setTeam(null)
         queryClient.clear()
         localStorage.removeItem('authTokens')
+        setCookiesAccepted(null)
         navigate('/login')
     }
 

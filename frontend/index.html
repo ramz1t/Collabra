@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
         <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
@@ -11,6 +11,18 @@
     <body
         class="font-primary selection:text-white selection:bg-accent dark:selection:bg-accent-dark dark:bg-slate-800 text-gray-900 dark:text-gray-100"
     >
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-6SR1BRMSWE"></script>
+        <script>
+            const accepted = localStorage.getItem('cookiesAccepted') === 'true'
+            console.log(accepted)
+            if (accepted) {
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-6SR1BRMSWE');
+            }
+        </script>
         <div id="root"></div>
         <script type="module" src="/src/main.jsx"></script>
     </body>

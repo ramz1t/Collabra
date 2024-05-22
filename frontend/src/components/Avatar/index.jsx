@@ -9,6 +9,9 @@ const Avatar = ({ className, user, size, square, style }) => {
             w = 36
             break
         case 'profile':
+            w = 150
+            break
+        case 'settings':
             w = 230
             break
         case 'task':

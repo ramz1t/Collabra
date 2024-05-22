@@ -149,7 +149,7 @@ const ImageEditor = ({
                                 {t('change_image')}
                             </Button>
                             <Button
-                                className="text-red-700"
+                                className="text-red-600 hover:!opacity-100 hover:text-red-700"
                                 action={() => {
                                     let body = {}
                                     body[onSaveField] = null
