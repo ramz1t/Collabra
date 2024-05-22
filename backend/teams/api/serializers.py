@@ -26,6 +26,15 @@ class TeamShortRetrieveSerializer(serializers.Serializer):
     slug = serializers.SlugField()
     image = Base64ImageField()
     title = serializers.CharField()
+    description = serializers.CharField()
+    is_admin = serializers.SerializerMethodField()
+    is_owner = serializers.SerializerMethodField()
+
+    def get_is_admin(self, team):
+        return selectors.is_user_admin_by_team(self.context["request"].user, team)
+
+    def get_is_owner(self, team):
+        return selectors.is_user_owner_by_team(team, self.context["request"].user)
 
 
 class TeamCreateSerializer(serializers.Serializer):
@@ -114,13 +123,37 @@ class JoinSerializer(serializers.Serializer):
         return attrs
 
 
-class UserToInviteListSerializer(serializers.Serializer):
+class TransferSerializer(serializers.Serializer):
+    user = serializers.IntegerField()
+    password = serializers.CharField(style={"input_type": "password"})
+
+    def validate_user(self, user_id):
+        user = selectors.get_user_or_404(id=user_id)
+        if not selectors.is_user_admin_by_team(user, self.context["team"]):
+            raise ValidationError(_("You can only transfer the group to an admin"))
+
+        return user
+
+    def validate_password(self, password):
+        if not self.context["user"].check_password(password):
+            raise ValidationError(_("Password is incorrect"))
+
+        return password
+
+
+class UserSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     avatar = Base64ImageField()
     generated_avatar = serializers.SerializerMethodField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
     username = serializers.CharField()
+
+    def get_generated_avatar(self, user):
+        return GeneratedAvatarRetrieveSerializer(instance=user.generated_avatar).data
+
+
+class UserToInviteListSerializer(UserSerializer):
     is_invited = serializers.SerializerMethodField()
     is_member = serializers.SerializerMethodField()
 
@@ -130,5 +163,15 @@ class UserToInviteListSerializer(serializers.Serializer):
     def get_is_member(self, user):
         return selectors.is_user_member_by_team(self.context["team"], user)
 
-    def get_generated_avatar(self, user):
-        return GeneratedAvatarRetrieveSerializer(instance=user.generated_avatar).data
+
+class MemberListSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    is_admin = serializers.BooleanField()
+    is_owner = serializers.SerializerMethodField()
+    user = serializers.SerializerMethodField()
+
+    def get_is_owner(self, member):
+        return selectors.is_user_owner_by_team(self.context["team"], member.user)
+
+    def get_user(self, member):
+        return UserSerializer(instance=member.user).data
