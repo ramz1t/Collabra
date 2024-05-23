@@ -49,10 +49,8 @@ const Features = () => {
                         return (
                             <div className="relative pl-16" key={key}>
                                 <dt className="text-base font-semibold leading-7 text-gray-900 dark:text-gray-100">
-                                    <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-accent dark:bg-accent-dark">
-                                        <span className="text-white">
-                                            {feature.icon}
-                                        </span>
+                                    <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-accent dark:bg-accent-dark text-white">
+                                        {feature.icon}
                                     </div>
                                     {feature.title}
                                 </dt>

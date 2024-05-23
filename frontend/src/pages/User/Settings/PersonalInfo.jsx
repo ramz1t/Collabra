@@ -136,6 +136,8 @@ const PersonalInfo = () => {
                                                 : '',
                                             '!min-h-10 !border-none !bg-slate-100 dark:!bg-slate-600'
                                         ),
+                                    valueContainer: () => '!pl-1 w-1',
+                                    input: () => 'line-clamp-1',
                                     singleValue: () => 'dark:!text-white',
                                     menu: () =>
                                         '!bg-slate-100 dark:!bg-slate-600 !border-accent dark:!border-accent-dark',

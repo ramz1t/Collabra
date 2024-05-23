@@ -14,11 +14,11 @@ const UserProfile = () => {
     if (isLoading) return 'loading'
     if (!user) return 'user not found'
     return (
-        <div className="container mx-auto px-4 py-10 flex gap-10 mt-4">
+        <div className="container mx-auto px-4 py-10 grid md:flex gap-10 mt-4">
             <Avatar user={user} size="profile" />
             <div className="grid gap-3 h-fit">
                 <div>
-                    <h1 className="text-3xl font-bold flex gap-5 items-center">
+                    <h1 className="text-3xl font-bold flex gap-5 items-start md:items-center">
                         {`${user.first_name} ${user.last_name}`}
                         {userId === 'me' && (
                             <Button
@@ -42,7 +42,7 @@ const UserProfile = () => {
                     </p>
                 )}
                 {user?.links && (
-                    <ul className="flex gap-4">
+                    <ul className="flex gap-2 md:gap-4 flex-wrap">
                         {user.links.map((link, key) => (
                             <li key={key}>
                                 <ShortLink link={link} />

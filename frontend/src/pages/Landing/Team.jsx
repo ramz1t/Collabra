@@ -59,12 +59,12 @@ const Team = () => {
         // },
     ]
     return (
-        <div className="mt-24 md:mt-32">
-            <p className="py-10 font-bold text-3xl">{t('our_team')}</p>
-            <pre className="text-gray-600 dark:text-gray-400 font-primary text-lg">
+        <div className="mt-16 md:mt-32">
+            <p className="pt-10 pb-3 font-bold text-3xl">{t('our_team')}</p>
+            <p className="text-gray-600 dark:text-gray-400 font-primary text-lg">
                 {t('about_team')}
-            </pre>
-            <ul className="grid md:grid-cols-[1fr_1fr] pt-16 gap-10">
+            </p>
+            <ul className="grid md:grid-cols-[1fr_1fr] pt-10 md:pt-16 gap-10">
                 {people.map((person, key) => {
                     return (
                         <li key={key} className="flex flex-col">
