@@ -20,7 +20,10 @@ const AdminsList = ({ setSelectedUser }) => {
     if (!members) return 'no admins'
     return (
         <>
-            <SearchBar inputInstance={search} placeholder={t('search_admin')} />
+            <SearchBar
+                inputInstance={search}
+                placeholder={t('transfer_ownership_searchbar')}
+            />
             <ul className="grid lg:grid-cols-2 gap-3">
                 {members
                     .filter((el) => {
