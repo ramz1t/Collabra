@@ -20,25 +20,29 @@ const AdminsList = ({ setSelectedUser }) => {
     if (!members) return 'no admins'
     return (
         <>
-            <SearchBar inputInstance={search} placeholder={t('search_admin')} />
+            <SearchBar
+                inputInstance={search}
+                placeholder={t('transfer_ownership_searchbar')}
+            />
             <ul className="grid lg:grid-cols-2 gap-3">
                 {members
                     .filter((el) => {
+                        const cleanedSearch = search.value.trim()
                         if (el.user.id === user.user_id) return false
-                        if (search.value) {
+                        if (cleanedSearch) {
                             return (
                                 el.user.first_name
                                     .toLowerCase()
-                                    .includes(search.value) ||
+                                    .includes(cleanedSearch) ||
                                 el.user.last_name
                                     .toLowerCase()
-                                    .includes(search.value) ||
+                                    .includes(cleanedSearch) ||
                                 el.user.email
                                     .toLowerCase()
-                                    .includes(search.value) ||
+                                    .includes(cleanedSearch) ||
                                 el.user.username
                                     .toLowerCase()
-                                    .includes(search.value)
+                                    .includes(cleanedSearch)
                             )
                         } else {
                             return true

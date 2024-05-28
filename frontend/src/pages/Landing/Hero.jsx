@@ -10,7 +10,7 @@ const Hero = () => {
 
     return (
         <div>
-            <div className="relative isolate px-6 pt-7 lg:px-8">
+            <div className="relative isolate md:pt-7 lg:px-8">
                 <BackgroundGradient />
                 <div className="mx-auto max-w-2xl py-14 sm:py-48 lg:py-56">
                     <div className="text-center">

@@ -49,7 +49,7 @@ const InvitePage = () => {
     return (
         <div className="grid place-items-center">
             {team && (
-                <div className="border dark:border-slate-700 rounded-2xl p-10 md:shadow-2xl max-md:mt-5 flex flex-col md:flex-row gap-10 bg-white dark:bg-slate-800 max-w-xl">
+                <div className="border dark:border-slate-700 rounded-2xl p-10 md:shadow-2xl max-md:mt-5 flex flex-col md:flex-row gap-10 bg-white dark:bg-gray-900 max-w-xl">
                     <TeamImage size="list" team={team} />
                     <div className="flex flex-col gap-3">
                         <h1 className="text-gray-600 dark:text-gray-400">

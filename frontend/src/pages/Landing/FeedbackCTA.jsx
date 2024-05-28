@@ -4,7 +4,7 @@ import { IoArrowForwardOutline } from 'react-icons/io5'
 const FeedbackCTA = () => {
     const { t } = useTranslation()
     return (
-        <div className="flex items-start md:items-center gap-5 justify-between py-32 flex-col md:flex-row">
+        <div className="flex items-start md:items-center gap-5 justify-between py-20 md:py-32 flex-col md:flex-row">
             <div className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">
                 <p>{t('feedback_1')}</p>
                 <p>{t('feedback_2')}</p>

@@ -44,7 +44,7 @@ const TimezoneClock = ({ timezone }) => {
     }, [counter])
 
     return (
-        <p className="text-gray-600">
+        <p className="text-gray-600 dark:text-gray-400">
             {timezone}
             <br />
             <span key={counter}>{currentTime}</span>
