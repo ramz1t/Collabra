@@ -1,5 +1,3 @@
-import secrets
-
 from django.db import models
 from django.contrib.auth import get_user_model
 from autoslug import AutoSlugField
@@ -22,14 +20,8 @@ class Team(models.Model):
     title = models.CharField(max_length=150)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="teams")
     description = models.TextField(null=True)
-    join_key_common = models.CharField(
-        default=secrets.token_hex(16), unique=True, max_length=32
-    )
-    join_key_selective = models.CharField(
-        default=secrets.token_hex(16),
-        unique=True,
-        max_length=32,
-    )
+    join_key_common = models.CharField(unique=True, max_length=36)
+    join_key_selective = models.CharField(unique=True, max_length=36)
     invited_people = models.ManyToManyField(User, related_name="teams_invited_to")
 
     def __str__(self):

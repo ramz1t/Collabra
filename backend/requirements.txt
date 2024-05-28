@@ -14,12 +14,10 @@ Django==5.0.2
 django-autoslug==1.9.9
 django-dump-load-utf8==0.0.4
 django-filter==24.2
-django-modeltranslation==0.18.11
 django-nine==0.2.7
 django-timezone-field==6.1.0
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.3.1
-drf-extra-fields==3.7.0
 elastic-transport==8.13.0
 elasticsearch-dsl==8.13.0
 filetype==1.2.0

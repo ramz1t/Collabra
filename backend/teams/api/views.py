@@ -39,7 +39,8 @@ class TeamViewSet(mixins.TeamMixin):
 
         update_team(team, **serializer.validated_data)
 
-        data = {"message": _("Team updated")}
+        serializer = serializers.TeamRetrieveSerializer(instance=team)
+        data = {"message": _("Team updated"), **serializer.data}
         return Response(data=data, status=status.HTTP_200_OK)
 
     def remove(self, request, pk):
