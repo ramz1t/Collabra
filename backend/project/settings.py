@@ -25,7 +25,6 @@ CSRF_TRUSTED_ORIGINS = ["http://localhost:8241"]
 
 INSTALLED_APPS = [
     "core",
-    # "modeltranslation",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -64,7 +63,7 @@ STATICFILES_DIRS = [
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, "core", "templates")
 
-MEDIA_URL = "media/"
+MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "core", "data", "media")
 
 TEMPLATES = [
@@ -197,24 +196,3 @@ AVATAR = {
 }
 
 USERNAME_POSTFIX_RANGE = (10000, 99999)
-
-
-DEFAULT_TEAM_COLOR = "ffffff"
-
-DEFAULT_ROLES = [
-    {
-        "title": "Admin",
-        "color": "ff2400",
-        "actions": ["admin_actions", "member_actions", "inspector_actions"],
-    },
-    {
-        "title": "Member",
-        "color": "4285b4",
-        "actions": ["member_actions", "inspector_actions"],
-    },
-    {
-        "title": "Inspector",
-        "color": "ffcf40",
-        "actions": ["inspector_actions"],
-    },
-]

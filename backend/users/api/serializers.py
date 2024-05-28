@@ -2,7 +2,6 @@ import re
 
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from drf_extra_fields.fields import Base64ImageField
 from timezone_field.rest_framework import TimeZoneSerializerField
 from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions as django_exceptions
@@ -48,7 +47,7 @@ class GeneratedAvatarSerializer(serializers.Serializer):
 
 
 class UserCreateUpdateBaseSerializer(serializers.Serializer):
-    avatar = Base64ImageField(required=False, allow_null=True)
+    avatar = serializers.ImageField(required=False, allow_null=True)
     description = serializers.CharField(
         min_length=1, max_length=500, required=False, allow_null=True
     )
@@ -77,11 +76,6 @@ class UserCreateUpdateBaseSerializer(serializers.Serializer):
         if is_user_exists(email=email):
             raise serializers.ValidationError(_("User with this email already exists"))
         return email
-
-    # def validate_timezone(self, timezone):
-    #     if timezone not in settings.TIMEZONES:
-    #         raise ValidationError(_("Invalid timezone format"))
-    #     return timezone
 
 
 class UserUpdateSerializer(UserCreateUpdateBaseSerializer):
@@ -121,7 +115,7 @@ class UserCreateSerializer(UserCreateUpdateBaseSerializer):
 class UserRetrieveSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     username = serializers.CharField()
-    avatar = Base64ImageField()
+    avatar = serializers.ImageField()
     generated_avatar = serializers.SerializerMethodField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()

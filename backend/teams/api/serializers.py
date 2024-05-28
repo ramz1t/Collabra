@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from drf_extra_fields.fields import Base64ImageField
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import ValidationError
 
@@ -10,13 +9,13 @@ class TeamListSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     slug = serializers.SlugField()
     title = serializers.CharField()
-    image = Base64ImageField()
+    image = serializers.ImageField()
 
 
 class TeamRetrieveSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     slug = serializers.SlugField()
-    image = Base64ImageField()
+    image = serializers.ImageField()
     title = serializers.CharField()
     description = serializers.CharField()
 
@@ -24,7 +23,7 @@ class TeamRetrieveSerializer(serializers.Serializer):
 class TeamShortRetrieveSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     slug = serializers.SlugField()
-    image = Base64ImageField()
+    image = serializers.ImageField()
     title = serializers.CharField()
     description = serializers.CharField()
     is_member = serializers.SerializerMethodField()
@@ -34,7 +33,7 @@ class TeamShortRetrieveSerializer(serializers.Serializer):
 
 
 class TeamCreateUpdateSerializer(serializers.Serializer):
-    image = Base64ImageField(required=False, allow_null=True)
+    image = serializers.ImageField(required=False, allow_null=True)
     description = serializers.CharField(
         max_length=1000, required=False, allow_null=True
     )
@@ -63,7 +62,7 @@ class GeneratedAvatarRetrieveSerializer(serializers.Serializer):
 
 class InvitedUserListSerializer(serializers.Serializer):
     id = serializers.IntegerField()
-    avatar = Base64ImageField()
+    avatar = serializers.ImageField()
     generated_avatar = serializers.SerializerMethodField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
@@ -142,7 +141,7 @@ class TransferSerializer(serializers.Serializer):
 
 class UserSerializer(serializers.Serializer):
     id = serializers.IntegerField()
-    avatar = Base64ImageField()
+    avatar = serializers.ImageField()
     generated_avatar = serializers.SerializerMethodField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
