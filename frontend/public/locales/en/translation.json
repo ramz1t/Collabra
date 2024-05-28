@@ -1,5 +1,5 @@
 {
-    "teams": "All teams",
+    "teams": "Teams",
     "tasks": "Tasks",
     "files": "Files",
     "chats": "Chats",
@@ -117,5 +117,9 @@
     "about": "About",
     "edit": "Edit",
     "no_access": "No access",
-    "login_to_access": "Sign in to your account to see this page"
+    "login_to_access": "Sign in to your account to see this page",
+    "search": "Search",
+    "view_as": "View as",
+    "grid": "Grid",
+    "list": "List"
 }
