@@ -66,7 +66,7 @@ const TextField = ({
                             setTimeout(() => onblur && onblur(), 100)
                         }}
                         className={cn(
-                            'flex gap-2 items-center bg-slate-100 caret-accent dark:caret-accent-dark dark:bg-slate-600 focus-within:ring-accent dark:focus-within:ring-accent-dark focus-within:shadow-sm focus-within:ring-1 focus-within:outline-none h-10 w-full p-2',
+                            'flex gap-2 items-center bg-slate-100 caret-accent dark:caret-accent-dark dark:bg-slate-700 focus-within:ring-accent dark:focus-within:ring-accent-dark focus-within:shadow-sm focus-within:ring-1 focus-within:outline-none h-10 w-full p-2',
                             prefix ? 'rounded-r-md' : 'rounded-md',
                             instance.allValid
                                 ? ''

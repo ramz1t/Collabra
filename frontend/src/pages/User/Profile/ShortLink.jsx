@@ -10,7 +10,7 @@ const ShortLink = ({ link }) => {
             href={link}
             title={link}
             target="_blank"
-            className="flex items-center space-x-2 rounded-full py-1 px-2 bg-gray-100 hover:bg-gray-200 transition-colors duration-75"
+            className="flex items-center space-x-2 rounded-full py-1 px-2 bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors duration-75"
         >
             <img
                 src={faviconUrl}

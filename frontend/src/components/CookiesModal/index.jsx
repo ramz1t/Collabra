@@ -16,7 +16,7 @@ const CookiesModal = () => {
     const { t } = useTranslation()
     if (isAccepted || cookiesSettingSaved) return
     return (
-        <div className="bg-white dark:bg-slate-800 py-2 px-3 rounded-md shadow-md flex flex-col md:flex-row gap-3 items-end md:items-center border dark:border-slate-600">
+        <div className="bg-white dark:bg-gray-900 py-2 px-3 rounded-md shadow-md flex flex-col md:flex-row gap-3 items-end md:items-center border dark:border-slate-600">
             <div className="flex gap-3 items-center">
                 <img src={cookie} className="h-7 pl-2 dark:brightness-125" />
                 <p className="font-semibold px-2">{t('cookies_banner')}</p>

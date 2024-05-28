@@ -19,7 +19,7 @@ const CreateTeam = () => {
             <div className="w-fit max-md:w-full">
                 <BackButton />
                 <Form
-                    className="flex flex-col md:flex-row gap-5 p-5 border dark:border-slate-700 !rounded-2xl max-w-2xl bg-white dark:bg-slate-800 shadow-sm mt-2"
+                    className="flex flex-col md:flex-row gap-5 p-5 border dark:border-slate-700 !rounded-2xl max-w-2xl bg-white dark:bg-gray-900 shadow-sm mt-2"
                     onSubmit={() =>
                         createTeam({
                             title: name.value,

@@ -14,11 +14,11 @@ const Team = () => {
             links: [
                 {
                     icon: <IoLogoGithub />,
-                    href: '',
+                    href: 'https://github.com/ramz1t',
                 },
                 {
                     icon: <IoLogoInstagram />,
-                    href: '',
+                    href: 'https://www.instagram.com/timurram007/',
                 },
             ],
             image: '/images/timur.jpg',
@@ -31,11 +31,11 @@ const Team = () => {
             links: [
                 {
                     icon: <IoLogoGithub />,
-                    href: '',
+                    href: 'https://www.instagram.com/alex.zavadskiy/',
                 },
                 {
                     icon: <IoLogoInstagram />,
-                    href: '',
+                    href: 'https://github.com/alexzawadsky',
                 },
             ],
             image: '/images/alex.jpg',

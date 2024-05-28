@@ -30,14 +30,14 @@ const UserProfile = () => {
                             </Button>
                         )}
                     </h1>
-                    <p className="text-gray-600 text-lg font-semibold">
+                    <p className="text-gray-600 dark:text-gray-400 text-lg font-semibold">
                         Senior Response Strategist, Executive Vice President of
                         Admissions
                     </p>
                 </div>
 
                 {user?.description && (
-                    <p className="text-gray-700 max-w-3xl pb-1.5">
+                    <p className="text-gray-700 dark:text-gray-300 max-w-3xl pb-1.5">
                         {user.description}
                     </p>
                 )}

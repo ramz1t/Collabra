@@ -61,7 +61,7 @@ const LanguagePicker = () => {
                 <IoChevronUp />
             </span>
             {isOpen && (
-                <ul className="absolute min-h-12 grid grid-cols-[1fr_1fr_1fr] gap-1 bg-white dark:bg-slate-700 border dark:border-slate-600 bottom-0 left-0 z-[999] p-1 rounded-md w-full">
+                <ul className="absolute min-h-12 grid grid-cols-[1fr_1fr_1fr] gap-1 bg-white dark:bg-slate-800 border dark:border-slate-700 bottom-0 left-0 z-[999] p-1 rounded-md w-full">
                     {Object.keys(languages).map((key) => (
                         <Button
                             key={key}

@@ -15,7 +15,7 @@ export const success = (text) => {
     toast.success(text, {
         style: isDark
             ? {
-                  background: '#28374f',
+                  background: '#1e2a3b',
                   color: '#fff',
               }
             : null,
@@ -31,7 +31,7 @@ export const error = (text) => {
     toast.error(text, {
         style: isDark
             ? {
-                  background: '#28374f',
+                  background: '#1e2a3b',
                   color: '#fff',
               }
             : null,

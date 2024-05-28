@@ -42,7 +42,7 @@ const TeamCard = ({ team }) => {
         <li>
             <NavLink
                 to={team.slug}
-                className="rounded-lg max-md:bg-gray-50 group-card hover:md:bg-gray-100 h-fit overflow-hidden dark:border-gray-700 hover:!border-accent hover:dark:!border-accent-dark transition-all duration-75 flex items-center gap-7 p-5"
+                className="rounded-lg max-md:bg-gray-50 group-card hover:md:bg-gray-100 dark:hover:md:bg-slate-800 h-fit overflow-hidden dark:border-gray-700 hover:!border-accent hover:dark:!border-accent-dark transition-all duration-75 flex items-center gap-7 p-5"
             >
                 {isTablet && <TeamImage team={team} size="list" />}
                 <div className="">
