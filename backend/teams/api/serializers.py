@@ -27,26 +27,25 @@ class TeamShortRetrieveSerializer(serializers.Serializer):
     image = Base64ImageField()
     title = serializers.CharField()
     description = serializers.CharField()
-    is_admin = serializers.SerializerMethodField()
-    is_owner = serializers.SerializerMethodField()
+    is_member = serializers.SerializerMethodField()
 
-    def get_is_admin(self, team):
-        return selectors.is_user_admin_by_team(self.context["request"].user, team)
-
-    def get_is_owner(self, team):
-        return selectors.is_user_owner_by_team(team, self.context["request"].user)
+    def get_is_member(self, team):
+        return selectors.is_user_member_by_team(team, self.context["user"])
 
 
-class TeamCreateSerializer(serializers.Serializer):
-    image = Base64ImageField(required=False)
+class TeamCreateUpdateSerializer(serializers.Serializer):
+    image = Base64ImageField(required=False, allow_null=True)
+    description = serializers.CharField(
+        max_length=1000, required=False, allow_null=True
+    )
+
+
+class TeamCreateSerializer(TeamCreateUpdateSerializer):
     title = serializers.CharField(max_length=100)
-    description = serializers.CharField(max_length=1000, required=False)
 
 
-class TeamUpdateSerializer(serializers.Serializer):
-    image = Base64ImageField(required=False)
+class TeamUpdateSerializer(TeamCreateUpdateSerializer):
     title = serializers.CharField(max_length=100, required=False)
-    description = serializers.CharField(max_length=1000, required=False)
 
 
 class TeamDeleteSerializer(serializers.Serializer):
