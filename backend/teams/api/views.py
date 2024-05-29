@@ -39,7 +39,7 @@ class TeamViewSet(mixins.TeamMixin):
 
         update_team(team, **serializer.validated_data)
 
-        serializer = serializers.TeamRetrieveSerializer(instance=team)
+        serializer = serializers.TeamRetrieveSerializer(instance=team, context={"user": request.user})
         data = {"message": _("Team updated"), **serializer.data}
         return Response(data=data, status=status.HTTP_200_OK)
 

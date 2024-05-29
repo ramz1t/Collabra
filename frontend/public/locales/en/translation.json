@@ -134,5 +134,6 @@
     "manage": "Edit",
     "remove": "Remove",
     "remove_member": "Remove member",
-    "role": "Role"
+    "role": "Role",
+    "open": "Open"
 }

@@ -50,10 +50,12 @@ const InvitePage = () => {
         <div className="grid place-items-center">
             {team && (
                 <div className="border dark:border-slate-700 rounded-2xl p-10 md:shadow-2xl max-md:mt-5 flex flex-col md:flex-row gap-10 bg-white dark:bg-gray-900 max-w-xl">
-                    <TeamImage size="list" team={team} />
+                    <TeamImage size="grid" team={team} />
                     <div className="flex flex-col gap-3">
                         <h1 className="text-gray-600 dark:text-gray-400">
-                            {t('invite_head')}
+                            {team.is_member
+                                ? t('already_in_team')
+                                : t('invite_head')}
                         </h1>
                         <p className="font-bold text-2xl">{team?.title}</p>
                         {team?.description && <p>{team.description}</p>}
@@ -65,20 +67,20 @@ const InvitePage = () => {
                             <Button
                                 style="primary"
                                 w_full
-                                action={() =>
-                                    joinTeam({
-                                        teamSlug: teamSlug,
-                                        teamKey: joinKey,
-                                    })
-                                }
+                                action={() => {
+                                    if (team.is_member) {
+                                        navigate(`/teams/${teamSlug}`)
+                                    } else {
+                                        joinTeam({
+                                            teamSlug: teamSlug,
+                                            teamKey: joinKey,
+                                        })
+                                    }
+                                }}
                             >
-                                {t('join_team')}
+                                {team.is_member ? t('open') : t('join_team')}
                             </Button>
-                            <Button
-                                style="secondary"
-                                w_full
-                                action={() => navigate('/teams')}
-                            >
+                            <Button style="secondary" w_full to={'/teams'}>
                                 {t('cancel')}
                             </Button>
                         </div>

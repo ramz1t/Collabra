@@ -9,9 +9,13 @@ const TeamImage = ({ team, size, className }) => {
             w = 230
             font = 80
             break
-        case 'list':
+        case 'grid':
             w = 140
             font = 36
+            break
+        case 'list':
+            w = 32
+            font = 10
             break
         default:
             w = 16
@@ -20,7 +24,7 @@ const TeamImage = ({ team, size, className }) => {
     }
     return team.image ? (
         <div
-            className="bg-cover bg-center rounded-md"
+            className={cn('bg-cover bg-center rounded-lg', className)}
             style={{
                 width: w,
                 height: w,
@@ -34,7 +38,7 @@ const TeamImage = ({ team, size, className }) => {
     ) : (
         <p
             className={cn(
-                'text-black font-extrabold flex items-center justify-center rounded-md bg-gradient-radial from-gray-200 to-gray-400 dark:from-gray-400 dark:to-gray-600 pointer-events-none select-none',
+                'text-black font-extrabold flex items-center justify-center rounded-lg bg-gradient-radial from-gray-300 to-gray-400/90 dark:from-gray-400 dark:to-gray-600 pointer-events-none select-none',
                 className
             )}
             style={{

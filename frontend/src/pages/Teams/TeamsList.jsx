@@ -18,7 +18,7 @@ const TeamsList = () => {
     const search = useInput('', {}, 250)
     const { data } = useTeams({ search: search.value })
     const { isTablet } = useScreenSize()
-    const [isList, setIsList] = useLocalStorage('displayTeamsInList', false)
+    const [isList, setIsList] = useLocalStorage('displayTeamsInList', true)
 
     useEffect(() => {
         if (search.value === '') search.setValue(null)
@@ -30,21 +30,9 @@ const TeamsList = () => {
                 <h1 className="font-bold text-3xl mr-auto">{t('teams')}</h1>
                 {isTablet && (
                     <div className="flex gap-1 items-center">
-                        <p className="hidden md:block font-semibold">
+                        <p className="hidden md:block font-semibold mr-2">
                             {t('view_as')}
                         </p>
-                        <Button
-                            action={() => setIsList(false)}
-                            className={cn(
-                                !isList
-                                    ? 'bg-gray-200 hover:!opacity-100 dark:bg-slate-700'
-                                    : 'bg-gray-100 dark:bg-slate-800',
-                                'min-h-10 min-w-10 md:px-3 rounded-md ml-2'
-                            )}
-                        >
-                            <IoGridOutline />
-                            {isTablet && t('grid')}
-                        </Button>
                         <Button
                             action={() => setIsList(true)}
                             className={cn(
@@ -56,6 +44,18 @@ const TeamsList = () => {
                         >
                             <IoReorderFourOutline />
                             {isTablet && t('list')}
+                        </Button>
+                        <Button
+                            action={() => setIsList(false)}
+                            className={cn(
+                                !isList
+                                    ? 'bg-gray-200 hover:!opacity-100 dark:bg-slate-700'
+                                    : 'bg-gray-100 dark:bg-slate-800',
+                                'min-h-10 min-w-10 md:px-3 rounded-md'
+                            )}
+                        >
+                            <IoGridOutline />
+                            {isTablet && t('grid')}
                         </Button>
                     </div>
                 )}
@@ -76,7 +76,7 @@ const TeamsList = () => {
                     className={cn(
                         isTablet && isList
                             ? ''
-                            : 'grid md:grid-cols-2 xl:grid-cols-3',
+                            : 'grid max-md:gap-3 md:grid-cols-2 xl:grid-cols-3',
                         'pt-5'
                     )}
                 >

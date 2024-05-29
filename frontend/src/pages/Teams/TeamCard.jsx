@@ -55,7 +55,9 @@ const TeamCard = ({ team, isList }) => {
                     'group-card h-fit overflow-hidden dark:border-gray-700 hover:!border-accent hover:dark:!border-accent-dark transition-all duration-75 flex items-center gap-7'
                 )}
             >
-                {isTablet && !isList && <TeamImage team={team} size="list" />}
+                {isTablet && (
+                    <TeamImage team={team} size={isList ? 'list' : 'grid'} />
+                )}
                 <div
                     className={
                         isTablet &&
