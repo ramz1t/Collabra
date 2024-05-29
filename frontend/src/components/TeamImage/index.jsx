@@ -28,7 +28,7 @@ const TeamImage = ({ team, size, className }) => {
                 minHeight: w,
                 maxWidth: w,
                 maxHeight: w,
-                backgroundImage: `url(${team.image})`,
+                backgroundImage: `url(${team?.image})`,
             }}
         ></div>
     ) : (

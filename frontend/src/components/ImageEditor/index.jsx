@@ -33,32 +33,38 @@ const ImageEditor = ({
     }
 
     const saveChanges = () => {
-        try {
-            setIsSaving(true)
-            const img = new Image()
-            let body = {}
-            img.src = editorRef.current.getImage().toDataURL()
-            img.onload = () => {
-                try {
-                    const canvas = document.createElement('canvas')
-                    canvas.width = 600
-                    canvas.height = 600
-                    const ctx = canvas.getContext('2d')
-                    ctx.drawImage(img, 0, 0, 600, 600)
-                    body[onSaveField] = canvas.toDataURL('image/png')
-                    onSave &&
-                        onSave(body).then(() => {
-                            closeEditor()
-                            setIsSaving(false)
-                        })
-                } catch (e) {
+        if (!onSave) return
+        setIsSaving(true)
+        const img = new Image()
+        img.src = editorRef.current.getImage().toDataURL()
+        img.onload = () => {
+            const canvas = document.createElement('canvas')
+            canvas.width = 600
+            canvas.height = 600
+            const ctx = canvas.getContext('2d')
+            ctx.drawImage(img, 0, 0, canvas.height, canvas.width)
+            const dataURL = canvas.toDataURL()
+            const blobBin = atob(dataURL.split(',')[1])
+            let array = []
+            for (let i = 0; i < blobBin.length; i++) {
+                array.push(blobBin.charCodeAt(i))
+            }
+            const file = new Blob([new Uint8Array(array)], {
+                type: 'image/png',
+            })
+            const requestBody = new FormData()
+            requestBody.append(onSaveField, file, 'file.png')
+            onSave(requestBody, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            })
+                .then(() => {
+                    closeEditor()
+                    setIsSaving(false)
+                })
+                .catch((e) => {
                     setIsSaving(false)
                     console.error('Error occurred while saving image', e)
-                }
-            }
-        } catch (e) {
-            setIsSaving(false)
-            console.error('Error occurred while saving image', e)
+                })
         }
     }
 
@@ -80,9 +86,9 @@ const ImageEditor = ({
             )}
             <div className="flex flex-col gap-3">
                 {inputImage && (
-                    <div className="bg-gray-100 rounded-lg p-2 flex flex-col">
+                    <div className="bg-gray-100 dark:bg-slate-800 rounded-lg p-2 flex flex-col">
                         <label
-                            className="text-sm text-gray-600"
+                            className="text-sm text-gray-600 dark:text-gray-400"
                             htmlFor="scale-range"
                         >
                             {t('zoom')}
@@ -98,14 +104,14 @@ const ImageEditor = ({
                             onChange={(e) => setScale(e.target.value)}
                         />
                         <label
-                            className="text-sm text-gray-600 mt-2 mb-1"
+                            className="text-sm text-gray-600 dark:text-gray-400 mt-2 mb-1"
                             htmlFor="rotation-controls"
                         >
                             {t('rotation')}
                         </label>
                         <div className="flex divide-x">
                             <Button
-                                className="grow border-y border-accent dark:border-accent-dark !h-8 hover:bg-accent/5 dark:bg-accent-dark/10 text-accent dark:text-accent-dark   border-l rounded-l-md"
+                                className="grow border-y border-accent dark:border-accent-dark !h-8 hover:bg-accent/5 dark:hover:bg-accent-dark/10 text-accent dark:text-accent-dark   border-l rounded-l-md"
                                 action={() =>
                                     setRotation((prevState) => prevState + 90)
                                 }
@@ -113,13 +119,13 @@ const ImageEditor = ({
                                 <BsArrowClockwise />
                             </Button>
                             <Button
-                                className="grow border-y border-accent dark:border-accent-dark !h-8 hover:bg-accent/5 dark:bg-accent-dark/10 text-accent dark:text-accent-dark  "
+                                className="grow border-y border-accent dark:border-accent-dark !h-8 hover:bg-accent/5 dark:hover:bg-accent-dark/10 text-accent dark:text-accent-dark  "
                                 action={() => setRotation(0)}
                             >
                                 {t('reset')}
                             </Button>
                             <Button
-                                className="grow border-y border-accent dark:border-accent-dark !h-8 hover:bg-accent/5 dark:bg-accent-dark/10 text-accent dark:text-accent-dark   !border-r rounded-r-md"
+                                className="grow border-y border-accent dark:border-accent-dark !h-8 hover:bg-accent/5 dark:hover:bg-accent-dark/10 text-accent dark:text-accent-dark   !border-r rounded-r-md"
                                 action={() =>
                                     setRotation((prevState) => prevState - 90)
                                 }
@@ -149,7 +155,7 @@ const ImageEditor = ({
                                 {t('change_image')}
                             </Button>
                             <Button
-                                className="text-red-600 hover:!opacity-100 hover:text-red-700"
+                                className="text-red-600 dark:text-red-700 hover:!opacity-100 hover:text-red-700 dark:hover:text-red-800"
                                 action={() => {
                                     let body = {}
                                     body[onSaveField] = null

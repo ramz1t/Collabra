@@ -27,8 +27,8 @@ const SearchBar = ({ placeholder, inputInstance, className }) => {
                         className="overflow-hidden h-10 flex items-center justify-center"
                     >
                         <Button
-                            style="tetriary"
-                            className="hover:text-accent rounded-md px-7 h-full"
+                            style="tertiary"
+                            className="hover:text-accent rounded-md pl-7 pr-1 h-full"
                             action={() => inputInstance.clear()}
                         >
                             {t('cancel')}

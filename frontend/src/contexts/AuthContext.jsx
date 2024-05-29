@@ -28,7 +28,11 @@ export const AuthProvider = ({ children }) => {
             ? jwtDecode(localStorage.getItem('authTokens'))
             : null
     )
-    const [_, setCookiesAccepted] = useLocalStorage('cookiesAccepted', false)
+    const [sca, setCookiesAccepted] = useLocalStorage('cookiesAccepted', false)
+    const [scss, setCookiesSettingSaved] = useLocalStorage(
+        'cookiesSettingSaved',
+        false
+    )
 
     const authWithTokens = (tokens, redirectFrom) => {
         setAuthTokens(tokens)
@@ -81,12 +85,22 @@ export const AuthProvider = ({ children }) => {
     }
 
     const logoutUser = () => {
+        // Clear auth data
         setAuthTokens(null)
         setUser(null)
-        setTeam(null)
-        queryClient.clear()
         localStorage.removeItem('authTokens')
+
+        // Clear selected team
+        setTeam(null)
+
+        // Clear cached API data
+        queryClient.clear()
+
+        // Clear cookies preferences
         setCookiesAccepted(null)
+        setCookiesSettingSaved(null)
+
+        // Navigate to log in form
         navigate('/login')
     }
 

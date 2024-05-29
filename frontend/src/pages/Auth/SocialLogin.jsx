@@ -15,7 +15,7 @@ const SocialLogin = () => {
                 <Button
                     type="button"
                     w_full
-                    className="!border hover:bg-accent/5 dark:hover:bt-accent-dark/10 rounded-md min-h-10"
+                    className="!border dark:border-slate-500 hover:bg-accent/5 dark:hover:bg-slate-800 rounded-md min-h-10"
                 >
                     <IoLogoApple />
                     Apple
@@ -23,7 +23,7 @@ const SocialLogin = () => {
                 <Button
                     type="button"
                     w_full
-                    className="!border hover:bg-accent/5 dark:hover:bt-accent-dark/10 rounded-md min-h-10"
+                    className="!border dark:border-slate-500 hover:bg-accent/5 dark:hover:bg-slate-800 rounded-md min-h-10"
                 >
                     <IoLogoGithub />
                     GitHub
@@ -31,7 +31,7 @@ const SocialLogin = () => {
                 <Button
                     type="button"
                     w_full
-                    className="!border hover:bg-accent/5 dark:hover:bt-accent-dark/10 rounded-md min-h-10"
+                    className="!border dark:border-slate-500 hover:bg-accent/5 dark:hover:bg-slate-800 rounded-md min-h-10"
                 >
                     <IoLogoGoogle />
                     Google

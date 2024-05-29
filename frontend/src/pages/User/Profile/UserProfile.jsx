@@ -14,11 +14,11 @@ const UserProfile = () => {
     if (isLoading) return 'loading'
     if (!user) return 'user not found'
     return (
-        <div className="container mx-auto px-4 py-10 flex gap-10 mt-4">
+        <div className="container mx-auto px-4 py-10 grid md:flex gap-10 mt-4">
             <Avatar user={user} size="profile" />
             <div className="grid gap-3 h-fit">
                 <div>
-                    <h1 className="text-3xl font-bold flex gap-5 items-center">
+                    <h1 className="text-3xl font-bold flex gap-5 items-start md:items-center">
                         {`${user.first_name} ${user.last_name}`}
                         {userId === 'me' && (
                             <Button
@@ -30,19 +30,19 @@ const UserProfile = () => {
                             </Button>
                         )}
                     </h1>
-                    <p className="text-gray-600 text-lg font-semibold">
+                    <p className="text-gray-600 dark:text-gray-400 text-lg font-semibold">
                         Senior Response Strategist, Executive Vice President of
                         Admissions
                     </p>
                 </div>
 
                 {user?.description && (
-                    <p className="text-gray-700 max-w-3xl pb-1.5">
+                    <p className="text-gray-700 dark:text-gray-300 max-w-3xl pb-1.5">
                         {user.description}
                     </p>
                 )}
                 {user?.links && (
-                    <ul className="flex gap-4">
+                    <ul className="flex gap-2 md:gap-4 flex-wrap">
                         {user.links.map((link, key) => (
                             <li key={key}>
                                 <ShortLink link={link} />

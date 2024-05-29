@@ -40,7 +40,7 @@ const InvitationsManagement = () => {
                 />
             </div>
             <InvitedUsersList
-                searchInfo={userInfo.value}
+                searchInfo={userInfo.value.trim()}
                 clearSearch={() => userInfo.setValue('')}
             />
             {!isLoading && (

@@ -37,7 +37,7 @@ const Input = ({
                     className={cn(
                         'pl-1',
                         must
-                            ? 'after:content-["*"] after:text-red-500 after:pl-0.5'
+                            ? 'after:content-["*"] after:text-red-500 dark:after:text-red-700 after:pl-0.5'
                             : '',
                         titleClassname
                     )}
@@ -55,7 +55,7 @@ const Input = ({
                     )}
                     <div
                         className={cn(
-                            'flex items-center bg-slate-100 caret-accent dark:caret-accent-dark dark:bg-slate-600 focus-within:ring-accent dark:focus-within:ring-accent-dark focus-within:shadow-sm focus-within:ring-1 focus-within:outline-none h-10 w-full',
+                            'flex items-center bg-slate-100 caret-accent dark:caret-accent-dark dark:bg-slate-700 focus-within:ring-accent dark:focus-within:ring-accent-dark focus-within:shadow-sm focus-within:ring-1 focus-within:outline-none h-10 w-full',
                             prefix ? 'rounded-r-md' : 'rounded-md',
                             instance.allValid
                                 ? ''

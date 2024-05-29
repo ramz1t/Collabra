@@ -8,7 +8,7 @@ const prefix = '/api/v1'
 export const useUser = (userId) => {
     const api = useAxios()
     return useQuery({
-        queryKey: ['users', { userId: userId }],
+        queryKey: ['user', { userId: userId }],
         queryFn: () => {
             return api.get(`${prefix}/users/${userId}`).then((res) => res.data)
         },
@@ -43,7 +43,7 @@ export const useUpdateUser = () => {
             return api.patch(`${prefix}/users/me/`, data).then((res) => res)
         },
         onSuccess: (res) => {
-            queryClient.setQueryData(['users', { userId: 'me' }], res.data)
+            queryClient.setQueryData(['user', { userId: 'me' }], res.data)
         },
     })
 }

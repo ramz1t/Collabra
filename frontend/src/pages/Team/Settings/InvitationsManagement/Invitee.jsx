@@ -14,7 +14,7 @@ const Invitee = ({ user, onSuccess = () => {} }) => {
     const { mutate: removeInvite } = useRemoveInvite(user.id, team.id)
 
     return (
-        <li className="flex gap-3 items-center rounded-full border dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700 px-2.5 py-2 transition-all duration-75">
+        <li className="flex gap-3 items-center rounded-full border dark:border-slate-700 px-2.5 py-2 transition-all duration-75">
             <Avatar user={user} />
             <div>
                 <p className="leading-[1.1]">
@@ -38,7 +38,7 @@ const Invitee = ({ user, onSuccess = () => {} }) => {
             {!user?.is_member ? (
                 user?.is_invited ? (
                     <Button
-                        className="text-gray-600 hover:text-red-500 ml-auto min-h-10 min-w-10 hover:scale-105 rounded-full"
+                        className="text-slate-400 text-2xl hover:text-red-500 ml-auto min-h-10 min-w-10 hover:scale-105 rounded-full"
                         action={() =>
                             removeInvite(
                                 { teamId: team.id, userId: user.id },
@@ -50,7 +50,7 @@ const Invitee = ({ user, onSuccess = () => {} }) => {
                     </Button>
                 ) : (
                     <Button
-                        className="text-gray-600 hover:text-green-600 ml-auto min-h-10 min-w-10 hover:scale-110 rounded-full"
+                        className="text-slate-400 text-2xl hover:text-green-600 ml-auto min-h-10 min-w-10 hover:scale-110 rounded-full"
                         action={() =>
                             addInvite(
                                 { teamId: team.id, userId: user.id },
