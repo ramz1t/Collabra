@@ -63,7 +63,9 @@ class TeamViewSet(mixins.TeamMixin):
         if not selectors.is_user_member_by_team(team, request.user):
             raise PermissionDenied()
 
-        serializer = serializers.TeamRetrieveSerializer(instance=team, context={"request": request})
+        serializer = serializers.TeamRetrieveSerializer(
+            instance=team, context={"user": request.user}
+        )
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 

@@ -18,6 +18,14 @@ class TeamRetrieveSerializer(serializers.Serializer):
     image = serializers.ImageField()
     title = serializers.CharField()
     description = serializers.CharField()
+    is_admin = serializers.SerializerMethodField()
+    is_owner = serializers.SerializerMethodField()
+
+    def get_is_admin(self, team):
+        return selectors.is_user_admin_by_team(self.context["user"], team)
+
+    def get_is_owner(self, team):
+        return selectors.is_user_owner_by_team(team, self.context["user"])
 
 
 class TeamShortRetrieveSerializer(serializers.Serializer):
