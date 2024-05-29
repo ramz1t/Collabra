@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 import AuthContext from '../../contexts/AuthContext'
 import { useTranslation } from 'react-i18next'
 import { Button, RichHeader } from '../index.js'
-import { IoBan } from 'react-icons/io5'
+import { IoDocumentLockOutline } from 'react-icons/io5'
 
 const PrivateRoute = ({ children }) => {
     const { user } = useContext(AuthContext)
@@ -20,7 +20,7 @@ const PrivateRoute = ({ children }) => {
             ) : (
                 <div className="grow flex items-center justify-center">
                     <RichHeader
-                        icon={<IoBan />}
+                        icon={<IoDocumentLockOutline />}
                         title={t('no_access')}
                         description={t('login_to_access')}
                         actions={

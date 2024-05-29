@@ -41,7 +41,7 @@ const App = () => {
                     </Routes>
                 </div>
             </Suspense>
-            <div className="fixed z-[999] right-2 bottom-2 max-md:left-2 flex justify-end gap-2 items-end">
+            <div className="fixed z-[998] right-2 bottom-2 max-md:left-2 flex justify-end gap-2 items-end">
                 <CookiesModal />
             </div>
         </>

@@ -1,60 +1,65 @@
 import { useParams } from 'react-router-dom'
 import { useTeamMembers } from '../../../../api/team.js'
 import FoundUser from './FoundUser.jsx'
-import { SearchBar } from '../../../../components/index.js'
+import { RichHeader, SearchBar } from '../../../../components/index.js'
 import useInput from '../../../../hooks/useInput.js'
 import { useContext, useState } from 'react'
 import TeamContext from '../../../../contexts/TeamContext.jsx'
 import { useTranslation } from 'react-i18next'
 import AuthContext from '../../../../contexts/AuthContext.jsx'
+import { IoMedalOutline } from 'react-icons/io5'
 
 const AdminsList = ({ setSelectedUser }) => {
     const { team } = useContext(TeamContext)
-    const { data: members, isLoading } = useTeamMembers(team.id, {
+    const { data: admins, isLoading } = useTeamMembers(team.id, {
         is_admin: true,
     })
     const { user } = useContext(AuthContext)
     const { t } = useTranslation()
     const search = useInput('')
-    if (isLoading) return 'admins loading'
-    if (!members) return 'no admins'
+
     return (
         <>
+            <RichHeader icon={<IoMedalOutline />} title={t('find_new_owner')} />
             <SearchBar
                 inputInstance={search}
                 placeholder={t('transfer_ownership_searchbar')}
             />
-            <ul className="grid lg:grid-cols-2 gap-3">
-                {members
-                    .filter((el) => {
-                        const cleanedSearch = search.value.trim()
-                        if (el.user.id === user.user_id) return false
-                        if (cleanedSearch) {
-                            return (
-                                el.user.first_name
-                                    .toLowerCase()
-                                    .includes(cleanedSearch) ||
-                                el.user.last_name
-                                    .toLowerCase()
-                                    .includes(cleanedSearch) ||
-                                el.user.email
-                                    .toLowerCase()
-                                    .includes(cleanedSearch) ||
-                                el.user.username
-                                    .toLowerCase()
-                                    .includes(cleanedSearch)
-                            )
-                        } else {
-                            return true
-                        }
-                    })
-                    .map((member, key) => (
-                        <FoundUser
-                            key={key}
-                            user={member.user}
-                            selectUser={setSelectedUser}
-                        />
-                    ))}
+            <ul className="grid lg:grid-cols-2 gap-3 max-h-80 overflow-y-auto">
+                {isLoading
+                    ? t('loading')
+                    : admins?.length
+                      ? admins
+                            .filter((el) => {
+                                const cleanedSearch = search.value.trim()
+                                if (el.user.id === user.user_id) return false
+                                if (cleanedSearch) {
+                                    return (
+                                        el.user.first_name
+                                            .toLowerCase()
+                                            .includes(cleanedSearch) ||
+                                        el.user.last_name
+                                            .toLowerCase()
+                                            .includes(cleanedSearch) ||
+                                        el.user.email
+                                            .toLowerCase()
+                                            .includes(cleanedSearch) ||
+                                        el.user.username
+                                            .toLowerCase()
+                                            .includes(cleanedSearch)
+                                    )
+                                } else {
+                                    return true
+                                }
+                            })
+                            .map((member, key) => (
+                                <FoundUser
+                                    key={key}
+                                    user={member.user}
+                                    selectUser={setSelectedUser}
+                                />
+                            ))
+                      : t('no_admins')}
             </ul>
         </>
     )
