@@ -66,7 +66,7 @@ const TeamCard = ({ team, isList }) => {
                     <p
                         className={cn(
                             isTablet && isList ? 'text-xl' : ' text-2xl',
-                            'font-bold line-clamp-1 whitespace-nowrap'
+                            'font-bold line-clamp-1'
                         )}
                     >
                         {team.title}

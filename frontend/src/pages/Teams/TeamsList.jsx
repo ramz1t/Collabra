@@ -76,7 +76,7 @@ const TeamsList = () => {
                     className={cn(
                         isTablet && isList
                             ? ''
-                            : 'grid gap-5 md:grid-cols-2 xl:grid-cols-3',
+                            : 'grid md:grid-cols-2 xl:grid-cols-3',
                         'pt-5'
                     )}
                 >

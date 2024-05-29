@@ -121,5 +121,18 @@
     "search": "Search",
     "view_as": "View as",
     "grid": "Grid",
-    "list": "List"
+    "list": "List",
+    "manage_members_head": "Manage team members",
+    "manage_members_desc": "Change members' roles or remove them from the team. Please note that roles and permissions get updated immediately but users' interface doesn't change until the next website reload",
+    "find_new_owner": "Find the new owner",
+    "owner": "owner",
+    "me": "me",
+    "search_members": "Search members...",
+    "kick": "Remove",
+    "remove_from_team": "Remove",
+    "remove_from_team_desc": "Are you sure you want to remove the member from the team? They will lose all access to this group. You will have to invite them again if needed.",
+    "manage": "Edit",
+    "remove": "Remove",
+    "remove_member": "Remove member",
+    "role": "Role"
 }

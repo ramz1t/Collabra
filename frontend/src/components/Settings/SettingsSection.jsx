@@ -1,16 +1,4 @@
-import useIsAllowed from '../../hooks/useIsAllowed.js'
-
-const SettingsSection = ({
-    children,
-    title,
-    description,
-    extraBlock,
-    allowedRoles,
-    restrictedRoles,
-}) => {
-    const isAllowed = useIsAllowed(allowedRoles, restrictedRoles)
-    if (!isAllowed) return
-
+const SettingsSection = ({ children, title, description, extraBlock }) => {
     return (
         <div className="grid md:grid-cols-[2fr_3fr] gap-10 pt-10 md:pt-16 first-of-type:pt-0 first-of-type:md:pt-0">
             <div className="grid gap-3 md:sticky h-fit md:top-16 md:z-40">
