@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import ValidationError
 
+from . import fields
 from .. import selectors
 
 
@@ -56,11 +57,7 @@ class TeamUpdateSerializer(TeamCreateUpdateSerializer):
 
 
 class TeamDeleteSerializer(serializers.Serializer):
-    password = serializers.CharField(style={"input_type": "password"})
-
-    def validate_password(self, password):
-        if not self.context["user"].check_password(password):
-            raise ValidationError(_("Password is incorrect"))
+    password = fields.PasswordField()
 
 
 class GeneratedAvatarRetrieveSerializer(serializers.Serializer):
@@ -131,7 +128,7 @@ class JoinSerializer(serializers.Serializer):
 
 class TransferSerializer(serializers.Serializer):
     user = serializers.IntegerField()
-    password = serializers.CharField(style={"input_type": "password"})
+    password = fields.PasswordField()
 
     def validate_user(self, user_id):
         user = selectors.get_user_or_404(id=user_id)
@@ -139,12 +136,6 @@ class TransferSerializer(serializers.Serializer):
             raise ValidationError(_("You can only transfer the group to an admin"))
 
         return user
-
-    def validate_password(self, password):
-        if not self.context["user"].check_password(password):
-            raise ValidationError(_("Password is incorrect"))
-
-        return password
 
 
 class UserSerializer(serializers.Serializer):
