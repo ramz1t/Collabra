@@ -3,20 +3,14 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.utils.translation import gettext_lazy as _
 
-from . import mixins
-from . import serializers
-from .. import selectors
-from ..services.create import create_team
-from ..services.delete import delete_team
-from ..services.update import update_team
-from ..services.transfer import transfer_team
-from ..services.join import (
-    refresh_join_keys,
-    invite,
-    remove_from_invited,
-    join,
-    exit_team,
-)
+from .. import mixins
+from ..serializers import teams as serializers
+from ... import selectors
+from ...services.create import create_team
+from ...services.delete import delete_team
+from ...services.update import update_team
+from ...services.transfer import transfer_team
+from ...services.join import refresh_join_keys, exit_team
 
 
 class TeamViewSet(mixins.TeamMixin):
@@ -79,34 +73,16 @@ class TeamViewSet(mixins.TeamMixin):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def list(self, request):
-        queryset = self.filter_queryset(selectors.get_teams(owner=self.request.user))
+        teams = self.filter_queryset(selectors.get_teams(members__user=request.user))
 
-        page = self.paginate_queryset(queryset)
+        page = self.paginate_queryset(teams)
         if page is not None:
             serializer = serializers.TeamListSerializer(page, many=True)
             return self.get_paginated_response(serializer.data)
 
-        serializer = serializers.TeamListSerializer(queryset, many=True)
+        serializer = serializers.TeamListSerializer(teams, many=True)
 
-        return Response(status.HTTP_200_OK, serializer.data)
-
-    def get_members(self, request, pk):
-        team = selectors.get_team_or_404(pk=pk)
-        if not selectors.is_user_member_by_team(team, request.user):
-            raise PermissionDenied()
-
-        is_admin = request.query_params.get("is_admin", None)
-        if is_admin is not None and is_admin.lower() in ("true", "false"):
-            is_admin = is_admin.lower() == "true"
-            members = selectors.get_team_members(team, is_admin=is_admin)
-        else:
-            members = selectors.get_team_members(team)
-
-        serializer = serializers.MemberListSerializer(
-            members, many=True, context={"team": team}
-        )
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status.HTTP_200_OK)
 
     def get_join_keys(self, request, pk):
         team = selectors.get_team_or_404(id=pk)
@@ -126,68 +102,6 @@ class TeamViewSet(mixins.TeamMixin):
 
         data = {"message": _("Keys refreshed")}
         return Response(data, status=status.HTTP_200_OK)
-
-    def invite(self, request, pk):
-        team = selectors.get_team_or_404(id=pk)
-        if not selectors.is_user_admin_by_team(request.user, team):
-            raise PermissionDenied()
-
-        serializer = serializers.InviteSerializer(
-            data=request.data, context={"user": request.user, "team": team}
-        )
-        serializer.is_valid(raise_exception=True)
-        user_id = serializer.validated_data["user"]
-
-        invite(team, user_id)
-
-        response_user = serializers.InvitedUserListSerializer(
-            instance=selectors.get_user_or_404(id=user_id)
-        ).data
-        data = {"message": _("User invited"), "user": response_user}
-        return Response(data, status=status.HTTP_200_OK)
-
-    def remove_from_invited(self, request, pk):
-        team = selectors.get_team_or_404(id=pk)
-        if not selectors.is_user_admin_by_team(request.user, team):
-            raise PermissionDenied()
-
-        serializer = serializers.RemoveFromInvitedSerializer(
-            data=request.data, context={"team": team}
-        )
-        serializer.is_valid(raise_exception=True)
-        user_id = serializer.validated_data["user"]
-
-        remove_from_invited(team, user_id)
-
-        data = {"message": _("User removed from invited"), "id": user_id}
-        return Response(data, status=status.HTTP_200_OK)
-
-    def join(self, request, slug, key):
-        team = selectors.get_team_or_404(slug=slug)
-
-        request.data["key"] = str(key)
-        serializer = serializers.JoinSerializer(
-            data=request.data, context={"team": team, "user": request.user}
-        )
-        serializer.is_valid(raise_exception=True)
-
-        join(team, key, request.user)
-
-        data = {"message": _("You joined")}
-        return Response(data, status=status.HTTP_200_OK)
-
-    def get_users_to_invite(self, request, pk, info):
-        team = selectors.get_team_or_404(id=pk)
-        if not selectors.is_user_admin_by_team(request.user, team):
-            raise PermissionDenied()
-
-        users = selectors.get_users_to_invite(info)
-
-        serializer = serializers.UserToInviteListSerializer(
-            instance=users, many=True, context={"team": team}
-        )
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def exit(self, request, pk):
         team = selectors.get_team_or_404(id=pk)
