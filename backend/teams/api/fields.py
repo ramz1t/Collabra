@@ -1,8 +1,6 @@
-from rest_framework.fields import CharField, BooleanField
+from rest_framework.fields import CharField
 from rest_framework.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-
-from .. import selectors
 
 
 class PasswordField(CharField):

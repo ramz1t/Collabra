@@ -1,4 +1,4 @@
-import secrets
+import uuid
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
@@ -11,9 +11,14 @@ from ..models import Team, Member
 User = get_user_model()
 
 
+def generate_join_keys() -> tuple:
+    common_key = str(uuid.uuid4())
+    selective_key = str(uuid.uuid4())
+    return common_key, selective_key
+
+
 def refresh_join_keys(team: Team) -> None:
-    team.join_key_common = secrets.token_hex(16)
-    team.join_key_selective = secrets.token_hex(16)
+    team.join_key_common, team.join_key_selective = generate_join_keys()
     team.save()
 
 
