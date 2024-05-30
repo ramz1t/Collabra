@@ -47,7 +47,7 @@ class RemoveFromInvitedSerializer(serializers.Serializer):
 
 
 class JoinSerializer(serializers.Serializer):
-    key = serializers.CharField(max_length=32, min_length=32)
+    key = serializers.CharField(max_length=64, min_length=32)
 
     def validate(self, attrs):
         key = attrs["key"]
@@ -69,6 +69,7 @@ class UserSerializer(serializers.Serializer):
     first_name = serializers.CharField()
     last_name = serializers.CharField()
     username = serializers.CharField()
+    email = serializers.CharField()
 
     def get_generated_avatar(self, user):
         return GeneratedAvatarRetrieveSerializer(instance=user.generated_avatar).data

@@ -30,7 +30,7 @@ const InvitedUsersList = ({ searchInfo, clearSearch }) => {
                 {searchInfo ? t('found_users') : t('invited_members')}
             </p>
             <Divider horizontal className="bg-gray-200" />
-            <ul className="mt-3 grid lg:grid-cols-2 gap-3 max-h-[40dvh] overflow-y-auto">
+            <ul className="mt-3 grid lg:grid-cols-2 gap-3 max-h-80 overflow-y-auto">
                 {isLoading ? (
                     t('fetching_invited_users')
                 ) : !searchInfo ? (

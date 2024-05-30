@@ -26,7 +26,9 @@ const PasswordSubmit = ({
                 autoRef={autoRef}
                 type="password"
                 instance={password}
-                hint={t('pass_to_submit', { action: actionText.toLowerCase() })}
+                hint={t('pass_to_submit', {
+                    action: actionText?.toLowerCase(),
+                })}
             />
             <Button
                 style="destructive"

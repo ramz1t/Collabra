@@ -120,7 +120,7 @@ export const useTransferOwnership = (teamSlug) => {
 export const useTeamMembers = (teamId, params) => {
     const api = useAxios()
     return useQuery({
-        queryKey: ['team-member', { teamId: teamId, ...params }],
+        queryKey: ['team-members', { teamId: teamId, ...params }],
         queryFn: () => {
             return api
                 .get(`${prefix}/teams/${teamId}/members/`, { params: params })

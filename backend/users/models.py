@@ -51,7 +51,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=254, unique=True)
     username = models.CharField(max_length=100, unique=True)
     description = models.TextField(null=True, blank=True)
-    timezone = TimeZoneField(use_pytz=True, null=True)
+    timezone = TimeZoneField(use_pytz=True, null=True, blank=True)
     date_joined = models.DateTimeField(
         verbose_name="date joined", default=djangotimezone.now
     )

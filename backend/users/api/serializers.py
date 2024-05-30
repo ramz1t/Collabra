@@ -24,10 +24,10 @@ def validate_old_password(user, old_password):
 
 
 class UserRemoveSerializer(serializers.Serializer):
-    old_password = serializers.CharField(style={"input_type": "password"})
+    password = serializers.CharField(style={"input_type": "password"})
 
     def validate(self, attrs):
-        validate_old_password(self.context["request"].user, attrs["old_password"])
+        validate_old_password(self.context["request"].user, attrs["password"])
         return attrs
 
 
@@ -51,7 +51,7 @@ class UserCreateUpdateBaseSerializer(serializers.Serializer):
     description = serializers.CharField(
         min_length=1, max_length=500, required=False, allow_null=True
     )
-    timezone = TimeZoneSerializerField(use_pytz=True, required=False)
+    timezone = TimeZoneSerializerField(use_pytz=False, required=False, allow_null=True)
     links = serializers.ListSerializer(
         child=serializers.URLField(), max_length=10, required=False
     )

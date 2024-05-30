@@ -30,7 +30,7 @@ const CreateTeam = () => {
                         team={{
                             title: name.value,
                         }}
-                        size="list"
+                        size="grid"
                     />
                     <div className="flex flex-col justify-between gap-3">
                         <Input instance={name} title={'Team name'} must />
