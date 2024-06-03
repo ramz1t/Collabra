@@ -4,7 +4,6 @@ import DeleteTeam from './DeleteTeam.jsx'
 import LeaveGroup from './LeaveTeam.jsx'
 import GeneralInfo from './GeneralInfo.jsx'
 import { UserRole } from '../../../hooks/useIsAllowed.js'
-import TransferOwnership from './TransferOwnership/TransferOwnership.jsx'
 import MembersManagement from './MembersManagement/index.jsx'
 
 const TeamSettings = () => {
@@ -25,10 +24,6 @@ const TeamSettings = () => {
             <PrivateComponent
                 component={<LeaveGroup />}
                 allowedRoles={[UserRole.MEMBER, UserRole.ADMIN]}
-            />
-            <PrivateComponent
-                component={<TransferOwnership />}
-                allowedRoles={[UserRole.OWNER]}
             />
             <PrivateComponent
                 component={<DeleteTeam />}

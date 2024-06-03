@@ -12,6 +12,7 @@ const Button = ({
     disabled,
     to,
     isLoading,
+    loadingText,
 }) => {
     const { t } = useTranslation()
     const componentProps = {
@@ -40,7 +41,7 @@ const Button = ({
 
     return to ? (
         <Link to={to} {...componentProps}>
-            {isLoading ? t('loading') : children}
+            {isLoading ? (loadingText ? loadingText : t('loading')) : children}
         </Link>
     ) : (
         <button
@@ -49,7 +50,7 @@ const Button = ({
                 action && action()
             }}
         >
-            {isLoading ? t('loading') : children}
+            {isLoading ? (loadingText ? loadingText : t('loading')) : children}
         </button>
     )
 }

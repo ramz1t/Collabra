@@ -9,9 +9,11 @@ const RichHeader = ({ icon, title, description, actions, className }) => {
                 {icon}
             </span>
             <p className="text-xl font-bold">{title}</p>
-            <p className="text-gray-600 dark:text-gray-400 md:px-16 text-center text-sm">
-                {description}
-            </p>
+            {description && (
+                <p className="text-gray-600 dark:text-gray-400 md:px-16 text-center text-sm">
+                    {description}
+                </p>
+            )}
             {actions && <div className="mt-5">{actions}</div>}
         </div>
     )

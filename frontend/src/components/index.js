@@ -23,7 +23,9 @@ import BackButton from './BackButton/index.jsx'
 import LoadingState from './LoadingState/index.jsx'
 import CookiesModal from './CookiesModal/index.jsx'
 import RichHeader from './RichHeader/RichHeader.jsx'
-import Dialog from './Dialog/index.jsx'
+import DialogWindow from './DialogWindow/index.jsx'
+import Index from './ListWithHeader/index.jsx'
+import Checkbox from './Checkbox/index.jsx'
 
 export {
     PrivateRoute,
@@ -51,5 +53,7 @@ export {
     LoadingState,
     CookiesModal,
     RichHeader,
-    Dialog,
+    DialogWindow,
+    Index,
+    Checkbox,
 }

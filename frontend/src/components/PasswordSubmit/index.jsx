@@ -20,7 +20,7 @@ const PasswordSubmit = ({
             onSubmit={() =>
                 submitFn({ ...submitData, password: password.value }, options)
             }
-            className={cn('!flex-row gap-5', className)}
+            className={cn('!flex-row gap-2 md:gap-5', className)}
         >
             <Input
                 autoRef={autoRef}

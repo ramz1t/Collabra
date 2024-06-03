@@ -128,3 +128,34 @@ export const useTeamMembers = (teamId, params) => {
         },
     })
 }
+
+export const useDeleteMembers = (teamSlug) => {
+    const api = useAxios()
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: ({ teamId, memberIds }) => {
+            return api.delete(`${prefix}/teams/${teamId}/members/`, {
+                data: {
+                    ids: memberIds,
+                },
+            })
+        },
+        onSuccess: () =>
+            queryClient.invalidateQueries(['team', { slug: teamSlug }]),
+    })
+}
+
+export const useUpdateMember = (teamSlug) => {
+    const api = useAxios()
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: ({ teamId, memberId, data }) => {
+            return api.patch(
+                `${prefix}/teams/${teamId}/members/${memberId}`,
+                data
+            )
+        },
+        onSuccess: () =>
+            queryClient.invalidateQueries(['teams', { slug: teamSlug }]),
+    })
+}

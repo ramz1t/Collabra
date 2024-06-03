@@ -5,6 +5,7 @@ import useInput from '../../../../hooks/useInput.js'
 import { SearchBar } from '../../../../components/index.js'
 import { useTranslation } from 'react-i18next'
 import MemberCell from './MemberCell.jsx'
+import ListWithHeader from '../../../../components/ListWithHeader/index.jsx'
 
 const MembersList = () => {
     const { team } = useContext(TeamContext)
@@ -17,13 +18,13 @@ const MembersList = () => {
         <div className="grid gap-3">
             <SearchBar
                 inputInstance={search}
-                placeholder={t('search_members')}
+                placeholder={t('members_email')}
             />
-            <ul className="grid gap-1.5 max-h-80 overflow-y-auto">
+            <ListWithHeader cols={1}>
                 {members.map((member) => (
                     <MemberCell member={member} key={member.id} />
                 ))}
-            </ul>
+            </ListWithHeader>
         </div>
     )
 }

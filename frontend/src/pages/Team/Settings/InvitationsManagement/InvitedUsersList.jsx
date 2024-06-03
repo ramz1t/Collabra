@@ -5,6 +5,7 @@ import Invitee from './Invitee.jsx'
 import useDebounce from '../../../../hooks/useDebounce.js'
 import { useContext } from 'react'
 import TeamContext from '../../../../contexts/TeamContext.jsx'
+import ListWithHeader from '../../../../components/ListWithHeader/index.jsx'
 
 const FoundInvitees = ({ info, clearSearch }) => {
     const { team } = useContext(TeamContext)
@@ -25,35 +26,25 @@ const InvitedUsersList = ({ searchInfo, clearSearch }) => {
     const { t } = useTranslation()
 
     return (
-        <div className="flex flex-col">
-            <p className="font-semibold pb-1 pt-5 text-gray-600 dark:text-gray-400 text-sm">
-                {searchInfo ? t('found_users') : t('invited_members')}
-            </p>
-            <Divider horizontal className="bg-gray-200" />
-            <ul className="mt-3 grid lg:grid-cols-2 gap-3 max-h-80 overflow-y-auto">
-                {isLoading ? (
-                    t('fetching_invited_users')
-                ) : !searchInfo ? (
-                    invitesData.invited_people?.length ? (
-                        invitesData.invited_people.map((user) => (
-                            <Invitee
-                                key={user.id}
-                                user={user}
-                                onSuccess={clearSearch}
-                            />
-                        ))
-                    ) : (
-                        t('no_invited_users')
-                    )
-                ) : (
-                    <FoundInvitees
-                        clearSearch={clearSearch}
-                        info={searchInfo}
+        <ListWithHeader
+            isLoading={isLoading}
+            title={searchInfo ? t('found_users') : t('invited_members')}
+            loadingState={t('fetching_invited_users')}
+            emptyState={t('no_invited_users')}
+            isEmpty={!invitesData?.invited_people?.length}
+        >
+            {!searchInfo ? (
+                invitesData?.invited_people.map((user) => (
+                    <Invitee
+                        key={user.id}
+                        user={user}
+                        onSuccess={clearSearch}
                     />
-                )}
-            </ul>
-            <Divider horizontal className="bg-gray-200 mt-3" />
-        </div>
+                ))
+            ) : (
+                <FoundInvitees clearSearch={clearSearch} info={searchInfo} />
+            )}
+        </ListWithHeader>
     )
 }
 

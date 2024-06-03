@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { IoAdd } from 'react-icons/io5'
+import { IoAdd, IoExit } from 'react-icons/io5'
 
 const LoadingState = ({ icon, titleKey }) => {
     const { t } = useTranslation()

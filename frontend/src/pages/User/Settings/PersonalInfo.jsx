@@ -8,6 +8,7 @@ import {
     SettingsSection,
     Input,
     ImageEditor,
+    LoadingState,
 } from '../../../components/index.js'
 import useInput from '../../../hooks/useInput.js'
 import { Link } from 'react-router-dom'
@@ -134,18 +135,18 @@ const PersonalInfo = () => {
                                             state.isFocused
                                                 ? 'ring-1 ring-accent dark:ring-accent-dark !shadow-none'
                                                 : '',
-                                            '!min-h-10 !border-none !bg-slate-100 dark:!bg-slate-600'
+                                            '!min-h-10 !border-none !bg-slate-100 dark:!bg-slate-700'
                                         ),
                                     valueContainer: () => '!pl-1 w-1',
                                     input: () => 'line-clamp-1',
                                     singleValue: () => 'dark:!text-white',
                                     menu: () =>
-                                        '!bg-slate-100 dark:!bg-slate-600 !border-accent dark:!border-accent-dark',
+                                        '!bg-slate-100 dark:!bg-slate-700 !border-accent dark:!border-accent-dark rounded-md',
                                     option: (state) =>
                                         cn(
                                             state.isSelected
                                                 ? '!bg-accent dark:!bg-accent-dark'
-                                                : 'hover:!bg-accent/20 dark:hover:!bg-accent-dark/20',
+                                                : 'hover:!bg-accent/20 dark:hover:!bg-accent-dark/20 !bg-slate-100 dark:!bg-slate-700',
                                             ''
                                         ),
                                 }}

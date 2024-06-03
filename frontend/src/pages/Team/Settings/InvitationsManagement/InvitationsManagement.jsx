@@ -27,7 +27,7 @@ const InvitationsManagement = () => {
             description={t('manage_invitations_desc')}
             extraBlock={<RefreshKeysButton />}
         >
-            <div className="w-full">
+            <div className="grid gap-5">
                 <RichHeader
                     icon={<IoPeopleOutline />}
                     title={t('add_team_members')}
@@ -36,29 +36,28 @@ const InvitationsManagement = () => {
                 <SearchBar
                     placeholder={t('new_member_info')}
                     inputInstance={userInfo}
-                    className="mt-7"
                 />
+                <InvitedUsersList
+                    searchInfo={userInfo.value.trim()}
+                    clearSearch={() => userInfo.setValue('')}
+                />
+                {!isLoading && (
+                    <div className="flex gap-3 flex-wrap mt-1">
+                        <JoinLink
+                            title={t('copy_public_link')}
+                            slug={teamSlug}
+                            joinKey={teamInvitesData?.join_key_common}
+                            isLoading={isLoading}
+                        />
+                        <JoinLink
+                            title={t('copy_selective_link')}
+                            slug={teamSlug}
+                            joinKey={teamInvitesData?.join_key_selective}
+                            isLoading={isLoading}
+                        />
+                    </div>
+                )}
             </div>
-            <InvitedUsersList
-                searchInfo={userInfo.value.trim()}
-                clearSearch={() => userInfo.setValue('')}
-            />
-            {!isLoading && (
-                <div className="flex gap-3 flex-wrap mt-6">
-                    <JoinLink
-                        title={t('copy_public_link')}
-                        slug={teamSlug}
-                        joinKey={teamInvitesData?.join_key_common}
-                        isLoading={isLoading}
-                    />
-                    <JoinLink
-                        title={t('copy_selective_link')}
-                        slug={teamSlug}
-                        joinKey={teamInvitesData?.join_key_selective}
-                        isLoading={isLoading}
-                    />
-                </div>
-            )}
         </SettingsSection>
     )
 }
