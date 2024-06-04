@@ -9,7 +9,7 @@ import {
 } from '../../../../components/index.js'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
-import { IoPencil, IoChevronForward } from 'react-icons/io5'
+import { IoPencil, IoChevronForward, IoCheckmark } from 'react-icons/io5'
 import { useContext, useState } from 'react'
 import MemberCellInfo from './MemberCellInfo.jsx'
 import useProfilePath from '../../../../hooks/useProfilePath.js'
@@ -21,8 +21,10 @@ import {
     useUpdateMember,
 } from '../../../../api/team.js'
 import useInput from '../../../../hooks/useInput.js'
+import cn from 'classnames'
+import AuthContext from '../../../../contexts/AuthContext.jsx'
 
-const MemberCell = ({ member }) => {
+const MemberCell = ({ member, toggleMemberSelection, selected }) => {
     const { t } = useTranslation()
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
     const profilePath = useProfilePath(member.user.id)
@@ -36,12 +38,38 @@ const MemberCell = ({ member }) => {
         useUpdateMember(teamSlug)
     const [isAdmin, setIsAdmin] = useState(member.is_admin)
     const memberUsername = useInput('')
+    const { user } = useContext(AuthContext)
+    const selectable = !member.is_owner && member.user.id !== user.user_id
 
     return (
         <div className="flex h-14 px-2 pr-3 pl-2.5  border dark:border-slate-700 items-center rounded-full gap-3 w-full flex-wrap ">
             <div className="flex gap-3 items-center mr-auto ">
-                <Avatar user={member.user} />
-                <Link to={profilePath} className="hover:underline">
+                <span
+                    className={cn(
+                        'rounded-full relative',
+                        selectable
+                            ? 'hover:cursor-pointer'
+                            : 'hover:cursor-not-allowed'
+                    )}
+                    onClick={() =>
+                        selectable && toggleMemberSelection(member.id)
+                    }
+                >
+                    <div
+                        className={cn(
+                            'absolute size-9 bg-accent dark:bg-accent-dark rounded-full text-white flex items-center justify-center transition-all text-xl',
+                            'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
+                            selected
+                                ? 'opacity-100 scale-100'
+                                : 'opacity-0 scale-0'
+                        )}
+                    >
+                        <IoCheckmark />
+                    </div>
+                    <Avatar user={member.user} />
+                </span>
+
+                <Link to={profilePath}>
                     <MemberCellInfo member={member} />
                 </Link>
             </div>
@@ -71,13 +99,16 @@ const MemberCell = ({ member }) => {
                 successButtonStyle="primary"
                 successButtonText={t('save')}
                 extraActions={
-                    <div className="pt-5 grid gap-5">
-                        <Checkbox
-                            id="admin"
-                            text={t('is_admin')}
-                            value={isAdmin}
-                            setValue={setIsAdmin}
-                        />
+                    <div className="pt-2 grid gap-5">
+                        {!member.is_owner &&
+                            member.user.id !== user.user_id && (
+                                <Checkbox
+                                    id="admin"
+                                    text={t('is_admin')}
+                                    value={isAdmin}
+                                    setValue={setIsAdmin}
+                                />
+                            )}
                         <Input
                             instance={memberUsername}
                             title={t('member_username')}
@@ -106,18 +137,21 @@ const MemberCell = ({ member }) => {
                     </div>
                 }
                 extraButtons={
-                    <Button
-                        action={() =>
-                            deleteMember({
-                                teamId: team.id,
-                                memberIds: [member.id],
-                            })
-                        }
-                        style="destructive"
-                        isLoading={isDeleting}
-                    >
-                        {t('delete')}
-                    </Button>
+                    !member.is_owner &&
+                    user.user_id !== member.user.id && (
+                        <Button
+                            action={() =>
+                                deleteMember({
+                                    teamId: team.id,
+                                    memberIds: [member.id],
+                                })
+                            }
+                            style="destructive"
+                            isLoading={isDeleting}
+                        >
+                            {t('delete')}
+                        </Button>
+                    )
                 }
             />
         </div>

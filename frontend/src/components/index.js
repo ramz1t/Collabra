@@ -26,6 +26,7 @@ import RichHeader from './RichHeader/RichHeader.jsx'
 import DialogWindow from './DialogWindow/index.jsx'
 import Index from './ListWithHeader/index.jsx'
 import Checkbox from './Checkbox/index.jsx'
+import InfoHeader from './InfoHeader/index.jsx'
 
 export {
     PrivateRoute,
@@ -56,4 +57,5 @@ export {
     DialogWindow,
     Index,
     Checkbox,
+    InfoHeader,
 }

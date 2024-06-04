@@ -1,8 +1,7 @@
 import useAxios from '../hooks/useAxios.js'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
-
-const prefix = '/api/v1'
+import { prefix } from './index.js'
 
 export const useUsersToInvite = (teamId, info) => {
     const api = useAxios()

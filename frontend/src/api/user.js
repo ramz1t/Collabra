@@ -2,8 +2,7 @@ import { useContext } from 'react'
 import useAxios from '../hooks/useAxios'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import AuthContext from '../contexts/AuthContext'
-
-const prefix = '/api/v1'
+import { prefix } from './index.js'
 
 export const useUser = (userId) => {
     const api = useAxios()

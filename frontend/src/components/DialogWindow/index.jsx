@@ -19,6 +19,7 @@ const DialogWindow = ({
     extraButtons,
     duration = 150,
     disabledClickOutside = false,
+    closeOnSuccess,
 }) => {
     const { t } = useTranslation()
 
@@ -72,7 +73,7 @@ const DialogWindow = ({
                                     </div>
                                     <p className="font-bold text-lg">{title}</p>
                                 </div>
-                                <div className="w-full pl-14">
+                                <div className="w-full pt-3 md:pl-14">
                                     {description && (
                                         <p className="text-gray-600 dark:text-gray-400">
                                             {description}
@@ -94,7 +95,11 @@ const DialogWindow = ({
                                 {onSuccess && (
                                     <Button
                                         style={successButtonStyle}
-                                        action={onSuccess}
+                                        action={() =>
+                                            onSuccess().then(
+                                                () => closeOnSuccess && close()
+                                            )
+                                        }
                                         isLoading={isLoading}
                                     >
                                         {isLoading
