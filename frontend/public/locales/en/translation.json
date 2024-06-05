@@ -146,5 +146,11 @@
     "users_selected": "{{number}} users selected",
     "user_selected": "1 user selected",
     "delete_members_dialog_head": "Are you sure?",
-    "delete_members_dialog_desc": "You are going to delete selected users from the team"
+    "delete_members_dialog_desc": "You are going to delete selected users from the team",
+
+
+    "title_login": "Login",
+    "title_register": "Register",
+    "title_teams": "Teams",
+    "title_profile_settings": "Profile settings"
 }

@@ -12,6 +12,7 @@ import { useTeams } from '../../api/team.js'
 import cn from 'classnames'
 import useLocalStorage from '../../hooks/useLocalStorage.js'
 import useScreenSize from '../../hooks/useScreenSize.js'
+import { Helmet } from 'react-helmet-async'
 
 const TeamsList = () => {
     const { t } = useTranslation()
@@ -22,6 +23,9 @@ const TeamsList = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>{t('title_teams')} - Collabra</title>
+            </Helmet>
             <div className="flex py-5 items-end gap-5 flex-wrap">
                 <h1 className="font-bold text-3xl mr-auto">{t('teams')}</h1>
                 {isTablet && (

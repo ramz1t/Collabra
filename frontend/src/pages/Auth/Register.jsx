@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom'
 import useInput from '../../hooks/useInput.js'
 import AuthContext from '../../contexts/AuthContext.jsx'
 import SocialLogin from './SocialLogin.jsx'
+import { Helmet } from 'react-helmet-async'
 
 const Register = () => {
     const { t } = useTranslation()
@@ -23,6 +24,9 @@ const Register = () => {
 
     return (
         <div className="flex flex-col items-center mt-5">
+            <Helmet>
+                <title>{t('title_register')} - Collabra</title>
+            </Helmet>
             <Form
                 className="w-full md:max-w-96 mt-10 md:mt-20"
                 onSubmit={() => {

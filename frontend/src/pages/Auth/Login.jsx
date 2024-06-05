@@ -6,6 +6,7 @@ import useInput from '../../hooks/useInput.js'
 import AuthContext from '../../contexts/AuthContext.jsx'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import SocialLogin from './SocialLogin.jsx'
+import { Helmet } from 'react-helmet-async'
 
 const Login = () => {
     const { t } = useTranslation()
@@ -16,6 +17,9 @@ const Login = () => {
 
     return (
         <div className="flex flex-col items-center mt-5">
+            <Helmet>
+                <title>{t('title_login')} - Collabra</title>
+            </Helmet>
             <Form
                 className="w-full md:max-w-96 mt-10 md:mt-20"
                 onSubmit={() => {

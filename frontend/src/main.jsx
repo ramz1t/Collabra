@@ -10,6 +10,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { TeamProvider } from './contexts/TeamContext.jsx'
 import { Toaster } from 'react-hot-toast'
+import { HelmetProvider } from 'react-helmet-async'
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -28,9 +29,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 <TeamProvider>
                     <AuthProvider>
                         <ThemeProvider>
-                            <App />
-                            <ReactQueryDevtools />
-                            <Toaster position="top-right" />
+                            <HelmetProvider>
+                                <App />
+                                <ReactQueryDevtools />
+                                <Toaster position="top-right" />
+                            </HelmetProvider>
                         </ThemeProvider>
                     </AuthProvider>
                 </TeamProvider>

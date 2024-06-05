@@ -9,6 +9,7 @@ import Chats from './Chats'
 import Calendar from './Calendar'
 import { useTeam } from '../../api/team.js'
 import LoadingState from '../../components/LoadingState/index.jsx'
+import { Helmet } from 'react-helmet-async'
 
 const TeamSpace = () => {
     const { teamSlug } = useParams()
@@ -24,6 +25,9 @@ const TeamSpace = () => {
 
     return (
         <div className="grow flex flex-col">
+            <Helmet>
+                <title>{teamData.title} - Collabra</title>
+            </Helmet>
             <Routes>
                 <Route index element={<Dashboard />} />
                 <Route path="settings" element={<TeamSettings />} />

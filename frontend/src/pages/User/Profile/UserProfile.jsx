@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import CurrentTime from './CurrentTime.jsx'
 import ShortLink from './ShortLink.jsx'
 import { IoPencil } from 'react-icons/io5'
+import { Helmet } from 'react-helmet-async'
 
 const UserProfile = () => {
     const { userId } = useParams()
@@ -15,6 +16,11 @@ const UserProfile = () => {
     if (!user) return 'user not found'
     return (
         <div className="container mx-auto px-4 py-10 grid md:flex gap-10 mt-4">
+            <Helmet>
+                <title>
+                    {user.first_name} {user.last_name} - Collabra
+                </title>
+            </Helmet>
             <Avatar user={user} size="profile" />
             <div className="grid gap-3 h-fit">
                 <div>
