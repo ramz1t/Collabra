@@ -27,6 +27,7 @@ import DialogWindow from './DialogWindow/index.jsx'
 import Index from './ListWithHeader/index.jsx'
 import Checkbox from './Checkbox/index.jsx'
 import InfoHeader from './InfoHeader/index.jsx'
+import LoadMoreMarker from './LoadMoreMarker/index.jsx'
 
 export {
     PrivateRoute,
@@ -58,4 +59,5 @@ export {
     Index,
     Checkbox,
     InfoHeader,
+    LoadMoreMarker,
 }

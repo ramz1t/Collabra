@@ -1,4 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+    useInfiniteQuery,
+    useMutation,
+    useQuery,
+    useQueryClient,
+} from '@tanstack/react-query'
 import useAxios from '../hooks/useAxios.js'
 import { useNavigate } from 'react-router-dom'
 import { prefix } from './index.js'
@@ -118,12 +123,20 @@ export const useTransferOwnership = (teamSlug) => {
 
 export const useTeamMembers = (teamId, params) => {
     const api = useAxios()
-    return useQuery({
+    return useInfiniteQuery({
         queryKey: ['team-members', { teamId: teamId, ...params }],
-        queryFn: () => {
+        queryFn: ({ pageParam = 1 }) => {
             return api
-                .get(`${prefix}/teams/${teamId}/members/`, { params: params })
+                .get(`${prefix}/teams/${teamId}/members`, {
+                    params: { ...params, page: pageParam },
+                })
                 .then((res) => res.data)
+        },
+        getNextPageParam: (lastPage, allPages) => {
+            if (lastPage.next === null) {
+                return undefined
+            }
+            return allPages.length
         },
     })
 }

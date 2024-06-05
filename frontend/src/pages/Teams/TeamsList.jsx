@@ -16,13 +16,9 @@ import useScreenSize from '../../hooks/useScreenSize.js'
 const TeamsList = () => {
     const { t } = useTranslation()
     const search = useInput('', {}, 250)
-    const { data } = useTeams({ search: search.value })
+    const { data } = useTeams({ search: search.value.trim() || null })
     const { isTablet } = useScreenSize()
     const [isList, setIsList] = useLocalStorage('displayTeamsInList', true)
-
-    useEffect(() => {
-        if (search.value === '') search.setValue(null)
-    }, [search.value])
 
     return (
         <div>

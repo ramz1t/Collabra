@@ -12,7 +12,7 @@ const FoundInvitees = ({ info, clearSearch }) => {
     const { data: foundUsers, isLoading } = useUsersToInvite(team.id, info)
     const { t } = useTranslation()
     return isLoading
-        ? t('loading_users')
+        ? t('loading')
         : foundUsers?.length
           ? foundUsers?.map((user) => (
                 <Invitee user={user} key={user.id} onSuccess={clearSearch} />
@@ -29,18 +29,19 @@ const InvitedUsersList = ({ searchInfo, clearSearch }) => {
         <ListWithHeader
             isLoading={isLoading}
             title={searchInfo ? t('found_users') : t('invited_members')}
-            loadingState={t('fetching_invited_users')}
-            emptyState={t('no_invited_users')}
-            isEmpty={!invitesData?.invited_people?.length}
         >
             {!searchInfo ? (
-                invitesData?.invited_people.map((user) => (
-                    <Invitee
-                        key={user.id}
-                        user={user}
-                        onSuccess={clearSearch}
-                    />
-                ))
+                invitesData?.invited_people.length ? (
+                    invitesData?.invited_people.map((user) => (
+                        <Invitee
+                            key={user.id}
+                            user={user}
+                            onSuccess={clearSearch}
+                        />
+                    ))
+                ) : (
+                    t('no_invited_users')
+                )
             ) : (
                 <FoundInvitees clearSearch={clearSearch} info={searchInfo} />
             )}

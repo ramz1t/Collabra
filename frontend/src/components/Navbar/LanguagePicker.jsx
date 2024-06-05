@@ -62,7 +62,7 @@ const LanguagePicker = () => {
                 close={() => setIsOpen(false)}
                 closeButtonText={t('close')}
                 extraActions={
-                    <ul className="pt-5 grid md:grid-cols-3 gap-2 md:gap-5">
+                    <ul className="pt-2 grid md:grid-cols-3 gap-2 md:gap-5">
                         {Object.keys(languages).map((key) => (
                             <LanguageButton
                                 lang={languages[key]}

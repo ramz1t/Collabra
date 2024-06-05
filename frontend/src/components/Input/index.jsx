@@ -79,7 +79,7 @@ const Input = ({
                             aria-label={ariaLabel}
                             id={id}
                             type={type}
-                            ref={ref ? ref : inputRef}
+                            ref={ref || inputRef}
                             value={instance.rawValue}
                             onChange={(e) => {
                                 onChange && onChange(e)

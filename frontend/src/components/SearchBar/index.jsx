@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { IoSearchOutline } from 'react-icons/io5'
 import cn from 'classnames'
+import { useEffect } from 'react'
 
 const SearchBar = ({ placeholder, inputInstance, className }) => {
     const { t } = useTranslation()
@@ -15,7 +16,7 @@ const SearchBar = ({ placeholder, inputInstance, className }) => {
                 innerIcon={<IoSearchOutline />}
             />
             <AnimatePresence>
-                {inputInstance.rawValue && (
+                {inputInstance.rawValue.trim() && (
                     <motion.div
                         initial={{ width: 0, paddingRight: 0, opacity: 0 }}
                         animate={{
