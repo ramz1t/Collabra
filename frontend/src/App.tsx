@@ -9,14 +9,14 @@ const {
     UserSettings,
     UserProfile,
 } = lazily(() => import('./pages'))
-import { PrivateRoute, Navbar, CookiesModal, InfoHeader } from './components/index.js'
+import { PrivateRoute, Navbar, CookiesModal, InfoHeader } from './components'
 import { Suspense } from 'react'
 
 const App = () => {
     return (
         <>
             <Navbar />
-            <div className="md:ml-[72px] max-md:mt-[72px] grow flex flex-col">
+            <div className="md:ml-nav max-md:mt-nav grow flex flex-col">
                 <InfoHeader />
                 <Suspense>
                     <div className="px-5 pb-5 grow grid">

@@ -58,5 +58,16 @@ export type PaginatedResponse<T> = {
     count: number
     next: string | null
     previous: string | null
+    page: number
     results: T[]
+}
+
+export type OrderingKey = 'id' | '-id' | string
+
+export type SearchParams = {
+    search?: string | null
+    email?: string | null
+    ordering?: OrderingKey
+    page_size?: number
+    page?: number
 }

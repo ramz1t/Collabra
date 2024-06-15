@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import TeamCard from './TeamCard.js'
-import { Button, SearchBar } from '../../components'
+import { Button, Dropdown, LoadMoreMarker, SearchBar } from '../../components'
 import {
     IoDuplicateOutline,
     IoReorderFourOutline,
     IoGridOutline,
+    IoText,
+    IoArrowDown,
+    IoArrowUp,
+    IoChevronUp,
 } from 'react-icons/io5'
 import { useTranslation } from 'react-i18next'
 import useInput from '../../hooks/useInput'
@@ -13,11 +17,30 @@ import cn from 'classnames'
 import useLocalStorage from '../../hooks/useLocalStorage'
 import useScreenSize from '../../hooks/useScreenSize'
 import { Helmet } from 'react-helmet-async'
+import { OrderingKey } from '../../types'
+
+interface SortingOption {
+    title: string
+    icon: React.ReactElement
+}
 
 const TeamsList = () => {
     const { t } = useTranslation()
+    const teamsSortingOptions: Record<string, SortingOption> = {
+        '-id': { title: t('newer_first'), icon: <IoArrowDown /> },
+        id: { title: t('older_first'), icon: <IoArrowUp /> },
+        title: { title: t('alphabetical'), icon: <IoText /> },
+    }
     const search = useInput<string>('', {}, 250)
-    const { data } = useTeams({ search: search.value.trim() || null })
+    const [sortBy, setSortBy] = useLocalStorage<OrderingKey>(
+        'teamsOrdering',
+        '-id'
+    )
+    const { data, fetchNextPage, isFetchingNextPage, hasNextPage, error } =
+        useTeams({
+            search: search.value.trim() || null,
+            ordering: sortBy!,
+        })
     const { isTablet } = useScreenSize()
     const [isList, setIsList] = useLocalStorage('displayTeamsInList', true)
 
@@ -26,64 +49,97 @@ const TeamsList = () => {
             <Helmet>
                 <title>{t('title_teams')} - Collabra</title>
             </Helmet>
-            <div className="flex py-5 items-end gap-5 flex-wrap">
-                <h1 className="font-bold text-3xl mr-auto">{t('teams')}</h1>
-                {isTablet && (
-                    <div className="flex gap-1 items-center">
-                        <p className="hidden md:block font-semibold mr-2">
-                            {t('view_as')}
-                        </p>
-                        <Button
-                            action={() => setIsList(true)}
-                            className={cn(
-                                isList
-                                    ? 'bg-gray-200 hover:!opacity-100 dark:bg-slate-700'
-                                    : 'bg-gray-100 dark:bg-slate-800',
-                                'min-h-10 min-w-10 md:px-3 rounded-md'
+            <div className="sticky top-nav md:top-0 bg-white dark:bg-slate-900 pb-5">
+                <div className="flex py-5 items-center gap-5 flex-wrap">
+                    <h1 className="font-bold text-3xl mr-auto">{t('teams')}</h1>
+                    <div className="flex items-center gap-3">
+                        <p className="font-semibold">{t('sort_by')}</p>
+                        <Dropdown<SortingOption>
+                            selected={sortBy!}
+                            setSelected={setSortBy}
+                            values={teamsSortingOptions}
+                            renderOption={(option, isSelected) => (
+                                <Button
+                                    className={cn(
+                                        'min-h-10 min-w-10 px-3 rounded-md w-full !justify-start',
+                                        isSelected
+                                            ? 'hover:!opacity-100 bg-gray-100 dark:bg-slate-800'
+                                            : 'hover:bg-gray-100 dark:hover:bg-slate-800'
+                                    )}
+                                >
+                                    {option.icon}
+                                    {option.title}
+                                </Button>
                             )}
-                        >
-                            <IoReorderFourOutline />
-                            {isTablet && t('list')}
-                        </Button>
-                        <Button
-                            action={() => setIsList(false)}
-                            className={cn(
-                                !isList
-                                    ? 'bg-gray-200 hover:!opacity-100 dark:bg-slate-700'
-                                    : 'bg-gray-100 dark:bg-slate-800',
-                                'min-h-10 min-w-10 md:px-3 rounded-md'
+                            renderSelected={(option) => (
+                                <Button className="bg-gray-100 dark:bg-slate-800 min-h-10 min-w-10 px-3 rounded-md">
+                                    {option.icon}
+                                    {option.title}
+                                </Button>
                             )}
-                        >
-                            <IoGridOutline />
-                            {isTablet && t('grid')}
-                        </Button>
+                        />
                     </div>
-                )}
-                <Button to="create" style="primary">
-                    <IoDuplicateOutline />
-                    {t('create_team')}
-                </Button>
-            </div>
-            <div className="flex md:items-center gap-3 md:gap-5 flex-col-reverse md:flex-row items-start max-md:flex-wrap">
-                <SearchBar
-                    inputInstance={search}
-                    placeholder={`${t('search')}...`}
-                />
-            </div>
-            {data && data.results.length && (
-                <ul
-                    className={cn(
-                        isTablet && isList
-                            ? ''
-                            : 'grid max-md:gap-3 md:grid-cols-2 xl:grid-cols-3',
-                        'pt-5'
+                    {isTablet && (
+                        <div className="flex gap-1 items-center">
+                            <p className="hidden md:block font-semibold mr-2">
+                                {t('view_as')}
+                            </p>
+                            <Button
+                                action={() => setIsList(true)}
+                                className={cn(
+                                    isList
+                                        ? 'bg-gray-200 hover:!opacity-100 dark:bg-slate-700'
+                                        : 'bg-gray-100 dark:bg-slate-800',
+                                    'min-h-10 min-w-10 md:px-3 rounded-md'
+                                )}
+                            >
+                                <IoReorderFourOutline />
+                                {isTablet && t('list')}
+                            </Button>
+                            <Button
+                                action={() => setIsList(false)}
+                                className={cn(
+                                    !isList
+                                        ? 'bg-gray-200 hover:!opacity-100 dark:bg-slate-700'
+                                        : 'bg-gray-100 dark:bg-slate-800',
+                                    'min-h-10 min-w-10 md:px-3 rounded-md'
+                                )}
+                            >
+                                <IoGridOutline />
+                                {isTablet && t('grid')}
+                            </Button>
+                        </div>
                     )}
-                >
-                    {data.results.map((team, key: number) => (
+                    <Button to="create" style="primary">
+                        <IoDuplicateOutline />
+                        {t('create_team')}
+                    </Button>
+                </div>
+                <div className="flex md:items-center gap-3 md:gap-5 flex-col-reverse md:flex-row items-start max-md:flex-wrap">
+                    <SearchBar
+                        inputInstance={search}
+                        placeholder={`${t('search')}...`}
+                    />
+                </div>
+            </div>
+            <ul
+                className={cn(
+                    isTablet && isList
+                        ? ''
+                        : 'grid max-md:gap-3 md:grid-cols-2 xl:grid-cols-3'
+                )}
+            >
+                {data &&
+                    data.teams.map((team, key: number) => (
                         <TeamCard key={key} team={team} isList={isList!} />
                     ))}
-                </ul>
-            )}
+                <LoadMoreMarker
+                    error={error}
+                    isFetching={isFetchingNextPage}
+                    hasNextPage={hasNextPage}
+                    fetch={fetchNextPage}
+                />
+            </ul>
         </div>
     )
 }

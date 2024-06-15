@@ -23,7 +23,7 @@ const Title = ({
     return (
         <h1
             className={cn(
-                'font-bold text-xl md:text-3xl pt-5 pb-10 mx-auto w-full flex gap-3 items-center sticky top-0 bg-white dark:bg-slate-800 after:bg-red-500 after:w-full after:absolute',
+                'font-bold text-xl md:text-3xl py-5 mx-auto w-full flex gap-3 items-center sticky top-0 bg-white dark:bg-slate-900 after:bg-red-500 after:w-full after:absolute',
                 position === 'center' ? 'justify-center' : '',
                 position === 'left' ? 'justify-start' : '',
                 position === 'right' ? 'justify-end' : '',

@@ -176,7 +176,7 @@ const ImageEditor = ({
                         onChange={handleFileChange}
                         type="file"
                         className="hidden"
-                        accept="image/png, image/jpeg, image/webp, image/jpg, image/heic"
+                        accept="image/png, image/jpeg, image/webp, image/jpg"
                     />
                     {!inputImage && initialImageExists ? (
                         <>
@@ -223,7 +223,7 @@ const ImageEditor = ({
                 </div>
                 {!inputImage && (
                     <p className="font-semibold text-sm text-gray-600 dark:text-gray-400">
-                        JPG, PNG, WEBP, {t('or')} HEIC
+                        JPG, PNG, {t('or')} WEBP
                     </p>
                 )}
                 {inputImage && (

@@ -24,8 +24,9 @@ const Checkbox = ({
             <div className="flex items-center gap-3">
                 <input
                     className={cn(
-                        'size-6 rounded-md bg-slate-100 dark:bg-slate-700 checked:bg-accent checked:dark:bg-accent-dark appearance-none relative transition-colors duration-[50ms]',
-                        'after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:text-sm after:text-white checked:after:content-["✓"]',
+                        'size-6 rounded-md bg-slate-100 dark:bg-slate-700 appearance-none relative',
+                        'after:transition-all after:duration-100 after:scale-0 checked:after:scale-100 after:opacity-0 checked:after:opacity-100 after:rounded-[20px] checked:after:rounded-md',
+                        'after:bg-accent after:dark:bg-accent-dark after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:text-sm after:text-white after:content-["✓"] after:w-full after:h-full after:flex after:items-center after:justify-center',
                         'focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:outline-none',
                         className
                     )}

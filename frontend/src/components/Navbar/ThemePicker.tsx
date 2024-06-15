@@ -58,7 +58,7 @@ const ThemePicker = (): React.ReactElement => {
             <span className="text-lg">
                 {options[themeSetting || 'light'].menuIcon}
             </span>
-            <p className="block whitespace-nowrap">
+            <p className="block whitespace-nowrap md:opacity-0 md:group-hover/navbar:opacity-100 transition-opacity duration-150">
                 {options[themeSetting || 'light'].title}
             </p>
         </Button>

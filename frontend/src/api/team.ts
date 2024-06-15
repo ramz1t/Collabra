@@ -10,7 +10,7 @@ import useAxios from '../hooks/useAxios'
 import { useNavigate } from 'react-router-dom'
 import { prefix } from './index'
 import { AxiosResponse } from 'axios'
-import { Member, PaginatedResponse, Team } from '../types'
+import { Member, PaginatedResponse, SearchParams, Team } from '../types'
 
 const removeTeamFromCachedQueries = async (
     teamId: number,
@@ -57,14 +57,23 @@ export const useCreateTeam = () => {
     })
 }
 
-export const useTeams = (params: Record<string, any>) => {
+export const useTeams = (params: SearchParams) => {
     const api = useAxios()
-    return useQuery({
+    return useInfiniteQuery({
         queryKey: ['teams', params],
-        queryFn: async (): Promise<PaginatedResponse<Team>> => {
-            const res = await api.get(`${prefix}/teams`, { params: params })
+        queryFn: async ({ pageParam }): Promise<PaginatedResponse<Team>> => {
+            const res = await api.get(`${prefix}/teams`, {
+                params: { ...params, page: pageParam },
+            })
             return res.data
         },
+        initialPageParam: 1,
+        getNextPageParam: (lastPage) => {
+            return lastPage.next !== null ? lastPage.page + 1 : null
+        },
+        select: (data) => ({
+            teams: [...data.pages.flatMap((page) => page.results)],
+        }),
     })
 }
 
@@ -157,7 +166,7 @@ export const useTransferOwnership = (teamSlug: string) => {
     })
 }
 
-export const useTeamMembers = (teamId: number, params: Record<string, any>) => {
+export const useTeamMembers = (teamId: number, params: SearchParams) => {
     const api = useAxios()
     return useInfiniteQuery({
         queryKey: ['team-members', { teamId, ...params }],
@@ -171,9 +180,12 @@ export const useTeamMembers = (teamId: number, params: Record<string, any>) => {
             return response.data
         },
         initialPageParam: 1,
-        getNextPageParam: (lastPage, allPages) => {
-            return lastPage.next === null ? undefined : allPages.length + 1
+        getNextPageParam: (lastPage) => {
+            return lastPage.next !== null ? lastPage.page + 1 : null
         },
+        select: (data) => ({
+            members: [...data.pages.flatMap((page) => page.results)],
+        }),
     })
 }
 

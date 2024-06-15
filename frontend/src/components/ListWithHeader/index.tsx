@@ -27,9 +27,11 @@ const ListWithHeader = ({
     const { t } = useTranslation()
     return (
         <div className={cn('flex flex-col', className)}>
-            <p className="font-semibold pb-1 text-gray-600 dark:text-gray-400 text-sm">
-                {title}
-            </p>
+            {title && (
+                <p className="font-semibold pb-1 text-gray-600 dark:text-gray-400 text-sm">
+                    {title}
+                </p>
+            )}
             <Divider horizontal className="bg-gray-200" />
             <ul
                 style={{

@@ -27,6 +27,7 @@ import Checkbox from './Checkbox'
 import InfoHeader from './InfoHeader'
 import LoadMoreMarker from './LoadMoreMarker'
 import TextField from './TextField'
+import Dropdown from './Dropdown'
 
 export {
     PrivateRoute,
@@ -58,4 +59,5 @@ export {
     InfoHeader,
     LoadMoreMarker,
     TextField,
+    Dropdown,
 }

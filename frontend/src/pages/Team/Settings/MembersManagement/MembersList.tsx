@@ -104,21 +104,13 @@ const MembersList = (): React.ReactElement => {
             {isLoading && t('loading')}
             {data && (
                 <ListWithHeader cols={1} isLoading={isLoading}>
-                    {data.pages.map((page, key) => (
-                        <React.Fragment key={key}>
-                            {page.results.map((member) => (
-                                <MemberCell
-                                    member={member}
-                                    key={member.id}
-                                    toggleMemberSelection={
-                                        toggleMemberSelection
-                                    }
-                                    selected={selectedMembers.includes(
-                                        member.id
-                                    )}
-                                />
-                            ))}
-                        </React.Fragment>
+                    {data.members.map((member) => (
+                        <MemberCell
+                            member={member}
+                            key={member.id}
+                            toggleMemberSelection={toggleMemberSelection}
+                            selected={selectedMembers.includes(member.id)}
+                        />
                     ))}
                     <LoadMoreMarker
                         hasNextPage={hasNextPage}

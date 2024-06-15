@@ -49,7 +49,7 @@ const LanguagePicker = (): React.ReactElement => {
                         width={18}
                     />
                 </span>
-                <p className="block whitespace-nowrap">
+                <p className="block whitespace-nowrap md:opacity-0 md:group-hover/navbar:opacity-100 transition-opacity duration-150">
                     {languages[i18n.resolvedLanguage || 'en'].name}
                 </p>
             </div>

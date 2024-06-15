@@ -126,7 +126,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
             if (res.ok) {
                 const data = await res.json()
                 success(data.message)
-                authWithTokens(data)
+                authWithTokens(data, '/users/me/settings')
             } else {
                 // setError && setError(res)
                 alert(JSON.stringify(res.statusText))

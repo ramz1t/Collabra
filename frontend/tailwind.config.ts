@@ -33,6 +33,9 @@ export default {
             backgroundImage: {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
             },
+            spacing: {
+                nav: '72px',
+            },
         },
     },
     plugins: [],

@@ -73,7 +73,7 @@ const TeamCard = ({ team, isList }: TeamCardProps): React.ReactElement => {
                 className={cn(
                     isTablet && isList
                         ? 'w-full px-4 py-3 gap-5'
-                        : 'rounded-lg max-md:bg-gray-50 group-card hover:md:bg-gray-100 dark:hover:md:bg-slate-800 p-5 gap-7',
+                        : 'rounded-lg max-md:bg-gray-50 max-md:dark:bg-slate-950 group-card hover:md:bg-gray-100 dark:hover:md:bg-slate-800 p-5 gap-7',
                     'group-card h-fit overflow-hidden dark:border-gray-700 hover:!border-accent hover:dark:!border-accent-dark transition-all duration-75 flex items-center'
                 )}
             >

@@ -2,8 +2,17 @@ import { IoChevronBackOutline } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import React, { useMemo } from 'react'
+import cn from 'classnames'
 
-const BackButton = ({ text }: { text?: string }): React.ReactElement => {
+interface BackButtonProps {
+    text?: string
+    className?: string
+}
+
+const BackButton = ({
+    text,
+    className,
+}: BackButtonProps): React.ReactElement => {
     const { t } = useTranslation()
     const to = useMemo(
         () =>
@@ -16,7 +25,10 @@ const BackButton = ({ text }: { text?: string }): React.ReactElement => {
     return (
         <Link
             to={to}
-            className="text-lg flex items-center gap-1.5 hover:text-accent dark:hover:text-accent-dark w-fit"
+            className={cn(
+                'text-lg flex items-center gap-1.5 hover:text-accent dark:hover:text-accent-dark w-fit',
+                className
+            )}
         >
             <IoChevronBackOutline />
             {text ? text : t('back')}

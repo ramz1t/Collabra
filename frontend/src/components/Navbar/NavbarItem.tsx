@@ -40,7 +40,9 @@ const NavbarItem = ({
             end={end}
         >
             <span className="text-lg">{icon}</span>
-            <p className="block whitespace-nowrap max-md:truncate">{title}</p>
+            <p className="block whitespace-nowrap max-md:truncate md:opacity-0 md:group-hover/navbar:opacity-100 transition-opacity duration-150">
+                {title}
+            </p>
         </NavLink>
     )
 }

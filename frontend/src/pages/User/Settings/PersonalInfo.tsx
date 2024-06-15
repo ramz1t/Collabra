@@ -31,7 +31,7 @@ const PersonalInfo = (): React.ReactElement => {
     const username = useInput<string>('', { isEmpty: true })
     const newLink = useInput<string>('')
     const [hasChanges, setHasChanges] = useState<boolean>(false)
-    const [timezone, setTimezone] = useState<ITimezone>('')
+    const [timezone, setTimezone] = useState<string>('')
     const [links, setLinks] = useState<string[]>([])
     const {
         mutate: updateUser,
@@ -66,9 +66,9 @@ const PersonalInfo = (): React.ReactElement => {
         )
     }, [formData, JSON.stringify(links)])
 
-    type ITimezoneWithValue = ITimezoneOption
     const setTimezoneValue = useCallback(
-        (timezone: ITimezoneWithValue) => setTimezone(timezone.value),
+        (timezone: ITimezone) =>
+            setTimezone((timezone as ITimezoneOption).value),
         []
     )
 

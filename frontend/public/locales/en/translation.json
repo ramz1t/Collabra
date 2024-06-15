@@ -147,6 +147,14 @@
     "user_selected": "1 user selected",
     "delete_members_dialog_head": "Are you sure?",
     "delete_members_dialog_desc": "You are going to delete selected users from the team",
+    "sort_by": "Sort by",
+    "newer_first": "Newer first",
+    "older_first": "Older first",
+    "alphabetical": "A - Z",
+    "good_morning": "Good morning",
+    "good_afternoon": "Good afternoon",
+    "good_evening": "Good evening",
+    "good_night": "Good night",
 
 
     "title_login": "Login",
