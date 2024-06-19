@@ -1,6 +1,9 @@
+from typing import Iterable, Sequence
+
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
-from django.db.models import QuerySet, Q
+from django.db.models import Q
+from django.db.models.query import QuerySet
 
 from .models import Team, Member
 
@@ -42,3 +45,44 @@ def get_users_to_invite(info: str) -> User:
 
 def get_user_or_404(**fields) -> User:
     return get_object_or_404(User, **fields)
+
+
+def are_members_exist(
+    team: Team | int, members: Sequence[int] | QuerySet[Member]
+) -> bool:
+    init_members_count = len(members)
+
+    if isinstance(team, int):
+        team = get_object_or_404(Team, id=team)
+    if not isinstance(members, QuerySet):
+        members = Member.objects.filter(id__in=members)
+
+    existing_members = members.filter(team=team)
+
+    return len(existing_members) == init_members_count
+
+
+def is_owner_in_members(
+    team: Team | int, members: Iterable[int] | QuerySet[Member]
+) -> bool:
+    if isinstance(team, int):
+        team = get_object_or_404(Team, id=team)
+    if not isinstance(members, QuerySet):
+        members = Member.objects.filter(team=team, id__in=members)
+
+    member_of_owner = Member.objects.get(team=team, user=team.owner)
+
+    return members.contains(member_of_owner)
+
+
+def am_i_in_members(
+    team: Team | int, me: User, members: Iterable[int] | QuerySet[Member]
+) -> bool:
+    if isinstance(team, int):
+        team = get_object_or_404(Team, id=team)
+    if not isinstance(members, QuerySet):
+        members = Member.objects.filter(id__in=members)
+
+    me_member = Member.objects.get(team=team, user=me)
+
+    return members.contains(me_member)

@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import ValidationError
 
 from ... import selectors
+from ...models import Team
 
 
 class GeneratedAvatarRetrieveSerializer(serializers.Serializer):
@@ -86,7 +87,7 @@ class UserToInviteListSerializer(UserSerializer):
         return selectors.is_user_member_by_team(self.context["team"], user)
 
 
-class MemberListSerializer(serializers.Serializer):
+class ListSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     is_admin = serializers.BooleanField()
     is_owner = serializers.SerializerMethodField()
@@ -97,3 +98,20 @@ class MemberListSerializer(serializers.Serializer):
 
     def get_user(self, member):
         return UserSerializer(instance=member.user).data
+
+
+class MultipleRemoveSerializer(serializers.Serializer):
+    members = serializers.ListField(child=serializers.IntegerField())
+
+    def validate_members(self, members_ids):
+        team = self.context["request"].team
+        me = self.context["request"].user
+
+        if not selectors.are_members_exist(team, members_ids):
+            raise ValidationError(_("Such members do not exist"))
+        if selectors.is_owner_in_members(team, members_ids):
+            raise ValidationError(_("Cannot remove team owner"))
+        if selectors.am_i_in_members(team, me, members_ids):
+            raise ValidationError(_("Cannot remove yourself"))
+
+        return members_ids

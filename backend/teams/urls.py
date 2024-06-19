@@ -30,5 +30,8 @@ urlpatterns = [
         "<int:pk>/get-users-to-invite/<str:info>/",
         MemberViewSet.as_view({"get": "get_users_to_invite"}),
     ),
-    path("<int:pk>/members/", MemberViewSet.as_view({"get": "list"})),
+    path(
+        "<int:pk>/members/",
+        MemberViewSet.as_view({"get": "list", "delete": "multiple_remove"}),
+    ),
 ]

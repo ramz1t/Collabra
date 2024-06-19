@@ -7,9 +7,26 @@ from .. import mixins
 from ..serializers import members as serializers
 from ... import selectors
 from ...services.join import invite, remove_from_invited, join
+from ...services.membership import multiple_remove
 
 
 class MemberViewSet(mixins.MemberMixin):
+    def multiple_remove(self, request, pk):
+        team = selectors.get_team_or_404(id=pk)
+        if not selectors.is_user_admin_by_team(request.user, team):
+            raise PermissionDenied()
+
+        request.team = team
+        serializer = serializers.MultipleRemoveSerializer(
+            data=request.data, context={"request": request}
+        )
+        serializer.is_valid(raise_exception=True)
+
+        multiple_remove(team, serializer.validated_data["members"])
+
+        data = {"message": _("Members successfully removed")}
+        return Response(data, status=status.HTTP_200_OK)
+
     def list(self, request, pk):
         team = selectors.get_team_or_404(pk=pk)
         if not selectors.is_user_member_by_team(team, request.user):
@@ -18,29 +35,14 @@ class MemberViewSet(mixins.MemberMixin):
         members = self.filter_queryset(selectors.get_team_members(team))
         page = self.paginate_queryset(members)
         if page is not None:
-            serializer = serializers.MemberListSerializer(
+            serializer = serializers.ListSerializer(
                 page, many=True, context={"team": team}
             )
             return self.get_paginated_response(serializer.data)
 
-        serializer = serializers.MemberListSerializer(
-            team, many=True, context={"team": team}
-        )
+        serializer = serializers.ListSerializer(team, many=True, context={"team": team})
 
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-        # is_admin = request.query_params.get("is_admin", None)
-        # if is_admin is not None and is_admin.lower() in ("true", "false"):
-        #     is_admin = is_admin.lower() == "true"
-        #     members = selectors.get_team_members(team, is_admin=is_admin)
-        # else:
-        #     members = selectors.get_team_members(team)
-
-        # serializer = serializers.MemberListSerializer(
-        #     members, many=True, context={"team": team}
-        # )
-
-        # return Response(serializer.data, status=status.HTTP_200_OK)
 
     def invite(self, request, pk):
         team = selectors.get_team_or_404(id=pk)
