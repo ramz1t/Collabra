@@ -13,7 +13,7 @@ const LoadMoreMarker = ({
     error,
     fetch,
     hasNextPage,
-}: LoadMoreMarkerProps): React.ReactElement => {
+}: LoadMoreMarkerProps): React.ReactElement | undefined => {
     const loadMoreMarkerRef = useRef<HTMLSpanElement>(null)
     const { t } = useTranslation()
 
@@ -45,6 +45,8 @@ const LoadMoreMarker = ({
 
         return () => observer.disconnect()
     }, [isFetching, hasNextPage, error, fetch])
+
+    if (!hasNextPage) return
 
     return (
         <span className="mx-auto min-h-[1px] min-w-[1px] col-span-full">

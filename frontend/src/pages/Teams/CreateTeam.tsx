@@ -28,7 +28,12 @@ const CreateTeam = (): React.ReactElement => {
                         size="grid"
                     />
                     <div className="flex flex-col justify-between gap-3">
-                        <Input instance={name} title={'Team name'} must />
+                        <Input
+                            instance={name}
+                            title={'Team name'}
+                            must
+                            autoRef
+                        />
                         <Button
                             style="primary"
                             type="submit"

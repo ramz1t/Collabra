@@ -141,6 +141,10 @@ const MemberCell = ({
                                             user: member.user.id,
                                             teamId: team!.id,
                                         }}
+                                        options={{
+                                            onSuccess: () =>
+                                                setDeleteDialogOpen(false),
+                                        }}
                                     />
                                 </div>
                             </PrivateComponent>
