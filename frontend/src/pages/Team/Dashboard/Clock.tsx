@@ -22,7 +22,7 @@ const Clock = (): React.ReactElement => {
                 hour: 'numeric',
                 minute: 'numeric',
                 second: 'numeric',
-                hour12: undefined,
+                hour12: false,
             })}
         </span>
     )

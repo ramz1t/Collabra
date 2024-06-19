@@ -69,7 +69,7 @@ export const useTeams = (params: SearchParams) => {
         },
         initialPageParam: 1,
         getNextPageParam: (lastPage) => {
-            return lastPage.next !== null ? lastPage.page + 1 : null
+            return lastPage.next !== null ? lastPage.current_page + 1 : null
         },
         select: (data) => ({
             teams: [...data.pages.flatMap((page) => page.results)],
@@ -181,7 +181,7 @@ export const useTeamMembers = (teamId: number, params: SearchParams) => {
         },
         initialPageParam: 1,
         getNextPageParam: (lastPage) => {
-            return lastPage.next !== null ? lastPage.page + 1 : null
+            return lastPage.next !== null ? lastPage.current_page + 1 : null
         },
         select: (data) => ({
             members: [...data.pages.flatMap((page) => page.results)],
@@ -202,7 +202,7 @@ export const useDeleteMembers = (teamSlug: string) => {
         }) => {
             return api.delete(`${prefix}/teams/${teamId}/members/`, {
                 data: {
-                    ids: memberIds,
+                    members: memberIds,
                 },
             })
         },

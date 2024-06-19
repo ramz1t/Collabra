@@ -8,7 +8,7 @@ const Dashboard = (): React.ReactElement => {
     const { data: user } = useUser('me')
     return (
         <div className="grow flex flex-col">
-            <div className="py-5 flex font-bold text-3xl items-center gap-5">
+            <div className="py-5 flex font-bold text-3xl items-center gap-5 flex-wrap">
                 <Greeting />
                 <Spacer />
                 <Clock />

@@ -45,11 +45,11 @@ function Input<T>({
     onChange,
     innerIcon,
 }: InputProps<T, React.RefObject<HTMLInputElement>>): React.ReactElement {
-    const inputRef = useRef<HTMLInputElement>(null)
+    if (!ref) ref = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
-        if (inputRef.current && autoRef) {
-            inputRef.current.focus()
+        if (ref.current && autoRef) {
+            ref.current.focus()
         }
     }, [])
 
@@ -88,12 +88,9 @@ function Input<T>({
                     >
                         {innerIcon && (
                             <span
-                                className="text-gray-400 px-2 h-full flex items-center"
+                                className="text-gray-400 px-2 h-full flex items-center hover:cursor-text"
                                 onClick={() =>
-                                    ref
-                                        ? ref.current && ref.current.click()
-                                        : inputRef.current &&
-                                          inputRef.current.focus()
+                                    ref.current && ref.current.focus()
                                 }
                             >
                                 {innerIcon}
@@ -103,7 +100,7 @@ function Input<T>({
                             aria-label={ariaLabel}
                             id={id}
                             type={type}
-                            ref={ref || inputRef}
+                            ref={ref}
                             value={instance.rawValue as string}
                             onChange={(e) => {
                                 onChange && onChange(e.target.value)
