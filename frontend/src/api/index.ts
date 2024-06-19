@@ -9,7 +9,7 @@ export const useCheckConnection = () => {
         queryKey: ['connection'],
         queryFn: async (): Promise<boolean> => {
             const res = await api.get(`${prefix}/smoke`)
-            return res.data
+            return res.status === 200
         },
     })
 }
