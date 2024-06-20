@@ -5,7 +5,7 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
 from django.db import transaction
 
-from ..models import Team, Member
+from ...models import Team, Member
 
 
 User = get_user_model()

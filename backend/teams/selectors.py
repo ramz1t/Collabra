@@ -19,6 +19,10 @@ def get_team_or_404(**fields) -> Team:
     return get_object_or_404(Team, **fields)
 
 
+def get_member_or_404(**fields) -> Member:
+    return get_object_or_404(Member, **fields)
+
+
 def get_team_members(team, **fields) -> QuerySet[Member]:
     return team.members.filter(**fields)
 

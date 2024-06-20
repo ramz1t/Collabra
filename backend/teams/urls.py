@@ -34,4 +34,8 @@ urlpatterns = [
         "<int:pk>/members/",
         MemberViewSet.as_view({"get": "list", "delete": "multiple_remove"}),
     ),
+    path(
+        "<int:team_pk>/members/<int:member_pk>/",
+        MemberViewSet.as_view({"patch": "partial_update"}),
+    ),
 ]

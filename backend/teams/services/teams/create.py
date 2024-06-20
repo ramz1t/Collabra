@@ -5,8 +5,8 @@ from django.core.files import File
 from django.utils.text import slugify
 from django.db import transaction
 
-from ..models import Team, Member
-from .images import prepare_icon
+from ...models import Team, Member
+from ..images import prepare_icon
 from .join import generate_join_keys
 
 
