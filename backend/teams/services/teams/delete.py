@@ -1,4 +1,4 @@
-from ..models import Team
+from ...models import Team
 
 
 def delete_team(team: Team) -> None:

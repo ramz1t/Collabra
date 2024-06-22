@@ -4,8 +4,8 @@ from django.contrib.auth import get_user_model
 from django.core.files import File
 from django.utils.text import slugify
 
-from ..models import Team
-from .images import prepare_icon
+from ...models import Team
+from ..images import prepare_icon
 
 
 User = get_user_model()

@@ -3,7 +3,7 @@ from typing import Iterable
 from django.shortcuts import get_object_or_404
 from django.db.models.query import QuerySet
 
-from ..models import Team, Member
+from ...models import Team, Member
 
 
 def multiple_remove(

@@ -6,11 +6,18 @@ from django.utils.translation import gettext_lazy as _
 from .. import mixins
 from ..serializers import members as serializers
 from ... import selectors
-from ...services.join import invite, remove_from_invited, join
-from ...services.membership import multiple_remove
+from ...services.teams.join import invite, remove_from_invited, join
+from ...services.members.update import update_member
+from ...services.members.membership import multiple_remove
 
 
 class MemberViewSet(mixins.MemberMixin):
+    @staticmethod
+    def _get_multiple_remove_message(number_of_removed_members: int) -> str:
+        return _("{} member{} successfully removed").format(
+            number_of_removed_members, "s" if number_of_removed_members != 1 else ""
+        )
+
     def multiple_remove(self, request, pk):
         team = selectors.get_team_or_404(id=pk)
         if not selectors.is_user_admin_by_team(request.user, team):
@@ -24,7 +31,20 @@ class MemberViewSet(mixins.MemberMixin):
 
         multiple_remove(team, serializer.validated_data["members"])
 
-        data = {"message": _("Members successfully removed")}
+        data = {
+            "message": self._get_multiple_remove_message(
+                len(serializer.validated_data["members"])
+            )
+        }
+        return Response(data, status=status.HTTP_200_OK)
+
+    def partial_update(self, request, team_pk, member_pk):
+        serializer = serializers.PartialUpdateSerializer(
+            data=request.data, context={"request": request}
+        )
+        serializer.is_valid(raise_exception=True)
+        update_member(team_pk, member_pk, request.user, **serializer.validated_data)
+        data = {"message": _("Member updated")}
         return Response(data, status=status.HTTP_200_OK)
 
     def list(self, request, pk):

@@ -1,6 +1,7 @@
+import django.core.exceptions
 from rest_framework import serializers
 from django.utils.translation import gettext_lazy as _
-from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError, PermissionDenied
 
 from ... import selectors
 from ...models import Team
@@ -115,3 +116,7 @@ class MultipleRemoveSerializer(serializers.Serializer):
             raise ValidationError(_("Cannot remove yourself"))
 
         return members_ids
+
+
+class PartialUpdateSerializer(serializers.Serializer):
+    is_admin = serializers.BooleanField(required=False)

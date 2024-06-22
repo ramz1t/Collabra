@@ -6,11 +6,11 @@ from django.utils.translation import gettext_lazy as _
 from .. import mixins
 from ..serializers import teams as serializers
 from ... import selectors
-from ...services.create import create_team
-from ...services.delete import delete_team
-from ...services.update import update_team
-from ...services.transfer import transfer_team
-from ...services.join import refresh_join_keys, exit_team
+from ...services.teams.create import create_team
+from ...services.teams.delete import delete_team
+from ...services.teams.update import update_team
+from ...services.teams.transfer import transfer_team
+from ...services.teams.join import refresh_join_keys, exit_team
 
 
 class TeamViewSet(mixins.TeamMixin):
@@ -33,7 +33,9 @@ class TeamViewSet(mixins.TeamMixin):
 
         update_team(team, **serializer.validated_data)
 
-        serializer = serializers.TeamRetrieveSerializer(instance=team, context={"user": request.user})
+        serializer = serializers.TeamRetrieveSerializer(
+            instance=team, context={"user": request.user}
+        )
         data = {"message": _("Team updated"), **serializer.data}
         return Response(data=data, status=status.HTTP_200_OK)
 
