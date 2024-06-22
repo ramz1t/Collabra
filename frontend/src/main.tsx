@@ -32,7 +32,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                             <HelmetProvider>
                                 <App />
                                 <ReactQueryDevtools />
-                                <Toaster position="top-right" />
+                                <Toaster
+                                    containerClassName="max-md:!top-20 max-md:!inset-x-2"
+                                    position="top-right"
+                                />
                             </HelmetProvider>
                         </ThemeProvider>
                     </AuthProvider>

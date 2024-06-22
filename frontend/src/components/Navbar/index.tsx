@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, {
+    useCallback,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { IoPeopleOutline, IoLogInOutline } from 'react-icons/io5'
 import NavbarItem from './NavbarItem'
@@ -20,14 +26,23 @@ const Navbar = (): React.ReactElement => {
     const [open, setOpen] = useState<boolean>(false)
     const { isTablet } = useScreenSize()
     const location = useLocation()
+    const navbarRef = useRef<HTMLElement>(null)
+
+    const handleClickOutside = useCallback(
+        (event: MouseEvent) => {
+            if (
+                navbarRef.current &&
+                !navbarRef.current.contains(event.target as Node)
+            ) {
+                setOpen(false)
+            }
+        },
+        [navbarRef]
+    )
+
+    const handleScroll = useCallback(() => setOpen(false), [setOpen])
 
     useEffect(() => {
-        const handleScroll = () => setOpen(false)
-        const handleClickOutside = (e: MouseEvent) => {
-            const target = e.target as HTMLElement
-            if (!target.closest('.navbar-area')) setOpen(false)
-        }
-
         window.addEventListener('click', handleClickOutside)
         window.addEventListener('scroll', handleScroll)
 
@@ -48,6 +63,7 @@ const Navbar = (): React.ReactElement => {
                 'navbar-area grid w-fit max-w-full hover:md:max-w-[300px] md:max-w-nav max-md:w-full grid-cols-[1fr_1fr] md:flex flex-col gap-3 p-3 hover:md:px-5 md:h-full fixed z-[999] bg-white dark:bg-slate-800 top-0 group/navbar transition-all shadow-md hover:md:shadow-xl outline-1 duration-150 overflow-x-hidden overflow-y-hidden md:overflow-y-auto',
                 open ? 'max-md:max-h-full' : 'max-md:max-h-nav'
             )}
+            ref={navbarRef}
         >
             <div className="flex gap-2 col-span-full items-center">
                 {!isTablet && (
@@ -63,6 +79,7 @@ const Navbar = (): React.ReactElement => {
                     className="!bg-transparent !hover:bg-transparent !p-0 !group-hover/navbar:pr-3 !pl-1 text-xl w-fit md:w-full max-md:gap-2"
                     icon={
                         <img
+                            alt="Collabra logo"
                             src={logo}
                             width={40}
                             height={40}
@@ -101,15 +118,16 @@ const Navbar = (): React.ReactElement => {
             <Divider horizontal />
             <LanguagePicker />
             <ThemePicker />
-            {user
-                ? isTablet && <UserProfileLink />
-                : isTablet && (
-                      <NavbarItem
-                          href="/login"
-                          icon={<IoLogInOutline />}
-                          title={t('login')}
-                      />
-                  )}
+            {isTablet &&
+                (user ? (
+                    <UserProfileLink />
+                ) : (
+                    <NavbarItem
+                        href="/login"
+                        icon={<IoLogInOutline />}
+                        title={t('login')}
+                    />
+                ))}
         </nav>
     )
 }

@@ -1,16 +1,12 @@
-import React, { useContext } from 'react'
-import { Twemoji, Spacer } from '../../../components'
-import { useUser } from '../../../api/user'
+import React from 'react'
 import Clock from './Clock'
 import Greeting from './Greeting'
 
 const Dashboard = (): React.ReactElement => {
-    const { data: user } = useUser('me')
     return (
         <div className="grow flex flex-col">
             <div className="py-5 flex font-bold text-3xl items-center gap-5 flex-wrap">
                 <Greeting />
-                <Spacer />
                 <Clock />
             </div>
             <div className="grid gap-5 md:grid-cols-[1fr_1fr_1fr_1fr] md:grid-rows-[2fr_1fr] grow">

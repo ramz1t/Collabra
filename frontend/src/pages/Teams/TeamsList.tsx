@@ -9,6 +9,7 @@ import {
     IoArrowDown,
     IoArrowUp,
     IoChevronUp,
+    IoCheckmark,
 } from 'react-icons/io5'
 import { useTranslation } from 'react-i18next'
 import useInput from '../../hooks/useInput'
@@ -62,14 +63,19 @@ const TeamsList = () => {
                             renderOption={(option, isSelected) => (
                                 <Button
                                     className={cn(
-                                        'min-h-10 min-w-10 px-3 rounded-md w-full !justify-start',
+                                        'min-h-10 min-w-10 px-3 rounded-md w-full !justify-start relative',
                                         isSelected
-                                            ? 'hover:!opacity-100 bg-gray-100 dark:bg-slate-800'
-                                            : 'hover:bg-gray-100 dark:hover:bg-slate-800'
+                                            ? 'hover:!opacity-100 md:bg-gray-100 dark:md:bg-slate-800 max-md:text-accent max-md:dark:text-accent-dark'
+                                            : 'hover:md:bg-gray-100 dark:hover:md:bg-slate-800'
                                     )}
                                 >
                                     {option.icon}
                                     {option.title}
+                                    {isSelected && !isTablet && (
+                                        <span className="ml-auto scale-125">
+                                            <IoCheckmark />
+                                        </span>
+                                    )}
                                 </Button>
                             )}
                             renderSelected={(option) => (

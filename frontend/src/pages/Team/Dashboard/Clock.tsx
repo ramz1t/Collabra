@@ -12,7 +12,7 @@ const Clock = (): React.ReactElement => {
     }, [])
 
     return (
-        <span className="text-gray-600 dark:text-gray-400 text-lg">
+        <span className="text-gray-600 dark:text-gray-400 text-lg md:ml-auto">
             {time.toLocaleDateString(undefined, {
                 day: 'numeric',
                 weekday: 'short',

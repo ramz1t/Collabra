@@ -1,8 +1,8 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import useScreenSize from '../../hooks/useScreenSize'
 import { Button } from '../index'
-import { IoClose } from 'react-icons/io5'
+import { useTranslation } from 'react-i18next'
 
 type DropdownProps<T> = {
     values: Record<string, T>
@@ -29,6 +29,7 @@ const Dropdown = <T,>({
     const dropdownRef = useRef<HTMLDivElement>(null)
     const listRef = useRef<HTMLUListElement>(null)
     const { isTablet } = useScreenSize()
+    const { t } = useTranslation()
 
     const selectedValue = values[selected]
 
@@ -81,7 +82,7 @@ const Dropdown = <T,>({
                                   }
                                 : {
                                       opacity: 1,
-                                      bottom: '8px',
+                                      bottom: 0,
                                   }
                         }
                         exit={
@@ -103,28 +104,27 @@ const Dropdown = <T,>({
                             pointerEvents: isOpen ? 'auto' : 'none',
                             gridTemplateColumns: `repeat(${cols}, 1fr)`,
                         }}
-                        className="fixed md:absolute left-2 max-md:right-2 max-md:max-h-fit md:left-0 md:top-12 origin-top-left bg-white dark:bg-slate-900 dark:border-slate-800 border rounded-2xl md:rounded-lg drop-shadow-md grid gap-1 p-1"
+                        className="fixed md:absolute left-0 max-md:right-0 max-md:max-h-fit md:left-0 md:top-12 origin-top-left bg-white dark:bg-slate-900 dark:border-slate-800 border rounded-t-2xl md:rounded-lg max-md:shadow-[0_6px_20px_15px_rgba(0,0,0,0.2)] md:drop-shadow-md grid gap-1 p-1"
                     >
-                        {!isTablet && (
-                            <div className="flex items-center gap-2 p-1 pb-2 mb-1 dark:border-slate-800 border-b">
-                                <Button
-                                    className="rounded-full min-h-7 min-w-7 text-gray-600 dark:text-slate-400 bg-gray-200 dark:bg-slate-700"
-                                    action={() => setIsOpen(false)}
-                                >
-                                    <IoClose />
-                                </Button>
-                                <p className="text-sm font-bold">{title}</p>
-                            </div>
+                        {!isTablet && title && (
+                            <p className="text-sm font-bold px-3 py-2">
+                                {title}
+                            </p>
                         )}
                         {Object.entries(values).map(([key, value]) => (
-                            <li
-                                className="max-md:overflow-hidden last:max-md:rounded-b-xl"
-                                key={key}
-                                onClick={() => handleSelect(key)}
-                            >
+                            <li key={key} onClick={() => handleSelect(key)}>
                                 {renderOption(value, key === selected)}
                             </li>
                         ))}
+                        {!isTablet && (
+                            <Button
+                                w_full
+                                className="py-5 text-gray-600 dark:text-gray-400 font-semibold"
+                                action={() => setIsOpen(false)}
+                            >
+                                {t('close')}
+                            </Button>
+                        )}
                     </motion.ul>
                 )}
             </AnimatePresence>

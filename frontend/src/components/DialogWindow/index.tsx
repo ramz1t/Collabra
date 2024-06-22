@@ -86,7 +86,7 @@ const DialogWindow = ({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: duration / 1000 }}
-                    className="fixed z-[900] h-dvh w-dvw bg-slate-500/25 dark:bg-slate-950/50 backdrop-blur-sm top-0 left-0 flex items-center justify-center"
+                    className="fixed z-[900] h-dvh w-dvw bg-slate-500/25 dark:bg-slate-950/65 backdrop-blur-sm top-0 left-0 flex items-center justify-center"
                 >
                     {isOpen && (
                         <motion.div
