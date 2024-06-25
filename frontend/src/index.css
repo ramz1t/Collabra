@@ -10,3 +10,22 @@
 /** {*/
 /*    outline: 1px solid red;*/
 /*}*/
+
+@keyframes appear {
+    from {
+        opacity: 0.6;
+        scale: 0.8;
+        transform: translateY(200px);
+    }
+    to {
+        opacity: 1;
+        scale: 1;
+        transform: translateY(0);
+    }
+}
+
+.appear-on-scroll {
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 50%;
+}

@@ -14,6 +14,7 @@ export interface ButtonProps {
     isLoading?: boolean
     loadingText?: React.ReactNode
     action?(): void
+    target?: string
 }
 
 const Button = ({
@@ -27,11 +28,12 @@ const Button = ({
     to,
     isLoading,
     loadingText,
+    target,
 }: ButtonProps): React.ReactElement => {
     const { t } = useTranslation()
     const componentProps = {
         className: cn(
-            'flex items-center focus-visible:ring-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none justify-center gap-3 transition-all duration-75 active:hover:opacity-80 h-fit whitespace-nowrap',
+            'flex items-center focus-visible:ring-accent focus-visible:dark:ring-accent-dark focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none justify-center gap-3 transition-all duration-75 active:hover:opacity-80 h-fit whitespace-nowrap',
             'disabled:cursor-not-allowed disabled:bg-gray-100 disabled:dark:bg-slate-800 disabled:dark:border-slate-500 disabled:!text-slate-500 disabled:dark:!text-slate-400',
             style === 'primary'
                 ? 'bg-accent dark:bg-accent-dark border-accent dark:border-accent-dark text-white font-bold hover:bg-accent/90 dark:hover:bg-accent-dark/90'
@@ -54,7 +56,7 @@ const Button = ({
     }
 
     return to ? (
-        <Link to={to} {...componentProps}>
+        <Link to={to} {...componentProps} target={target}>
             {isLoading ? (loadingText ? loadingText : t('loading')) : children}
         </Link>
     ) : (

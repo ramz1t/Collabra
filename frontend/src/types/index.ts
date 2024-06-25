@@ -28,6 +28,7 @@ export type Member = {
     id: number
     is_owner: boolean
     is_admin: boolean
+    status: string | null
     user: User
 }
 

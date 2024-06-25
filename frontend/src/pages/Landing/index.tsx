@@ -5,6 +5,7 @@ import FeedbackCTA from './FeedbackCTA'
 import Footer from './Footer'
 import Team from './Team'
 import { Helmet } from 'react-helmet-async'
+import { BackgroundGradient } from '../../components'
 
 const Landing = (): React.ReactElement => {
     return (
@@ -12,6 +13,7 @@ const Landing = (): React.ReactElement => {
             <Helmet>
                 <title>Collabra</title>
             </Helmet>
+            <BackgroundGradient />
             <Hero />
             <Features />
             <Team />

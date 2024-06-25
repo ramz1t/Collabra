@@ -31,6 +31,11 @@ const MemberCellInfo = ({
                     {'∙'}
                 </span>
                 {member.user.first_name} {member.user.last_name}
+                {member.status && (
+                    <span className="text-gray-600 pl-1">
+                        ({member.status})
+                    </span>
+                )}
             </span>
             <span className="text-xs text-gray-600 dark:text-gray-400 flex items-center">
                 <span className="text-accent dark:text-accent-dark mr-1">

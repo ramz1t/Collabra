@@ -33,7 +33,7 @@ const NavbarItem = ({
                     isActive && !markerDisabled
                         ? 'before:h-6 group-hover/navbar:md:before:rounded-l-lg bg-accent/5 dark:bg-accent-dark/10'
                         : 'before:h-0 hover:md:bg-accent/[.03] dark:md:hover:bg-accent-dark/5',
-                    'focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:rounded-md focus-visible:outline-none',
+                    'focus-visible:ring-2 focus-visible:ring-accent focus-visible:dark:ring-accent-dark focus-visible:ring-offset-2 focus-visible:rounded-md focus-visible:outline-none',
                     className
                 )
             }

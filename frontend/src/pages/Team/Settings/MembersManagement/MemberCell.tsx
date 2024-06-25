@@ -49,7 +49,7 @@ const MemberCell = ({
         teamSlug!
     )
     const [isAdmin, setIsAdmin] = useState<boolean>(member.is_admin)
-    const memberUsername = useInput<string>('')
+    const status = useInput<string>(member.status || '')
     const { user } = useContext(AuthContext) as IAuthContext
     const selectable = !member.is_owner && member.user.id !== user!.user_id
 
@@ -103,6 +103,7 @@ const MemberCell = ({
                         teamId: team!.id,
                         memberId: member.id,
                         data: {
+                            status: status.value,
                             is_admin: isAdmin,
                         },
                     })
@@ -122,9 +123,9 @@ const MemberCell = ({
                                 />
                             )}
                         <Input
-                            instance={memberUsername}
-                            title={t('member_username')}
-                            hint={t('member_username_hint')}
+                            instance={status}
+                            title={t('member_status')}
+                            hint={t('member_status_hint')}
                         />
                         {!member.is_owner && member.is_admin && (
                             <PrivateComponent allowedRoles={[UserRole.OWNER]}>
