@@ -37,7 +37,10 @@ const ListWithHeader = ({
                 style={{
                     gridTemplateColumns: `repeat(${cols}, 1fr)`,
                 }}
-                className="mt-3 grid max-md:!grid-cols-1 gap-3 max-h-80 overflow-y-auto overscroll-contain"
+                className={cn(
+                    'mt-3 grid max-md:!grid-cols-1 gap-3 max-h-80 overflow-y-auto overscroll-contain',
+                    isEmpty ? '!grid-cols-1' : null
+                )}
             >
                 {isLoading
                     ? loadingState || t('loading')

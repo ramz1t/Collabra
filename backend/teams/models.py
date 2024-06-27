@@ -9,6 +9,7 @@ class Member(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="members")
     team = models.ForeignKey("Team", on_delete=models.CASCADE, related_name="members")
     is_admin = models.BooleanField(default=False)
+    status = models.CharField(null=True, default=None)
 
     def __str__(self):
         return f"{self.id}:{self.user.email}:{'admin' if self.is_admin else 'user'}"

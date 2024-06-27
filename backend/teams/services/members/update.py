@@ -21,15 +21,21 @@ def _get_objects(
 
 
 def _check_permissions(
-    team: Team, member: Member, me: User, is_admin: bool | None
+    team: Team, member: Member, me: User, is_admin: bool | None, status: str | None
 ) -> None:
-    if is_admin is not None:
-        if (
+    if not selectors.is_user_admin_by_team(me, team): raise PermissionDenied()
+
+    if (
+        is_admin is not None
+        and (
             me == member.user
             or selectors.is_user_owner_by_team(team, member.user)
-            or not selectors.is_user_admin_by_team(me, team)
-        ):
-            raise PermissionDenied()
+        )
+    ) or (
+        status is not None
+        and (selectors.is_user_owner_by_team(team, member.user) and me != member.user)
+    ):
+        raise PermissionDenied()
 
 
 def _update_object(member: Member, **fields) -> Member:
@@ -47,6 +53,7 @@ def update_member(
     team, member, me = _get_objects(team, member, me)
 
     is_admin = fields.get("is_admin", None)
-    _check_permissions(team, member, me, is_admin)
+    status = fields.get("status", None)
+    _check_permissions(team, member, me, is_admin, status)
 
     return _update_object(member, **fields)

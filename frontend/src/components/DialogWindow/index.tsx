@@ -21,6 +21,7 @@ export interface DialogWindowProps {
     closeOnSuccess?: boolean
     close(): void
     onSuccess?: (() => void) | (() => Promise<void>)
+    disabled?: boolean
 }
 
 const DialogWindow = ({
@@ -37,8 +38,9 @@ const DialogWindow = ({
     extraActions,
     extraButtons,
     duration = 150,
-    disabledClickOutside = false,
+    disabledClickOutside,
     closeOnSuccess,
+    disabled,
 }: DialogWindowProps): React.ReactElement => {
     const { t } = useTranslation()
 
@@ -69,6 +71,7 @@ const DialogWindow = ({
 
     const handleSubmit = useCallback(() => {
         if (!onSuccess) return
+        if (disabled) return
         const result = onSuccess()
 
         if (result instanceof Promise) {
@@ -76,7 +79,7 @@ const DialogWindow = ({
         } else {
             closeOnSuccess && close()
         }
-    }, [onSuccess])
+    }, [onSuccess, disabled, closeOnSuccess])
 
     return (
         <AnimatePresence>

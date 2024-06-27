@@ -225,7 +225,7 @@ export const useUpdateMember = (teamSlug: string) => {
             data: Partial<Member>
         }) => {
             return api.patch(
-                `${prefix}/teams/${teamId}/members/${memberId}`,
+                `${prefix}/teams/${teamId}/members/${memberId}/`,
                 data
             )
         },

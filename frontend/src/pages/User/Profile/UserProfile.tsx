@@ -36,18 +36,18 @@ const UserProfile = (): React.ReactNode => {
                             </Button>
                         )}
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 text-lg font-semibold">
-                        Senior Response Strategist, Executive Vice President of
-                        Admissions
-                    </p>
+                    {/*<p className="text-gray-600 dark:text-gray-400 text-lg font-semibold">*/}
+                    {/*    Senior Response Strategist, Executive Vice President of*/}
+                    {/*    Admissions*/}
+                    {/*</p>*/}
                 </div>
 
-                {user?.description && (
+                {user.description && (
                     <p className="text-gray-700 dark:text-gray-300 max-w-3xl pb-1.5">
                         {user.description}
                     </p>
                 )}
-                {user?.links && (
+                {user.links.length ? (
                     <ul className="flex gap-2 md:gap-4 flex-wrap">
                         {user.links.map((link, key) => (
                             <li key={key}>
@@ -55,7 +55,7 @@ const UserProfile = (): React.ReactNode => {
                             </li>
                         ))}
                     </ul>
-                )}
+                ) : null}
                 <CurrentTime timezone={user.timezone} />
             </div>
         </div>

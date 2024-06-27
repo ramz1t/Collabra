@@ -92,6 +92,7 @@ class ListSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     is_admin = serializers.BooleanField()
     is_owner = serializers.SerializerMethodField()
+    status = serializers.CharField()
     user = serializers.SerializerMethodField()
 
     def get_is_owner(self, member):
@@ -120,3 +121,4 @@ class MultipleRemoveSerializer(serializers.Serializer):
 
 class PartialUpdateSerializer(serializers.Serializer):
     is_admin = serializers.BooleanField(required=False)
+    status = serializers.CharField(required=False, allow_null=True)

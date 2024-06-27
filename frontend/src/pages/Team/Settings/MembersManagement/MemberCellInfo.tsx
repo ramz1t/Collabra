@@ -14,30 +14,28 @@ const MemberCellInfo = ({
     const { t } = useTranslation()
     const { user } = useContext(AuthContext) as IAuthContext
     return (
-        <span className="grid">
+        <div className="grid">
             <span className="font-semibold flex items-center">
                 <span className="text-accent dark:text-accent-dark mr-1 flex items-center gap-1">
                     {member.is_owner ? (
                         <IoMedalOutline />
                     ) : member.is_admin ? (
                         <IoSchoolOutline />
-                    ) : member.id === user!.user_id ? (
-                        `${t('me')} `
-                    ) : !member.is_admin &&
-                      !member.is_owner &&
-                      member.id !== user!.user_id ? (
+                    ) : (
                         <IoBodyOutline />
-                    ) : null}
+                    )}
                     {'∙'}
                 </span>
-                {member.user.first_name} {member.user.last_name}
-                {member.status && (
-                    <span className="text-gray-600 pl-1">
-                        ({member.status})
-                    </span>
-                )}
+                <span>
+                    {member.user.first_name} {member.user.last_name}
+                    {member.status && (
+                        <span className="text-gray-600 dark:text-gray-400 pl-1 text-xs">
+                            ({member.status})
+                        </span>
+                    )}
+                </span>
             </span>
-            <span className="text-xs text-gray-600 dark:text-gray-400 flex items-center">
+            <span className="text-xs text-gray-600 dark:text-gray-400">
                 <span className="text-accent dark:text-accent-dark mr-1">
                     {member.is_owner
                         ? t('owner')
@@ -50,7 +48,7 @@ const MemberCellInfo = ({
                 </span>
                 {member.user.username}
             </span>
-        </span>
+        </div>
     )
 }
 

@@ -24,6 +24,7 @@ import useInput from '../../../../hooks/useInput'
 import cn from 'classnames'
 import AuthContext, { IAuthContext } from '../../../../contexts/AuthContext'
 import { Member } from '../../../../types'
+import { objectsDifference } from '../../../../utils'
 
 export interface MemberCellProps {
     member: Member
@@ -85,14 +86,16 @@ const MemberCell = ({
                     <MemberCellInfo member={member} />
                 </Link>
             </div>
-            <Button
-                style="tertiary"
-                className="!min-h-8 !rounded-full max-md:!gap-1"
-                action={() => setDeleteDialogOpen(true)}
-            >
-                {t('manage')}
-                <IoChevronForward />
-            </Button>
+            {(!member.is_owner || member.user.id === user!.user_id) && (
+                <Button
+                    style="tertiary"
+                    className="!min-h-8 !rounded-full max-md:!gap-1"
+                    action={() => setDeleteDialogOpen(true)}
+                >
+                    {t('manage')}
+                    <IoChevronForward />
+                </Button>
+            )}
             <DialogWindow
                 icon={<IoPencil />}
                 title={`${member.user.first_name} ${member.user.last_name}`}
@@ -102,11 +105,23 @@ const MemberCell = ({
                     updateMember({
                         teamId: team!.id,
                         memberId: member.id,
-                        data: {
-                            status: status.value,
-                            is_admin: isAdmin,
-                        },
+                        data: objectsDifference(
+                            {
+                                is_admin: member.is_admin,
+                                status: member.status,
+                            },
+                            {
+                                is_admin: isAdmin,
+                                status: status.value.trim().length
+                                    ? status.value.trim()
+                                    : null,
+                            }
+                        ),
                     })
+                }
+                disabled={
+                    (status.value.trim() || null) === member.status &&
+                    isAdmin === member.is_admin
                 }
                 close={() => setDeleteDialogOpen(false)}
                 successButtonStyle="primary"

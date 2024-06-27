@@ -8,7 +8,7 @@ from .views import smoke
 admin.site.site_header = "Collabra administration"
 
 urlpatterns = [
-    path("smoke/", smoke, name="smoke"),
+    path("api/v1/smoke/", smoke, name="smoke"),
     path("admin/", admin.site.urls),
     path("api/v1/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/v1/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
