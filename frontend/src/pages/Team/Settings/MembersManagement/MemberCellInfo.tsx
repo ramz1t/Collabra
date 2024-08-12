@@ -1,7 +1,6 @@
 import { IoBodyOutline, IoMedalOutline, IoSchoolOutline } from 'react-icons/io5'
 import { useTranslation } from 'react-i18next'
-import React, { useContext } from 'react'
-import AuthContext, { IAuthContext } from '../../../../contexts/AuthContext'
+import React from 'react'
 import { Member } from '../../../../types'
 
 export interface MemberCellInfoProps {
@@ -12,10 +11,9 @@ const MemberCellInfo = ({
     member,
 }: MemberCellInfoProps): React.ReactElement => {
     const { t } = useTranslation()
-    const { user } = useContext(AuthContext) as IAuthContext
     return (
         <div className="grid">
-            <span className="font-semibold flex items-center">
+            <div className="font-semibold flex items-center">
                 <span className="text-accent dark:text-accent-dark mr-1 flex items-center gap-1">
                     {member.is_owner ? (
                         <IoMedalOutline />
@@ -26,15 +24,17 @@ const MemberCellInfo = ({
                     )}
                     {'∙'}
                 </span>
-                <span>
-                    {member.user.first_name} {member.user.last_name}
+                <div className="flex flex-wrap items-baseline gap-x-1">
+                    <p>
+                        {member.user.first_name} {member.user.last_name}
+                    </p>
                     {member.status && (
-                        <span className="text-gray-600 dark:text-gray-400 pl-1 text-xs">
+                        <p className="text-gray-600 dark:text-gray-400 text-xs">
                             ({member.status})
-                        </span>
+                        </p>
                     )}
-                </span>
-            </span>
+                </div>
+            </div>
             <span className="text-xs text-gray-600 dark:text-gray-400">
                 <span className="text-accent dark:text-accent-dark mr-1">
                     {member.is_owner

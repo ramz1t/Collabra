@@ -35,6 +35,7 @@ export default {
             },
             spacing: {
                 nav: '72px',
+                'nav-half': '36px',
             },
         },
     },
