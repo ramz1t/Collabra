@@ -9,7 +9,7 @@ import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from '../../../tailwind.config'
 
 export interface DialogWindowProps {
-    icon?: React.ReactElement
+    icon?: React.ReactElement | React.ReactNode
     title: string
     description?: string
     closeButtonText?: React.ReactNode

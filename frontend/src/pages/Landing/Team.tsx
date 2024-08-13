@@ -59,7 +59,7 @@ const Team = (): React.ReactElement => {
         // },
     ]
     return (
-        <div className="mt-16 md:mt-32 appear-on-scroll">
+        <div className="mt-16 md:mt-32">
             <p className="pt-10 pb-3 font-bold text-3xl">{t('our_team')}</p>
             <p className="text-gray-600 dark:text-gray-400 font-primary text-lg">
                 {t('about_team')}

@@ -1,12 +1,15 @@
 import React from 'react'
-import { Title } from '../../../components/index.js'
-import { useTranslation } from 'react-i18next'
+import TaskboardHeader from './Header/TaskboardHeader'
+import { Route, Routes } from 'react-router-dom'
+import TasksContainer from './Tasks/Container'
 
 const Tasks = (): React.ReactElement => {
-    const { t } = useTranslation()
     return (
-        <div>
-            <Title position="left">{t('tasks')}</Title>
+        <div className="min-h-full flex flex-col">
+            <TaskboardHeader />
+            <Routes>
+                <Route index element={<TasksContainer />} />
+            </Routes>
         </div>
     )
 }

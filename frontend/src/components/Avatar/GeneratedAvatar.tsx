@@ -37,7 +37,7 @@ const GeneratedAvatar = ({
             font = 80
             break
         case 'task':
-            font = 11
+            font = 12
             break
         default:
             font = 16

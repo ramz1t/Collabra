@@ -28,6 +28,7 @@ import InfoHeader from './InfoHeader'
 import LoadMoreMarker from './LoadMoreMarker'
 import TextField from './TextField'
 import Dropdown from './Dropdown'
+import NotFoundRoute from './NotFoundRoute'
 
 export {
     PrivateRoute,
@@ -60,4 +61,5 @@ export {
     LoadMoreMarker,
     TextField,
     Dropdown,
+    NotFoundRoute,
 }

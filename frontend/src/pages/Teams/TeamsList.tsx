@@ -50,7 +50,7 @@ const TeamsList = () => {
             <Helmet>
                 <title>{t('title_teams')} - Collabra</title>
             </Helmet>
-            <div className="sticky top-nav md:top-0 bg-white dark:bg-slate-900 pb-5">
+            <div className="sticky top-nav md:top-0 bg-white dark:bg-slate-900 pb-5 px-5">
                 <div className="flex py-5 items-center gap-5 flex-wrap">
                     <h1 className="font-bold text-3xl mr-auto">{t('teams')}</h1>
                     <div className="flex items-center gap-3">
@@ -132,7 +132,7 @@ const TeamsList = () => {
             <ul
                 className={cn(
                     isTablet && isList
-                        ? ''
+                        ? 'px-5'
                         : 'grid max-md:gap-3 md:grid-cols-2 xl:grid-cols-3'
                 )}
             >

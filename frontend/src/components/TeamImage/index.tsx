@@ -5,7 +5,7 @@ import { Team } from '../../types'
 
 export interface TeamImageProps {
     team: Partial<Team>
-    size?: 'settings' | 'grid' | 'list'
+    size?: 'settings' | 'grid' | 'list' | 'board' | (string & {})
     className?: string
 }
 
@@ -28,6 +28,10 @@ const TeamImage = ({
         case 'list':
             w = 32
             font = 10
+            break
+        case 'board':
+            w = 60
+            font = 20
             break
         default:
             w = 16

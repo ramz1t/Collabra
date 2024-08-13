@@ -29,7 +29,7 @@ const Features = (): React.ReactElement => {
         },
     ]
     return (
-        <div className="appear-on-scroll">
+        <div>
             <div className="mx-auto max-w-2xl lg:text-center">
                 <h2 className="text-base font-semibold leading-7 text-accent dark:text-accent-dark">
                     Deploy faster

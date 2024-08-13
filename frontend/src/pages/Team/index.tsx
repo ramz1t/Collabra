@@ -32,7 +32,7 @@ const TeamSpace = () => {
             <Routes>
                 <Route index element={<Dashboard />} />
                 <Route path="settings" element={<TeamSettings />} />
-                <Route path="tasks" element={<Tasks />} />
+                <Route path="tasks/*" element={<Tasks />} />
                 <Route path="files" element={<Files />} />
                 <Route path="chats" element={<Chats />} />
                 <Route path="calendar" element={<Calendar />} />
