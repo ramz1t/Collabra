@@ -17,7 +17,7 @@ const Register = (): React.ReactElement => {
     const { registerUser } = useContext(AuthContext) as IAuthContext
 
     return (
-        <div className="flex flex-col items-center mt-5">
+        <div className="flex flex-col items-center mt-5 p-5">
             <Helmet>
                 <title>{t('title_register')} - Collabra</title>
             </Helmet>

@@ -1,6 +1,6 @@
 import useLocalStorage from '../../../../hooks/useLocalStorage'
-import Board from './Board'
-import List from './List'
+import Board from './Board/Board'
+import List from './List/List'
 
 const TasksContainer = () => {
     const [viewOption, setViewOption] = useLocalStorage(

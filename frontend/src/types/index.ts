@@ -101,7 +101,7 @@ export type Task = {
     deadline: string
     comments: number
     attachments: File[]
-    assignees: Member[]
+    assignee: Member
     tag: Tag
     status: string
 }

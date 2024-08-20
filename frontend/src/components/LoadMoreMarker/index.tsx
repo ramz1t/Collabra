@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import LoadingState from '../LoadingState'
 
 export interface LoadMoreMarkerProps {
     isFetching: boolean
@@ -50,11 +51,7 @@ const LoadMoreMarker = ({
 
     return (
         <span className="mx-auto min-h-[1px] min-w-[1px] col-span-full">
-            {isFetching && (
-                <span className="font-semibold animate-ping pt-3 pl-2">
-                    {t('loading')}
-                </span>
-            )}
+            {isFetching && <LoadingState titleKey={'loading'} />}
             {error && t('error')}
             <span
                 ref={loadMoreMarkerRef}

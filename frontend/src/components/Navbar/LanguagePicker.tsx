@@ -60,18 +60,17 @@ const LanguagePicker = (): React.ReactElement => {
                 isOpen={isOpen}
                 close={() => setIsOpen(false)}
                 closeButtonText={t('close')}
-                extraActions={
-                    <ul className="pt-2 grid md:grid-cols-3 gap-2 md:gap-5">
-                        {Object.keys(languages).map((key: string) => (
-                            <LanguageButton
-                                lang={languages[key]}
-                                key={key}
-                                close={() => setIsOpen(false)}
-                            />
-                        ))}
-                    </ul>
-                }
-            />
+            >
+                <ul className="pt-2 grid md:grid-cols-3 gap-2 md:gap-5">
+                    {Object.keys(languages).map((key: string) => (
+                        <LanguageButton
+                            lang={languages[key]}
+                            key={key}
+                            close={() => setIsOpen(false)}
+                        />
+                    ))}
+                </ul>
+            </DialogWindow>
         </>
     )
 }

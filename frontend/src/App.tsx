@@ -24,8 +24,8 @@ const App = () => {
             <Navbar />
             <div className="md:ml-nav max-md:mt-nav grow flex flex-col">
                 <InfoHeader />
-                <Suspense>
-                    <div className="grow grid">
+                <div className="grow grid">
+                    <Suspense>
                         <Routes>
                             <Route path="/" element={<Landing />} />
                             <Route path="/login" element={<Login />} />
@@ -47,8 +47,8 @@ const App = () => {
                             </Route>
                             <Route path="*" element={<NotFoundRoute />} />
                         </Routes>
-                    </div>
-                </Suspense>
+                    </Suspense>
+                </div>
             </div>
             <div className="fixed z-[998] right-2 bottom-2 max-md:left-2 flex justify-end gap-2 items-end">
                 <CookiesModal />

@@ -33,6 +33,13 @@ export default {
             backgroundImage: {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
             },
+            width: {
+                slot: 'calc(100vw - 72px)',
+            },
+            maxWidth: {
+                slot: 'calc(100vw - 72px)',
+                screen: '100vw',
+            },
             spacing: {
                 nav: '72px',
                 'nav-half': '36px',

@@ -1,14 +1,10 @@
-import {
-    IoAdd,
-    IoEllipsisVerticalSharp,
-    IoReceiptOutline,
-} from 'react-icons/io5'
-import { Button, DialogWindow } from '../../../../components'
+import { IoAdd, IoEllipsisVerticalSharp } from 'react-icons/io5'
+import { Button } from '../../../../../components'
 import { useTranslation } from 'react-i18next'
-import Card from './Card'
+import TaskCard from './Card'
 import { useState } from 'react'
-import AddTaskDialog from './AddTaskDialog'
-import { useTasks } from '../../../../api/tasks'
+import AddTaskDialog from '../AddTaskDialog'
+import { useTasks } from '../../../../../api/tasks'
 import { useParams } from 'react-router-dom'
 
 interface ColumnProps {
@@ -21,7 +17,7 @@ interface ColumnProps {
 const Column = ({ title, color, canAdd = true, status }: ColumnProps) => {
     const [addNewTaskOpen, setAddNewTaskOpen] = useState(false)
     const { teamSlug } = useParams()
-    const { data: tasks, isLoading } = useTasks(teamSlug!, status)
+    const { data: tasks, isLoading } = useTasks(teamSlug!, { status: status })
     const { t } = useTranslation()
 
     const marker = (
@@ -32,12 +28,12 @@ const Column = ({ title, color, canAdd = true, status }: ColumnProps) => {
     )
 
     return (
-        <div className="grid gap-5">
+        <div className="grid gap-5 min-w-72">
             <div className="flex items-center gap-3">
                 {marker}
                 <p className="font-semibold text-lg">{title}</p>
                 <span className="bg-white dark:bg-slate-800 rounded-full px-5 font-bold py-1 shadow-md">
-                    5
+                    {tasks ? tasks.length : 0}
                 </span>
                 <span className="ml-auto justify-self-end px-1.5 text-xl">
                     <IoEllipsisVerticalSharp />
@@ -68,7 +64,7 @@ const Column = ({ title, color, canAdd = true, status }: ColumnProps) => {
             {!isLoading && tasks && (
                 <ul className="grid gap-3">
                     {tasks.map((task) => (
-                        <Card view={'board'} task={task} key={task.id} />
+                        <TaskCard view={'board'} task={task} key={task.id} />
                     ))}
                 </ul>
             )}

@@ -17,7 +17,6 @@ export interface DialogWindowProps {
     successButtonText?: string
     isOpen: boolean
     isLoading?: boolean
-    extraActions?: React.ReactNode
     extraButtons?: React.ReactElement[] | React.ReactElement | null
     duration?: number
     disabledClickOutside?: boolean
@@ -25,6 +24,7 @@ export interface DialogWindowProps {
     close(): void
     onSuccess?: (() => void) | (() => Promise<void>)
     disabled?: boolean
+    children?: React.ReactNode
 }
 
 const DialogWindow = ({
@@ -38,12 +38,12 @@ const DialogWindow = ({
     successButtonText,
     isOpen = false,
     isLoading,
-    extraActions,
     extraButtons,
     duration = 150,
     disabledClickOutside,
     closeOnSuccess,
     disabled,
+    children,
 }: DialogWindowProps): React.ReactElement => {
     const { t } = useTranslation()
     const { isTablet } = useScreenSize()
@@ -124,7 +124,7 @@ const DialogWindow = ({
                                         {description}
                                     </p>
                                 )}
-                                {extraActions}
+                                {children}
                             </div>
                         </div>
                         <div className="flex items-center px-5 py-3 bg-gray-100 dark:bg-slate-800 gap-3 w-full">

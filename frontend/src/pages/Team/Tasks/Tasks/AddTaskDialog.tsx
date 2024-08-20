@@ -1,5 +1,12 @@
-import { IoReceiptOutline } from 'react-icons/io5'
-import { DialogWindow, Form, Input, TextField } from '../../../../components'
+import { IoCheckmark, IoClose, IoReceiptOutline } from 'react-icons/io5'
+import {
+    Button,
+    Checkbox,
+    DialogWindow,
+    Form,
+    Input,
+    TextField,
+} from '../../../../components'
 import { useTranslation } from 'react-i18next'
 import React, { SetStateAction, useState } from 'react'
 import useInput from '../../../../hooks/useInput'
@@ -22,6 +29,18 @@ const AddTaskDialog = ({
     const description = useInput('')
     const nextStep = useInput('')
     const [steps, setSteps] = useState<string[]>([])
+    const [requiresReview, setRequiresReview] = useState(false)
+
+    const addStep = () => {
+        if (nextStep.value.trim() === '') return
+        setSteps((prev) => [...prev, nextStep.value.trim()])
+        nextStep.clear()
+    }
+
+    const removeStep = (step: string) => {
+        setSteps((prev) => prev.filter((el) => el !== step))
+    }
+
     return (
         <DialogWindow
             icon={icon}
@@ -31,30 +50,50 @@ const AddTaskDialog = ({
             successButtonStyle="primary"
             successButtonText={t('create')}
             close={() => setOpen(false)}
-            extraActions={
-                <Form>
-                    <Input title={t('title')} instance={title} />
-                    <TextField
-                        title={t('description')}
-                        instance={description}
-                    />
-                    <Form
-                        onSubmit={() => {
-                            if (nextStep.value.trim() === '') return
-                            setSteps((prev) => [...prev, nextStep.value.trim()])
-                            nextStep.clear
-                        }}
+        >
+            <Form>
+                <Input must title={t('title')} instance={title} />
+                <TextField
+                    must
+                    title={t('description')}
+                    instance={description}
+                />
+                <div className="flex items-end gap-3">
+                    <Input title={t('subtasks')} instance={nextStep} />
+                    <Button
+                        action={addStep}
+                        className="min-w-10 !p-0"
+                        style="primary"
                     >
-                        <Input title={t('steps')} instance={nextStep} />
-                        <ul>
-                            {steps.map((step, key) => (
-                                <li key={key}>{step}</li>
-                            ))}
-                        </ul>
-                    </Form>
-                </Form>
-            }
-        />
+                        <IoCheckmark />
+                    </Button>
+                </div>
+                {steps.length > 0 && (
+                    <ul className="flex flex-wrap gap-3">
+                        {steps.map((step, key) => (
+                            <li
+                                className="bg-gray-200 flex items-center rounded-full pr-3 w-fit gap-0.5"
+                                key={key}
+                            >
+                                <Button
+                                    className="px-2 hover:bg-gray-300 min-h-8 rounded-full"
+                                    action={() => removeStep(step)}
+                                >
+                                    <IoClose />
+                                </Button>
+                                {step}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+                <Checkbox
+                    value={requiresReview}
+                    text={t('requires_review')}
+                    id={'requires_review'}
+                    setValue={setRequiresReview}
+                />
+            </Form>
+        </DialogWindow>
     )
 }
 

@@ -12,7 +12,7 @@ const PrivateComponent = ({
     component,
     children,
 }: PrivateComponentProps): React.ReactNode => {
-    const allowed: boolean = useIsAllowed(allowedRoles)
+    const allowed = useIsAllowed(allowedRoles)
     if (!allowed) return
     return component ? component : children
 }

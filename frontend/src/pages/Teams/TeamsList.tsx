@@ -131,8 +131,9 @@ const TeamsList = () => {
             </div>
             <ul
                 className={cn(
+                    'pb-5 px-5',
                     isTablet && isList
-                        ? 'px-5'
+                        ? 'rounded-lg overflow-hidden'
                         : 'grid max-md:gap-3 md:grid-cols-2 xl:grid-cols-3'
                 )}
             >

@@ -15,7 +15,7 @@ const Login = (): React.ReactElement => {
     const [searchParams, _] = useSearchParams()
 
     return (
-        <div className="flex flex-col items-center mt-5">
+        <div className="flex flex-col items-center mt-5 p-5">
             <Helmet>
                 <title>{t('title_login')} - Collabra</title>
             </Helmet>

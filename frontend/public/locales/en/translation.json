@@ -168,7 +168,17 @@
     "done": "Done",
     "add_new_task": "Add new task",
     "title": "Title",
-    "steps": "Steps",
+    "subtasks": "Subtasks",
+    "requires_review": "This task requires review",
+    "status": "Status",
+    "due_date": "Due date",
+    "assignee": "Assignee",
+    "tag": "Tag",
+    "attachments": "Attachments",
+    "no_attachments": "No attachments",
+    "loading_team_space": "Loading team space",
+    "filter": "Filter",
+    "threads": "Threads",
 
 
     "title_login": "Login",

@@ -119,47 +119,6 @@ const MemberCell = ({
                 close={() => setDeleteDialogOpen(false)}
                 successButtonStyle="primary"
                 successButtonText={t('save')}
-                extraActions={
-                    <div className="pt-4 md:pt-2 grid gap-5">
-                        {!member.is_owner &&
-                            member.user.id !== user!.user_id && (
-                                <Checkbox
-                                    id="admin"
-                                    text={t('is_admin')}
-                                    value={isAdmin}
-                                    setValue={setIsAdmin}
-                                />
-                            )}
-                        <Input
-                            instance={status}
-                            title={t('member_status')}
-                            hint={t('member_status_hint')}
-                        />
-                        {!member.is_owner && member.is_admin && (
-                            <PrivateComponent allowedRoles={[UserRole.OWNER]}>
-                                <div>
-                                    <p className="pl-1 pb-1">
-                                        {t('transfer_ownership')}
-                                    </p>
-                                    <PasswordSubmit
-                                        actionText={t('transfer_ownership')}
-                                        buttonText={t('transfer')}
-                                        isLoading={isTransfering}
-                                        submitFn={transferOwnership}
-                                        submitData={{
-                                            user: member.user.id,
-                                            teamId: team!.id,
-                                        }}
-                                        options={{
-                                            onSuccess: () =>
-                                                setDeleteDialogOpen(false),
-                                        }}
-                                    />
-                                </div>
-                            </PrivateComponent>
-                        )}
-                    </div>
-                }
                 extraButtons={
                     !member.is_owner && user!.user_id !== member.user.id ? (
                         <Button
@@ -176,7 +135,46 @@ const MemberCell = ({
                         </Button>
                     ) : null
                 }
-            />
+            >
+                <div className="pt-4 md:pt-2 grid gap-5">
+                    {!member.is_owner && member.user.id !== user!.user_id && (
+                        <Checkbox
+                            id="admin"
+                            text={t('is_admin')}
+                            value={isAdmin}
+                            setValue={setIsAdmin}
+                        />
+                    )}
+                    <Input
+                        instance={status}
+                        title={t('member_status')}
+                        hint={t('member_status_hint')}
+                    />
+                    {!member.is_owner && member.is_admin && (
+                        <PrivateComponent allowedRoles={[UserRole.OWNER]}>
+                            <div>
+                                <p className="pl-1 pb-1">
+                                    {t('transfer_ownership')}
+                                </p>
+                                <PasswordSubmit
+                                    actionText={t('transfer_ownership')}
+                                    buttonText={t('transfer')}
+                                    isLoading={isTransfering}
+                                    submitFn={transferOwnership}
+                                    submitData={{
+                                        user: member.user.id,
+                                        teamId: team!.id,
+                                    }}
+                                    options={{
+                                        onSuccess: () =>
+                                            setDeleteDialogOpen(false),
+                                    }}
+                                />
+                            </div>
+                        </PrivateComponent>
+                    )}
+                </div>
+            </DialogWindow>
         </div>
     )
 }

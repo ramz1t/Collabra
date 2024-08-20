@@ -1,56 +1,10 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import TeamStats from './TeamStats'
 import { TeamImage } from '../../components'
 import useScreenSize from '../../hooks/useScreenSize'
 import cn from 'classnames'
 import { Team } from '../../types'
-
-const membersMock = [
-    {
-        id: 1,
-        is_owner: false,
-        is_admin: false,
-        user: {
-            avatar: 'http://localhost:5173/images/timur.jpg',
-            generated_avatar: {
-                first_color: 'a18cd1',
-                second_color: 'fbc2eb',
-            },
-            first_name: 'Leonid',
-            last_name: 'Prokopev',
-        },
-    },
-    {
-        id: 2,
-        is_owner: false,
-        is_admin: false,
-        user: {
-            avatar: 'http://localhost:5173/images/alex.jpg',
-            generated_avatar: {
-                first_color: 'ff9a9e',
-                second_color: 'fecfef',
-            },
-            first_name: 'Alexey',
-            last_name: 'Zavadsky',
-        },
-    },
-    {
-        id: 3,
-        is_owner: false,
-        is_admin: false,
-        user: {
-            avatar: null,
-            generated_avatar: {
-                first_color: 'f6d365',
-                second_color: 'fda085',
-            },
-            first_name: 'Timur',
-            last_name: 'Ramazanov',
-        },
-    },
-]
 
 export interface TeamCardProps {
     team: Team
@@ -64,7 +18,7 @@ const TeamCard = ({ team, isList }: TeamCardProps): React.ReactElement => {
         <li
             className={
                 isList
-                    ? 'md:odd:bg-gray-100 md:odd:dark:bg-slate-800 md:hover:bg-gray-200 md:hover:dark:bg-slate-700 md:rounded-lg'
+                    ? 'md:odd:bg-gray-100 md:bg-gray-50 md:odd:dark:bg-slate-800 md:hover:bg-gray-200 md:hover:dark:bg-slate-700'
                     : ''
             }
         >
@@ -90,7 +44,7 @@ const TeamCard = ({ team, isList }: TeamCardProps): React.ReactElement => {
                     <p
                         className={cn(
                             isTablet && isList ? 'text-xl' : ' text-2xl',
-                            'font-bold line-clamp-1'
+                            'font-semibold line-clamp-1'
                         )}
                     >
                         {team.title}
