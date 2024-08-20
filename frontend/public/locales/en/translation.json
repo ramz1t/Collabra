@@ -177,8 +177,10 @@
     "attachments": "Attachments",
     "no_attachments": "No attachments",
     "loading_team_space": "Loading team space",
-    "filter": "Filter",
+    "filters": "Filters",
     "threads": "Threads",
+    "deadline_soon": "Deadline soon",
+    "stats": "Stats",
 
 
     "title_login": "Login",

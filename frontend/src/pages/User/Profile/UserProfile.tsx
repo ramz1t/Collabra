@@ -18,7 +18,7 @@ const UserProfile = (): React.ReactNode => {
         <div className="container mx-auto px-4 py-10 grid md:flex gap-10 mt-4">
             <Helmet>
                 <title>
-                    {user.first_name} {user.last_name} - Collabra
+                    {user.first_name} {user.last_name} | Collabra
                 </title>
             </Helmet>
             <Avatar user={user} size="profile" />

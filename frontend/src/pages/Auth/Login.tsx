@@ -17,7 +17,7 @@ const Login = (): React.ReactElement => {
     return (
         <div className="flex flex-col items-center mt-5 p-5">
             <Helmet>
-                <title>{t('title_login')} - Collabra</title>
+                <title>{t('title_login')} | Collabra</title>
             </Helmet>
             <Form
                 className="w-full md:max-w-96 mt-10 md:mt-20"

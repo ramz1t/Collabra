@@ -7,7 +7,7 @@ import { Task } from '../../../../types'
 
 const TaskStats = ({ task }: { task: Task }) => {
     return (
-        <>
+        <div className="flex gap-3">
             <Link
                 to={`${task.id}`}
                 className="flex text-gray-400 dark:text-gray-500 items-center gap-1.5 font-semibold hover:text-gray-500 transition-all duration-75"
@@ -22,7 +22,7 @@ const TaskStats = ({ task }: { task: Task }) => {
                 <IoDocumentAttachOutline />
                 {6}
             </Link>
-        </>
+        </div>
     )
 }
 

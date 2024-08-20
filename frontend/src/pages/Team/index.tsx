@@ -26,7 +26,7 @@ const TeamSpace = () => {
     return (
         <div className="grow flex flex-col">
             <Helmet>
-                <title>{teamData.title} - Collabra</title>
+                <title>{teamData.title} | Collabra</title>
             </Helmet>
             <Routes>
                 <Route index element={<Dashboard />} />

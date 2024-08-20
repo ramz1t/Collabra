@@ -10,18 +10,21 @@ export interface SearchBarProps {
     placeholder?: string
     inputInstance: IInputInstance<string>
     className?: string
+    title?: string
 }
 
 const SearchBar = ({
     placeholder,
     inputInstance,
     className,
+    title,
 }: SearchBarProps): React.ReactElement => {
     const { t } = useTranslation()
 
     return (
         <div className={cn('flex w-full items-center flex-row', className)}>
             <Input
+                title={title}
                 instance={inputInstance}
                 placeholder={placeholder}
                 innerIcon={<IoSearchOutline />}

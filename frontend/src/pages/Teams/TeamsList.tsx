@@ -48,7 +48,7 @@ const TeamsList = () => {
     return (
         <div>
             <Helmet>
-                <title>{t('title_teams')} - Collabra</title>
+                <title>{t('title_teams')} | Collabra</title>
             </Helmet>
             <div className="sticky top-nav md:top-0 bg-white dark:bg-slate-900 pb-5 px-5">
                 <div className="flex py-5 items-center gap-5 flex-wrap">

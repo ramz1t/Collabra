@@ -16,6 +16,7 @@ interface AddTaskDialogProps {
     title: string
     open: boolean
     setOpen: React.Dispatch<SetStateAction<boolean>>
+    status: string
 }
 
 const AddTaskDialog = ({
@@ -23,6 +24,7 @@ const AddTaskDialog = ({
     title: dialogTitle,
     open,
     setOpen,
+    status,
 }: AddTaskDialogProps) => {
     const { t } = useTranslation()
     const title = useInput('')

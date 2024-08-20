@@ -18,7 +18,7 @@ const TeamCard = ({ team, isList }: TeamCardProps): React.ReactElement => {
         <li
             className={
                 isList
-                    ? 'md:odd:bg-gray-100 md:bg-gray-50 md:odd:dark:bg-slate-800 md:hover:bg-gray-200 md:hover:dark:bg-slate-700'
+                    ? 'md:odd:bg-gray-100 md:bg-gray-50 md:odd:dark:bg-slate-800 md:dark:bg-slate-900 md:hover:bg-gray-200 md:hover:dark:bg-slate-700'
                     : ''
             }
         >
