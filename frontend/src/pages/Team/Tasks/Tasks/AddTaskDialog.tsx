@@ -10,6 +10,7 @@ import {
 import { useTranslation } from 'react-i18next'
 import React, { SetStateAction, useState } from 'react'
 import useInput from '../../../../hooks/useInput'
+import TagSelector from './TagSelector'
 
 interface AddTaskDialogProps {
     icon: React.ReactNode | React.ReactElement
@@ -27,11 +28,13 @@ const AddTaskDialog = ({
     status,
 }: AddTaskDialogProps) => {
     const { t } = useTranslation()
+
     const title = useInput('')
     const description = useInput('')
     const nextStep = useInput('')
     const [steps, setSteps] = useState<string[]>([])
     const [requiresReview, setRequiresReview] = useState(false)
+    const [selectedTag, setSelectedTag] = useState<number | undefined>()
 
     const addStep = () => {
         if (nextStep.value.trim() === '') return
@@ -55,6 +58,11 @@ const AddTaskDialog = ({
         >
             <Form>
                 <Input must title={t('title')} instance={title} />
+                <TagSelector
+                    selected={selectedTag}
+                    setSelected={setSelectedTag}
+                    canEdit
+                />
                 <TextField
                     must
                     title={t('description')}
@@ -91,7 +99,6 @@ const AddTaskDialog = ({
                 <Checkbox
                     value={requiresReview}
                     text={t('requires_review')}
-                    id={'requires_review'}
                     setValue={setRequiresReview}
                 />
             </Form>

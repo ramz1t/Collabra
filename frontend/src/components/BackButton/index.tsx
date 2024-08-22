@@ -22,6 +22,7 @@ const BackButton = ({
             ),
         [window.location.pathname]
     )
+
     return (
         <Link
             to={to}

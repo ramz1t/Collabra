@@ -13,33 +13,7 @@ import { FaRegDotCircle } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next'
 import TaskTag from '../TaskTag'
 import cn from 'classnames'
-import { useState } from 'react'
-import { Step } from '../../../../../types'
-
-const Steps = ({ steps, disabled }: { steps: Step[]; disabled: boolean }) => {
-    const [stepsState, setStepsState] = useState(steps)
-
-    return (
-        <ul className="grid gap-2">
-            {steps.map((step, key) => (
-                <span>
-                    <Checkbox
-                        key={key}
-                        value={stepsState[key]?.is_done}
-                        text={step.title}
-                        id={step.id}
-                        disabled={disabled}
-                        setValue={(value) => {
-                            let copy = [...stepsState]
-                            copy[key].is_done = !copy[key].is_done
-                            setStepsState(copy)
-                        }}
-                    />
-                </span>
-            ))}
-        </ul>
-    )
-}
+import TaskSteps from '../TaskSteps'
 
 const TaskDetails = () => {
     const { t, i18n } = useTranslation()
@@ -126,10 +100,7 @@ const TaskDetails = () => {
                         {t('subtasks')}
                     </div>
                     {task.steps.length > 0 ? (
-                        <Steps
-                            steps={task.steps}
-                            disabled={task.status === 'done'}
-                        />
+                        <TaskSteps steps={task.steps} isOpen={true} />
                     ) : (
                         t('no_subtasks')
                     )}

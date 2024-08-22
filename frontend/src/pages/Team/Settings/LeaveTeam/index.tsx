@@ -1,8 +1,8 @@
-import { PasswordSubmit, SettingsSection } from '../../../components'
+import { PasswordSubmit, SettingsSection } from '../../../../components'
 import { useTranslation } from 'react-i18next'
-import { useLeaveTeam } from '../../../api/team'
+import { useLeaveTeam } from '../../../../api/team'
 import React, { useContext } from 'react'
-import TeamContext, { ITeamContext } from '../../../contexts/TeamContext'
+import TeamContext, { ITeamContext } from '../../../../contexts/TeamContext'
 
 const LeaveTeam = (): React.ReactElement => {
     const { team, setTeam } = useContext(TeamContext) as ITeamContext

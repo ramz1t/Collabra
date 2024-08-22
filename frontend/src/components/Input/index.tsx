@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useId } from 'react'
 import cn from 'classnames'
 import { IInputInstance } from '../../hooks/useInput'
 
@@ -6,7 +6,6 @@ export interface InputProps<TValue, TRef> {
     className?: string
     titleClassname?: string
     placeholder?: string
-    id?: string
     type?: HTMLInputElement['type']
     instance: IInputInstance<TValue>
     title?: string
@@ -28,7 +27,6 @@ function Input<T>({
     className,
     titleClassname,
     placeholder,
-    id,
     type,
     instance,
     title,
@@ -46,6 +44,7 @@ function Input<T>({
     innerIcon,
 }: InputProps<T, React.RefObject<HTMLInputElement>>): React.ReactElement {
     if (!ref) ref = useRef<HTMLInputElement>(null)
+    const id = useId()
 
     useEffect(() => {
         if (ref.current && autoRef) {
@@ -58,7 +57,7 @@ function Input<T>({
             {title && (
                 <label
                     className={cn(
-                        'pl-1',
+                        'pl-1 w-fit',
                         must
                             ? 'after:content-["*"] after:text-red-500 dark:after:text-red-700 after:pl-0.5'
                             : '',

@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useId, useRef } from 'react'
 import { InputProps } from '../Input'
 
 export interface TextFieldProps<T>
@@ -11,7 +11,6 @@ function TextField<T>({
     className,
     titleClassname,
     placeholder,
-    id,
     instance,
     title,
     autoRef,
@@ -28,6 +27,7 @@ function TextField<T>({
     minHeight,
 }: TextFieldProps<T>): React.ReactElement {
     const textareaRef = useRef<HTMLTextAreaElement>(null)
+    const id = useId()
 
     useEffect(() => {
         if (textareaRef.current && autoRef) {
@@ -39,7 +39,7 @@ function TextField<T>({
             {title && (
                 <label
                     className={cn(
-                        'pl-1',
+                        'pl-1 w-fit',
                         must
                             ? 'after:content-["*"] after:text-red-500 after:pl-0.5'
                             : '',

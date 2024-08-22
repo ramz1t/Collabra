@@ -57,3 +57,37 @@ export const objectsDifference = (
     )
     return Object.fromEntries(changedFields)
 }
+
+export const hexToRGBA = (hex: string, opacity: number = 1) => {
+    hex = hex.replace(/^#/, '')
+
+    let r, g, b
+
+    if (hex.length === 3) {
+        r = parseInt(hex[0] + hex[0], 16)
+        g = parseInt(hex[1] + hex[1], 16)
+        b = parseInt(hex[2] + hex[2], 16)
+    } else if (hex.length === 6) {
+        r = parseInt(hex.slice(0, 2), 16)
+        g = parseInt(hex.slice(2, 4), 16)
+        b = parseInt(hex.slice(4, 6), 16)
+    } else {
+        throw new Error(`Invalid hex color - ${hex}`)
+    }
+
+    if (opacity < 0 || opacity > 1) {
+        throw new Error('Opacity must be between 0 and 1')
+    }
+
+    return `rgba(${r}, ${g}, ${b}, ${opacity})`
+}
+
+export const getStatusColor = (status: string) => {
+    const colors: Record<string, string> = {
+        to_do: '#ff9100',
+        in_progress: '#006fff',
+        need_review: '#ffdd00',
+        done: '#1cc01f',
+    }
+    return colors[status]
+}

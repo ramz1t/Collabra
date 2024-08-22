@@ -1,12 +1,35 @@
 import { Tag } from '../../../../types'
+import { hexToRGBA } from '../../../../utils'
+import { useContext, useState } from 'react'
+import ThemeContext, { IThemeContext } from '../../../../contexts/ThemeContext'
+import { Button, DialogWindow } from '../../../../components'
+import { IoTrashOutline } from 'react-icons/io5'
+import { useTranslation } from 'react-i18next'
+import { useDeleteTag } from '../../../../api/tags'
+import { useParams } from 'react-router-dom'
 
-const TaskTag = ({ tag }: { tag: Tag }) => {
+const TaskTag = ({ tag, canDelete }: { tag: Tag; canDelete?: boolean }) => {
+    const { isDark } = useContext(ThemeContext) as IThemeContext
+    const { teamSlug } = useParams()
+    const { mutate: deleteTag } = useDeleteTag(teamSlug!, tag.id)
+
     return (
         <span
-            className="rounded-full px-3 py-1 bg-orange-100 dark:bg-orange-500 text-orange-500 dark:text-orange-100 font-bold w-fit line-clamp-1"
-            // style={{ color: tag.color, backgroundColor: tag.color }}
+            className="rounded-full px-3 py-1 font-bold w-fit line-clamp-1 h-fit flex items-center gap-3"
+            style={{
+                color: isDark ? 'white' : hexToRGBA(tag.color),
+                backgroundColor: hexToRGBA(tag.color, isDark ? 1 : 0.2),
+            }}
         >
             {tag.title}
+            {canDelete && (
+                <Button
+                    action={() => deleteTag(tag.id)}
+                    className="hover:text-red-600 dark:hover:text-red-800"
+                >
+                    <IoTrashOutline />
+                </Button>
+            )}
         </span>
     )
 }

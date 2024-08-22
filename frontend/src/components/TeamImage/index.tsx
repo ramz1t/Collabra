@@ -40,6 +40,7 @@ const TeamImage = ({
     }
     return team.image ? (
         <div
+            aria-label={`${team.title} image`}
             className={cn('bg-cover bg-center rounded-lg', className)}
             style={{
                 width: w,
@@ -66,6 +67,7 @@ const TeamImage = ({
                 maxWidth: w,
                 maxHeight: w,
             }}
+            aria-label={`${team.title} image`}
         >
             {team.title ? (
                 team.title

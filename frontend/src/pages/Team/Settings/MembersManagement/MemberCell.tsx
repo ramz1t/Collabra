@@ -139,7 +139,6 @@ const MemberCell = ({
                 <div className="pt-4 md:pt-2 grid gap-5">
                     {!member.is_owner && member.user.id !== user!.user_id && (
                         <Checkbox
-                            id="admin"
                             text={t('is_admin')}
                             value={isAdmin}
                             setValue={setIsAdmin}

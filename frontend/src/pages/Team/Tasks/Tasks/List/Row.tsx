@@ -5,12 +5,15 @@ import TaskStats from '../TaskStats'
 import { Avatar } from '../../../../../components'
 import cn from 'classnames'
 import { useTranslation } from 'react-i18next'
+import TaskMenu from '../TaskMenu'
+import { getStatusColor } from '../../../../../utils'
 
 const TaskRow = ({ task }: { task: Task }) => {
     const { t } = useTranslation()
+
     return (
-        <li className="grid grid-cols-[3fr_2fr] odd:bg-gray-50 bg-gray-100 odd:dark:bg-slate-800 dark:bg-slate-900 px-5 py-4 gap-4 xl:gap-10">
-            <div className="grid grid-cols-[160px_1fr]">
+        <li className="grid lg:grid-cols-[2fr_2fr] xl:grid-cols-[3fr_2fr] odd:bg-gray-50 bg-gray-100 odd:dark:bg-slate-800 dark:bg-slate-900 px-5 py-4 gap-4 xl:gap-10 first:rounded-t-lg last:rounded-b-lg">
+            <div className="grid md:grid-cols-[130px_1fr] place-items-center justify-items-start gap-3">
                 <TaskTag tag={task.tag} />
                 <Link
                     to={`${task.id}`}
@@ -19,19 +22,12 @@ const TaskRow = ({ task }: { task: Task }) => {
                     {task.title}
                 </Link>
             </div>
-            <div className="grid grid-cols-[1fr_1fr_1fr]">
+            <div className="grid grid-cols-[1fr_1fr_1fr_40px]">
                 <div className="flex items-center gap-3">
                     <span
-                        className={cn(
-                            'size-4 rounded-full bg-red-500 inline-block'
-                        )}
+                        className={cn('size-4 rounded-full inline-block')}
                         style={{
-                            backgroundColor: {
-                                to_do: '#ff9100',
-                                in_progress: '#006fff',
-                                need_review: '#ffdd00',
-                                done: '#1cc01f',
-                            }[task.status],
+                            backgroundColor: getStatusColor(task.status),
                         }}
                     ></span>
                     {t(task.status)}
@@ -40,8 +36,8 @@ const TaskRow = ({ task }: { task: Task }) => {
                     <Avatar user={task.assignee.user} />
                     {task.assignee.user.first_name}
                 </div>
-
                 <TaskStats task={task} />
+                <TaskMenu task={task} />
             </div>
         </li>
     )

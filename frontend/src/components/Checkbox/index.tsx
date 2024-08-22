@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import React, { ChangeEvent, useContext } from 'react'
+import React, { ChangeEvent, useContext, useId } from 'react'
 import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from '../../../tailwind.config'
 import ThemeContext, { IThemeContext } from '../../contexts/ThemeContext'
@@ -9,7 +9,6 @@ export interface CheckboxProps {
     className?: string
     title?: string
     text: React.ReactNode
-    id: string | number
     setValue(value: boolean): void
     disabled?: boolean
     color?: string
@@ -21,12 +20,13 @@ const Checkbox = ({
     className,
     title,
     text,
-    id,
     disabled,
     color,
 }: CheckboxProps): React.ReactElement => {
     const fullConfig = resolveConfig(tailwindConfig)
+    const id = useId()
     const { isDark } = useContext(ThemeContext) as IThemeContext
+
     return (
         <div className="grid">
             {title && <p className="pb-1 pl-1">{title}</p>}

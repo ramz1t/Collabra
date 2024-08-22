@@ -181,7 +181,13 @@
     "threads": "Threads",
     "deadline_soon": "Deadline soon",
     "stats": "Stats",
-
+    "new_tag": "New tag",
+    "clear_filters": "Clear filters",
+    "move_col_left": "Move column left",
+    "move_col_right": "Move column right",
+    "clear_col": "Clear column",
+    "send_to_review": "Send to review",
+    "mark_as_done": "Mark as Done",
 
     "title_login": "Login",
     "title_register": "Register",

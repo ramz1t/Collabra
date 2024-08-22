@@ -31,6 +31,7 @@ const Button = ({
     target,
 }: ButtonProps): React.ReactElement => {
     const { t } = useTranslation()
+
     const componentProps = {
         className: cn(
             'flex items-center focus-visible:ring-accent focus-visible:dark:ring-accent-dark focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none justify-center gap-3 transition-all duration-75 active:hover:opacity-80 h-fit whitespace-nowrap',
@@ -55,13 +56,19 @@ const Button = ({
         disabled: disabled || isLoading,
     }
 
+    const content = isLoading
+        ? loadingText
+            ? loadingText
+            : t('loading')
+        : children
+
     return to ? (
         <Link to={to} {...componentProps} target={target}>
-            {isLoading ? (loadingText ? loadingText : t('loading')) : children}
+            {content}
         </Link>
     ) : (
         <button {...componentProps} onClick={() => action && action()}>
-            {isLoading ? (loadingText ? loadingText : t('loading')) : children}
+            {content}
         </button>
     )
 }

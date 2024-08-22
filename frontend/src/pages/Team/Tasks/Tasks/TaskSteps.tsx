@@ -1,18 +1,20 @@
-import { Task } from '../../../../types'
+import { Step, Task } from '../../../../types'
 import cn from 'classnames'
 import { Checkbox } from '../../../../components'
-import { useState } from 'react'
+import React, { SetStateAction, useState } from 'react'
 
 const TaskSteps = ({
-    task,
+    steps,
+    setDoneCounter,
     isOpen,
     disabled,
 }: {
-    task: Task
+    steps: Step[]
+    setDoneCounter?: React.Dispatch<SetStateAction<number>>
     isOpen?: boolean
     disabled?: boolean
 }) => {
-    const [stepsState, setStepsState] = useState(task.steps)
+    const [stepsState, setStepsState] = useState(steps)
 
     return (
         <ul
@@ -23,7 +25,7 @@ const TaskSteps = ({
                     : 'max-h-0 pt-0.5 gap-0 opacity-0 pointer-events-none'
             )}
         >
-            {task.steps.map((step, key) => (
+            {steps.map((step, key) => (
                 <span
                     className="transition-all duration-200"
                     style={{
@@ -35,12 +37,15 @@ const TaskSteps = ({
                         key={key}
                         value={stepsState[key].is_done}
                         text={step.title}
-                        id={step.id}
                         disabled={disabled}
                         setValue={(value) => {
                             let copy = [...stepsState]
                             copy[key].is_done = !copy[key].is_done
                             setStepsState(copy)
+                            setDoneCounter &&
+                                setDoneCounter(
+                                    copy.filter((step) => step.is_done).length
+                                )
                         }}
                     />
                 </span>

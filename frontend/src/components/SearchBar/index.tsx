@@ -43,7 +43,7 @@ const SearchBar = ({
                     >
                         <Button
                             style="tertiary"
-                            className="hover:text-accent rounded-md pl-7 pr-2 h-full"
+                            className="hover:text-accent rounded-md pl-7 pr-3.5 h-full"
                             action={() => inputInstance.clear()}
                         >
                             {t('cancel')}

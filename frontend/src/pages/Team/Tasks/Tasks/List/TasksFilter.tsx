@@ -1,96 +1,123 @@
 import React, { SetStateAction, useEffect, useState } from 'react'
 import useInput from '../../../../../hooks/useInput'
-import { Checkbox, SearchBar } from '../../../../../components'
+import { Button, Checkbox, SearchBar } from '../../../../../components'
 import { useTranslation } from 'react-i18next'
-import { FaFire } from 'react-icons/fa6'
+import { IoChevronDown, IoFilter } from 'react-icons/io5'
+import useScreenSize from '../../../../../hooks/useScreenSize'
+import cn from 'classnames'
+import FireIcon from '../../../../../components/FireIcon'
+import TagSelector from '../TagSelector'
+import { getStatusColor } from '../../../../../utils'
 
 const TasksFilter = ({
     setFilters,
 }: {
     setFilters: React.Dispatch<SetStateAction<Record<string, any>>>
 }) => {
-    const title = useInput<string>('', {}, 150)
+    const { t } = useTranslation()
+    const { isTablet } = useScreenSize()
+    const [isOpen, setIsOpen] = useState(isTablet)
+
     const statuses = ['to_do', 'in_progress', 'need_review', 'done']
+
+    const title = useInput<string>('', {}, 150)
     const [checkedStatuses, setCheckedStatuses] = useState<string[]>(statuses)
     const [isDeadlineSoon, setIsDeadlineSoon] = useState(false)
-    const { t } = useTranslation()
+    const [selectedTag, setSelectedTag] = useState<number | undefined>()
 
     useEffect(() => {
         setFilters({
-            title: title.value.trim() ? title.value.trim() : null,
+            title: title.value.trim() || null,
             status: checkedStatuses,
             is_deadline_soon: isDeadlineSoon,
+            tag: selectedTag || null,
         })
-    }, [title.value, checkedStatuses, isDeadlineSoon])
+    }, [title.value, checkedStatuses, isDeadlineSoon, selectedTag])
+
+    const clearFilters = () => {
+        title.clear()
+        setCheckedStatuses(statuses)
+        setIsDeadlineSoon(false)
+        setSelectedTag(undefined)
+    }
 
     return (
-        <div className="grid gap-6">
-            <SearchBar placeholder={t('title')} inputInstance={title} />
+        <div>
+            <Button
+                className="text-lg font-semibold flex items-center gap-4 my-5 hover:!opacity-100"
+                w_full
+                action={() => setIsOpen((prev) => !prev)}
+            >
+                <IoFilter />
+                {t('filters')}
+                <span
+                    className={cn(
+                        'text-xl p-2 transition-all duration-200 ml-auto',
+                        isOpen ? 'rotate-180' : null
+                    )}
+                >
+                    <IoChevronDown />
+                </span>
+            </Button>
+            <div
+                className={cn(
+                    'grid gap-6 transition-all duration-200',
+                    isOpen
+                        ? 'max-h-[600px] pb-5 opacity-100'
+                        : 'max-h-0 pb-0 opacity-50 overflow-hidden'
+                )}
+            >
+                <SearchBar placeholder={t('title')} inputInstance={title} />
 
-            <ul className="grid gap-2">
-                {statuses.map((status) => (
-                    <Checkbox
-                        value={checkedStatuses.includes(status)}
-                        text={t(status)}
-                        id={status}
-                        setValue={(checked) => {
-                            let copy
-                            if (!checked) {
-                                if (checkedStatuses.length === 1) return
-                                copy = checkedStatuses.filter(
-                                    (el) => el !== status
-                                )
-                            } else {
-                                copy = [...checkedStatuses, status]
-                            }
-                            setCheckedStatuses(copy)
-                        }}
-                        color={
-                            {
-                                to_do: '#ff9100',
-                                in_progress: '#006fff',
-                                need_review: '#ffdd00',
-                                done: '#1cc01f',
-                            }[status]
-                        }
+                <div>
+                    <p className="pb-2 font-semibold">{t('status')}</p>
+                    <ul className="grid gap-2">
+                        {statuses.map((status) => (
+                            <Checkbox
+                                key={status}
+                                value={checkedStatuses.includes(status)}
+                                text={t(status)}
+                                setValue={(checked) => {
+                                    let copy
+                                    if (!checked) {
+                                        if (checkedStatuses.length === 1) return
+                                        copy = checkedStatuses.filter(
+                                            (el) => el !== status
+                                        )
+                                    } else {
+                                        copy = [...checkedStatuses, status]
+                                    }
+                                    setCheckedStatuses(copy)
+                                }}
+                                color={getStatusColor(status)}
+                            />
+                        ))}
+                    </ul>
+                </div>
+                <div>
+                    <p className="pb-2 font-semibold">{t('tag')}</p>
+                    <TagSelector
+                        selected={selectedTag}
+                        setSelected={setSelectedTag}
                     />
-                ))}
-            </ul>
-
-            <Checkbox
-                value={isDeadlineSoon}
-                text={
-                    <>
-                        {t('deadline_soon')}
-                        <svg width="0" height="0" className="pl-2">
-                            <linearGradient
-                                id="fire-gradient"
-                                x1="0%"
-                                y1="100%"
-                                x2="0%"
-                                y2="0%"
-                            >
-                                <stop
-                                    stopColor="rgb(253 186 116)"
-                                    offset="0%"
-                                />
-                                <stop
-                                    stopColor="rgb(249 115 22)"
-                                    offset="33%"
-                                />
-                                <stop stopColor="rgb(194 65 12)" offset="80%" />
-                                <stop
-                                    stopColor="rgb(194 65 12)"
-                                    offset="100%"
-                                />
-                            </linearGradient>
-                        </svg>
-                        <FaFire style={{ fill: 'url(#fire-gradient)' }} />
-                    </>
-                }
-                id={'deadline_soon'}
-                setValue={setIsDeadlineSoon}
-            />
+                </div>
+                <Checkbox
+                    value={isDeadlineSoon}
+                    text={
+                        <>
+                            {t('deadline_soon')}
+                            <FireIcon />
+                        </>
+                    }
+                    setValue={setIsDeadlineSoon}
+                />
+                <Button
+                    className="text-accent dark:text-accent-dark"
+                    action={clearFilters}
+                >
+                    {t('clear_filters')}
+                </Button>
+            </div>
         </div>
     )
 }

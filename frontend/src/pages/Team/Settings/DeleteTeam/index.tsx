@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
-import { PasswordSubmit, SettingsSection } from '../../../components'
-import { useDeleteTeam } from '../../../api/team'
+import { PasswordSubmit, SettingsSection } from '../../../../components'
+import { useDeleteTeam } from '../../../../api/team'
 import React, { useContext } from 'react'
-import TeamContext, { ITeamContext } from '../../../contexts/TeamContext'
+import TeamContext, { ITeamContext } from '../../../../contexts/TeamContext'
 
 const DeleteTeam = (): React.ReactElement => {
     const { t } = useTranslation()

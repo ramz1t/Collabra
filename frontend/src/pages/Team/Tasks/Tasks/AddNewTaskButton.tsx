@@ -1,18 +1,11 @@
-import { Button } from '../../../components'
+import { Button } from '../../../../components'
 import { IoAdd } from 'react-icons/io5'
-import AddTaskDialog from './Tasks/AddTaskDialog'
+import AddTaskDialog from './AddTaskDialog'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { getStatusColor } from '../../../../utils'
 
-const AddNewTaskButton = ({
-    title,
-    color,
-    status,
-}: {
-    title: string
-    color: string
-    status: string
-}) => {
+const AddNewTaskButton = ({ status }: { status: string }) => {
     const { t } = useTranslation()
     const [addNewTaskOpen, setAddNewTaskOpen] = useState(false)
     return (
@@ -28,10 +21,10 @@ const AddNewTaskButton = ({
                 icon={
                     <span
                         className="size-6 mr-3 rounded-full inline-block"
-                        style={{ backgroundColor: color }}
+                        style={{ backgroundColor: getStatusColor(status) }}
                     ></span>
                 }
-                title={title}
+                title={t(status)}
                 open={addNewTaskOpen}
                 setOpen={setAddNewTaskOpen}
                 status={status}

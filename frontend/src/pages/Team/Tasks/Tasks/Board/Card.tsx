@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom'
 import TaskTag from '../TaskTag'
 import TaskStats from '../TaskStats'
 import TaskSteps from '../TaskSteps'
+import TaskMenu from '../TaskMenu'
 
 interface CardProps {
     task: Task
@@ -28,8 +29,9 @@ const StepsProgress = ({
     parentOpen: boolean
 }) => {
     const [isOpen, setIsOpen] = useState(false)
-    const [stepsState, setStepsState] = useState(task.steps)
-    const doneCount = stepsState.filter((el) => el.is_done).length
+    const [doneCount, setDoneCount] = useState(
+        task.steps.filter((step) => step.is_done).length
+    )
 
     return (
         <div>
@@ -47,7 +49,8 @@ const StepsProgress = ({
             </span>
             <TaskSteps
                 disabled={task.status === 'done'}
-                task={task}
+                steps={task.steps}
+                setDoneCounter={setDoneCount}
                 isOpen={isOpen && parentOpen}
             />
         </div>
@@ -60,15 +63,15 @@ const TaskCard = ({ task }: CardProps) => {
         <li className="bg-white dark:bg-slate-800 rounded-lg border dark:border-slate-700">
             <div
                 className={cn(
-                    'flex items-center overflow-hidden transition-all duration-200 px-4',
+                    'flex items-center transition-all duration-200 px-4',
                     isOpen
                         ? 'max-h-52 pt-4 opacity-100'
                         : 'max-h-0 pt-0 opacity-0'
                 )}
             >
                 <TaskTag tag={task.tag} />
-                <span className="text-xl ml-auto">
-                    <IoEllipsisVerticalSharp />
+                <span className="ml-auto">
+                    <TaskMenu task={task} />
                 </span>
             </div>
             <div
