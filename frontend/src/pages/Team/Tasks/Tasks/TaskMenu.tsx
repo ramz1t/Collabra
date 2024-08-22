@@ -7,8 +7,11 @@ import {
     IoCheckmarkDoneOutline,
     IoEllipsisVerticalSharp,
     IoFlaskOutline,
+    IoPencilOutline,
     IoTrashOutline,
 } from 'react-icons/io5'
+import { useState } from 'react'
+import { DialogWindow } from '../../../../components'
 
 const TaskMenu = ({ task }: { task: Task }) => {
     const { t } = useTranslation()
@@ -24,16 +27,32 @@ const TaskMenu = ({ task }: { task: Task }) => {
             action() {},
         },
         {
+            title: t('edit'),
+            icon: <IoPencilOutline />,
+            action() {},
+        },
+        {
             title: t('delete'),
             icon: <IoTrashOutline />,
-            action() {},
+            action: () => setIsDeleteDialogOpen(true),
             color: '#e82c2c',
         },
     ]
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
     return (
-        <Menu actions={actions} position="left">
-            <IoEllipsisVerticalSharp size="1.2em" />
-        </Menu>
+        <>
+            <Menu actions={actions} position="left">
+                <IoEllipsisVerticalSharp size="1.2em" />
+            </Menu>
+            <DialogWindow
+                icon={<IoTrashOutline />}
+                description={t('delete_task_dialog_desc')}
+                isOpen={isDeleteDialogOpen}
+                close={() => setIsDeleteDialogOpen(false)}
+                onSuccess={() => {}}
+                successButtonText={t('delete')}
+            />
+        </>
     )
 }
 

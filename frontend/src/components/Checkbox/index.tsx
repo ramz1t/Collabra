@@ -22,10 +22,9 @@ const Checkbox = ({
     text,
     disabled,
     color,
-}: CheckboxProps): React.ReactElement => {
-    const fullConfig = resolveConfig(tailwindConfig)
+}: CheckboxProps) => {
     const id = useId()
-    const { isDark } = useContext(ThemeContext) as IThemeContext
+    const { isDark, tailwindConfig } = useContext(ThemeContext) as IThemeContext
 
     return (
         <div className="grid">
@@ -40,7 +39,7 @@ const Checkbox = ({
                         'disabled:checked:after:bg-gray-400/60 disabled:hover:cursor-not-allowed',
                         className
                     )}
-                    id={`checkbox-${id}`}
+                    id={id}
                     type="checkbox"
                     checked={value}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -53,12 +52,14 @@ const Checkbox = ({
                             '--checkbox-accent': color
                                 ? color
                                 : isDark
-                                  ? fullConfig.theme.colors.accent.dark
-                                  : fullConfig.theme.colors.accent.DEFAULT,
+                                  ? // @ts-ignore
+                                    tailwindConfig.theme.colors.accent.dark
+                                  : // @ts-ignore
+                                    tailwindConfig.theme.colors.accent.DEFAULT,
                         } as React.CSSProperties
                     }
                 />
-                <label className="flex items-center" htmlFor={`checkbox-${id}`}>
+                <label className="flex items-center" htmlFor={id}>
                     {text}
                 </label>
             </div>

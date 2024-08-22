@@ -22,34 +22,38 @@ interface CardProps {
 }
 
 const StepsProgress = ({
-    task,
+    steps,
     parentOpen,
+    disabled,
 }: {
-    task: Task
+    steps: Step[]
+    disabled: boolean
     parentOpen: boolean
 }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [doneCount, setDoneCount] = useState(
-        task.steps.filter((step) => step.is_done).length
+        steps.filter((step) => step.is_done).length
     )
+
+    if (steps.length === 0) return
 
     return (
         <div>
             <span
                 className={cn(
                     'hover:cursor-pointer rounded-md mt-3 py-1 pl-2 pr-3 border dark:border-gray-500 text-gray-400 dark:text-gray-500 flex items-center font-semibold gap-2 w-fit transition-all duration-75',
-                    doneCount === task.steps.length
+                    doneCount === steps.length
                         ? 'bg-gray-100 dark:bg-slate-700'
                         : 'hover:bg-gray-50 dark:hover:bg-slate-700'
                 )}
                 onClick={() => setIsOpen((prev) => !prev)}
             >
                 <IoCheckmarkDoneOutline size="1.2em" />
-                {doneCount}/{task.steps.length}
+                {doneCount}/{steps.length}
             </span>
             <TaskSteps
-                disabled={task.status === 'done'}
-                steps={task.steps}
+                disabled={disabled}
+                steps={steps}
                 setDoneCounter={setDoneCount}
                 isOpen={isOpen && parentOpen}
             />
@@ -115,9 +119,11 @@ const TaskCard = ({ task }: CardProps) => {
                 <p className="text-gray-500 dark:text-gray-400 text-sm line-clamp-3">
                     {task.description}
                 </p>
-                {task.steps.length > 0 && (
-                    <StepsProgress task={task} parentOpen={isOpen} />
-                )}
+                <StepsProgress
+                    steps={task.steps}
+                    parentOpen={isOpen}
+                    disabled={task.status === 'done'}
+                />
             </div>
             <div
                 className={cn(

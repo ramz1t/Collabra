@@ -10,7 +10,7 @@ import tailwindConfig from '../../../tailwind.config'
 
 export interface DialogWindowProps {
     icon?: React.ReactElement | React.ReactNode
-    title: string
+    title?: string
     description?: string
     closeButtonText?: React.ReactNode
     successButtonStyle?: ButtonProps['style']
@@ -116,7 +116,9 @@ const DialogWindow = ({
                                 <div className="text-4xl text-accent dark:text-accent-dark">
                                     {icon || <IoAlert />}
                                 </div>
-                                <p className="font-bold text-lg">{title}</p>
+                                <p className="font-bold text-lg">
+                                    {title || t('are_you_sure')}
+                                </p>
                             </div>
                             <div className="w-full pt-3 md:pl-14">
                                 {description && (

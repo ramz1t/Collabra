@@ -80,7 +80,6 @@ const MembersList = (): React.ReactElement => {
                     </Button>
                     <DialogWindow
                         icon={<IoTrashOutline />}
-                        title={t('delete_members_dialog_head')}
                         description={t('delete_members_dialog_desc')}
                         onSuccess={() =>
                             deleteMembers(
