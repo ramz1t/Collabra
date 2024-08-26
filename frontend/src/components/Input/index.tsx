@@ -79,9 +79,9 @@ function Input<T>({
                         className={cn(
                             'flex items-center bg-slate-100 caret-accent dark:caret-accent-dark dark:bg-slate-700 focus-within:ring-accent dark:focus-within:ring-accent-dark focus-within:shadow-sm focus-within:ring-1 focus-within:outline-none h-10 w-full',
                             prefix ? 'rounded-r-md' : 'rounded-md',
-                            instance.allValid
-                                ? ''
-                                : '!ring-red-500 !text-red-500 !bg-red-50 dark:!bg-red-900/30 !caret-red-500',
+                            instance.isDirty && !instance.allValid
+                                ? '!ring-red-500 !text-red-500 !bg-red-50 dark:!bg-red-900/30 !caret-red-500'
+                                : '',
                             className
                         )}
                     >

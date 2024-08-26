@@ -21,7 +21,7 @@ const TaskSteps = ({
             className={cn(
                 'transition-all duration-200 grid gap-2.5',
                 isOpen
-                    ? 'max-h-[1000px] pt-4 gap-1.5 opacity-100'
+                    ? 'max-h-[1000px] gap-1.5 opacity-100'
                     : 'max-h-0 pt-0.5 gap-0 opacity-0 pointer-events-none'
             )}
         >

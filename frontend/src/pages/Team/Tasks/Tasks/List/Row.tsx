@@ -12,7 +12,7 @@ const TaskRow = ({ task }: { task: Task }) => {
     const { t } = useTranslation()
 
     return (
-        <li className="grid lg:grid-cols-[2fr_2fr] xl:grid-cols-[3fr_2fr] odd:bg-gray-50 bg-gray-100 odd:dark:bg-slate-800 dark:bg-slate-900 px-5 py-4 gap-4 xl:gap-10 first:rounded-t-lg last:rounded-b-lg">
+        <li className="grid lg:grid-cols-[2fr_2fr] odd:bg-gray-50 bg-gray-100 odd:dark:bg-slate-800 dark:bg-slate-900 px-5 py-4 gap-4 xl:gap-10 first:rounded-t-lg last:rounded-b-lg">
             <div className="grid md:grid-cols-[130px_1fr] place-items-center justify-items-start gap-3">
                 <TaskTag tag={task.tag} />
                 <Link

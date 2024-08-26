@@ -20,8 +20,8 @@ const LanguagePicker = (): React.ReactElement => {
             flag: '🇷🇺',
             name: 'Русский',
         },
-        se: {
-            code: 'se',
+        sv: {
+            code: 'sv',
             flag: '🇸🇪',
             name: 'Svenska',
         },

@@ -7,10 +7,11 @@ import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { hexToRGBA } from '../../../../utils'
 import { IoAdd } from 'react-icons/io5'
+import { Tag } from '../../../../types'
 
 interface TagSelectorProps {
-    selected: number | undefined
-    setSelected: React.Dispatch<SetStateAction<number | undefined>>
+    selected: Tag | undefined | null
+    setSelected: React.Dispatch<SetStateAction<Tag | undefined | null>>
     canEdit?: boolean
 }
 
@@ -63,7 +64,7 @@ const TagSelector = ({ selected, setSelected, canEdit }: TagSelectorProps) => {
                                     onSuccess: (res) => {
                                         setColor(initialColor)
                                         setNewTag('')
-                                        setSelected(res.data.id)
+                                        setSelected(res.data)
                                     },
                                 }
                             )
@@ -77,8 +78,8 @@ const TagSelector = ({ selected, setSelected, canEdit }: TagSelectorProps) => {
                 tags.map((tag) => (
                     <li
                         className={cn(
-                            'rounded-full transition-all duration-[50ms] outline outline-[--accent]',
-                            selected === tag.id ? 'outline-2' : 'outline-0'
+                            'rounded-full transition-all duration-[50ms] outline outline-[--accent] dark:outline-white',
+                            selected?.id === tag.id ? 'outline-2' : 'outline-0'
                         )}
                         key={tag.id}
                         style={
@@ -89,9 +90,7 @@ const TagSelector = ({ selected, setSelected, canEdit }: TagSelectorProps) => {
                     >
                         <Button
                             action={() =>
-                                selected === tag.id
-                                    ? setSelected(undefined)
-                                    : setSelected(tag.id)
+                                setSelected(selected === tag ? undefined : tag)
                             }
                         >
                             <TaskTag tag={tag} canDelete={canEdit} />

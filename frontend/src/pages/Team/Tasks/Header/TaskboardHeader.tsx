@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next'
 import TaskboardHeaderLink from './TaskboardHeaderLink'
 import TaskboardHeaderViewOption from './TaskboardHeaderViewOption'
 import useLocalStorage from '../../../../hooks/useLocalStorage'
-import { TfiLayoutColumn2 } from 'react-icons/tfi'
 import { IoReorderFourOutline } from 'react-icons/io5'
+import { BsColumnsGap } from 'react-icons/bs'
 
 const TaskboardHeader = () => {
     const { teamSlug } = useParams()
@@ -54,7 +54,7 @@ const TaskboardHeader = () => {
                 </div>
                 <div className="flex md:mb-2">
                     <TaskboardHeaderViewOption
-                        icon={<TfiLayoutColumn2 />}
+                        icon={<BsColumnsGap />}
                         title={t('board')}
                         viewOption={'board'}
                         selectedViewOption={viewOption}

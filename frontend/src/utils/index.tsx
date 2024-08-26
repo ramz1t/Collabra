@@ -30,7 +30,7 @@ export const success = (text: string): void => {
                   background: '#1e2a3b',
                   color: '#fff',
               }
-            : undefined,
+            : {},
     })
 }
 
@@ -43,7 +43,7 @@ export const error = (text: string): void => {
                   background: '#1e2a3b',
                   color: '#fff',
               }
-            : undefined,
+            : {},
     })
 }
 
@@ -83,11 +83,16 @@ export const hexToRGBA = (hex: string, opacity: number = 1) => {
 }
 
 export const getStatusColor = (status: string) => {
+    // t('to_do')
+    // t('in_progress')
+    // t('need_review')
+    // t('done')
+    const defaultColor = '#424242'
     const colors: Record<string, string> = {
-        to_do: '#ff9100',
-        in_progress: '#006fff',
-        need_review: '#ffdd00',
-        done: '#1cc01f',
+        to_do: '#d57201',
+        in_progress: '#006285',
+        need_review: '#dabb00',
+        done: '#00ab04',
     }
-    return colors[status]
+    return colors[status] || defaultColor
 }

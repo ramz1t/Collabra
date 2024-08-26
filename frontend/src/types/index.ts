@@ -98,10 +98,11 @@ export type Task = {
     title: string
     description: string
     steps: Step[]
-    deadline: string
+    deadline: string | null
     comments: number
     attachments: File[]
     assignee: Member
-    tag: Tag
+    tag: Tag | null
     status: string
+    requires_review: boolean
 }

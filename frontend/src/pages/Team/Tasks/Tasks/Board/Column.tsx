@@ -5,16 +5,20 @@ import {
     IoEllipsisVerticalSharp,
     IoTrashOutline,
 } from 'react-icons/io5'
-import { Button } from '../../../../../components'
+import { Button, DialogWindow } from '../../../../../components'
 import { useTranslation } from 'react-i18next'
 import TaskCard from './Card'
 import { useState } from 'react'
 import AddTaskDialog from '../AddTaskDialog'
-import { useTasks } from '../../../../../api/tasks'
+import { useDeleteTasks, useTasks } from '../../../../../api/tasks'
 import { useParams } from 'react-router-dom'
 import AddNewTaskButton from '../AddNewTaskButton'
 import Menu, { MenuAction } from '../../../../../components/Menu'
-import { LuPanelRightClose, LuPanelRightOpen } from 'react-icons/lu'
+import {
+    LuPanelRightClose,
+    LuPanelRightOpen,
+    LuRectangleVertical,
+} from 'react-icons/lu'
 import { getStatusColor } from '../../../../../utils'
 
 export interface ColumnProps {
@@ -29,6 +33,8 @@ const Column = ({ canAdd = true, status, moveColumn, index }: ColumnProps) => {
     const { teamSlug } = useParams()
     const { data: tasks, isLoading } = useTasks(teamSlug!, { status: status })
     const { t } = useTranslation()
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+    const { mutate: deleteTasks } = useDeleteTasks(teamSlug!)
 
     const marker = (
         <span
@@ -52,8 +58,8 @@ const Column = ({ canAdd = true, status, moveColumn, index }: ColumnProps) => {
         },
         {
             title: t('clear_col'),
-            action: () => {},
-            icon: <IoTrashOutline />,
+            action: () => setIsDeleteDialogOpen(true),
+            icon: <LuRectangleVertical />,
             color: '#e82c2c',
         },
     ]
@@ -69,6 +75,15 @@ const Column = ({ canAdd = true, status, moveColumn, index }: ColumnProps) => {
                 <Menu actions={menuActions} className="ml-auto" position="left">
                     <IoEllipsisVerticalSharp size="1.2em" />
                 </Menu>
+                <DialogWindow
+                    isOpen={isDeleteDialogOpen}
+                    close={() => setIsDeleteDialogOpen(false)}
+                    icon={<IoTrashOutline />}
+                    description={t('clear_col_dialog_desc')}
+                    onSuccess={() => deleteTasks({ status: status })}
+                    successButtonText={t('delete')}
+                    closeOnSuccess
+                />
             </div>
             {canAdd && <AddNewTaskButton status={status} />}
             {!isLoading && tasks && (

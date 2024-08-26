@@ -14,6 +14,9 @@ import { useTranslation } from 'react-i18next'
 import TaskTag from '../TaskTag'
 import cn from 'classnames'
 import TaskSteps from '../TaskSteps'
+import TaskMenu from '../TaskMenu'
+import { getStatusColor } from '../../../../../utils'
+import TaskDeadline from '../TaskDeadline'
 
 const TaskDetails = () => {
     const { t, i18n } = useTranslation()
@@ -23,52 +26,42 @@ const TaskDetails = () => {
     if (!task) return 'task not found'
     return (
         <div className="p-5 md:p-10 grid md:grid-cols-[1fr_1fr] gap-10">
-            <div className="grid gap-5 md:gap-10">
-                <h1 className="text-3xl font-semibold">
-                    #{task.id} - {task.title}
-                </h1>
-                <div className="flex flex-col md:grid grid-cols-[1fr_3fr] gap-3 md:gap-7 place-items-start">
+            <div className="grid gap-5 md:gap-10 md:p-10 md:border dark:border-slate-700 rounded-2xl">
+                <div className="flex items-center justify-between">
+                    <h1 className="text-3xl font-semibold flex items-center justify-between">
+                        #{task.id} - {task.title}
+                    </h1>
+                    <TaskMenu task={task} />
+                </div>
+
+                <div className="flex flex-col md:grid grid-cols-[1fr_3fr] gap-3 md:gap-7 place-items-start max-md:[&>*:nth-child(even)]:mb-4 max-md:[&>*:last-child]:!mb-0">
                     <div className="flex items-center text-gray-600 dark:text-gray-400 font-semibold gap-3">
                         <FaRegDotCircle />
                         {t('status')}
                     </div>
-                    <div className="flex items-center gap-3 max-md:mb-4">
+                    <div className="flex items-center gap-3">
                         <span
-                            className={cn(
-                                'size-4 rounded-full bg-red-500 inline-block'
-                            )}
+                            className={cn('size-4 rounded-full inline-block')}
                             style={{
-                                backgroundColor: {
-                                    to_do: '#ff9100',
-                                    in_progress: '#006fff',
-                                    need_review: '#ffdd00',
-                                    done: '#1cc01f',
-                                }[task.status],
+                                backgroundColor: getStatusColor(task.status),
                             }}
                         ></span>
                         {t(task.status)}
                     </div>
+
                     <div className="flex items-center text-gray-600 dark:text-gray-400 font-semibold gap-3">
                         <IoCalendarNumberOutline />
                         {t('due_date')}
                     </div>
-                    <div className="max-md:mb-4">
-                        {new Date(task.deadline).toLocaleDateString(
-                            i18n.resolvedLanguage,
-                            {
-                                weekday: 'long',
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                            }
-                        )}
-                    </div>
-                    <div className="flex items-center text-gray-600 dark:text-gray-400 font-semibold gap-3">
+                    <TaskDeadline date={task.deadline} />
+
+                    <div className="flex items-center text-gray-600 dark:text-gray-400 font-semibold gap-3 self-center">
                         <IoPricetagOutline />
                         {t('tag')}
                     </div>
                     <TaskTag tag={task.tag} />
-                    <div className="flex items-center text-gray-600 dark:text-gray-400 font-semibold gap-3 max-md:mt-4">
+
+                    <div className="flex items-center text-gray-600 dark:text-gray-400 font-semibold gap-3 self-center">
                         <IoPersonOutline />
                         {t('assignee')}
                     </div>
@@ -77,24 +70,23 @@ const TaskDetails = () => {
                         {task.assignee.user.first_name}{' '}
                         {task.assignee.user.last_name}
                     </div>
+
                     <div className="flex items-center text-gray-600 dark:text-gray-400 font-semibold gap-2">
                         <IoDocumentAttachOutline />
                         {t('attachments')}
                     </div>
-                    <ul className="max-md:mb-4">
+                    <ul>
                         {task.attachments.length > 0
                             ? 'list'
                             : t('no_attachments')}
                     </ul>
-                    <div className="col-span-2  max-md:mb-4">
-                        <div className="flex items-center text-gray-600 dark:text-gray-400 font-semibold gap-2 pb-2">
-                            <IoText />
-                            {t('description')}
-                        </div>
-                        <div className="rounded-xl border dark:border-slate-800 p-3">
-                            {task.description}
-                        </div>
+
+                    <div className="flex items-center text-gray-600 dark:text-gray-400 font-semibold gap-2">
+                        <IoText />
+                        {t('description')}
                     </div>
+                    <p>{task.description}</p>
+
                     <div className="flex items-center text-gray-600 dark:text-gray-400 font-semibold gap-2">
                         <IoCheckmarkDoneOutline />
                         {t('subtasks')}
@@ -102,7 +94,7 @@ const TaskDetails = () => {
                     {task.steps.length > 0 ? (
                         <TaskSteps steps={task.steps} isOpen={true} />
                     ) : (
-                        t('no_subtasks')
+                        <p>{t('no_subtasks')}</p>
                     )}
                 </div>
             </div>

@@ -51,12 +51,19 @@ const StepsProgress = ({
                 <IoCheckmarkDoneOutline size="1.2em" />
                 {doneCount}/{steps.length}
             </span>
-            <TaskSteps
-                disabled={disabled}
-                steps={steps}
-                setDoneCounter={setDoneCount}
-                isOpen={isOpen && parentOpen}
-            />
+            <div
+                className={cn(
+                    'transition-all duration-200',
+                    isOpen ? 'pt-4' : 'pt-0'
+                )}
+            >
+                <TaskSteps
+                    disabled={disabled}
+                    steps={steps}
+                    setDoneCounter={setDoneCount}
+                    isOpen={isOpen && parentOpen}
+                />
+            </div>
         </div>
     )
 }

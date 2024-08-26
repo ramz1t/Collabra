@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import useScreenSize from '../../hooks/useScreenSize'
 import { Button } from '../index'
@@ -30,18 +30,21 @@ const Menu = ({
     const menuRef = useRef<HTMLDivElement>(null)
     const { isTablet } = useScreenSize()
 
-    const handleClickOutside = (event: MouseEvent) => {
-        if (
-            menuRef.current &&
-            !menuRef.current.contains(event.target as Node)
-        ) {
-            setIsOpen(false)
-        }
-    }
+    const handleClickOutside = useCallback(
+        (event: MouseEvent) => {
+            if (
+                menuRef.current &&
+                !menuRef.current.contains(event.target as Node)
+            ) {
+                setIsOpen(false)
+            }
+        },
+        [menuRef, setIsOpen]
+    )
 
-    const handlePageScroll = () => {
+    const handlePageScroll = useCallback(() => {
         setIsOpen(false)
-    }
+    }, [setIsOpen])
 
     useEffect(() => {
         window.addEventListener('scroll', handlePageScroll)
@@ -97,7 +100,7 @@ const Menu = ({
                     >
                         {actions.map((action, key) => (
                             <button
-                                className="flex items-center justify-between whitespace-nowrap gap-8 px-3 min-h-9 disabled:hover:cursor-not-allowed disabled:text-gray-300 dark:disabled:text-gray-600 [&:not(:disabled)]:hover:bg-white/90 [&:not(:disabled)]:dark:hover:bg-white/[0.025]"
+                                className="flex items-center justify-between whitespace-nowrap gap-8 px-3 min-h-9 disabled:hover:cursor-not-allowed disabled:text-gray-300 dark:disabled:text-gray-600 [&:not(:disabled)]:hover:bg-gray-100/50 [&:not(:disabled)]:dark:hover:bg-white/[0.025]"
                                 key={key}
                                 onClick={() => {
                                     action.action()

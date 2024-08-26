@@ -22,7 +22,7 @@ const List = () => {
     return (
         <div className="grow px-5 pb-5 grid md:grid-cols-[3fr_1fr] md:gap-5">
             <div>
-                <div className="hidden lg:grid lg:grid-cols-[2fr_2fr] xl:grid-cols-[3fr_2fr] gap-4 xl:gap-10 px-5 pb-2 pt-3 font-bold text-sm bg-white dark:bg-gray-900 sticky top-[165px]">
+                <div className="hidden lg:grid lg:grid-cols-[2fr_2fr] gap-4 xl:gap-10 px-5 pb-2 pt-3 font-bold text-sm bg-white dark:bg-gray-900 sticky top-[165px]">
                     <div className="grid grid-cols-[130px_1fr] gap-3">
                         <p>{t('tag')}</p>
                         <p>{t('title')}</p>
@@ -41,11 +41,7 @@ const List = () => {
                 </ul>
             </div>
             <div className="max-md:row-start-1 max-lg:ml-auto h-fit pt-5 w-full">
-                <AddNewTaskButton
-                    title={t('to_do')}
-                    color={'#ff9100'}
-                    status="to_do"
-                />
+                <AddNewTaskButton status="to_do" />
                 <TasksFilter setFilters={setFilters} />
             </div>
         </div>

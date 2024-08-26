@@ -48,6 +48,7 @@ const useInput = <T extends string>(
 
     const clear = (): void => {
         setValue('' as T)
+        setIsDirty(false)
     }
 
     return {

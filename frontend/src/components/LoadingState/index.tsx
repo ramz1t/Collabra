@@ -2,6 +2,9 @@ import { useTranslation } from 'react-i18next'
 import { IoAdd, IoExit } from 'react-icons/io5'
 import React from 'react'
 
+// All loading messages' variants
+// t('loading_team_space')
+
 export interface LoadingStateProps {
     titleKey: string
 }

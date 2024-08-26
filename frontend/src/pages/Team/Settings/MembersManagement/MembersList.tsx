@@ -60,7 +60,7 @@ const MembersList = (): React.ReactElement => {
                 />
                 <div
                     className={cn(
-                        'flex transition-all items-center',
+                        'flex transition-all items-center gap-5',
                         selectedMembers.length ? 'opacity-100' : 'opacity-0'
                     )}
                 >
@@ -77,6 +77,13 @@ const MembersList = (): React.ReactElement => {
                     >
                         <IoTrashOutline />
                         {t('delete')}
+                    </Button>
+                    <Button
+                        style="tertiary"
+                        className="py-2"
+                        action={() => setSelectedMembers([])}
+                    >
+                        {t('cancel')}
                     </Button>
                     <DialogWindow
                         icon={<IoTrashOutline />}

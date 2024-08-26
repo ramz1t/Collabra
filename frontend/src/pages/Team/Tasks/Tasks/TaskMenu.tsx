@@ -12,9 +12,13 @@ import {
 } from 'react-icons/io5'
 import { useState } from 'react'
 import { DialogWindow } from '../../../../components'
+import AddTaskDialog from './AddTaskDialog'
+import { useDeleteTasks, useUpdateTask } from '../../../../api/tasks'
+import { useParams } from 'react-router-dom'
 
 const TaskMenu = ({ task }: { task: Task }) => {
     const { t } = useTranslation()
+    const { teamSlug } = useParams()
     const actions: MenuAction[] = [
         {
             title: t('send_to_review'),
@@ -29,7 +33,7 @@ const TaskMenu = ({ task }: { task: Task }) => {
         {
             title: t('edit'),
             icon: <IoPencilOutline />,
-            action() {},
+            action: () => setIsEditDialogOpen(true),
         },
         {
             title: t('delete'),
@@ -38,7 +42,15 @@ const TaskMenu = ({ task }: { task: Task }) => {
             color: '#e82c2c',
         },
     ]
+
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
+
+    const { mutate: updateTask } = useUpdateTask(teamSlug!, task.id)
+    const { mutate: deleteTask, isPending: isDeleting } = useDeleteTasks(
+        teamSlug!
+    )
+
     return (
         <>
             <Menu actions={actions} position="left">
@@ -49,8 +61,19 @@ const TaskMenu = ({ task }: { task: Task }) => {
                 description={t('delete_task_dialog_desc')}
                 isOpen={isDeleteDialogOpen}
                 close={() => setIsDeleteDialogOpen(false)}
-                onSuccess={() => {}}
+                onSuccess={() => deleteTask({ id: task.id })}
                 successButtonText={t('delete')}
+                isLoading={isDeleting}
+                closeOnSuccess
+            />
+            <AddTaskDialog
+                icon={<IoPencilOutline />}
+                title={t('edit_task')}
+                open={isEditDialogOpen}
+                setOpen={setIsEditDialogOpen}
+                onSuccess={updateTask}
+                initialTask={task}
+                successButtonText={t('save')}
             />
         </>
     )

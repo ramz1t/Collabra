@@ -4,10 +4,14 @@ import AddTaskDialog from './AddTaskDialog'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getStatusColor } from '../../../../utils'
+import { useCreateTask } from '../../../../api/tasks'
+import { useParams } from 'react-router-dom'
 
 const AddNewTaskButton = ({ status }: { status: string }) => {
     const { t } = useTranslation()
     const [addNewTaskOpen, setAddNewTaskOpen] = useState(false)
+    const { teamSlug } = useParams()
+    const { mutate: createTask } = useCreateTask(teamSlug!, status)
     return (
         <>
             <Button
@@ -27,7 +31,10 @@ const AddNewTaskButton = ({ status }: { status: string }) => {
                 title={t(status)}
                 open={addNewTaskOpen}
                 setOpen={setAddNewTaskOpen}
+                onSuccess={createTask}
                 status={status}
+                successButtonText={t('create')}
+                clearOnClose
             />
         </>
     )
