@@ -50,6 +50,8 @@
   "edit_task": "",
   "email": "Почта",
   "error": "Ошибка",
+  "everything_for_collaboration": "",
+  "everything_for_collaboration_desc": "",
   "feedback_1": "Нашли баг?",
   "feedback_2": "Пришлите нам отчет!",
   "files": "Файлы",
@@ -152,6 +154,8 @@
   "subtasks": "Подзадачи",
   "tag": "Тэг",
   "tasks": "Задачи",
+  "team_members_management": "",
+  "team_members_management_desc": "",
   "team_name": "Название команды",
   "teams": "Команды",
   "threads": "Треды",
@@ -173,5 +177,6 @@
   "view_as": "Вид",
   "view_profile": "Показать профиль со стороны",
   "website_language": "Язык сайта",
+  "work_together": "",
   "zoom": "Приближение"
 }

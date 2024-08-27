@@ -1,5 +1,5 @@
 {
-  "about_team": "Anim aute id magna aliqua ad ad non deserunt sunt.\nQui irure qui lorem cupidatat commodo. Elit sunt",
+  "about_team": "Two passionate students from Kristianstad University and Inholland University. Creators of",
   "accept": "Accept",
   "add_new_task": "Add new task",
   "add_team_members": "Add team members",
@@ -51,6 +51,8 @@
   "edit_task": "Edit task",
   "email": "Email",
   "error": "Error",
+  "everything_for_collaboration": "Everything you need for collaboration",
+  "everything_for_collaboration_desc": "Use our flexible tools to make your team workflow as precise as it needs to be",
   "feedback_1": "Found a bug?",
   "feedback_2": "Send us a report!",
   "files": "Files",
@@ -155,6 +157,8 @@
   "subtasks": "Subtasks",
   "tag": "Tag",
   "tasks": "Tasks",
+  "team_members_management": "Team members management",
+  "team_members_management_desc": "Change roles and permissions for each individual user. Make custom invitations and more!",
   "team_name": "Team name",
   "teams": "Teams",
   "threads": "Threads",
@@ -176,5 +180,6 @@
   "view_as": "View as",
   "view_profile": "Look how others see my profile",
   "website_language": "Website language",
+  "work_together": "Work together",
   "zoom": "Zoom"
 }

@@ -31,11 +31,11 @@ const Team = (): React.ReactElement => {
             links: [
                 {
                     icon: <IoLogoGithub />,
-                    href: 'https://www.instagram.com/alex.zavadskiy/',
+                    href: 'https://github.com/alexzawadsky',
                 },
                 {
                     icon: <IoLogoInstagram />,
-                    href: 'https://github.com/alexzawadsky',
+                    href: 'https://www.instagram.com/alex.zavadskiy/',
                 },
             ],
             image: '/images/alex.jpg',
@@ -62,7 +62,14 @@ const Team = (): React.ReactElement => {
         <div className="mt-16 md:mt-32">
             <p className="pt-10 pb-3 font-bold text-3xl">{t('our_team')}</p>
             <p className="text-gray-600 dark:text-gray-400 font-primary text-lg">
-                {t('about_team')}
+                {t('about_team')}{' '}
+                <a
+                    className="hover:underline text-orange-500"
+                    href="https://timur.aboard.ru"
+                    target="_blank"
+                >
+                    Grocket
+                </a>
             </p>
             <ul className="grid md:grid-cols-[1fr_1fr] pt-10 md:pt-16 gap-10">
                 {people.map((person, key) => {
@@ -80,7 +87,7 @@ const Team = (): React.ReactElement => {
                             </p>
                             <p className="font-xl text-gray-600 dark:text-gray-400 flex items-center gap-2 pt-1">
                                 {person.location}
-                                <Twemoji emoji={person.flag} width={16} />
+                                <Twemoji emoji={person.flag} width={18} />
                             </p>
                             <ul className="flex gap-4 pt-5 text-gray-500 dark:text-gray-300">
                                 {person.links.map((link, key) => {

@@ -51,6 +51,8 @@
   "edit_task": "",
   "email": "E-post",
   "error": "Fel",
+  "everything_for_collaboration": "",
+  "everything_for_collaboration_desc": "",
   "feedback_1": "Hittade en bugg?",
   "feedback_2": "Skicka oss en rapport!",
   "files": "Filer",
@@ -155,6 +157,8 @@
   "subtasks": "Deluppgifter",
   "tag": "Tag",
   "tasks": "Uppgifter",
+  "team_members_management": "",
+  "team_members_management_desc": "",
   "team_name": "Lagnamn",
   "teams": "Alla lag",
   "threads": "Trådar",
@@ -179,5 +183,6 @@
   "view_as": "Visa som",
   "view_profile": "Se hur andra ser min profil",
   "website_language": "Webbplatsens språk",
+  "work_together": "",
   "zoom": "Zoom"
 }

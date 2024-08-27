@@ -7,7 +7,7 @@ const Footer = (): React.ReactElement => {
             <span className="pt-0.5">
                 <LuCopyright />
             </span>
-            {new Date().getFullYear()} Collabra Inc. All rights reserved.
+            {new Date().getFullYear()} Collabra, prod. by Ramazanov & Zavadsky.
         </p>
     )
 }
