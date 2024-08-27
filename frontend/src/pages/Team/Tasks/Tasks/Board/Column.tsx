@@ -20,6 +20,7 @@ import {
     LuRectangleVertical,
 } from 'react-icons/lu'
 import { getStatusColor } from '../../../../../utils'
+import useIsAllowed, { UserRole } from '../../../../../hooks/useIsAllowed'
 
 export interface ColumnProps {
     status: string
@@ -35,6 +36,7 @@ const Column = ({ canAdd = true, status, moveColumn, index }: ColumnProps) => {
     const { t } = useTranslation()
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
     const { mutate: deleteTasks } = useDeleteTasks(teamSlug!)
+    const isAdmin = useIsAllowed([UserRole.OWNER, UserRole.ADMIN])
 
     const marker = (
         <span
@@ -56,13 +58,13 @@ const Column = ({ canAdd = true, status, moveColumn, index }: ColumnProps) => {
             disabled: index === 3,
             icon: <LuPanelRightClose />,
         },
-        {
+        isAdmin && {
             title: t('clear_col'),
             action: () => setIsDeleteDialogOpen(true),
             icon: <LuRectangleVertical />,
             color: '#e82c2c',
         },
-    ]
+    ].filter(Boolean) as MenuAction[]
 
     return (
         <div className="grid gap-5 min-w-72 transition-transform duration-500">

@@ -55,6 +55,7 @@ const Menu = ({
         }
     }, [])
 
+    if (Object.keys(actions).length === 0) return
     return (
         <div
             className={cn('relative', className)}

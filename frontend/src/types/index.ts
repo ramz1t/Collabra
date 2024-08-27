@@ -103,6 +103,6 @@ export type Task = {
     attachments: File[]
     assignee: Member
     tag: Tag | null
-    status: string
+    status: 'to_do' | 'in_progress' | 'need_review' | 'done'
     requires_review: boolean
 }
