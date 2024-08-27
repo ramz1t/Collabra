@@ -2,19 +2,25 @@ import { Step, Task } from '../../../../types'
 import cn from 'classnames'
 import { Checkbox } from '../../../../components'
 import React, { SetStateAction, useState } from 'react'
+import { useToggleStep } from '../../../../api/tasks'
+import { useParams } from 'react-router-dom'
 
 const TaskSteps = ({
+    taskId,
     steps,
     setDoneCounter,
     isOpen,
     disabled,
 }: {
+    taskId: number
     steps: Step[]
     setDoneCounter?: React.Dispatch<SetStateAction<number>>
     isOpen?: boolean
     disabled?: boolean
 }) => {
     const [stepsState, setStepsState] = useState(steps)
+    const { teamSlug } = useParams()
+    const { mutate: toggleStep } = useToggleStep(teamSlug!, taskId)
 
     return (
         <ul
@@ -39,13 +45,18 @@ const TaskSteps = ({
                         text={step.title}
                         disabled={disabled}
                         setValue={(value) => {
-                            let copy = [...stepsState]
-                            copy[key].is_done = !copy[key].is_done
-                            setStepsState(copy)
-                            setDoneCounter &&
-                                setDoneCounter(
-                                    copy.filter((step) => step.is_done).length
-                                )
+                            toggleStep(step.id, {
+                                onSuccess: () => {
+                                    let copy = [...stepsState]
+                                    copy[key].is_done = !copy[key].is_done
+                                    setStepsState(copy)
+                                    setDoneCounter &&
+                                        setDoneCounter(
+                                            copy.filter((step) => step.is_done)
+                                                .length
+                                        )
+                                },
+                            })
                         }}
                     />
                 </span>

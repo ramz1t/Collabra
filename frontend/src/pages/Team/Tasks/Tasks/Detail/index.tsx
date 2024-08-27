@@ -92,7 +92,11 @@ const TaskDetails = () => {
                         {t('subtasks')}
                     </div>
                     {task.steps.length > 0 ? (
-                        <TaskSteps steps={task.steps} isOpen={true} />
+                        <TaskSteps
+                            taskId={task.id}
+                            steps={task.steps}
+                            isOpen={true}
+                        />
                     ) : (
                         <p>{t('no_subtasks')}</p>
                     )}

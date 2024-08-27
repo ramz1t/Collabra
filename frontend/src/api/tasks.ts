@@ -81,3 +81,13 @@ export const useDeleteTasks = (teamSlug: string) => {
         },
     })
 }
+
+export const useToggleStep = (teamSlug: string, taskId: number) => {
+    const api = useAxios()
+    return useMutation({
+        mutationFn: (stepId: number) =>
+            api.post(
+                `${prefix}/teams/${teamSlug}/tasks/${taskId}/steps/${stepId}/toggle/`
+            ),
+    })
+}
