@@ -17,7 +17,7 @@ const useIsAllowed = (allowedRoles: string[] = []): boolean => {
           ? 'admin'
           : 'member'
 
-    if (import.meta.env.DEV) return true
+    // if (import.meta.env.DEV) return true
     return allowedRoles.includes(userRole)
 }
 

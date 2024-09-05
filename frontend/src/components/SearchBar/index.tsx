@@ -10,18 +10,21 @@ export interface SearchBarProps {
     placeholder?: string
     inputInstance: IInputInstance<string>
     className?: string
+    title?: string
 }
 
 const SearchBar = ({
     placeholder,
     inputInstance,
     className,
+    title,
 }: SearchBarProps): React.ReactElement => {
     const { t } = useTranslation()
 
     return (
         <div className={cn('flex w-full items-center flex-row', className)}>
             <Input
+                title={title}
                 instance={inputInstance}
                 placeholder={placeholder}
                 innerIcon={<IoSearchOutline />}
@@ -40,7 +43,7 @@ const SearchBar = ({
                     >
                         <Button
                             style="tertiary"
-                            className="hover:text-accent rounded-md pl-7 pr-2 h-full"
+                            className="hover:text-accent rounded-md pl-7 pr-3.5 h-full"
                             action={() => inputInstance.clear()}
                         >
                             {t('cancel')}

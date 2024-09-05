@@ -54,7 +54,7 @@ const InvitedUsersList = ({
                         />
                     ))
                 ) : (
-                    t('no_invited_users')
+                    <p className="col-span-full">{t('no_invited_users')}</p>
                 )
             ) : (
                 <FoundInvitees clearSearch={clearSearch} info={searchInfo} />

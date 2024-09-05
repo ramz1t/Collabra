@@ -48,9 +48,9 @@ const TeamsList = () => {
     return (
         <div>
             <Helmet>
-                <title>{t('title_teams')} - Collabra</title>
+                <title>{t('title_teams')} | Collabra</title>
             </Helmet>
-            <div className="sticky top-nav md:top-0 bg-white dark:bg-slate-900 pb-5">
+            <div className="sticky top-nav md:top-0 bg-white dark:bg-slate-900 pb-5 px-5">
                 <div className="flex py-5 items-center gap-5 flex-wrap">
                     <h1 className="font-bold text-3xl mr-auto">{t('teams')}</h1>
                     <div className="flex items-center gap-3">
@@ -61,22 +61,12 @@ const TeamsList = () => {
                             setSelected={setSortBy}
                             values={teamsSortingOptions}
                             renderOption={(option, isSelected) => (
-                                <Button
-                                    className={cn(
-                                        'min-h-10 min-w-10 px-3 rounded-md w-full !justify-start relative',
-                                        isSelected
-                                            ? 'hover:!opacity-100 md:bg-gray-100 dark:md:bg-slate-800 max-md:text-accent max-md:dark:text-accent-dark'
-                                            : 'hover:md:bg-gray-100 dark:hover:md:bg-slate-800'
-                                    )}
-                                >
-                                    {option.icon}
+                                <div className="flex items-center w-full gap-3 md:gap-8">
                                     {option.title}
-                                    {isSelected && !isTablet && (
-                                        <span className="ml-auto scale-125">
-                                            <IoCheckmark />
-                                        </span>
-                                    )}
-                                </Button>
+                                    <span className="max-md:order-first md:ml-auto">
+                                        {option.icon}
+                                    </span>
+                                </div>
                             )}
                             renderSelected={(option) => (
                                 <Button className="bg-gray-100 dark:bg-slate-800 min-h-10 min-w-10 px-3 rounded-md">
@@ -131,8 +121,9 @@ const TeamsList = () => {
             </div>
             <ul
                 className={cn(
+                    'pb-5 px-5',
                     isTablet && isList
-                        ? ''
+                        ? 'rounded-lg overflow-hidden'
                         : 'grid max-md:gap-3 md:grid-cols-2 xl:grid-cols-3'
                 )}
             >

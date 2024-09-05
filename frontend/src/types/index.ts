@@ -72,3 +72,37 @@ export type SearchParams = {
     page_size?: number
     page?: number
 }
+
+export type Tag = {
+    id: number
+    team: number
+    title: string
+    color: string
+}
+
+export type Step = {
+    id: number
+    title: string
+    is_done: boolean
+}
+
+export type Comment = {
+    id: number
+    text: string
+    task: number
+    user: User
+}
+
+export type Task = {
+    id: number
+    title: string
+    description: string
+    steps: Step[]
+    deadline: string | null
+    comments: number
+    attachments: File[]
+    assignee: Member
+    tag: Tag | null
+    status: 'to_do' | 'in_progress' | 'need_review' | 'done'
+    requires_review: boolean
+}

@@ -30,7 +30,7 @@ const CreateTeam = (): React.ReactElement => {
                     <div className="flex flex-col justify-between gap-3">
                         <Input
                             instance={name}
-                            title={'Team name'}
+                            title={t('team_name')}
                             must
                             autoRef
                         />

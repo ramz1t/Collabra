@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useId, useRef } from 'react'
 import { InputProps } from '../Input'
 
 export interface TextFieldProps<T>
@@ -11,7 +11,6 @@ function TextField<T>({
     className,
     titleClassname,
     placeholder,
-    id,
     instance,
     title,
     autoRef,
@@ -28,6 +27,7 @@ function TextField<T>({
     minHeight,
 }: TextFieldProps<T>): React.ReactElement {
     const textareaRef = useRef<HTMLTextAreaElement>(null)
+    const id = useId()
 
     useEffect(() => {
         if (textareaRef.current && autoRef) {
@@ -39,7 +39,7 @@ function TextField<T>({
             {title && (
                 <label
                     className={cn(
-                        'pl-1',
+                        'pl-1 w-fit',
                         must
                             ? 'after:content-["*"] after:text-red-500 after:pl-0.5'
                             : '',
@@ -73,16 +73,16 @@ function TextField<T>({
                         className={cn(
                             'flex gap-2 items-center bg-slate-100 caret-accent dark:caret-accent-dark dark:bg-slate-700 focus-within:ring-accent dark:focus-within:ring-accent-dark focus-within:shadow-sm focus-within:ring-1 focus-within:outline-none h-10 w-full p-2',
                             prefix ? 'rounded-r-md' : 'rounded-md',
-                            instance.allValid
-                                ? ''
-                                : '!ring-red-500 !text-red-500 !bg-red-50 dark:!bg-red-900/30 !caret-red-500',
+                            instance.isDirty && !instance.allValid
+                                ? '!ring-red-500 !text-red-500 !bg-red-50 dark:!bg-red-900/30 !caret-red-500'
+                                : '',
                             className
                         )}
                         onFocus={() => onfocus && onfocus()}
                         disabled={disabled}
                         placeholder={placeholder}
                         autoComplete={autocomplete}
-                        style={{ minHeight: minHeight || 80 }}
+                        style={{ minHeight: minHeight || 120 }}
                     />
                 </div>
                 {hint && (

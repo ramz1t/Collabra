@@ -4,7 +4,7 @@ import Greeting from './Greeting'
 
 const Dashboard = (): React.ReactElement => {
     return (
-        <div className="grow flex flex-col">
+        <div className="grow flex flex-col px-5">
             <div className="py-5 flex font-bold text-3xl items-center gap-5 flex-wrap">
                 <Greeting />
                 <Clock />

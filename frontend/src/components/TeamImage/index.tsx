@@ -5,7 +5,7 @@ import { Team } from '../../types'
 
 export interface TeamImageProps {
     team: Partial<Team>
-    size?: 'settings' | 'grid' | 'list'
+    size?: 'settings' | 'grid' | 'list' | 'board' | (string & {})
     className?: string
 }
 
@@ -29,6 +29,10 @@ const TeamImage = ({
             w = 32
             font = 10
             break
+        case 'board':
+            w = 60
+            font = 20
+            break
         default:
             w = 16
             font = 16
@@ -36,6 +40,7 @@ const TeamImage = ({
     }
     return team.image ? (
         <div
+            aria-label={`${team.title} image`}
             className={cn('bg-cover bg-center rounded-lg', className)}
             style={{
                 width: w,
@@ -62,6 +67,7 @@ const TeamImage = ({
                 maxWidth: w,
                 maxHeight: w,
             }}
+            aria-label={`${team.title} image`}
         >
             {team.title ? (
                 team.title

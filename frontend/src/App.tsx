@@ -9,7 +9,13 @@ const {
     UserSettings,
     UserProfile,
 } = lazily(() => import('./pages'))
-import { PrivateRoute, Navbar, CookiesModal, InfoHeader } from './components'
+import {
+    PrivateRoute,
+    Navbar,
+    CookiesModal,
+    InfoHeader,
+    NotFoundRoute,
+} from './components'
 import { Suspense } from 'react'
 
 const App = () => {
@@ -18,8 +24,8 @@ const App = () => {
             <Navbar />
             <div className="md:ml-nav max-md:mt-nav grow flex flex-col">
                 <InfoHeader />
-                <Suspense>
-                    <div className="px-5 pb-5 grow grid">
+                <div className="grow grid">
+                    <Suspense>
                         <Routes>
                             <Route path="/" element={<Landing />} />
                             <Route path="/login" element={<Login />} />
@@ -39,10 +45,10 @@ const App = () => {
                                     element={<InvitePage />}
                                 />
                             </Route>
-                            <Route path="*" element="not found" />
+                            <Route path="*" element={<NotFoundRoute />} />
                         </Routes>
-                    </div>
-                </Suspense>
+                    </Suspense>
+                </div>
             </div>
             <div className="fixed z-[998] right-2 bottom-2 max-md:left-2 flex justify-end gap-2 items-end">
                 <CookiesModal />

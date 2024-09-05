@@ -55,41 +55,34 @@ const MemberCell = ({
     const selectable = !member.is_owner && member.user.id !== user!.user_id
 
     return (
-        <div className="flex h-14 px-2 pr-3 pl-2.5  border dark:border-slate-700 items-center rounded-full gap-3 w-full flex-wrap ">
-            <div className="flex gap-3 items-center mr-auto ">
-                <span
+        <div className="flex py-2 pr-3 pl-2.5 border dark:border-slate-700 items-center rounded-full gap-3 w-full">
+            <span
+                className={cn(
+                    'rounded-full relative',
+                    selectable
+                        ? 'hover:cursor-pointer'
+                        : 'hover:cursor-not-allowed'
+                )}
+                onClick={() => selectable && toggleMemberSelection(member.id)}
+            >
+                <div
                     className={cn(
-                        'rounded-full relative',
-                        selectable
-                            ? 'hover:cursor-pointer'
-                            : 'hover:cursor-not-allowed'
+                        'absolute size-9 bg-accent dark:bg-accent-dark rounded-full text-white flex items-center justify-center transition-all text-xl',
+                        'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
+                        selected ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
                     )}
-                    onClick={() =>
-                        selectable && toggleMemberSelection(member.id)
-                    }
                 >
-                    <div
-                        className={cn(
-                            'absolute size-9 bg-accent dark:bg-accent-dark rounded-full text-white flex items-center justify-center transition-all text-xl',
-                            'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
-                            selected
-                                ? 'opacity-100 scale-100'
-                                : 'opacity-0 scale-0'
-                        )}
-                    >
-                        <IoCheckmark />
-                    </div>
-                    <Avatar user={member.user} />
-                </span>
-
-                <Link to={profilePath}>
-                    <MemberCellInfo member={member} />
-                </Link>
-            </div>
+                    <IoCheckmark />
+                </div>
+                <Avatar user={member.user} />
+            </span>
+            <Link to={profilePath}>
+                <MemberCellInfo member={member} />
+            </Link>
             {(!member.is_owner || member.user.id === user!.user_id) && (
                 <Button
                     style="tertiary"
-                    className="!min-h-8 !rounded-full max-md:!gap-1"
+                    className="!min-h-8 !rounded-full max-md:!gap-1 ml-auto"
                     action={() => setDeleteDialogOpen(true)}
                 >
                     {t('manage')}
@@ -126,47 +119,6 @@ const MemberCell = ({
                 close={() => setDeleteDialogOpen(false)}
                 successButtonStyle="primary"
                 successButtonText={t('save')}
-                extraActions={
-                    <div className="pt-2 grid gap-5">
-                        {!member.is_owner &&
-                            member.user.id !== user!.user_id && (
-                                <Checkbox
-                                    id="admin"
-                                    text={t('is_admin')}
-                                    value={isAdmin}
-                                    setValue={setIsAdmin}
-                                />
-                            )}
-                        <Input
-                            instance={status}
-                            title={t('member_status')}
-                            hint={t('member_status_hint')}
-                        />
-                        {!member.is_owner && member.is_admin && (
-                            <PrivateComponent allowedRoles={[UserRole.OWNER]}>
-                                <div>
-                                    <p className="pl-1 pb-1">
-                                        {t('transfer_ownership')}
-                                    </p>
-                                    <PasswordSubmit
-                                        actionText={t('transfer_ownership')}
-                                        buttonText={t('transfer')}
-                                        isLoading={isTransfering}
-                                        submitFn={transferOwnership}
-                                        submitData={{
-                                            user: member.user.id,
-                                            teamId: team!.id,
-                                        }}
-                                        options={{
-                                            onSuccess: () =>
-                                                setDeleteDialogOpen(false),
-                                        }}
-                                    />
-                                </div>
-                            </PrivateComponent>
-                        )}
-                    </div>
-                }
                 extraButtons={
                     !member.is_owner && user!.user_id !== member.user.id ? (
                         <Button
@@ -183,7 +135,45 @@ const MemberCell = ({
                         </Button>
                     ) : null
                 }
-            />
+            >
+                <div className="pt-4 md:pt-2 grid gap-5">
+                    {!member.is_owner && member.user.id !== user!.user_id && (
+                        <Checkbox
+                            text={t('is_admin')}
+                            value={isAdmin}
+                            setValue={setIsAdmin}
+                        />
+                    )}
+                    <Input
+                        instance={status}
+                        title={t('member_status')}
+                        hint={t('member_status_hint')}
+                    />
+                    {!member.is_owner && member.is_admin && (
+                        <PrivateComponent allowedRoles={[UserRole.OWNER]}>
+                            <div>
+                                <p className="pl-1 pb-1">
+                                    {t('transfer_ownership')}
+                                </p>
+                                <PasswordSubmit
+                                    actionText={t('transfer_ownership')}
+                                    buttonText={t('transfer')}
+                                    isLoading={isTransfering}
+                                    submitFn={transferOwnership}
+                                    submitData={{
+                                        user: member.user.id,
+                                        teamId: team!.id,
+                                    }}
+                                    options={{
+                                        onSuccess: () =>
+                                            setDeleteDialogOpen(false),
+                                    }}
+                                />
+                            </div>
+                        </PrivateComponent>
+                    )}
+                </div>
+            </DialogWindow>
         </div>
     )
 }

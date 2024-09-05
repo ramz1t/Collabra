@@ -1,0 +1,15 @@
+{
+  "about": "Om",
+  "add_to_invites": "Lägg till inbjudningar",
+  "chats": "Chattar",
+  "clear": "",
+  "fetching_invited_users": "Hämtar inbjudna användare",
+  "new_translation_to_write": "",
+  "profile": "Profil",
+  "select": "Välj",
+  "selected_user": "Vald användare",
+  "team_settings": "{{name}}s inställningar",
+  "team_stats_messages": "Olästa meddelanden",
+  "team_stats_tasks": "Tilldelade uppgifter",
+  "team_stats_users": "Medlemmar"
+}

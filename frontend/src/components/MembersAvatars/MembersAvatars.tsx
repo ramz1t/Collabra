@@ -1,18 +1,43 @@
 import { Avatar } from '../index'
-import { AvatarProps } from '../Avatar'
 import React from 'react'
-import { Member } from '../../types'
+import { User } from '../../types'
 
 const MembersAvatars = ({
-    members,
+    users,
+    size,
 }: {
-    members: Member[]
+    users: User[]
+    size?: string
 }): React.ReactElement => {
+    const placeholderUser = {
+        id: 1,
+        avatar: null,
+        generated_avatar: {
+            first_color: 'cfe2f3',
+            second_color: 'cfe2f3',
+        },
+        first_name: '+',
+        last_name: `${users.length - 3}`,
+        username: '',
+        email: '',
+        description: '',
+        timezone: '',
+        links: [],
+        date_joined: '',
+    }
+
     return (
         <div className="flex -space-x-2 flex-wrap">
-            {members.map((member, key) => (
-                <Avatar user={member.user} size="task" key={key} />
+            {users.slice(0, 3).map((user, key) => (
+                <Avatar user={user} size={size ? size : 'task'} key={key} />
             ))}
+            {users.length > 3 ? (
+                <Avatar
+                    user={placeholderUser}
+                    size={size ? size : 'task'}
+                    className="border-accent border !text-accent"
+                />
+            ) : null}
         </div>
     )
 }

@@ -2,8 +2,9 @@ import React, { useContext } from 'react'
 import { Outlet } from 'react-router-dom'
 import AuthContext, { IAuthContext } from '../../contexts/AuthContext.js'
 import { useTranslation } from 'react-i18next'
-import { Button, RichHeader } from '../index'
-import { IoDocumentLockOutline } from 'react-icons/io5'
+import { Button } from '../index'
+import { IoArrowBack } from 'react-icons/io5'
+import noAccess from '../../assets/images/no-access.svg'
 
 const PrivateRoute = ({ children }: { children?: JSX.Element[] }) => {
     const { user } = useContext(AuthContext) as IAuthContext
@@ -19,19 +20,33 @@ const PrivateRoute = ({ children }: { children?: JSX.Element[] }) => {
                 )
             ) : (
                 <div className="grow flex items-center justify-center">
-                    <RichHeader
-                        icon={<IoDocumentLockOutline />}
-                        title={t('no_access')}
-                        description={t('login_to_access')}
-                        actions={
-                            <Button
-                                to={`/login?redirectFrom=${window.location.pathname}`}
-                                style="primary"
-                            >
-                                {t('login')}
-                            </Button>
-                        }
-                    />
+                    <div className="flex gap-32 items-center max-w-5xl">
+                        <div className="grid gap-3 h-fit">
+                            <h1 className="text-5xl font-bold">
+                                {t('no_access')}
+                            </h1>
+                            <p className="text-2xl text-gray-600">
+                                {t('login_to_access')}
+                            </p>
+                            <div className="flex gap-5 mt-5">
+                                <Button
+                                    style="secondary"
+                                    to="/"
+                                    className="font-semibold"
+                                >
+                                    <IoArrowBack />
+                                    {t('to_main')}
+                                </Button>
+                                <Button
+                                    to={`/login?redirectFrom=${window.location.pathname}`}
+                                    style="primary"
+                                >
+                                    {t('login')}
+                                </Button>
+                            </div>
+                        </div>
+                        <img src={noAccess} />
+                    </div>
                 </div>
             )}
         </>

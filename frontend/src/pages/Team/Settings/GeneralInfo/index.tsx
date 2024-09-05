@@ -6,16 +6,16 @@ import {
     SettingsSection,
     TeamImage,
     TextField,
-} from '../../../components'
+} from '../../../../components'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
-import { useTeam, useUpdateTeam } from '../../../api/team'
+import { useTeam, useUpdateTeam } from '../../../../api/team'
 import React, { useContext, useEffect, useState } from 'react'
-import { objectsDifference } from '../../../utils'
-import useInput from '../../../hooks/useInput'
-import TeamContext, { ITeamContext } from '../../../contexts/TeamContext'
+import { objectsDifference } from '../../../../utils'
+import useInput from '../../../../hooks/useInput'
+import TeamContext, { ITeamContext } from '../../../../contexts/TeamContext'
 
-const GeneralInfo = (): React.ReactElement => {
+const Index = (): React.ReactElement => {
     const { t } = useTranslation()
     const { teamSlug } = useParams()
     const { team: contextTeam } = useContext(TeamContext) as ITeamContext
@@ -95,4 +95,4 @@ const GeneralInfo = (): React.ReactElement => {
     )
 }
 
-export default GeneralInfo
+export default Index

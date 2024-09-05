@@ -39,8 +39,8 @@ const Invitee = ({ user, onSuccess }: InviteeProps): React.ReactElement => {
                 )}
             </div>
 
-            {!user?.is_member ? (
-                user?.is_invited ? (
+            {!user?.is_member &&
+                (user?.is_invited ? (
                     <Button
                         className="text-slate-400 text-2xl hover:text-red-500 ml-auto min-h-10 min-w-10 hover:scale-105 rounded-full"
                         action={() =>
@@ -64,8 +64,7 @@ const Invitee = ({ user, onSuccess }: InviteeProps): React.ReactElement => {
                     >
                         <IoAdd />
                     </Button>
-                )
-            ) : null}
+                ))}
         </li>
     )
 }

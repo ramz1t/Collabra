@@ -1,11 +1,10 @@
 import React, { useContext } from 'react'
 import NavbarItem from './NavbarItem.js'
 import {
-    IoChatboxOutline,
-    IoFolderOutline,
     IoFileTrayFullOutline,
-    IoCalendarOutline,
     IoEaselOutline,
+    IoGitMergeOutline,
+    IoReceiptOutline,
 } from 'react-icons/io5'
 import { LiaUsersCogSolid } from 'react-icons/lia'
 import { useTranslation } from 'react-i18next'
@@ -27,24 +26,19 @@ const TeamSpaceControls = (): React.ReactElement | undefined => {
                 end
             />
             <NavbarItem
-                href={`/teams/${team.slug}/chats`}
-                icon={<IoChatboxOutline />}
-                title={t('chats')}
-            />
-            <NavbarItem
                 href={`/teams/${team.slug}/tasks`}
                 icon={<IoFileTrayFullOutline />}
                 title={t('tasks')}
             />
             <NavbarItem
-                href={`/teams/${team.slug}/calendar`}
-                icon={<IoCalendarOutline />}
-                title={t('calendar')}
+                href={`/teams/${team.slug}/threads`}
+                icon={<IoGitMergeOutline />}
+                title={t('threads')}
             />
             <NavbarItem
-                href={`/teams/${team.slug}/files`}
-                icon={<IoFolderOutline />}
-                title={t('files')}
+                href={`/teams/${team.slug}/notes`}
+                icon={<IoReceiptOutline />}
+                title={t('notes')}
             />
             <NavbarItem
                 href={`/teams/${team.slug}/settings`}

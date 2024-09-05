@@ -12,7 +12,7 @@ const UserSettings = (): React.ReactElement => {
     return (
         <SettingsContainer>
             <Helmet>
-                <title>{t('title_profile_settings')} - Collabra</title>
+                <title>{t('title_profile_settings')} | Collabra</title>
             </Helmet>
             <Logout />
             <PersonalInfo />

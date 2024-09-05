@@ -18,6 +18,7 @@ const Avatar = ({
     square,
     style,
 }: AvatarProps): React.ReactElement | undefined => {
+    if (!user) return
     let w
     switch (size) {
         case 'sidebar':
@@ -30,7 +31,7 @@ const Avatar = ({
             w = 230
             break
         case 'task':
-            w = 24
+            w = 30
             break
         default:
             w = 36
