@@ -1,15 +1,11 @@
 import {
-    IoAdd,
-    IoArrowBack,
-    IoArrowForward,
     IoEllipsisVerticalSharp,
     IoTrashOutline,
 } from 'react-icons/io5'
-import { Button, DialogWindow } from '../../../../../components'
+import { DialogWindow } from '../../../../../components'
 import { useTranslation } from 'react-i18next'
 import TaskCard from './Card'
 import { useState } from 'react'
-import AddTaskDialog from '../AddTaskDialog'
 import { useDeleteTasks, useTasks } from '../../../../../api/tasks'
 import { useParams } from 'react-router-dom'
 import AddNewTaskButton from '../AddNewTaskButton'
@@ -87,7 +83,7 @@ const Column = ({ canAdd = true, status, moveColumn, index }: ColumnProps) => {
                     closeOnSuccess
                 />
             </div>
-            {canAdd && <AddNewTaskButton status={status} />}
+            {canAdd && isAdmin && <AddNewTaskButton status={status} />}
             {!isLoading && tasks && (
                 <ul className="grid gap-3">
                     {tasks.map((task) => (
