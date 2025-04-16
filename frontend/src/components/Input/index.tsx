@@ -1,13 +1,13 @@
-import React, { useRef, useEffect, useId } from 'react'
+import React, { useRef, useEffect, useId, memo } from 'react'
 import cn from 'classnames'
 import { IInputInstance } from '../../hooks/useInput'
 
-export interface InputProps<TValue, TRef> {
+export interface InputProps<TRef> {
     className?: string
     titleClassname?: string
     placeholder?: string
     type?: HTMLInputElement['type']
-    instance: IInputInstance<TValue>
+    instance: IInputInstance
     title?: string
     autoRef?: boolean
     disabled?: boolean
@@ -18,12 +18,13 @@ export interface InputProps<TValue, TRef> {
     prefix?: React.ReactNode
     hint?: string
     innerIcon?: React.ReactElement
+    errors?: string[] | undefined | null
     onfocus?(): void
     onblur?(): void
     onChange?(value: string): void
 }
 
-function Input<T>({
+const Input = ({
     className,
     titleClassname,
     placeholder,
@@ -42,7 +43,8 @@ function Input<T>({
     hint,
     onChange,
     innerIcon,
-}: InputProps<T, React.RefObject<HTMLInputElement>>): React.ReactElement {
+    errors,
+}: InputProps<React.RefObject<HTMLInputElement>>): React.ReactElement => {
     if (!ref) ref = useRef<HTMLInputElement>(null)
     const id = useId()
 
@@ -120,14 +122,22 @@ function Input<T>({
                         />
                     </div>
                 </div>
-                {hint && (
-                    <p className="pl-2 text-gray-400 dark:text-gray-500 text-xs pt-1">
-                        {hint}
-                    </p>
+                {errors?.length ? (
+                    <div className="text-red-500 text-xs pl-1.5 pt-1">
+                        {errors.map((error, key) => (
+                            <p key={key}>{error}</p>
+                        ))}
+                    </div>
+                ) : (
+                    hint && (
+                        <p className="pl-1.5 text-gray-400 dark:text-gray-500 text-xs pt-1">
+                            {hint}
+                        </p>
+                    )
                 )}
             </div>
         </div>
     )
 }
 
-export default Input
+export default memo(Input)
