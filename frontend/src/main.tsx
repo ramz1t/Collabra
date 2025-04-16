@@ -11,6 +11,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { TeamProvider } from './contexts/TeamContext'
 import { Toaster } from 'react-hot-toast'
 import { HelmetProvider } from 'react-helmet-async'
+import { scan } from 'react-scan'
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -20,6 +21,10 @@ const queryClient = new QueryClient({
             refetchOnWindowFocus: false,
         },
     },
+})
+
+scan({
+    enabled: true,
 })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
