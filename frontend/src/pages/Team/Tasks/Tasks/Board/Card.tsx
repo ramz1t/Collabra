@@ -1,21 +1,25 @@
-import { Step, Task } from '../../../../../types'
+import { Task } from '../../../../../types'
 import {
-    IoChatboxEllipsesOutline,
+    IoBookOutline,
     IoCheckmark,
     IoCheckmarkDoneOutline,
     IoChevronDown,
-    IoDocumentAttachOutline,
-    IoEllipsisVerticalSharp,
 } from 'react-icons/io5'
-import { Avatar, Checkbox, MembersAvatars } from '../../../../../components'
-import { useState } from 'react'
+import {
+    Avatar,
+    DialogWindow,
+    RichDescription,
+    TaskTag,
+} from '../../../../../components'
+import React, { memo, useContext, useState } from 'react'
 import cn from 'classnames'
 import { Link } from 'react-router-dom'
-import TaskTag from '../TaskTag'
 import TaskStats from '../TaskStats'
 import TaskSteps from '../TaskSteps'
 import TaskMenu from '../TaskMenu'
 import useProfilePath from '../../../../../hooks/useProfilePath'
+import TeamContext, { ITeamContext } from '../../../../../contexts/TeamContext'
+import { useTranslation } from 'react-i18next'
 
 interface CardProps {
     task: Task
@@ -33,7 +37,9 @@ const StepsProgress = ({
     const [doneCount, setDoneCount] = useState(
         task.steps.filter((step) => step.is_done).length
     )
+    const { team } = useContext(TeamContext) as ITeamContext
 
+    if (!(team?.is_admin || team?.member_id === task.assignee.id)) return
     if (task.steps.length === 0) return
 
     return (
@@ -70,11 +76,18 @@ const StepsProgress = ({
 
 const TaskCard = ({ task }: CardProps) => {
     const [isOpen, setIsOpen] = useState(task.status !== 'done')
+    const [isDescriptionOpen, setIsDescriptionOpen] = useState(false)
+    const { t } = useTranslation()
+
     return (
-        <li className="bg-white dark:bg-slate-800 rounded-lg border dark:border-slate-700">
+        <li
+            className="bg-white dark:bg-slate-800 rounded-lg border dark:border-slate-700 transition-all"
+            style={{ '--card-ms': '200ms' } as React.CSSProperties}
+        >
+            {/* TAG AND MENU */}
             <div
                 className={cn(
-                    'flex items-center transition-all duration-200 px-4',
+                    'flex items-center duration-[--card-ms] pl-4 pr-1.5',
                     isOpen
                         ? 'max-h-52 pt-4 opacity-100'
                         : 'max-h-0 pt-0 opacity-0'
@@ -85,14 +98,14 @@ const TaskCard = ({ task }: CardProps) => {
                     <TaskMenu task={task} />
                 </span>
             </div>
+
+            {/* TITLE AND EXPAND BUTTON */}
             <div
                 className={cn(
-                    'flex items-center gap-2 p-4',
-                    task.status === 'done' ? 'hover:cursor-pointer' : null
+                    'flex items-center gap-2 pl-4 pr-1.5 hover:cursor-pointer duration-[--card-ms]',
+                    isOpen ? 'py-4' : 'py-1.5'
                 )}
-                onClick={() =>
-                    task.status === 'done' && setIsOpen((prev) => !prev)
-                }
+                onClick={() => setIsOpen((prev) => !prev)}
             >
                 {task.status === 'done' && (
                     <span className="text-green-600 text-lg">
@@ -107,30 +120,45 @@ const TaskCard = ({ task }: CardProps) => {
                 </Link>
                 <span
                     className={cn(
-                        'text-xl p-2 transition-all duration-200 ml-auto',
-                        isOpen ? 'rotate-180' : null,
-                        task.status !== 'done' ? 'hidden' : null
+                        'text-xl duration-[--card-ms] size-10 flex justify-center items-center ml-auto',
+                        isOpen ? 'rotate-180' : null
                     )}
                 >
                     <IoChevronDown />
                 </span>
             </div>
+
+            {/* DESCRIPTION AND STEPS */}
             <div
                 className={cn(
-                    'px-4 grid overflow-hidden transition-all duration-200',
+                    'px-4 grid overflow-hidden duration-[--card-ms]',
                     isOpen
                         ? 'pb-4 max-h-[1000px] border-b dark:border-b-slate-700 opacity-100'
                         : 'pb-0 max-h-0 border-0 opacity-0'
                 )}
             >
-                <p className="text-gray-500 dark:text-gray-400 text-sm line-clamp-3">
+                <p
+                    className="text-gray-500 dark:text-gray-400 text-sm line-clamp-3 hover:cursor-help"
+                    onClick={() => setIsDescriptionOpen(true)}
+                >
                     {task.description}
                 </p>
+                <DialogWindow
+                    icon={<IoBookOutline />}
+                    title={t('description')}
+                    isOpen={isDescriptionOpen}
+                    close={() => setIsDescriptionOpen(false)}
+                    closeButtonText={t('close')}
+                >
+                    <RichDescription text={task.description} />
+                </DialogWindow>
                 <StepsProgress task={task} parentOpen={isOpen} />
             </div>
+
+            {/* FOOTER */}
             <div
                 className={cn(
-                    'px-4 flex items-center gap-3.5 overflow-hidden transition-all duration-200',
+                    'px-4 flex items-center gap-3.5 overflow-hidden duration-[--card-ms]',
                     isOpen
                         ? 'max-h-52 py-4 opacity-100'
                         : 'max-h-0 py-0 opacity-0'
@@ -138,7 +166,7 @@ const TaskCard = ({ task }: CardProps) => {
             >
                 <Link
                     to={useProfilePath(task.assignee.user.id)}
-                    className="flex items-center gap-3 font-semibold text-gray-600 dark:text-gray-400 mr-auto"
+                    className="flex items-center gap-3 font-semibold text-gray-600 dark:text-gray-400 mr-auto hover:opacity-90 transition-opacity duration-75"
                 >
                     <Avatar user={task.assignee.user} />
                     {task.assignee.user.first_name}
@@ -149,4 +177,4 @@ const TaskCard = ({ task }: CardProps) => {
     )
 }
 
-export default TaskCard
+export default memo(TaskCard)
