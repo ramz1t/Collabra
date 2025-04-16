@@ -71,9 +71,7 @@ export const useTeams = (params: SearchParams) => {
         getNextPageParam: (lastPage) => {
             return lastPage.next !== null ? lastPage.current_page + 1 : null
         },
-        select: (data) => ({
-            teams: [...data.pages.flatMap((page) => page.results)],
-        }),
+        select: (data) => [...data.pages.flatMap((page) => page.results)],
     })
 }
 
@@ -183,9 +181,7 @@ export const useTeamMembers = (teamId: number, params: SearchParams) => {
         getNextPageParam: (lastPage) => {
             return lastPage.next !== null ? lastPage.current_page + 1 : null
         },
-        select: (data) => ({
-            members: [...data.pages.flatMap((page) => page.results)],
-        }),
+        select: (data) => [...data.pages.flatMap((page) => page.results)],
     })
 }
 
