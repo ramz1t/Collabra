@@ -24,7 +24,7 @@ export interface User {
     date_joined: string
 }
 
-export type Member = {
+export interface Member {
     id: number
     is_owner: boolean
     is_admin: boolean
@@ -42,6 +42,7 @@ export interface Team {
     is_owner: boolean
     is_member: boolean
     members: Member[]
+    member_id: number
 }
 
 export interface Invitee extends User {
@@ -49,13 +50,13 @@ export interface Invitee extends User {
     is_member: boolean
 }
 
-export type TeamInvitesData = {
+export interface TeamInvitesData {
     invited_people: Invitee[]
     join_key_common: string
     join_key_selective: string
 }
 
-export type PaginatedResponse<T> = {
+export interface PaginatedResponse<T> {
     count: number
     next: string | null
     previous: string | null
@@ -65,7 +66,7 @@ export type PaginatedResponse<T> = {
 
 export type OrderingKey = 'id' | '-id' | string
 
-export type SearchParams = {
+export interface SearchParams {
     search?: string | null
     email?: string | null
     ordering?: OrderingKey
@@ -73,36 +74,38 @@ export type SearchParams = {
     page?: number
 }
 
-export type Tag = {
+export interface Tag {
     id: number
     team: number
     title: string
     color: string
 }
 
-export type Step = {
+export interface Step {
     id: number
     title: string
     is_done: boolean
 }
 
-export type Comment = {
+export interface Comment {
     id: number
     text: string
     task: number
     user: User
 }
 
-export type Task = {
+export interface Task {
     id: number
     title: string
     description: string
     steps: Step[]
     deadline: string | null
-    comments: number
+    messages_count: number
     attachments: File[]
     assignee: Member
     tag: Tag | null
     status: 'to_do' | 'in_progress' | 'need_review' | 'done'
     requires_review: boolean
 }
+
+export type ValidationErrors = Record<string, string[]>
