@@ -64,7 +64,7 @@ const Team = (): React.ReactElement => {
             <p className="text-gray-600 dark:text-gray-400 font-primary text-lg">
                 {t('about_team')}{' '}
                 <a
-                    className="hover:underline text-orange-500"
+                    className="hover:underline text-orange-500 decoration-2"
                     href="https://timur.aboard.ru"
                     target="_blank"
                 >
