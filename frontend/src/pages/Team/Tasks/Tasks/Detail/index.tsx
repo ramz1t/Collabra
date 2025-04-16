@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { useTask } from '../../../../../api/tasks'
-import { Avatar, Checkbox } from '../../../../../components'
+import { Avatar, TaskTag } from '../../../../../components'
 import {
     IoCalendarNumberOutline,
     IoCheckmarkDoneOutline,
@@ -11,7 +11,6 @@ import {
 } from 'react-icons/io5'
 import { FaRegDotCircle } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next'
-import TaskTag from '../TaskTag'
 import cn from 'classnames'
 import TaskSteps from '../TaskSteps'
 import TaskMenu from '../TaskMenu'
@@ -26,7 +25,7 @@ const TaskDetails = () => {
     if (!task) return 'task not found'
     return (
         <div className="p-5 md:p-10 grid md:grid-cols-[1fr_1fr] gap-10">
-            <div className="grid gap-5 md:gap-10 md:p-10 md:border dark:border-slate-700 rounded-2xl">
+            <div className="grid gap-5 md:gap-10 dark:border-slate-700 rounded-2xl">
                 <div className="flex items-center justify-between">
                     <h1 className="text-3xl font-semibold flex items-center justify-between">
                         #{task.id} - {task.title}

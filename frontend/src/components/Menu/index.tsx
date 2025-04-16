@@ -62,12 +62,12 @@ const Menu = ({
             ref={menuRef}
             key={`${isTablet}`}
         >
-            <div
-                className="hover:cursor-pointer min-h-10 flex items-center justify-center min-w-10"
-                onClick={() => setIsOpen((prev) => !prev)}
+            <Button
+                className="min-h-10 min-w-10"
+                action={() => setIsOpen((prev) => !prev)}
             >
                 {children}
-            </div>
+            </Button>
             <AnimatePresence>
                 {isOpen && (
                     <motion.ul

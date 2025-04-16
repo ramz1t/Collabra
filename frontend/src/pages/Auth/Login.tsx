@@ -9,8 +9,8 @@ import { Helmet } from 'react-helmet-async'
 
 const Login = (): React.ReactElement => {
     const { t } = useTranslation()
-    const email = useInput<string>('')
-    const password = useInput<string>('')
+    const email = useInput('')
+    const password = useInput('')
     const { loginUser } = useContext(AuthContext) as IAuthContext
     const [searchParams, _] = useSearchParams()
 

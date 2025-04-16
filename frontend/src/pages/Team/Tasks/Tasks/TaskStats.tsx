@@ -13,14 +13,14 @@ const TaskStats = ({ task }: { task: Task }) => {
                 className="flex text-gray-400 dark:text-gray-500 items-center gap-1.5 font-semibold hover:text-gray-500 transition-all duration-75"
             >
                 <IoChatboxEllipsesOutline />
-                {task.comments}
+                {task.messages_count}
             </Link>
             <Link
                 to={`${task.id}`}
                 className="flex text-gray-400 dark:text-gray-500 items-center gap-1.5 font-semibold hover:text-gray-500 transition-all duration-75"
             >
                 <IoDocumentAttachOutline />
-                {6}
+                {task.attachments.length}
             </Link>
         </div>
     )

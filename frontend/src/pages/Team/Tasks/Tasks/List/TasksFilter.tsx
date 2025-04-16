@@ -20,17 +20,17 @@ const TasksFilter = ({
 
     const statuses = ['to_do', 'in_progress', 'need_review', 'done']
 
-    const title = useInput<string>('', {}, 150)
+    const title = useInput('', {}, 150)
     const [checkedStatuses, setCheckedStatuses] = useState<string[]>(statuses)
     const [isDeadlineSoon, setIsDeadlineSoon] = useState(false)
-    const [selectedTag, setSelectedTag] = useState<number | undefined>()
+    const [selectedTag, setSelectedTag] = useState<number | null | undefined>()
 
     useEffect(() => {
         setFilters({
-            title: title.value.trim() || null,
+            search: title.value.trim() || null,
             status: checkedStatuses,
             is_deadline_soon: isDeadlineSoon,
-            tag: selectedTag || null,
+            tag: selectedTag || undefined,
         })
     }, [title.value, checkedStatuses, isDeadlineSoon, selectedTag])
 
@@ -99,6 +99,7 @@ const TasksFilter = ({
                     <TagSelector
                         selected={selectedTag}
                         setSelected={setSelectedTag}
+                        canSelectNone
                     />
                 </div>
                 <Checkbox

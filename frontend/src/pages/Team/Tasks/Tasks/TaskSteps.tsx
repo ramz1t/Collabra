@@ -40,7 +40,7 @@ const TaskSteps = ({
                     key={step.id}
                 >
                     <Checkbox
-                        key={key}
+                        key={step.id}
                         value={stepsState[key].is_done}
                         text={step.title}
                         disabled={disabled}

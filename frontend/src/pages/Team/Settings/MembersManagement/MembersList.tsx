@@ -19,19 +19,19 @@ const MembersList = (): React.ReactElement => {
     const { team } = useContext(TeamContext) as ITeamContext
     const { teamSlug } = useParams()
     const { t } = useTranslation()
-    const search = useInput<string>('', {}, 250)
+    const search = useInput('', {}, 250)
     const [selectedMembers, setSelectedMembers] = useState<number[]>([])
     const [deleteMembersDialogOpen, setDeleteMembersDialogOpen] =
         useState<boolean>(false)
 
     const {
-        data,
+        data: members,
         isLoading,
         hasNextPage,
         isFetchingNextPage,
         fetchNextPage,
         error,
-    } = useTeamMembers(team!.id, { email: search.value.trim() || null })
+    } = useTeamMembers(team!.id, { search: search.value.trim() || null })
     const { mutateAsync: deleteMembers, isPending: isDeleting } =
         useDeleteMembers(teamSlug!)
 
@@ -50,7 +50,7 @@ const MembersList = (): React.ReactElement => {
             <div className="relative min-h-10">
                 <SearchBar
                     inputInstance={search}
-                    placeholder={t('members_email')}
+                    placeholder={t('members_email_name_or_surname')}
                     className={cn(
                         'absolute z-10 left-0 transition-all',
                         selectedMembers.length
@@ -108,9 +108,13 @@ const MembersList = (): React.ReactElement => {
                 </div>
             </div>
             {isLoading && t('loading')}
-            {data && (
-                <ListWithHeader cols={1} isLoading={isLoading}>
-                    {data.members.map((member) => (
+            {members && (
+                <ListWithHeader
+                    cols={1}
+                    isLoading={isLoading}
+                    isEmpty={members.length === 0}
+                >
+                    {members.map((member) => (
                         <MemberCell
                             member={member}
                             key={member.id}

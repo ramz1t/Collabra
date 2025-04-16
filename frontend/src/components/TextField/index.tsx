@@ -2,12 +2,12 @@ import cn from 'classnames'
 import React, { useEffect, useId, useRef } from 'react'
 import { InputProps } from '../Input'
 
-export interface TextFieldProps<T>
-    extends InputProps<T, React.RefObject<HTMLTextAreaElement>> {
+export interface TextFieldProps
+    extends InputProps<React.RefObject<HTMLTextAreaElement>> {
     minHeight?: number
 }
 
-function TextField<T>({
+function TextField({
     className,
     titleClassname,
     placeholder,
@@ -25,7 +25,7 @@ function TextField<T>({
     hint,
     onChange,
     minHeight,
-}: TextFieldProps<T>): React.ReactElement {
+}: TextFieldProps): React.ReactElement {
     const textareaRef = useRef<HTMLTextAreaElement>(null)
     const id = useId()
 

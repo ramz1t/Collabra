@@ -51,7 +51,7 @@ const LoadMoreMarker = ({
 
     return (
         <span className="mx-auto min-h-[1px] min-w-[1px] col-span-full">
-            {isFetching && <LoadingState titleKey={'loading'} />}
+            {isFetching && <LoadingState />}
             {error && t('error')}
             <span
                 ref={loadMoreMarkerRef}
