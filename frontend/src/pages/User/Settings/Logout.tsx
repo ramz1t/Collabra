@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { memo, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Form, Button, SettingsSection } from '../../../components'
 import AuthContext, { IAuthContext } from '../../../contexts/AuthContext'
@@ -21,4 +21,4 @@ const Logout = (): React.ReactElement => {
     )
 }
 
-export default Logout
+export default memo(Logout)

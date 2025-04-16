@@ -1,6 +1,6 @@
 import { Tag } from '../../types'
 import { hexToRGBA } from '../../utils'
-import React, { useContext, useState } from 'react'
+import React, { memo, useContext, useState } from 'react'
 import ThemeContext, { IThemeContext } from '../../contexts/ThemeContext'
 import { Button } from '../index'
 import { IoPencilOutline } from 'react-icons/io5'
@@ -45,4 +45,4 @@ const TaskTag = ({ tag, canEdit }: { tag: Tag | null; canEdit?: boolean }) => {
     )
 }
 
-export default TaskTag
+export default memo(TaskTag)

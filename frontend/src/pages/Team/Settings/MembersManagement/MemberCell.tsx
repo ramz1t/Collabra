@@ -10,7 +10,7 @@ import {
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
 import { IoPencil, IoChevronForward, IoCheckmark } from 'react-icons/io5'
-import React, { useContext, useState } from 'react'
+import React, { memo, useContext, useState } from 'react'
 import MemberCellInfo from './MemberCellInfo'
 import useProfilePath from '../../../../hooks/useProfilePath'
 import { UserRole } from '../../../../hooks/useIsAllowed'
@@ -38,7 +38,7 @@ const MemberCell = ({
     selected,
 }: MemberCellProps): React.ReactElement => {
     const { t } = useTranslation()
-    const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false)
+    const [dialogOpen, setDialogOpen] = useState<boolean>(false)
     const profilePath = useProfilePath(member.user.id)
     const { team } = useContext(TeamContext) as ITeamContext
     const { teamSlug } = useParams()
@@ -50,7 +50,7 @@ const MemberCell = ({
         teamSlug!
     )
     const [isAdmin, setIsAdmin] = useState<boolean>(member.is_admin)
-    const status = useInput<string>(member.status || '')
+    const status = useInput(member.status || '')
     const { user } = useContext(AuthContext) as IAuthContext
     const selectable = !member.is_owner && member.user.id !== user!.user_id
 
@@ -83,7 +83,7 @@ const MemberCell = ({
                 <Button
                     style="tertiary"
                     className="!min-h-8 !rounded-full max-md:!gap-1 ml-auto"
-                    action={() => setDeleteDialogOpen(true)}
+                    action={() => setDialogOpen(true)}
                 >
                     {t('manage')}
                     <IoChevronForward />
@@ -92,7 +92,7 @@ const MemberCell = ({
             <DialogWindow
                 icon={<IoPencil />}
                 title={`${member.user.first_name} ${member.user.last_name}`}
-                isOpen={deleteDialogOpen}
+                isOpen={dialogOpen}
                 isLoading={isSaving}
                 onSuccess={() =>
                     updateMember({
@@ -116,9 +116,10 @@ const MemberCell = ({
                     (status.value.trim() || null) === member.status &&
                     isAdmin === member.is_admin
                 }
-                close={() => setDeleteDialogOpen(false)}
+                close={() => setDialogOpen(false)}
                 successButtonStyle="primary"
                 successButtonText={t('save')}
+                closeButtonText={t('close')}
                 extraButtons={
                     !member.is_owner && user!.user_id !== member.user.id ? (
                         <Button
@@ -126,7 +127,7 @@ const MemberCell = ({
                                 deleteMember({
                                     teamId: team!.id,
                                     memberIds: [member.id],
-                                }).then(() => setDeleteDialogOpen(false))
+                                }).then(() => setDialogOpen(false))
                             }
                             style="destructive"
                             isLoading={isDeleting}
@@ -165,8 +166,7 @@ const MemberCell = ({
                                         teamId: team!.id,
                                     }}
                                     options={{
-                                        onSuccess: () =>
-                                            setDeleteDialogOpen(false),
+                                        onSuccess: () => setDialogOpen(false),
                                     }}
                                 />
                             </div>
@@ -178,4 +178,4 @@ const MemberCell = ({
     )
 }
 
-export default MemberCell
+export default memo(MemberCell)

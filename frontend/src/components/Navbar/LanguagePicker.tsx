@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Twemoji from '../Twemoji'
 import { Button, DialogWindow } from '../index'
@@ -76,4 +76,4 @@ const LanguagePicker = (): React.ReactElement => {
     )
 }
 
-export default LanguagePicker
+export default memo(LanguagePicker)

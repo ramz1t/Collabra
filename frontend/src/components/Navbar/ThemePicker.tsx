@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { memo, useContext, useEffect } from 'react'
 import ThemeContext, { IThemeContext } from '../../contexts/ThemeContext'
 import { Button } from '../index.js'
 import { useTranslation } from 'react-i18next'
@@ -65,4 +65,4 @@ const ThemePicker = (): React.ReactElement => {
     )
 }
 
-export default ThemePicker
+export default memo(ThemePicker)

@@ -7,14 +7,16 @@ interface LinkCellProps {
     links: string[]
     setLinks: React.Dispatch<SetStateAction<string[]>>
     index: number
+    errors?: string[] | undefined
 }
 
 const LinkCell = ({
     links,
     setLinks,
     index,
+    errors,
 }: LinkCellProps): React.ReactElement => {
-    const inputInstance = useInput<string>(links[index])
+    const inputInstance = useInput(links[index])
 
     return (
         <li className="flex gap-5 items-center">
@@ -27,6 +29,7 @@ const LinkCell = ({
                         return updatedLinks
                     })
                 }}
+                errors={errors}
             />
             <Button
                 style="destructive"

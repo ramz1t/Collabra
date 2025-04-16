@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { parse } from 'twemoji-parser'
 
 export interface TwemojiProps {
@@ -23,4 +23,4 @@ const Twemoji = ({ emoji, width, className }: TwemojiProps): JSX.Element => {
     )
 }
 
-export default Twemoji
+export default memo(Twemoji)

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import TeamCard from './TeamCard.js'
 import { Button, Dropdown, LoadMoreMarker, SearchBar } from '../../components'
 import {
@@ -8,8 +8,6 @@ import {
     IoText,
     IoArrowDown,
     IoArrowUp,
-    IoChevronUp,
-    IoCheckmark,
 } from 'react-icons/io5'
 import { useTranslation } from 'react-i18next'
 import useInput from '../../hooks/useInput'
@@ -37,11 +35,16 @@ const TeamsList = () => {
         'teamsOrdering',
         '-id'
     )
-    const { data, fetchNextPage, isFetchingNextPage, hasNextPage, error } =
-        useTeams({
-            search: search.value.trim() || null,
-            ordering: sortBy!,
-        })
+    const {
+        data: teams,
+        fetchNextPage,
+        isFetchingNextPage,
+        hasNextPage,
+        error,
+    } = useTeams({
+        search: search.value.trim() || null,
+        ordering: sortBy!,
+    })
     const { isTablet } = useScreenSize()
     const [isList, setIsList] = useLocalStorage('displayTeamsInList', true)
 
@@ -127,10 +130,9 @@ const TeamsList = () => {
                         : 'grid max-md:gap-3 md:grid-cols-2 xl:grid-cols-3'
                 )}
             >
-                {data &&
-                    data.teams.map((team, key: number) => (
-                        <TeamCard key={key} team={team} isList={isList!} />
-                    ))}
+                {teams?.map((team, key: number) => (
+                    <TeamCard key={key} team={team} isList={isList!} />
+                ))}
                 <LoadMoreMarker
                     error={error}
                     isFetching={isFetchingNextPage}

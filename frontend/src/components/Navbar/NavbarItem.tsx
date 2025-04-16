@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import cn from 'classnames'
-import React from 'react'
+import React, { memo } from 'react'
 
 export interface NavbarItemProps {
     icon: React.ReactElement
@@ -47,4 +47,4 @@ const NavbarItem = ({
     )
 }
 
-export default NavbarItem
+export default memo(NavbarItem)

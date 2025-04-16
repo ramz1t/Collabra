@@ -1,22 +1,25 @@
 import cn from 'classnames'
-import React from 'react'
+import React, { memo } from 'react'
+import { AvatarProps } from './index'
 
 export interface GeneratedAvatarProps {
-    firstName: string
-    lastName: string
+    firstName?: string
+    lastName?: string
     startColor: string
     endColor: string
-    size?:
-        | 'sidebar'
-        | 'profile'
-        | 'settings'
-        | 'task'
-        | 'assigneeOption'
-        | string
+    size?: AvatarProps['size']
     square?: boolean
-    style: { string: any } | undefined
+    style?: React.CSSProperties
     className?: string
     w: number
+}
+
+const FONT_SIZES: Record<NonNullable<GeneratedAvatarProps['size']>, number> = {
+    sidebar: 16,
+    profile: 60,
+    settings: 80,
+    task: 12,
+    assigneeOption: 10,
 }
 
 const GeneratedAvatar = ({
@@ -24,57 +27,37 @@ const GeneratedAvatar = ({
     lastName,
     startColor,
     endColor,
-    size,
-    square,
+    size = 'sidebar',
+    square = false,
     style,
     className,
     w,
-}: GeneratedAvatarProps): React.ReactElement => {
-    let font
+}: GeneratedAvatarProps) => {
+    const fontSize = FONT_SIZES[size] ?? 16
 
-    switch (size) {
-        case 'sidebar':
-            font = 16
-            break
-        case 'profile':
-            font = 60
-            break
-        case 'settings':
-            font = 80
-            break
-        case 'task':
-            font = 12
-            break
-        case 'assigneeOption':
-            font = 10
-            break
-        default:
-            font = 16
-            break
-    }
     return (
         <div
             className={cn(
-                `rounded-full flex items-center justify-center font-extrabold text-black pointer-events-none select-none`,
+                'flex items-center justify-center font-extrabold text-black pointer-events-none select-none',
                 square ? 'rounded-xl' : 'rounded-full',
                 className
             )}
             style={{
-                fontSize: font,
+                fontSize,
                 width: w,
                 height: w,
                 minWidth: w,
                 minHeight: w,
                 maxWidth: w,
                 maxHeight: w,
-                background: `linear-gradient(90deg, #${startColor} 0%, #${endColor} 100%)`,
+                background: `linear-gradient(90deg, ${startColor.startsWith('#') ? startColor : `#${startColor}`} 0%, ${endColor.startsWith('#') ? endColor : `#${endColor}`} 100%)`,
                 ...style,
             }}
         >
-            {firstName && firstName[0]}
-            {lastName && lastName[0]}
+            {firstName?.[0]}
+            {lastName?.[0]}
         </div>
     )
 }
 
-export default GeneratedAvatar
+export default memo(GeneratedAvatar)

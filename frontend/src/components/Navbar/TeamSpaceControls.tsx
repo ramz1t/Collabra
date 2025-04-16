@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { memo, useContext } from 'react'
 import NavbarItem from './NavbarItem.js'
 import {
     IoFileTrayFullOutline,
@@ -49,4 +49,4 @@ const TeamSpaceControls = (): React.ReactElement | undefined => {
     )
 }
 
-export default TeamSpaceControls
+export default memo(TeamSpaceControls)

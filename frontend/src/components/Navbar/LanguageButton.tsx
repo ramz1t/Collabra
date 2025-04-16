@@ -1,7 +1,7 @@
 import { Button, Twemoji } from '../index'
 import cn from 'classnames'
 import { useTranslation } from 'react-i18next'
-import React from 'react'
+import React, { memo } from 'react'
 
 export interface LanguageButtonProps {
     lang: { code: string; flag: string; name: string }
@@ -38,4 +38,4 @@ const LanguageButton = ({
     )
 }
 
-export default LanguageButton
+export default memo(LanguageButton)

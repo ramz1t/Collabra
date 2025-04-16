@@ -1,7 +1,7 @@
 import { IoChevronBackOutline } from 'react-icons/io5'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import React, { useMemo } from 'react'
+import React, { memo } from 'react'
 import cn from 'classnames'
 
 interface BackButtonProps {
@@ -9,19 +9,13 @@ interface BackButtonProps {
     className?: string
 }
 
-const BackButton = ({
-    text,
-    className,
-}: BackButtonProps): React.ReactElement => {
+const BackButton: React.FC<BackButtonProps> = ({ text, className }) => {
     const { t } = useTranslation()
-    const to = useMemo(
-        () =>
-            window.location.pathname.substring(
-                0,
-                window.location.pathname.lastIndexOf('/')
-            ),
-        [window.location.pathname]
-    )
+    const location = useLocation()
+
+    const to =
+        location.pathname.substring(0, location.pathname.lastIndexOf('/')) ||
+        '/'
 
     return (
         <Link
@@ -32,9 +26,9 @@ const BackButton = ({
             )}
         >
             <IoChevronBackOutline />
-            {text ? text : t('back')}
+            {text ?? t('back')}
         </Link>
     )
 }
 
-export default BackButton
+export default memo(BackButton)

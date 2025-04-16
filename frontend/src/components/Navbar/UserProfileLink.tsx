@@ -2,7 +2,7 @@ import NavbarItem from './NavbarItem'
 import { Avatar } from '../'
 import { useUser } from '../../api/user'
 import useScreenSize from '../../hooks/useScreenSize'
-import React from 'react'
+import React, { memo } from 'react'
 
 const UserProfileLink = (): React.ReactNode => {
     const { data, isLoading } = useUser('me')
@@ -28,4 +28,4 @@ const UserProfileLink = (): React.ReactNode => {
     )
 }
 
-export default UserProfileLink
+export default memo(UserProfileLink)

@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import React from 'react'
+import React, { memo } from 'react'
 
 export interface DividerProps {
     vertical?: boolean
@@ -27,4 +27,4 @@ const Divider = ({
     )
 }
 
-export default Divider
+export default memo(Divider)

@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import React from 'react'
+import React, { memo } from 'react'
 
 export interface RichHeaderProps {
     icon: React.ReactElement
@@ -34,4 +34,4 @@ const RichHeader = ({
     )
 }
 
-export default RichHeader
+export default memo(RichHeader)

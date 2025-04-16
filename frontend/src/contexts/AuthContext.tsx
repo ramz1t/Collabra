@@ -5,9 +5,11 @@ import React, {
     useContext,
     Dispatch,
     SetStateAction,
+    useCallback,
+    useMemo,
 } from 'react'
 import { NavigateFunction, useNavigate } from 'react-router-dom'
-import { jwtDecode, JwtHeader, JwtPayload } from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode'
 import { error, getCookie, success } from '../utils'
 import { QueryClient, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
@@ -46,7 +48,7 @@ const AuthContext = createContext<IAuthContext | null>(null)
 export default AuthContext
 
 export const AuthProvider = ({ children }: { children: JSX.Element }) => {
-    const { i18n: i18n } = useTranslation()
+    const { i18n } = useTranslation()
     const navigate: NavigateFunction = useNavigate()
     const queryClient: QueryClient = useQueryClient()
     const { setTeam } = useContext(TeamContext) as ITeamContext
@@ -58,117 +60,153 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     const [user, setUser] = useState<TokenUser | null>(() =>
         authTokens ? (jwtDecode(JSON.stringify(authTokens)) as TokenUser) : null
     )
-    const [sca, setCookiesAccepted] = useLocalStorage<boolean>(
+    const [, setCookiesAccepted] = useLocalStorage<boolean>(
         'cookiesAccepted',
         false
     )
-    const [scss, setCookiesSettingSaved] = useLocalStorage<boolean>(
+    const [, setCookiesSettingSaved] = useLocalStorage<boolean>(
         'cookiesSettingSaved',
         false
     )
 
-    const authWithTokens = (
-        tokens: AuthTokens,
-        redirectFrom?: string | null
-    ) => {
-        setAuthTokens(tokens)
-        localStorage.setItem('authTokens', JSON.stringify(tokens))
-        navigate(redirectFrom || '/teams')
-    }
-
-    const loginUser: ILoginUserFunc = async (
-        {
-            email,
-            password,
-            redirectFrom,
-        }: {
-            email: string
-            password: string
-            redirectFrom?: string | undefined | null
+    const authWithTokens = useCallback(
+        (tokens: AuthTokens, redirectFrom?: string | null) => {
+            setAuthTokens(tokens)
+            localStorage.setItem('authTokens', JSON.stringify(tokens))
+            navigate(redirectFrom || '/teams')
         },
-        setError?: (error: string) => void
-    ) => {
-        if (email === '' || password === '') return
+        [navigate, setAuthTokens]
+    )
 
-        fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/token/`, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                'Accept-Language': i18n.resolvedLanguage || 'en',
+    const loginUser: ILoginUserFunc = useCallback(
+        async (
+            {
+                email,
+                password,
+                redirectFrom,
+            }: {
+                email: string
+                password: string
+                redirectFrom?: string | undefined | null
             },
-            body: JSON.stringify({ email, password }),
-        }).then(async (res) => {
-            if (res.ok) {
-                const data = await res.json()
-                authWithTokens(data, redirectFrom)
-            } else {
-                const data = await res.json()
-                error(data.detail)
-            }
-        })
-    }
+            setError?: (error: string) => void
+        ) => {
+            if (!email || !password) return
 
-    const registerUser = (
-        user: Record<string, string>,
-        setError: (value: string | undefined) => void
-    ) => {
-        fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/`, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken') || '',
-                'Accept-Language': i18n.resolvedLanguage || 'en',
-            },
-            body: JSON.stringify(user),
-        }).then(async (res) => {
-            if (res.ok) {
-                const data = await res.json()
-                success(data.message)
-                authWithTokens(data, '/users/me/settings')
-            } else {
-                // setError && setError(res)
-                alert(JSON.stringify(res.statusText))
-            }
-        })
-    }
+            try {
+                const res = await fetch(
+                    `${import.meta.env.VITE_API_URL || ''}/api/v1/token/`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                            'Accept-Language': i18n.resolvedLanguage || 'en',
+                        },
+                        body: JSON.stringify({ email, password }),
+                    }
+                )
 
-    const logoutUser = (): void => {
-        // Clear auth data
+                const data = await res.json()
+
+                if (res.ok) {
+                    authWithTokens(data, redirectFrom)
+                } else {
+                    error(data.detail)
+                    setError?.(data.detail)
+                }
+            } catch (err) {
+                error('Network error')
+                setError?.('Network error')
+            }
+        },
+        [authWithTokens, i18n.resolvedLanguage]
+    )
+
+    const registerUser = useCallback(
+        async (
+            user: Record<string, string>,
+            setError: (value: string | undefined) => void
+        ) => {
+            try {
+                const res = await fetch(
+                    `${import.meta.env.VITE_API_URL || ''}/api/v1/users/`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken') || '',
+                            'Accept-Language': i18n.resolvedLanguage || 'en',
+                        },
+                        body: JSON.stringify(user),
+                    }
+                )
+
+                const data = await res.json()
+
+                if (res.ok) {
+                    success(data.message)
+                    authWithTokens(data, '/users/me/settings')
+                } else {
+                    setError(data.detail || 'Registration failed')
+                }
+            } catch (err) {
+                setError('Network error')
+            }
+        },
+        [authWithTokens, i18n.resolvedLanguage]
+    )
+
+    const logoutUser = useCallback(() => {
         setAuthTokens(null)
         setUser(null)
-        localStorage.removeItem('authTokens')
+        localStorage.clear()
 
-        // Clear selected team
         setTeam(null)
 
-        // Clear cached API data
-        queryClient.clear()
-
-        // Clear cookies preferences
         setCookiesAccepted(null)
         setCookiesSettingSaved(null)
 
-        // Navigate to log in form
-        navigate('/login')
-    }
+        queryClient.clear()
 
-    const contextData = {
-        user,
-        setUser,
-        loginUser,
-        registerUser,
-        authTokens,
+        navigate('/login')
+    }, [
         setAuthTokens,
-        logoutUser,
-    }
+        setUser,
+        setTeam,
+        queryClient,
+        setCookiesAccepted,
+        setCookiesSettingSaved,
+        navigate,
+    ])
 
     useEffect(() => {
         if (authTokens) {
             setUser(jwtDecode(authTokens.access))
         }
     }, [authTokens])
+
+    const contextData = useMemo(
+        () => ({
+            user,
+            setUser,
+            loginUser,
+            registerUser,
+            authTokens,
+            setAuthTokens,
+            logoutUser,
+        }),
+        [
+            user,
+            setUser,
+            loginUser,
+            registerUser,
+            authTokens,
+            setAuthTokens,
+            logoutUser,
+        ]
+    )
 
     return (
         <AuthContext.Provider value={contextData}>

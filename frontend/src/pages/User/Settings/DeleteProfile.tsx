@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { SettingsSection, PasswordSubmit } from '../../../components'
 import { useDeleteUser } from '../../../api/user'
-import React from 'react'
+import React, { memo } from 'react'
 
 const DeleteProfile = (): React.ReactElement => {
     const { t } = useTranslation()
@@ -22,4 +22,4 @@ const DeleteProfile = (): React.ReactElement => {
     )
 }
 
-export default DeleteProfile
+export default memo(DeleteProfile)

@@ -2,7 +2,7 @@ import useLocalStorage from '../../hooks/useLocalStorage'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../index'
 import cookie from '../../assets/images/cookie-icon.svg'
-import React from 'react'
+import React, { memo } from 'react'
 
 const CookiesModal = (): React.ReactElement | undefined => {
     const [isAccepted, setIsAccepted] = useLocalStorage<boolean>(
@@ -44,4 +44,4 @@ const CookiesModal = (): React.ReactElement | undefined => {
     )
 }
 
-export default CookiesModal
+export default memo(CookiesModal)

@@ -1,51 +1,34 @@
 import cn from 'classnames'
 import GeneratedAvatar from './GeneratedAvatar'
-import React from 'react'
+import React, { memo } from 'react'
 import { User } from '../../types'
 
-export interface AvatarProps {
+export type AvatarProps = {
     className?: string
-    size?:
-        | 'sidebar'
-        | 'profile'
-        | 'settings'
-        | 'task'
-        | 'assigneeOption'
-        | string
+    size?: 'sidebar' | 'profile' | 'settings' | 'task' | 'assigneeOption'
     square?: boolean
-    style?: { string: any }
-    user: User
+    style?: React.CSSProperties
+    user?: User
+}
+
+const AVATAR_SIZES: Record<NonNullable<AvatarProps['size']>, number> = {
+    sidebar: 36,
+    profile: 150,
+    settings: 230,
+    task: 30,
+    assigneeOption: 24,
 }
 
 const Avatar = ({
     className,
     user,
-    size,
-    square,
+    size = 'sidebar',
+    square = false,
     style,
-}: AvatarProps): React.ReactElement | undefined => {
-    if (!user) return
-    let w
-    switch (size) {
-        case 'sidebar':
-            w = 36
-            break
-        case 'profile':
-            w = 150
-            break
-        case 'settings':
-            w = 230
-            break
-        case 'task':
-            w = 30
-            break
-        case 'assigneeOption':
-            w = 24
-            break
-        default:
-            w = 36
-            break
-    }
+}: AvatarProps) => {
+    if (!user) return null
+
+    const w = AVATAR_SIZES[size] ?? 36
 
     if (user.avatar) {
         return (
@@ -65,6 +48,7 @@ const Avatar = ({
                     maxHeight: w,
                     ...style,
                 }}
+                aria-label={`${user.first_name} ${user.last_name} avatar`}
             />
         )
     }
@@ -84,4 +68,4 @@ const Avatar = ({
     )
 }
 
-export default Avatar
+export default memo(Avatar)

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import useInput from '../../../hooks/useInput'
 import { Form, Input, Button, SettingsSection } from '../../../components'
@@ -6,8 +6,8 @@ import { useChangePassword } from '../../../api/user'
 
 const ChangePassword = (): React.ReactElement => {
     const { t } = useTranslation()
-    const oldPassword = useInput<string>('')
-    const newPassword = useInput<string>('')
+    const oldPassword = useInput('')
+    const newPassword = useInput('')
     const { mutate: changePassword, isPending } = useChangePassword()
 
     return (
@@ -53,4 +53,4 @@ const ChangePassword = (): React.ReactElement => {
     )
 }
 
-export default ChangePassword
+export default memo(ChangePassword)

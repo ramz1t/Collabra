@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 const SettingsContainer = ({
     children,
@@ -12,4 +12,4 @@ const SettingsContainer = ({
     )
 }
 
-export default SettingsContainer
+export default memo(SettingsContainer)
