@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import useDebounce from './useDebounce'
 
-export interface IInputInstance<T> {
-    value: T
-    rawValue: T
-    setValue: (value: T) => void
+export interface IInputInstance {
+    value: string
+    rawValue: string
+    setValue: (value: string) => void
     isDirty: boolean
     checkValue: (
         e:
@@ -26,13 +26,13 @@ interface IValidations {
     isFloat: boolean
 }
 
-const useInput = <T extends string>(
-    initialValue: T,
+const useInput = (
+    initialValue: string,
     validations: Partial<IValidations> = {},
     debounce: number = 0
-): IInputInstance<T> => {
-    const [rawValue, setValue] = useState<T>(initialValue)
-    const value = useDebounce<T>(rawValue, debounce)
+): IInputInstance => {
+    const [rawValue, setValue] = useState(initialValue)
+    const value = useDebounce<string>(rawValue, debounce)
     const [isDirty, setIsDirty] = useState<boolean>(false)
     const valid = useValidation(value, validations)
     const allValid: boolean = Object.values(valid).every((item) => !item)
@@ -42,12 +42,12 @@ const useInput = <T extends string>(
             | React.ChangeEvent<HTMLInputElement>
             | React.ChangeEvent<HTMLTextAreaElement>
     ): void => {
-        setValue(e.target.value as T)
+        setValue(e.target.value)
         setIsDirty(true)
     }
 
     const clear = (): void => {
-        setValue('' as T)
+        setValue('')
         setIsDirty(false)
     }
 
