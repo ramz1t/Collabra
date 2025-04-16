@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next'
-import { IoAdd, IoExit } from 'react-icons/io5'
 import React from 'react'
 
 // All loading messages' variants
+// Needed for auto-parser
 // t('loading_team_space')
 
 export interface LoadingStateProps {
-    titleKey: string
+    titleKey?: string
 }
 
 const LoadingState = ({ titleKey }: LoadingStateProps): React.ReactElement => {
@@ -33,7 +33,9 @@ const LoadingState = ({ titleKey }: LoadingStateProps): React.ReactElement => {
                     </svg>
                     <span className="sr-only">Loading...</span>
                 </div>
-                <p className="font-semibold text-2xl">{t(titleKey)}</p>
+                {titleKey && (
+                    <p className="font-semibold text-2xl">{t(titleKey)}</p>
+                )}
             </div>
         </div>
     )
@@ -43,5 +45,21 @@ const TeamSpace = (): React.ReactElement => {
     return <LoadingState titleKey="loading_team_space" />
 }
 LoadingState.TeamSpace = TeamSpace
+
+const TagPill = () => {
+    return (
+        <>
+            {Array(3)
+                .fill(0)
+                .map((_, key) => (
+                    <p
+                        key={key}
+                        className="h-8 w-24 rounded-full bg-slate-100 dark:bg-zinc-700 animate-pulse"
+                    ></p>
+                ))}
+        </>
+    )
+}
+LoadingState.TagPill = TagPill
 
 export default LoadingState
