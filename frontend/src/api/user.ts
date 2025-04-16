@@ -3,8 +3,8 @@ import useAxios from '../hooks/useAxios.js'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import AuthContext, { IAuthContext } from '../contexts/AuthContext'
 import { prefix } from './index'
-import { AxiosResponse } from 'axios'
-import { User } from '../types'
+import { AxiosError, AxiosResponse } from 'axios'
+import { User, ValidationErrors } from '../types'
 
 export const useUser = (userId: string | number) => {
     const api = useAxios()
@@ -43,10 +43,12 @@ export const useChangePassword = () => {
 export const useUpdateUser = () => {
     const api = useAxios()
     const queryClient = useQueryClient()
-    return useMutation({
-        mutationFn: async (
-            data: Partial<User>
-        ): Promise<AxiosResponse<User>> => {
+    return useMutation<
+        AxiosResponse<User>,
+        AxiosError<ValidationErrors>,
+        Partial<User>
+    >({
+        mutationFn: async (data) => {
             return await api.patch(`${prefix}/users/me/`, data)
         },
         onSuccess: (res) => {

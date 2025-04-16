@@ -24,12 +24,12 @@ import cn from 'classnames'
 const PersonalInfo = (): React.ReactElement => {
     const { t } = useTranslation()
     const { data: user, isLoading } = useUser('me')
-    const firstName = useInput<string>('', { isEmpty: true })
-    const lastName = useInput<string>('', { isEmpty: true })
-    const bio = useInput<string>('')
-    const email = useInput<string>('', { isEmpty: true })
-    const username = useInput<string>('', { isEmpty: true })
-    const newLink = useInput<string>('')
+    const firstName = useInput('', { isEmpty: true })
+    const lastName = useInput('', { isEmpty: true })
+    const bio = useInput('')
+    const email = useInput('', { isEmpty: true })
+    const username = useInput('', { isEmpty: true })
+    const newLink = useInput('')
     const [hasChanges, setHasChanges] = useState<boolean>(false)
     const [timezone, setTimezone] = useState<string>('')
     const [links, setLinks] = useState<string[]>([])
@@ -37,6 +37,7 @@ const PersonalInfo = (): React.ReactElement => {
         mutate: updateUser,
         isPending: mutationLoading,
         mutateAsync: updateUserAsync,
+        error,
     } = useUpdateUser()
 
     const formData = {
@@ -113,11 +114,13 @@ const PersonalInfo = (): React.ReactElement => {
                                 title={t('first_name')}
                                 instance={firstName}
                                 must
+                                errors={error?.response?.data?.first_name}
                             />
                             <Input
                                 title={t('last_name')}
                                 instance={lastName}
                                 must
+                                errors={error?.response?.data?.last_name}
                             />
                         </div>
                         <Input
@@ -125,12 +128,14 @@ const PersonalInfo = (): React.ReactElement => {
                             instance={email}
                             type="email"
                             must
+                            errors={error?.response?.data?.email}
                         />
                         <Input
                             title={t('username')}
                             instance={username}
                             prefix="@"
                             must
+                            errors={error?.response?.data?.username}
                         />
                         <div className="flex flex-col gap-1">
                             <p className="pl-1">{t('timezone')}</p>
@@ -183,15 +188,24 @@ const PersonalInfo = (): React.ReactElement => {
                                 className="flex gap-5 flex-col"
                                 key={links.length}
                             >
-                                {links.map((_, key) => (
-                                    <LinkCell
-                                        links={links}
-                                        index={key}
-                                        key={key}
-                                        setLinks={setLinks}
-                                    />
-                                ))}
-                                <div className="flex gap-5 items-center">
+                                {links.map((_, key) => {
+                                    const possibleError =
+                                        error?.response?.data?.links?.[key]
+                                    return (
+                                        <LinkCell
+                                            links={links}
+                                            index={key}
+                                            key={key}
+                                            setLinks={setLinks}
+                                            errors={
+                                                Array.isArray(possibleError)
+                                                    ? possibleError
+                                                    : undefined
+                                            }
+                                        />
+                                    )
+                                })}
+                                <div className="flex gap-5 items-start">
                                     <Input instance={newLink} />
                                     <Button
                                         style="secondary"
