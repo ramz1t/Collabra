@@ -40,6 +40,12 @@ export default {
                 slot: 'calc(100vw - 72px)',
                 screen: '100vw',
             },
+            maxHeight: {
+                slot: 'calc(100dvh - 72px)',
+            },
+            minHeight: {
+                slot: 'calc(100dvh - 72px)',
+            },
             spacing: {
                 nav: '72px',
                 'nav-half': '36px',
