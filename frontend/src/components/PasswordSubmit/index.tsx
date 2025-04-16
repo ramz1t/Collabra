@@ -2,8 +2,7 @@ import useInput from '../../hooks/useInput'
 import { Button, Form, Input } from '../index'
 import { useTranslation } from 'react-i18next'
 import cn from 'classnames'
-import React from 'react'
-import { AxiosRequestConfig } from 'axios'
+import React, { useState } from 'react'
 import { UseMutateFunction } from '@tanstack/react-query'
 
 export interface PasswordSubmitProps {
@@ -28,12 +27,23 @@ const PasswordSubmit = ({
     autoRef = false,
 }: PasswordSubmitProps): React.ReactElement => {
     const password = useInput('')
+    const [isError, setIsError] = useState(false)
     const { t } = useTranslation()
     return (
         <Form
-            onSubmit={() =>
-                submitFn({ ...submitData, password: password.value }, options)
-            }
+            onSubmit={() => {
+                setIsError(false)
+                submitFn(
+                    { ...submitData, password: password.value },
+                    {
+                        ...options,
+                        onError: () => {
+                            setIsError(true)
+                            options?.onError()
+                        },
+                    }
+                )
+            }}
             className={cn('!flex-row gap-2 md:gap-5', className)}
         >
             <Input
@@ -43,11 +53,13 @@ const PasswordSubmit = ({
                 hint={t('pass_to_submit', {
                     action: actionText?.toLowerCase(),
                 })}
+                errors={isError ? [t('wrong_password')] : []}
             />
             <Button
                 style="destructive"
                 isLoading={isLoading}
                 disabled={!password.value}
+                type="submit"
             >
                 {buttonText || actionText}
             </Button>
