@@ -1,8 +1,5 @@
-import {
-    IoEllipsisVerticalSharp,
-    IoTrashOutline,
-} from 'react-icons/io5'
-import { DialogWindow } from '../../../../../components'
+import { IoEllipsisVerticalSharp, IoTrashOutline } from 'react-icons/io5'
+import { DialogWindow, LoadMoreMarker } from '../../../../../components'
 import { useTranslation } from 'react-i18next'
 import TaskCard from './Card'
 import { useState } from 'react'
@@ -28,7 +25,13 @@ export interface ColumnProps {
 const Column = ({ canAdd = true, status, moveColumn, index }: ColumnProps) => {
     const [addNewTaskOpen, setAddNewTaskOpen] = useState(false)
     const { teamSlug } = useParams()
-    const { data: tasks, isLoading } = useTasks(teamSlug!, { status: status })
+    const {
+        data: tasks,
+        isLoading,
+        hasNextPage,
+        fetchNextPage,
+        isFetching,
+    } = useTasks(teamSlug!, { status: status })
     const { t } = useTranslation()
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
     const { mutate: deleteTasks } = useDeleteTasks(teamSlug!)
@@ -89,6 +92,11 @@ const Column = ({ canAdd = true, status, moveColumn, index }: ColumnProps) => {
                     {tasks.map((task) => (
                         <TaskCard view={'board'} task={task} key={task.id} />
                     ))}
+                    <LoadMoreMarker
+                        isFetching={isFetching}
+                        hasNextPage={hasNextPage}
+                        fetch={fetchNextPage}
+                    />
                 </ul>
             )}
         </div>
