@@ -22,12 +22,16 @@ class TeamRetrieveSerializer(serializers.Serializer):
     description = serializers.CharField()
     is_admin = serializers.SerializerMethodField()
     is_owner = serializers.SerializerMethodField()
+    member_id = serializers.SerializerMethodField()
 
     def get_is_admin(self, team):
         return selectors.is_user_admin_by_team(self.context["user"], team)
 
     def get_is_owner(self, team):
         return selectors.is_user_owner_by_team(team, self.context["user"])
+
+    def get_member_id(self, team):
+        return selectors.get_member_or_404(user=self.context["user"], team=team).id
 
 
 class TeamShortRetrieveSerializer(serializers.Serializer):
