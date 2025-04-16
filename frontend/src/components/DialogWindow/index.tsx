@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { memo, useCallback, useEffect, useRef } from 'react'
 import { Button } from '../index'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -117,6 +117,7 @@ const DialogWindow = ({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: duration / 1000 }}
+                    key={`${isTablet}`}
                     className="fixed z-[900] h-dvh w-dvw bg-slate-500/25 dark:bg-slate-950/65 backdrop-blur-sm top-0 left-0 flex items-center justify-center"
                 >
                     <motion.div
@@ -134,13 +135,18 @@ const DialogWindow = ({
                         transition={{ duration: duration / 1000 }}
                         className={cn(
                             isCover
-                                ? 'max-md:min-h-slot md:rounded-lg'
+                                ? 'max-md:max-h-slot max-md:min-h-slot md:rounded-lg'
                                 : 'rounded-lg max-md:w-11/12',
-                            'max-h-slot md:max-h-[90dvh] bg-white dark:bg-slate-900 overflow-y-auto max-w-2xl w-full max-md:-translate-y-nav-half md:translate-x-nav-half shadow-2xl overflow-hidden'
+                            'max-h-slot md:max-h-[90dvh] bg-white dark:bg-slate-900 overflow-y-auto max-w-2xl w-full max-md:-translate-y-nav-half md:translate-x-nav-half shadow-2xl overflow-hidden flex flex-col'
                         )}
                         ref={dialogRef}
                     >
-                        <div className="flex gap-5 items-center w-full fixed:top-0 p-7 pb-3 sticky top-0 bg-white dark:bg-slate-900">
+                        <div
+                            className={cn(
+                                isCover && 'max-md:pt-3',
+                                'flex gap-5 items-center w-full fixed:top-0 p-7 pb-3 sticky top-0 bg-white dark:bg-slate-900'
+                            )}
+                        >
                             <div className="text-4xl text-accent dark:text-accent-dark">
                                 {icon || <IoAlert />}
                             </div>
@@ -148,7 +154,7 @@ const DialogWindow = ({
                                 {title || t('are_you_sure')}
                             </p>
                         </div>
-                        <div className="flex px-7 pb-7 flex-col items-end overflow-y-auto">
+                        <div className="flex px-7 pb-7 flex-col items-end overflow-y-auto grow">
                             <div className="w-full md:pl-14">
                                 {description && (
                                     <p className="text-gray-600 dark:text-gray-400">
@@ -158,7 +164,7 @@ const DialogWindow = ({
                                 {children}
                             </div>
                         </div>
-                        <div className="flex items-center px-5 py-3 bg-gray-100 dark:bg-slate-800 gap-3 w-full sticky bottom-0">
+                        <div className="flex items-center px-5 py-3 bg-gray-100 dark:bg-slate-800 gap-3 w-full sticky z-40 bottom-0">
                             {extraButtons}
                             <Button
                                 action={close}
@@ -187,4 +193,4 @@ const DialogWindow = ({
     )
 }
 
-export default DialogWindow
+export default memo(DialogWindow)
