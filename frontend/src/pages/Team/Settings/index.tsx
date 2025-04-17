@@ -6,6 +6,7 @@ import GeneralInfo from './GeneralInfo'
 import { UserRole } from '../../../hooks/useIsAllowed'
 import MembersManagement from './MembersManagement'
 import React from 'react'
+import TeamTags from './TeamTags'
 
 const TeamSettings = (): React.ReactElement => {
     return (
@@ -16,6 +17,10 @@ const TeamSettings = (): React.ReactElement => {
             />
             <PrivateComponent
                 component={<MembersManagement />}
+                allowedRoles={[UserRole.ADMIN, UserRole.OWNER]}
+            />
+            <PrivateComponent
+                component={<TeamTags />}
                 allowedRoles={[UserRole.ADMIN, UserRole.OWNER]}
             />
             <PrivateComponent
