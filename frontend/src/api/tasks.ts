@@ -1,25 +1,35 @@
 import useAxios from '../hooks/useAxios'
 import {
+    InfiniteData,
     InvalidateQueryFilters,
+    useInfiniteQuery,
     useMutation,
     useQuery,
     useQueryClient,
 } from '@tanstack/react-query'
-import { Tag, Task } from '../types'
+import { Member, PaginatedResponse, SearchParams, Tag, Task } from '../types'
 import { prefix } from './index'
 import { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 export const useTasks = (teamSlug: string, params?: Record<string, any>) => {
     const api = useAxios()
-    return useQuery({
-        queryKey: ['tasks', { teamSlug: teamSlug, ...params }],
-        queryFn: async (): Promise<Task[]> => {
-            const res = await api.get(`${prefix}/teams/${teamSlug}/tasks`, {
-                params: params,
-            })
-            return res.data
+    return useInfiniteQuery({
+        queryKey: ['tasks', { teamSlug, ...params }],
+        queryFn: async ({ pageParam }): Promise<PaginatedResponse<Task>> => {
+            const response = await api.get(
+                `${prefix}/teams/${teamSlug}/tasks`,
+                {
+                    params: { ...params, page: pageParam },
+                }
+            )
+            return response.data
         },
+        initialPageParam: 1,
+        getNextPageParam: (lastPage) => {
+            return lastPage.next !== null ? lastPage.current_page + 1 : null
+        },
+        select: (data) => [...data.pages.flatMap((page) => page.results)],
     })
 }
 
@@ -28,10 +38,10 @@ export const useTask = (teamSlug: string, taskId: number) => {
     return useQuery({
         queryKey: ['task', { id: taskId }],
         queryFn: async (): Promise<Task> => {
-            const res = await api.get(
+            const { data } = await api.get(
                 `${prefix}/teams/${teamSlug}/tasks/${taskId}`
             )
-            return res.data
+            return data
         },
     })
 }
@@ -39,14 +49,32 @@ export const useTask = (teamSlug: string, taskId: number) => {
 export const useCreateTask = (teamSlug: string, status: string) => {
     const api = useAxios()
     const queryClient = useQueryClient()
+
     return useMutation({
-        mutationFn: (data: Partial<Task>): Promise<AxiosResponse<Tag>> =>
-            api.post(`${prefix}/teams/${teamSlug}/tasks/`, data),
-        onSuccess: async (res) => {
-            const queryKey = ['tasks', { teamSlug: teamSlug, status: status }]
-            const queryData = queryClient.getQueryData<Tag[]>(queryKey)
-            if (!queryData) return
-            queryClient.setQueryData(queryKey, [res.data, ...queryData])
+        mutationFn: (data: Partial<Task>): Promise<AxiosResponse<Task>> => {
+            return api.post(`${prefix}/teams/${teamSlug}/tasks/`, data)
+        },
+        onSuccess: (res) => {
+            const queryKey = ['tasks', { teamSlug, status }]
+            const previousData =
+                queryClient.getQueryData<InfiniteData<PaginatedResponse<Task>>>(
+                    queryKey
+                )
+
+            if (!previousData) return
+
+            const updatedPages = [...previousData.pages]
+            const lastPageIndex = updatedPages.length - 1
+
+            updatedPages[lastPageIndex] = {
+                ...updatedPages[lastPageIndex],
+                results: [res.data, ...updatedPages[lastPageIndex].results],
+            }
+
+            queryClient.setQueryData(queryKey, {
+                ...previousData,
+                pages: updatedPages,
+            })
         },
     })
 }
@@ -54,15 +82,21 @@ export const useCreateTask = (teamSlug: string, status: string) => {
 export const useUpdateTask = (teamSlug: string, taskId: number) => {
     const api = useAxios()
     const queryClient = useQueryClient()
+
     return useMutation({
-        mutationFn: (data: Partial<Task>): Promise<AxiosResponse<Tag>> =>
+        mutationFn: (data: Partial<Task>): Promise<AxiosResponse<Task>> =>
             api.patch(`${prefix}/teams/${teamSlug}/tasks/${taskId}/`, data),
         onSuccess: async (res) => {
-            queryClient.setQueryData(['task', { id: res.data.id }], res.data)
-            await queryClient.invalidateQueries([
-                'tasks',
-                { teamSlug: teamSlug },
-            ] as InvalidateQueryFilters)
+            const updatedTask = res.data
+
+            queryClient.setQueryData(
+                ['task', { id: updatedTask.id }],
+                updatedTask
+            )
+
+            await queryClient.invalidateQueries({
+                queryKey: ['tasks', { teamSlug }],
+            } as InvalidateQueryFilters)
         },
     })
 }
@@ -86,7 +120,7 @@ export const useToggleStep = (teamSlug: string, taskId: number) => {
     const api = useAxios()
     return useMutation({
         mutationFn: (stepId: number) =>
-            api.post(
+            api.patch(
                 `${prefix}/teams/${teamSlug}/tasks/${taskId}/steps/${stepId}/toggle/`
             ),
     })
