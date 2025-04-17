@@ -47,8 +47,12 @@ const AuthContext = createContext<IAuthContext | null>(null)
 
 export default AuthContext
 
-export const AuthProvider = ({ children }: { children: JSX.Element }) => {
-    const { i18n } = useTranslation()
+export const AuthProvider = ({
+    children,
+}: {
+    children: React.ReactElement
+}) => {
+    const { i18n, t } = useTranslation()
     const navigate: NavigateFunction = useNavigate()
     const queryClient: QueryClient = useQueryClient()
     const { setTeam } = useContext(TeamContext) as ITeamContext
@@ -57,9 +61,18 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
         'authTokens',
         null
     )
-    const [user, setUser] = useState<TokenUser | null>(() =>
-        authTokens ? (jwtDecode(JSON.stringify(authTokens)) as TokenUser) : null
-    )
+
+    const decodedUser = useMemo(() => {
+        try {
+            return authTokens
+                ? (jwtDecode(authTokens.access) as TokenUser)
+                : null
+        } catch {
+            return null
+        }
+    }, [authTokens])
+    const [user, setUser] = useState<TokenUser | null>(decodedUser)
+
     const [, setCookiesAccepted] = useLocalStorage<boolean>(
         'cookiesAccepted',
         false
@@ -78,6 +91,17 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
         [navigate, setAuthTokens]
     )
 
+    const apiBaseUrl = useMemo(() => import.meta.env.VITE_API_URL || '', [])
+
+    const getCommonHeaders = useCallback(
+        () => ({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Language': i18n.resolvedLanguage || 'en',
+        }),
+        [i18n.resolvedLanguage]
+    )
+
     const loginUser: ILoginUserFunc = useCallback(
         async (
             {
@@ -94,18 +118,11 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
             if (!email || !password) return
 
             try {
-                const res = await fetch(
-                    `${import.meta.env.VITE_API_URL || ''}/api/v1/token/`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            Accept: 'application/json',
-                            'Content-Type': 'application/json',
-                            'Accept-Language': i18n.resolvedLanguage || 'en',
-                        },
-                        body: JSON.stringify({ email, password }),
-                    }
-                )
+                const res = await fetch(`${apiBaseUrl}/api/v1/token/`, {
+                    method: 'POST',
+                    headers: getCommonHeaders(),
+                    body: JSON.stringify({ email, password }),
+                })
 
                 const data = await res.json()
 
@@ -129,19 +146,14 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
             setError: (value: string | undefined) => void
         ) => {
             try {
-                const res = await fetch(
-                    `${import.meta.env.VITE_API_URL || ''}/api/v1/users/`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            Accept: 'application/json',
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': getCookie('csrftoken') || '',
-                            'Accept-Language': i18n.resolvedLanguage || 'en',
-                        },
-                        body: JSON.stringify(user),
-                    }
-                )
+                const res = await fetch(`${apiBaseUrl}/api/v1/users/`, {
+                    method: 'POST',
+                    headers: {
+                        ...getCommonHeaders(),
+                        'X-CSRFToken': getCookie('csrftoken') || '',
+                    },
+                    body: JSON.stringify(user),
+                })
 
                 const data = await res.json()
 
@@ -182,10 +194,16 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     ])
 
     useEffect(() => {
-        if (authTokens) {
-            setUser(jwtDecode(authTokens.access))
+        if (authTokens?.access) {
+            try {
+                setUser(jwtDecode(authTokens.access))
+            } catch (e) {
+                console.error('Invalid token:', e)
+                error(t('internal_token_err'))
+                logoutUser()
+            }
         }
-    }, [authTokens])
+    }, [authTokens, logoutUser])
 
     const contextData = useMemo(
         () => ({
