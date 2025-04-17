@@ -30,6 +30,8 @@ import TextField from './TextField'
 import Dropdown from './Dropdown'
 import NotFoundRoute from './NotFoundRoute'
 import FireIcon from './FireIcon'
+import TaskTag from './TaskTag'
+import RichDescription from './RichDescription'
 
 export {
     PrivateRoute,
@@ -64,4 +66,6 @@ export {
     Dropdown,
     NotFoundRoute,
     FireIcon,
+    TaskTag,
+    RichDescription
 }
