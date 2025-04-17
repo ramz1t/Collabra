@@ -3,9 +3,9 @@ import { useCheckConnection } from '../../api'
 import React from 'react'
 
 const InfoHeader = (): React.ReactElement | undefined => {
-    const { data: isOnline, isLoading } = useCheckConnection()
+    const { data: isOnline, isLoading, isError } = useCheckConnection()
 
-    if (!isLoading && !isOnline)
+    if ((!isLoading && !isOnline) || isError)
         return (
             <div className="bg-accent dark:bg-accent-dark min-h-10 sticky top-nav md:top-0 z-[998] flex items-center justify-center gap-5 text-white text-lg px-5">
                 <span className="max-md:text-xl">
