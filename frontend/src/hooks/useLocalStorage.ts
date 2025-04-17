@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 const getSavedValue = <T>(key: string, initialValue: T): T => {
     const localStorageValue = localStorage.getItem(key)
@@ -25,16 +25,22 @@ const useLocalStorage = <T>(key: string, initialValue: T) => {
         window.dispatchEvent(
             new CustomEvent('storage', { detail: { key, value } })
         )
-    }, [value])
+    }, [value, key])
+
+    const listener = useCallback(
+        (e: CustomEvent) => {
+            if (e.detail.key === key) {
+                setValue(e.detail.value)
+            }
+        },
+        [key]
+    )
 
     useEffect(() => {
-        const listener = (e: CustomEvent): any => {
-            if (e.detail.key === key) setValue(e.detail.value)
-        }
         window.addEventListener('storage', listener as EventListener)
         return () =>
             window.removeEventListener('storage', listener as EventListener)
-    }, [])
+    }, [listener])
 
     return [value, setValue] as const
 }
