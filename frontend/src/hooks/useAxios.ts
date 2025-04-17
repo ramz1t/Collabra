@@ -23,6 +23,8 @@ const useAxios = () => {
 
     // @ts-ignore
     axiosInstance.interceptors.request.use(async (req) => {
+        // Prevents unnecessary token updates when using a Mock server with hardcoded tokens
+        if (import.meta.env.DEV) return req
         if (!authTokens) return req
         const user = jwtDecode(authTokens.access)
         const isExpired = dayjs.unix(user.exp || 0).diff(dayjs()) < 1
