@@ -30,13 +30,16 @@ export const useDeleteUser = () => {
 
 export const useChangePassword = () => {
     const api = useAxios()
-    return useMutation({
-        mutationFn: async (data: {
+    return useMutation<
+        AxiosResponse<void>,
+        AxiosError<ValidationErrors>,
+        {
             old_password: string
             new_password: string
-        }) => {
-            await api.patch(`${prefix}/users/me/change-password/`, data)
-        },
+        }
+    >({
+        mutationFn: (data) =>
+            api.patch<void>(`${prefix}/users/me/change-password/`, data),
     })
 }
 

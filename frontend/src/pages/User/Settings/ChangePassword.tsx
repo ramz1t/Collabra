@@ -8,7 +8,7 @@ const ChangePassword = (): React.ReactElement => {
     const { t } = useTranslation()
     const oldPassword = useInput('')
     const newPassword = useInput('')
-    const { mutate: changePassword, isPending } = useChangePassword()
+    const { mutate: changePassword, isPending, error } = useChangePassword()
 
     return (
         <SettingsSection
@@ -39,11 +39,13 @@ const ChangePassword = (): React.ReactElement => {
                     title={t('old_pass')}
                     instance={oldPassword}
                     type="password"
+                    errors={error?.response?.data?.old_password}
                 />
                 <Input
                     title={t('new_pass')}
                     instance={newPassword}
                     type="password"
+                    errors={error?.response?.data?.new_password}
                 />
                 <Button style="primary" type="submit" isLoading={isPending}>
                     {t('change')}
