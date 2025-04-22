@@ -22,5 +22,27 @@ class TeamMixin(GenericViewSet):
 class MemberMixin(GenericViewSet):
     pagination_class = CustomPagination
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    search_fields = ["user__first_name", "user__last_name", "user__email"]
     filterset_fields = ["is_admin"]
     ordering = ["user__first_name", "user__last_name"]
+
+
+class TaskMixin(GenericViewSet):
+    pagination_class = CustomPagination
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    search_fields = ["title"]
+    ordering_fields = ["title", "id", "-id"]
+    filterset_fields = ["status", "tag"]
+    ordering = ["-id"]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        status = self.request.query_params.getlist('status')
+        if status:
+            queryset = queryset.filter(status=status)
+        return queryset
+
+
+class TagMixin(GenericViewSet):
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    ordering = ["title"]
