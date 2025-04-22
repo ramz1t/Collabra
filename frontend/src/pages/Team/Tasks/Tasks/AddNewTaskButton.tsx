@@ -18,7 +18,7 @@ const AddNewTaskButton = ({ status }: { status: string }) => {
                 action={() => setAddNewTaskOpen(true)}
                 className="py-3 w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-accent dark:text-accent-dark font-semibold"
             >
-                <IoAdd />
+                <IoAdd size={'1.2em'} />
                 {t('add_new_task')}
             </Button>
             <AddTaskDialog
