@@ -7,10 +7,15 @@ import { UserRole } from '../../../hooks/useIsAllowed'
 import MembersManagement from './MembersManagement'
 import React from 'react'
 import TeamTags from './TeamTags'
+import MemberStatus from './MemberStatus'
 
 const TeamSettings = (): React.ReactElement => {
     return (
         <SettingsContainer>
+            <PrivateComponent
+                component={<MemberStatus />}
+                allowedRoles={[UserRole.MEMBER]}
+            />
             <PrivateComponent
                 component={<GeneralInfo />}
                 allowedRoles={[UserRole.ADMIN, UserRole.OWNER]}

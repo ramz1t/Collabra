@@ -43,6 +43,7 @@ export interface Team {
     is_member: boolean
     members: Member[]
     member_id: number
+    member_status: string
 }
 
 export interface Invitee extends User {
