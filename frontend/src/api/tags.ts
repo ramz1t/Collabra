@@ -53,13 +53,24 @@ export const useEditTag = (teamSlug: string) => {
     const api = useAxios()
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: (tagId: number): Promise<AxiosResponse<Tag>> =>
-            api.patch(`${prefix}/teams/${teamSlug}/tags/${tagId}/`),
+        mutationFn: ({
+            tagId,
+            data,
+        }: {
+            tagId: number
+            data: {
+                title: string
+                color: string
+            }
+        }): Promise<AxiosResponse<Tag>> =>
+            api.patch(`${prefix}/teams/${teamSlug}/tags/${tagId}/`, data),
         onSuccess: (res) => {
             const updatedTag = res.data
-            const queryKey = ['tags', { teamSlug }]
+            const queryKey = ['tags', teamSlug]
             queryClient.setQueryData<Tag[]>(queryKey, (oldTags) => {
+                console.log(res.data, teamSlug)
                 if (!oldTags) return
+                console.log(oldTags)
                 return oldTags.map((tag) =>
                     tag.id === updatedTag.id ? updatedTag : tag
                 )

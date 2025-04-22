@@ -1,5 +1,5 @@
 import { Tag } from '../../../../types'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { IoPencil } from 'react-icons/io5'
 import { Button, DialogWindow, Input } from '../../../../components'
 import { useTranslation } from 'react-i18next'
@@ -26,8 +26,14 @@ const EditTagDialog = ({
     const { mutate: editTag, isPending: isEditing } = useEditTag(teamSlug!)
 
     const isValid =
-        title.allValid &&
-        (title.value !== tag.title || color !== tag.color)
+        title.allValid && (title.value !== tag.title || color !== tag.color)
+
+    const handleSubmit = useCallback(() => {
+        editTag({
+            tagId: tag.id,
+            data: { title: title.value.trim(), color: color },
+        })
+    }, [editTag, tag, title, color])
 
     return (
         <DialogWindow
@@ -35,7 +41,7 @@ const EditTagDialog = ({
             title={t('edit_tag')}
             isOpen={isOpen}
             isLoading={isEditing}
-            onSuccess={() => editTag(tag.id)}
+            onSuccess={handleSubmit}
             closeOnSuccess
             disabled={!isValid}
             close={() => setIsOpen(false)}
