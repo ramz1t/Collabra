@@ -14,6 +14,7 @@ import TagSelector from './TagSelector'
 import { Member, Step, Tag, Task } from '../../../../types'
 import { objectsDifference } from '../../../../utils'
 import AssigneeSelector from './AssigneeSelector'
+import { UseMutateFunction } from '@tanstack/react-query'
 
 interface AddTaskDialogProps {
     icon: React.ReactNode | React.ReactElement
@@ -21,7 +22,7 @@ interface AddTaskDialogProps {
     open: boolean
     setOpen: React.Dispatch<SetStateAction<boolean>>
     initialTask?: Task
-    onSuccess(data: Record<string, any>): void
+    onSuccess: UseMutateFunction<any, Error, any, unknown>
     status?: string
     clearOnClose?: boolean
     successButtonText: string
@@ -39,31 +40,31 @@ const AddTaskDialog = ({
     successButtonText,
 }: AddTaskDialogProps) => {
     const { t } = useTranslation()
-    const title = useInput(initialTask?.title || '', { isEmpty: true })
-    const description = useInput(initialTask?.description || '', {
+    const title = useInput(initialTask?.title ?? '', { isEmpty: true })
+    const description = useInput(initialTask?.description ?? '', {
         isEmpty: true,
     })
     const nextStep = useInput('')
-    const [steps, setSteps] = useState<Partial<Step>[]>(
-        initialTask?.steps || []
+    const [steps, setSteps] = useState<string[]>(
+        initialTask?.steps.map((step) => step.title) ?? []
     )
     const [requiresReview, setRequiresReview] = useState(
-        initialTask?.requires_review || false
+        initialTask?.requires_review ?? false
     )
-    const [selectedTag, setSelectedTag] = useState<Tag | null | undefined>(
-        initialTask?.tag
+    const [selectedTag, setSelectedTag] = useState<number | null | undefined>(
+        initialTask?.tag?.id ?? null
     )
-    const [assignee, setAssignee] = useState<number | undefined | null>(
-        initialTask?.assignee.id
+    const [assignee, setAssignee] = useState<Member | null>(
+        initialTask?.assignee ?? null
     )
 
     const addStep = () => {
         if (nextStep.value.trim() === '') return
-        setSteps((prev) => [...prev, { title: nextStep.value.trim() }])
+        setSteps((prev) => [...prev, nextStep.value.trim()])
         nextStep.clear()
     }
 
-    const removeStep = (step: Partial<Step>) => {
+    const removeStep = (step: string) => {
         setSteps((prev) => prev.filter((el) => el !== step))
     }
 
@@ -83,7 +84,7 @@ const AddTaskDialog = ({
         tag: selectedTag,
         status: status || initialTask?.status,
         steps: steps,
-        assignee: assignee,
+        assignee: assignee?.id,
     }
 
     const diff = objectsDifference(initialTask || {}, formData)
@@ -91,8 +92,7 @@ const AddTaskDialog = ({
         Object.keys(diff).length > 0 &&
         title.allValid &&
         description.allValid &&
-        assignee !== null &&
-        selectedTag !== null
+        assignee !== null
 
     return (
         <DialogWindow
@@ -100,8 +100,12 @@ const AddTaskDialog = ({
             title={dialogTitle}
             isOpen={open}
             onSuccess={() => {
-                onSuccess(diff)
-                clearOnClose && clearForm()
+                onSuccess(diff, {
+                    onSuccess: () => {
+                        setOpen(false)
+                        clearOnClose && clearForm()
+                    },
+                })
             }}
             successButtonStyle="primary"
             successButtonText={successButtonText}
@@ -110,16 +114,20 @@ const AddTaskDialog = ({
                 clearOnClose && clearForm()
             }}
             disabled={!canSave}
-            closeOnSuccess
             isCover
         >
             <Form>
                 <Input must title={t('title')} instance={title} />
-                <TagSelector
-                    selected={selectedTag}
-                    setSelected={setSelectedTag}
-                    canEdit
-                />
+                <div className="flex flex-col gap-1.5">
+                    <TagSelector
+                        selected={selectedTag}
+                        setSelected={setSelectedTag}
+                        unselectToNull
+                    />
+                    <p className="text-xs font-semibold text-gray-400">
+                        {t('to_tag_settings')}
+                    </p>
+                </div>
                 <TextField
                     must
                     title={t('description')}
@@ -142,9 +150,9 @@ const AddTaskDialog = ({
                                 className="bg-gray-200 dark:bg-slate-700 flex items-center rounded-full pl-3 w-fit gap-0.5"
                                 key={key}
                             >
-                                {step.title}
+                                {step}
                                 <Button
-                                    className="px-2 hover:bg-gray-300 dark:hover:bg-slate-600 min-h-8 rounded-full"
+                                    className="px-2 hover:bg-gray-300 dark:hover:bg-slate-600 min-h-8 !rounded-full"
                                     action={() => removeStep(step)}
                                 >
                                     <IoClose />
