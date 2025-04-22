@@ -32,6 +32,7 @@ import NotFoundRoute from './NotFoundRoute'
 import FireIcon from './FireIcon'
 import TaskTag from './TaskTag'
 import RichDescription from './RichDescription'
+import SmoothContainer from './SmoothContainer'
 
 export {
     PrivateRoute,
@@ -67,5 +68,6 @@ export {
     NotFoundRoute,
     FireIcon,
     TaskTag,
-    RichDescription
+    RichDescription,
+    SmoothContainer,
 }
