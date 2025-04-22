@@ -1,4 +1,4 @@
-import { Divider } from '../index'
+import { Divider, LoadingState } from '../index'
 import cn from 'classnames'
 import { useTranslation } from 'react-i18next'
 import React from 'react'
@@ -43,7 +43,9 @@ const ListWithHeader = ({
                 )}
             >
                 {isLoading
-                    ? loadingState || t('loading')
+                    ? loadingState || (
+                          <LoadingState className="col-span-full py-3" />
+                      )
                     : isEmpty
                       ? emptyState || t('nothing_found')
                       : children}
