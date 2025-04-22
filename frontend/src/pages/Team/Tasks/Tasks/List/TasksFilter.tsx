@@ -1,6 +1,11 @@
 import React, { SetStateAction, useEffect, useState } from 'react'
 import useInput from '../../../../../hooks/useInput'
-import { Button, Checkbox, SearchBar } from '../../../../../components'
+import {
+    Button,
+    Checkbox,
+    SearchBar,
+    SmoothContainer,
+} from '../../../../../components'
 import { useTranslation } from 'react-i18next'
 import { IoChevronDown, IoFilter } from 'react-icons/io5'
 import useScreenSize from '../../../../../hooks/useScreenSize'
@@ -31,6 +36,7 @@ const TasksFilter = ({
             status: checkedStatuses,
             is_deadline_soon: isDeadlineSoon,
             tag: selectedTag || undefined,
+            page_size: 20,
         })
     }, [title.value, checkedStatuses, isDeadlineSoon, selectedTag])
 
@@ -59,15 +65,19 @@ const TasksFilter = ({
                     <IoChevronDown />
                 </span>
             </Button>
-            <div
+            <SmoothContainer
+                duration={200}
+                isOpen={isOpen}
                 className={cn(
-                    'grid gap-6 transition-all duration-200',
-                    isOpen
-                        ? 'max-h-[600px] pb-5 opacity-100'
-                        : 'max-h-0 pb-0 opacity-50 overflow-hidden'
+                    'grid gap-6',
+                    isOpen ? 'pb-5' : 'pb-0 opacity-50'
                 )}
             >
-                <SearchBar placeholder={t('title')} inputInstance={title} />
+                <SearchBar
+                    className="p-0.5"
+                    placeholder={t('title')}
+                    inputInstance={title}
+                />
 
                 <div>
                     <p className="pb-2 font-semibold">{t('status')}</p>
@@ -118,7 +128,7 @@ const TasksFilter = ({
                 >
                     {t('clear_filters')}
                 </Button>
-            </div>
+            </SmoothContainer>
         </div>
     )
 }
