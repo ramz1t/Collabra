@@ -12,6 +12,8 @@ export interface ListWithHeaderProps {
     children: React.ReactNode
     className?: string
     cols?: number
+    actions?: React.ReactNode
+    innerClassName?: string
 }
 
 const ListWithHeader = ({
@@ -23,14 +25,19 @@ const ListWithHeader = ({
     children,
     className,
     cols = 2,
+    actions,
+    innerClassName,
 }: ListWithHeaderProps): React.ReactElement => {
     const { t } = useTranslation()
     return (
         <div className={cn('flex flex-col', className)}>
-            {title && (
-                <p className="font-semibold pb-1 text-gray-600 dark:text-gray-400 text-sm">
-                    {title}
-                </p>
+            {(title || actions) && (
+                <div className="flex pb-1">
+                    <p className="font-semibold pb-1 text-gray-600 dark:text-gray-400 text-sm">
+                        {title}
+                    </p>
+                    <div className="ml-auto">{actions}</div>
+                </div>
             )}
             <Divider horizontal className="bg-gray-200" />
             <ul
@@ -39,7 +46,8 @@ const ListWithHeader = ({
                 }}
                 className={cn(
                     'mt-3 grid max-md:!grid-cols-1 gap-3 max-h-80 overflow-y-auto overscroll-contain',
-                    isEmpty ? '!grid-cols-1' : null
+                    isEmpty ? '!grid-cols-1' : null,
+                    innerClassName
                 )}
             >
                 {isLoading
