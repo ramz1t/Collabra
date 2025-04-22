@@ -37,9 +37,11 @@ const PasswordSubmit = ({
                     { ...submitData, password: password.value },
                     {
                         ...options,
-                        onError: () => {
+                        onError: (err: any) => {
                             setIsError(true)
-                            options?.onError()
+                            if (typeof options?.onError === 'function') {
+                                options.onError(err)
+                            }
                         },
                     }
                 )
