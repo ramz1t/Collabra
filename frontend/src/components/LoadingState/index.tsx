@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import React from 'react'
+import cn from 'classnames'
 
 // All loading messages' variants
 // Needed for auto-parser
@@ -7,12 +8,16 @@ import React from 'react'
 
 export interface LoadingStateProps {
     titleKey?: string
+    className?: string
 }
 
-const LoadingState = ({ titleKey }: LoadingStateProps): React.ReactElement => {
+const LoadingState = ({
+    titleKey,
+    className,
+}: LoadingStateProps): React.ReactElement => {
     const { t } = useTranslation()
     return (
-        <div className="grow flex items-center justify-center">
+        <div className={cn('grow flex items-center justify-center', className)}>
             <div className="flex items-center gap-3">
                 <div role="status">
                     <svg
