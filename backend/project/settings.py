@@ -196,3 +196,10 @@ AVATAR = {
 }
 
 USERNAME_POSTFIX_RANGE = (10000, 99999)
+
+STATUS_CHOICES = [
+    ('to_do', "To do"),
+    ('in_progress', "In progress"),
+    ('need_review', "Needs review"),
+    ('done', "Done"),
+]
