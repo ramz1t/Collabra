@@ -1,5 +1,9 @@
 import { IoEllipsisVerticalSharp, IoTrashOutline } from 'react-icons/io5'
-import { DialogWindow, LoadMoreMarker } from '../../../../../components'
+import {
+    DialogWindow,
+    LoadingState,
+    LoadMoreMarker,
+} from '../../../../../components'
 import { useTranslation } from 'react-i18next'
 import TaskCard from './Card'
 import { useState } from 'react'
@@ -71,7 +75,7 @@ const Column = ({ canAdd = true, status, moveColumn, index }: ColumnProps) => {
                 {marker}
                 <p className="font-semibold text-lg">{t(status)}</p>
                 <span className="bg-white dark:bg-slate-800 rounded-full px-5 font-bold py-1 shadow-md">
-                    {tasks ? tasks.length : 0}
+                    {tasks?.length ?? 0}
                 </span>
                 <Menu actions={menuActions} className="ml-auto" position="left">
                     <IoEllipsisVerticalSharp size="1.2em" />
@@ -99,6 +103,7 @@ const Column = ({ canAdd = true, status, moveColumn, index }: ColumnProps) => {
                     />
                 </ul>
             )}
+            {isLoading && <LoadingState />}
         </div>
     )
 }
