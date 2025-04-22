@@ -9,6 +9,7 @@ import {
     Avatar,
     DialogWindow,
     RichDescription,
+    SmoothContainer,
     TaskTag,
 } from '../../../../../components'
 import React, { memo, useContext, useState } from 'react'
@@ -56,20 +57,18 @@ const StepsProgress = ({
                 <IoCheckmarkDoneOutline size="1.2em" />
                 {doneCount}/{task.steps.length}
             </span>
-            <div
-                className={cn(
-                    'transition-all duration-200',
-                    isOpen ? 'pt-4' : 'pt-0'
-                )}
+            <SmoothContainer
+                duration={200}
+                isOpen={isOpen && parentOpen}
+                className={cn(isOpen ? 'pt-4' : 'pt-0')}
             >
                 <TaskSteps
                     taskId={task.id}
                     disabled={task.status === 'done'}
                     steps={task.steps}
                     setDoneCounter={setDoneCount}
-                    isOpen={isOpen && parentOpen}
                 />
-            </div>
+            </SmoothContainer>
         </div>
     )
 }
@@ -79,25 +78,31 @@ const TaskCard = ({ task }: CardProps) => {
     const [isDescriptionOpen, setIsDescriptionOpen] = useState(false)
     const { t } = useTranslation()
 
+    const openTransitionDuration = 200
+
     return (
         <li
             className="bg-white dark:bg-slate-800 rounded-lg border dark:border-slate-700 transition-all"
-            style={{ '--card-ms': '200ms' } as React.CSSProperties}
+            style={
+                {
+                    '--card-ms': `${openTransitionDuration}ms`,
+                } as React.CSSProperties
+            }
         >
             {/* TAG AND MENU */}
-            <div
+            <SmoothContainer
+                isOpen={isOpen}
                 className={cn(
                     'flex items-center duration-[--card-ms] pl-4 pr-1.5',
-                    isOpen
-                        ? 'max-h-52 pt-4 opacity-100'
-                        : 'max-h-0 pt-0 opacity-0'
+                    isOpen ? 'pt-4' : 'pt-0'
                 )}
+                duration={openTransitionDuration}
             >
                 <TaskTag tag={task.tag} />
                 <span className="ml-auto">
                     <TaskMenu task={task} />
                 </span>
-            </div>
+            </SmoothContainer>
 
             {/* TITLE AND EXPAND BUTTON */}
             <div
@@ -108,7 +113,7 @@ const TaskCard = ({ task }: CardProps) => {
                 onClick={() => setIsOpen((prev) => !prev)}
             >
                 {task.status === 'done' && (
-                    <span className="text-green-600 text-lg">
+                    <span className="text-green-600 text-xl">
                         <IoCheckmark />
                     </span>
                 )}
@@ -129,12 +134,14 @@ const TaskCard = ({ task }: CardProps) => {
             </div>
 
             {/* DESCRIPTION AND STEPS */}
-            <div
+            <SmoothContainer
+                isOpen={isOpen}
+                duration={openTransitionDuration}
                 className={cn(
-                    'px-4 grid overflow-hidden duration-[--card-ms]',
+                    'px-4',
                     isOpen
-                        ? 'pb-4 max-h-[1000px] border-b dark:border-b-slate-700 opacity-100'
-                        : 'pb-0 max-h-0 border-0 opacity-0'
+                        ? 'pb-4 border-b dark:border-b-slate-700'
+                        : 'pb-0 border-0'
                 )}
             >
                 <p
@@ -153,15 +160,15 @@ const TaskCard = ({ task }: CardProps) => {
                     <RichDescription text={task.description} />
                 </DialogWindow>
                 <StepsProgress task={task} parentOpen={isOpen} />
-            </div>
+            </SmoothContainer>
 
             {/* FOOTER */}
-            <div
+            <SmoothContainer
+                isOpen={isOpen}
+                duration={openTransitionDuration}
                 className={cn(
-                    'px-4 flex items-center gap-3.5 overflow-hidden duration-[--card-ms]',
-                    isOpen
-                        ? 'max-h-52 py-4 opacity-100'
-                        : 'max-h-0 py-0 opacity-0'
+                    'px-4 flex items-center gap-3.5',
+                    isOpen ? 'py-4' : 'py-0'
                 )}
             >
                 <Link
@@ -170,9 +177,10 @@ const TaskCard = ({ task }: CardProps) => {
                 >
                     <Avatar user={task.assignee.user} />
                     {task.assignee.user.first_name}
+                    {task.assignee.status && ` (${task.assignee.status})`}
                 </Link>
                 <TaskStats task={task} />
-            </div>
+            </SmoothContainer>
         </li>
     )
 }
