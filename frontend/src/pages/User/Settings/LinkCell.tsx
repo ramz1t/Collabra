@@ -19,7 +19,7 @@ const LinkCell = ({
     const inputInstance = useInput(links[index])
 
     return (
-        <li className="flex gap-5 items-center">
+        <li className="flex gap-5 items-start">
             <Input
                 instance={inputInstance}
                 onChange={(value) => {
