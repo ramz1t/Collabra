@@ -70,6 +70,8 @@ const useAxios = () => {
         (err) => {
             if (err.response.data?.non_field_errors) {
                 error(err.response.data?.non_field_errors.join('\n'))
+            } else if (err?.data?.detail) {
+                error(err?.data?.detail)
             } else {
                 error(err?.data?.message)
             }
