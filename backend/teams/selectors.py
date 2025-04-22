@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.db.models.query import QuerySet
 
-from .models import Team, Member
+from .models import Team, Member, Task, TaskTag, TaskStep
 
 
 User = get_user_model()
@@ -44,7 +44,7 @@ def is_user_invited(user_id: int, team: Team) -> bool:
 
 
 def get_users_to_invite(info: str) -> User:
-    return User.objects.filter(Q(email__iexact=info) | Q(username__iexact=info))
+    return User.objects.filter(Q(email=info) | Q(username=info))
 
 
 def get_user_or_404(**fields) -> User:
@@ -90,3 +90,31 @@ def am_i_in_members(
     me_member = Member.objects.get(team=team, user=me)
 
     return members.contains(me_member)
+
+
+def get_tasks(**fields) -> QuerySet[Task]:
+    return Task.objects.filter(**fields)
+
+
+def get_task_or_404(**fields) -> Task:
+    return get_object_or_404(Task, **fields)
+
+
+def get_tags(**fields) -> QuerySet[TaskTag]:
+    return TaskTag.objects.filter(**fields)
+
+
+def get_tag_or_404(**fields) -> TaskTag:
+    return get_object_or_404(TaskTag, **fields)
+
+
+def get_steps(**fields) -> QuerySet[TaskStep]:
+    return TaskStep.objects.filter(**fields).order_by('id')
+
+
+def get_step_or_404(**fields) -> TaskStep:
+    return get_object_or_404(TaskStep, **fields)
+
+
+def is_user_assignee_by_task(user: User, task: Task) -> bool:
+    return task.assignee.user == user
