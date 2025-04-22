@@ -23,6 +23,7 @@ class TeamRetrieveSerializer(serializers.Serializer):
     is_admin = serializers.SerializerMethodField()
     is_owner = serializers.SerializerMethodField()
     member_id = serializers.SerializerMethodField()
+    member_status = serializers.SerializerMethodField()
 
     def get_is_admin(self, team):
         return selectors.is_user_admin_by_team(self.context["user"], team)
@@ -32,6 +33,9 @@ class TeamRetrieveSerializer(serializers.Serializer):
 
     def get_member_id(self, team):
         return selectors.get_member_or_404(user=self.context["user"], team=team).id
+
+    def get_member_status(self, team):
+        return selectors.get_member_or_404(user=self.context["user"], team=team).status
 
 
 class TeamShortRetrieveSerializer(serializers.Serializer):
@@ -90,3 +94,7 @@ class TransferSerializer(serializers.Serializer):
             raise ValidationError(_("You can only transfer the group to an admin"))
 
         return user
+
+
+class LeaveSerializer(serializers.Serializer):
+    password = fields.PasswordField()
