@@ -7,6 +7,7 @@ export interface LoadMoreMarkerProps {
     error?: Error | null
     hasNextPage: boolean
     fetch(): void
+    className?: string
 }
 
 const LoadMoreMarker = ({
@@ -14,6 +15,7 @@ const LoadMoreMarker = ({
     error,
     fetch,
     hasNextPage,
+    className,
 }: LoadMoreMarkerProps): React.ReactElement | undefined => {
     const loadMoreMarkerRef = useRef<HTMLSpanElement>(null)
     const { t } = useTranslation()
@@ -51,7 +53,7 @@ const LoadMoreMarker = ({
 
     return (
         <span className="mx-auto min-h-[1px] min-w-[1px] col-span-full">
-            {isFetching && <LoadingState />}
+            {isFetching && <LoadingState className={className} />}
             {error && t('error')}
             <span
                 ref={loadMoreMarkerRef}
