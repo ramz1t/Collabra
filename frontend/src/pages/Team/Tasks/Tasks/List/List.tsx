@@ -5,11 +5,17 @@ import { useTranslation } from 'react-i18next'
 import TasksFilter from './TasksFilter'
 import { useState } from 'react'
 import AddNewTaskButton from '../AddNewTaskButton'
+import { LoadMoreMarker } from '../../../../../components'
 
 const List = () => {
     const { teamSlug } = useParams()
     const [filters, setFilters] = useState({})
-    const { data: tasks } = useTasks(teamSlug!, filters)
+    const {
+        data: tasks,
+        isFetching,
+        hasNextPage,
+        fetchNextPage,
+    } = useTasks(teamSlug!, filters)
     const { t } = useTranslation()
 
     return (
@@ -30,6 +36,12 @@ const List = () => {
                     {tasks?.map((task) => (
                         <TaskRow task={task} key={task.id} />
                     ))}
+                    <LoadMoreMarker
+                        isFetching={isFetching}
+                        hasNextPage={hasNextPage}
+                        fetch={fetchNextPage}
+                        className="mt-7"
+                    />
                 </ul>
             </div>
             <div className="max-md:row-start-1 max-lg:ml-auto h-fit pt-5 w-full">
