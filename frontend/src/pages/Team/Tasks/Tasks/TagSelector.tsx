@@ -67,6 +67,7 @@ const TagSelector = ({
                                     setSelected(tag.id)
                                 }
                             }}
+                            className="!rounded-full"
                         >
                             <TaskTag tag={tag} />
                         </Button>
