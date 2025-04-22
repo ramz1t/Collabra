@@ -8,6 +8,7 @@ import useScreenSize from '../../hooks/useScreenSize'
 import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from '../../../tailwind.config'
 import cn from 'classnames'
+import { createPortal } from 'react-dom'
 
 export interface DialogWindowProps {
     icon?: React.ReactElement | React.ReactNode
@@ -109,7 +110,7 @@ const DialogWindow = ({
         }
     }, [onSuccess, disabled, closeOnSuccess])
 
-    return (
+    return createPortal(
         <AnimatePresence>
             {isOpen && (
                 <motion.div
@@ -118,17 +119,11 @@ const DialogWindow = ({
                     exit={{ opacity: 0 }}
                     transition={{ duration: duration / 1000 }}
                     key={`${isTablet}`}
-                    className="fixed z-[900] h-dvh w-dvw bg-slate-500/25 dark:bg-slate-950/65 backdrop-blur-sm top-0 left-0 flex items-center justify-center"
+                    className="fixed z-[999] h-dvh w-dvw bg-slate-500/25 dark:bg-slate-950/65 backdrop-blur-sm top-0 left-0 flex items-center justify-center"
                 >
                     <motion.div
                         initial={{
                             scale: 0.85,
-                            translateX: isTablet
-                                ? fullConfig.theme.spacing['nav-half']
-                                : 0,
-                            translateY: isTablet
-                                ? 0
-                                : fullConfig.theme.spacing['nav-half'],
                         }}
                         animate={{ scale: 1 }}
                         exit={{ scale: 1.15 }}
@@ -137,7 +132,7 @@ const DialogWindow = ({
                             isCover
                                 ? 'max-md:max-h-slot max-md:min-h-slot md:rounded-lg'
                                 : 'rounded-lg max-md:w-11/12',
-                            'max-h-slot md:max-h-[90dvh] bg-white dark:bg-slate-900 overflow-y-auto max-w-2xl w-full max-md:-translate-y-nav-half md:translate-x-nav-half shadow-2xl overflow-hidden flex flex-col'
+                            'max-md:min-h-full md:max-h-[90dvh] bg-white dark:bg-slate-900 overflow-y-auto max-w-2xl w-full shadow-2xl overflow-hidden flex flex-col'
                         )}
                         ref={dialogRef}
                     >
@@ -189,7 +184,8 @@ const DialogWindow = ({
                     </motion.div>
                 </motion.div>
             )}
-        </AnimatePresence>
+        </AnimatePresence>,
+        document.body
     )
 }
 

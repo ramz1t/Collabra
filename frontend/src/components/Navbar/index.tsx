@@ -134,7 +134,7 @@ const Navbar = (): React.ReactElement => {
         <nav
             ref={navbarRef}
             className={cn(
-                'navbar-area grid w-fit max-w-full hover:md:max-w-[300px] md:max-w-nav max-md:w-full grid-cols-[1fr_1fr] md:flex flex-col gap-3 p-3 hover:md:px-5 md:h-full fixed z-[999] bg-white dark:bg-slate-800 top-0 group/navbar transition-all shadow-md hover:md:shadow-xl outline-1 duration-150 overflow-x-hidden overflow-y-hidden md:overflow-y-auto',
+                'navbar-area grid w-fit max-w-full hover:md:max-w-[300px] md:max-w-nav max-md:w-full grid-cols-[1fr_1fr] md:flex flex-col gap-3 p-3 hover:md:px-5 md:h-full fixed z-[998] bg-white dark:bg-slate-800 top-0 group/navbar transition-all shadow-md hover:md:shadow-xl outline-1 duration-150 overflow-x-hidden overflow-y-hidden md:overflow-y-auto',
                 open ? 'max-md:max-h-full' : 'max-md:max-h-nav'
             )}
         >
