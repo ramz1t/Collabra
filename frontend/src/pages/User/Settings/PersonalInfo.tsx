@@ -195,7 +195,7 @@ const PersonalInfo = (): React.ReactElement => {
                                         <LinkCell
                                             links={links}
                                             index={key}
-                                            key={key}
+                                            key={`${key}_${links[key]}`}
                                             setLinks={setLinks}
                                             errors={
                                                 Array.isArray(possibleError)
