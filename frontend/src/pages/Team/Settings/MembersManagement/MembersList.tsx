@@ -107,29 +107,26 @@ const MembersList = (): React.ReactElement => {
                     />
                 </div>
             </div>
-            {isLoading && t('loading')}
-            {members && (
-                <ListWithHeader
-                    cols={1}
-                    isLoading={isLoading}
-                    isEmpty={members.length === 0}
-                >
-                    {members.map((member) => (
-                        <MemberCell
-                            member={member}
-                            key={member.id}
-                            toggleMemberSelection={toggleMemberSelection}
-                            selected={selectedMembers.includes(member.id)}
-                        />
-                    ))}
-                    <LoadMoreMarker
-                        hasNextPage={hasNextPage}
-                        error={error}
-                        fetch={fetchNextPage}
-                        isFetching={isFetchingNextPage}
+            <ListWithHeader
+                cols={1}
+                isLoading={isLoading}
+                isEmpty={members?.length === 0}
+            >
+                {members?.map((member) => (
+                    <MemberCell
+                        member={member}
+                        key={member.id}
+                        toggleMemberSelection={toggleMemberSelection}
+                        selected={selectedMembers.includes(member.id)}
                     />
-                </ListWithHeader>
-            )}
+                ))}
+                <LoadMoreMarker
+                    hasNextPage={hasNextPage}
+                    error={error}
+                    fetch={fetchNextPage}
+                    isFetching={isFetchingNextPage}
+                />
+            </ListWithHeader>
         </div>
     )
 }
