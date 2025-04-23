@@ -106,7 +106,7 @@ const AssigneeSelector = ({ assignee, setAssignee }: AssigneeSelectorProps) => {
                                 </p>
                             )}
                             <Button
-                                className="ml-auto text-accent bg-gray-200 font-semibold !rounded-full px-3"
+                                className="ml-auto text-accent dark:text-accent-dark bg-gray-200 dark:bg-gray-800 font-semibold !rounded-full px-3"
                                 action={() => handleClick(member)}
                             >
                                 {member.id === assignee?.id
