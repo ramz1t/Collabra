@@ -19,7 +19,7 @@ const CreateTeam = (): React.ReactElement => {
 
 const CreateTeamForm = () => {
     const { t } = useTranslation()
-    const { mutate: createTeam, isPending } = useCreateTeam()
+    const { mutate: createTeam, isPending, error } = useCreateTeam()
     const name = useInput('')
 
     return (
@@ -38,7 +38,13 @@ const CreateTeamForm = () => {
                 size="grid"
             />
             <div className="flex flex-col justify-between gap-3">
-                <Input instance={name} title={t('team_name')} must autoRef />
+                <Input
+                    instance={name}
+                    title={t('team_name')}
+                    must
+                    autoRef
+                    errors={error?.response?.data?.title}
+                />
                 <Button
                     style="primary"
                     type="submit"

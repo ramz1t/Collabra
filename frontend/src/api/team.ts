@@ -9,8 +9,15 @@ import {
 import useAxios from '../hooks/useAxios'
 import { useNavigate } from 'react-router-dom'
 import { prefix } from './index'
-import { AxiosResponse } from 'axios'
-import { Member, PaginatedResponse, SearchParams, Team } from '../types'
+import { AxiosError, AxiosResponse } from 'axios'
+import {
+    Member,
+    PaginatedResponse,
+    SearchParams,
+    Team,
+    User,
+    ValidationErrors,
+} from '../types'
 
 const removeTeamFromCachedQueries = async (
     teamId: number,
@@ -47,10 +54,12 @@ const invalidateCachedTeam = async (
 export const useCreateTeam = () => {
     const api = useAxios()
     const navigate = useNavigate()
-    return useMutation({
-        mutationFn: (
-            data: Record<string, any>
-        ): Promise<AxiosResponse<Team>> => {
+    return useMutation<
+        AxiosResponse<Team>,
+        AxiosError<ValidationErrors>,
+        { title: string }
+    >({
+        mutationFn: (data) => {
             return api.post(`${prefix}/teams/`, data)
         },
         onSuccess: (res) => navigate(`/teams/${res.data.slug}/settings`),
