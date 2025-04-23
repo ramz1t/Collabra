@@ -66,6 +66,7 @@ const Column = ({ canAdd = true, status, moveColumn, index }: ColumnProps) => {
             action: () => setIsDeleteDialogOpen(true),
             icon: <LuRectangleVertical />,
             color: '#e82c2c',
+            disabled: !tasks?.length,
         },
     ].filter(Boolean) as MenuAction[]
 

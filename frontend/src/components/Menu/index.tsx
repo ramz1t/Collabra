@@ -121,7 +121,7 @@ const Menu = ({
                         >
                             {actions.map((action, key) => (
                                 <button
-                                    className="flex items-center justify-between whitespace-nowrap gap-8 px-3 min-h-9 disabled:hover:cursor-not-allowed disabled:text-gray-300 dark:disabled:text-gray-600 [&:not(:disabled)]:hover:bg-gray-100/50 [&:not(:disabled)]:dark:hover:bg-white/[0.025]"
+                                    className="flex items-center justify-between whitespace-nowrap gap-8 px-3 min-h-9 disabled:hover:cursor-not-allowed disabled:!text-gray-300 dark:disabled:!text-gray-600 [&:not(:disabled)]:hover:bg-gray-100/50 [&:not(:disabled)]:dark:hover:bg-white/[0.025]"
                                     key={key}
                                     onClick={() => {
                                         action.action()

@@ -69,15 +69,11 @@ const TasksFilter = ({
                 duration={200}
                 isOpen={isOpen}
                 className={cn(
-                    'grid gap-6',
+                    'grid gap-6 px-0.5',
                     isOpen ? 'pb-5' : 'pb-0 opacity-50'
                 )}
             >
-                <SearchBar
-                    className="p-0.5"
-                    placeholder={t('title')}
-                    inputInstance={title}
-                />
+                <SearchBar placeholder={t('title')} inputInstance={title} />
 
                 <div>
                     <p className="pb-2 font-semibold">{t('status')}</p>
