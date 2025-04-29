@@ -25,7 +25,7 @@ const PrivateRoute = ({ children }: { children?: JSX.Element[] }) => {
                             <h1 className="text-5xl font-bold">
                                 {t('no_access')}
                             </h1>
-                            <p className="text-2xl text-gray-600">
+                            <p className="text-2xl text-gray-600 dark:text-gray-400">
                                 {t('login_to_access')}
                             </p>
                             <div className="flex gap-5 mt-5">

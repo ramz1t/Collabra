@@ -69,7 +69,7 @@ const TasksFilter = ({
                 duration={200}
                 isOpen={isOpen}
                 className={cn(
-                    'grid gap-6 px-0.5',
+                    'grid gap-6 px-0.5 pt-0.5',
                     isOpen ? 'pb-5' : 'pb-0 opacity-50'
                 )}
             >
