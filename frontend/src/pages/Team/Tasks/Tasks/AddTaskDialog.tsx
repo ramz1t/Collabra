@@ -8,7 +8,7 @@ import {
     TextField,
 } from '../../../../components'
 import { useTranslation } from 'react-i18next'
-import React, { SetStateAction, useState } from 'react'
+import React, { SetStateAction, useCallback, useMemo, useState } from 'react'
 import useInput from '../../../../hooks/useInput'
 import TagSelector from './TagSelector'
 import { Member, Step, Tag, Task } from '../../../../types'
@@ -58,41 +58,90 @@ const AddTaskDialog = ({
         initialTask?.assignee ?? null
     )
 
-    const addStep = () => {
-        if (nextStep.value.trim() === '') return
-        setSteps((prev) => [...prev, nextStep.value.trim()])
+    const addStep = useCallback(() => {
+        const nextStepValue = nextStep.value.trim()
+        if (nextStepValue === '') return
+        setSteps((prev) => [...prev, nextStepValue])
         nextStep.clear()
-    }
+    }, [nextStep.value, setSteps, nextStep])
 
-    const removeStep = (step: string) => {
-        setSteps((prev) => prev.filter((el) => el !== step))
-    }
+    const removeStep = useCallback(
+        (step: string) => {
+            setSteps((prev) => prev.filter((el) => el !== step))
+        },
+        [setSteps]
+    )
 
-    const clearForm = () => {
+    const clearForm = useCallback(() => {
         title.clear()
         description.clear()
         setSelectedTag(null)
         setRequiresReview(false)
         setSteps([])
         setAssignee(null)
-    }
+    }, [
+        title,
+        description,
+        setSelectedTag,
+        setRequiresReview,
+        setSteps,
+        setAssignee,
+    ])
 
-    const formData = {
-        title: title.value.trim(),
-        description: description.value.trim(),
-        requires_review: requiresReview,
-        tag: selectedTag,
-        status: status || initialTask?.status,
-        steps: steps,
-        assignee: assignee?.id,
-    }
+    const closeForm = useCallback(() => {
+        setOpen(false)
+        clearOnClose && clearForm()
+    }, [setOpen, clearForm, clearOnClose])
 
-    const diff = objectsDifference(initialTask || {}, formData)
+    const formData = useMemo(
+        () => ({
+            title: title.value.trim(),
+            description: description.value.trim(),
+            requires_review: requiresReview,
+            tag: selectedTag,
+            steps,
+            assignee: assignee?.id,
+        }),
+        [
+            title.value,
+            description.value,
+            requiresReview,
+            selectedTag,
+            steps,
+            assignee,
+        ]
+    )
+
+    const diff = useMemo(
+        () =>
+            objectsDifference(initialTask || {}, formData, {
+                tag: (
+                    lhs: Tag | null | undefined,
+                    rhs: number | null
+                ): boolean => {
+                    const lhsUnset = lhs === null || lhs === undefined
+                    const rhsUnset = rhs === null
+                    if (lhsUnset && rhsUnset) return true
+                    if (lhs && rhs !== null) return lhs.id === rhs
+                    return false
+                },
+                assignee: (lhs: Member | null, rhs: number | null) => {
+                    return lhs?.id === rhs
+                },
+                steps: (lhs: Step[] = [], rhs: string[] = []) => {
+                    if (lhs.length !== rhs.length) return false
+                    return lhs.every((step, index) => step.title === rhs[index])
+                },
+            }),
+        [formData, initialTask]
+    )
+
     const canSave =
         Object.keys(diff).length > 0 &&
         title.allValid &&
         description.allValid &&
         assignee !== null
+    const isEditMode = !!initialTask
 
     return (
         <DialogWindow
@@ -100,19 +149,16 @@ const AddTaskDialog = ({
             title={dialogTitle}
             isOpen={open}
             onSuccess={() => {
-                onSuccess(diff, {
-                    onSuccess: () => {
-                        setOpen(false)
-                        clearOnClose && clearForm()
-                    },
-                })
+                onSuccess(
+                    isEditMode ? { ...diff, status } : { ...formData, status },
+                    {
+                        onSuccess: closeForm,
+                    }
+                )
             }}
             successButtonStyle="primary"
             successButtonText={successButtonText}
-            close={() => {
-                setOpen(false)
-                clearOnClose && clearForm()
-            }}
+            close={closeForm}
             disabled={!canSave}
             isCover
         >
