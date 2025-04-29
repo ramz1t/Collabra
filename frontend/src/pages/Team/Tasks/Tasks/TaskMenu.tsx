@@ -5,12 +5,13 @@ import {
     IoCheckmarkCircleOutline,
     IoEllipsisVerticalSharp,
     IoFlaskOutline,
+    IoPauseOutline,
     IoPencilOutline,
     IoPlayBackOutline,
     IoPlayOutline,
     IoTrashOutline,
 } from 'react-icons/io5'
-import { useContext, useState } from 'react'
+import { useContext, useState, useMemo } from 'react'
 import { DialogWindow } from '../../../../components'
 import AddTaskDialog from './AddTaskDialog'
 import { useDeleteTasks, useUpdateTask } from '../../../../api/tasks'
@@ -25,78 +26,88 @@ const TaskMenu = ({ task }: { task: Task }) => {
     const isAdmin = useIsAllowed([UserRole.ADMIN, UserRole.OWNER])
     const isAssignee = user?.user_id === task.assignee.user.id
 
+    const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false)
+    const [isEditDialogOpen, setEditDialogOpen] = useState(false)
+
     const { mutate: updateTask } = useUpdateTask(teamSlug!, task.id)
     const { mutate: deleteTask, isPending: isDeleting } = useDeleteTasks(
         teamSlug!
     )
 
-    const isToDo = task.status === 'to_do'
-    const isInProgress = task.status === 'in_progress'
-    const isNeedReview = task.status === 'need_review'
-    const isDone = task.status === 'done'
+    const canSeeMenu = isAdmin || isAssignee
+    if (!canSeeMenu) return null
 
-    const actions: MenuAction[] = [
-        isToDo && {
-            title: t('start_the_task'),
-            icon: <IoPlayOutline />,
-            action: () => updateTask({ status: 'in_progress' }),
-        },
-        !isNeedReview &&
-            !isDone && {
+    const handleStatusUpdate = (status: Task['status']) => () => {
+        updateTask({ status })
+    }
+
+    const actions: MenuAction[] = useMemo(() => {
+        const list: (MenuAction | false)[] = [
+            task.status === 'to_do' && {
+                title: t('start_the_task'),
+                icon: <IoPlayOutline />,
+                action: handleStatusUpdate('in_progress'),
+            },
+            !['to_do', 'done'].includes(task.status) && {
+                title: t('pause_the_task'),
+                icon: <IoPauseOutline />,
+                action: handleStatusUpdate('to_do'),
+            },
+            !['need_review', 'done'].includes(task.status) && {
                 title: t('send_to_review'),
                 icon: <IoFlaskOutline />,
-                action: () => updateTask({ status: 'need_review' }),
+                action: handleStatusUpdate('need_review'),
             },
-        !isDone &&
-            (isAdmin || !task.requires_review) && {
-                title: t('mark_as_done'),
-                icon: <IoCheckmarkCircleOutline />,
-                action: () => updateTask({ status: 'done' }),
-            },
-        isDone &&
+            ['need_review', 'done'].includes(task.status) &&
+                isAdmin && {
+                    title: t('needs_more_work'),
+                    icon: <IoPlayBackOutline />,
+                    action: handleStatusUpdate('in_progress'),
+                },
+            task.status !== 'done' &&
+                (isAdmin || !task.requires_review) && {
+                    title: t('mark_as_done'),
+                    icon: <IoCheckmarkCircleOutline />,
+                    action: handleStatusUpdate('done'),
+                },
             isAdmin && {
-                title: t('needs_more_work'),
-                icon: <IoPlayBackOutline />,
-                action: () => updateTask({ status: 'in_progress' }),
+                title: t('edit'),
+                icon: <IoPencilOutline />,
+                action: () => setEditDialogOpen(true),
             },
-        isAdmin && {
-            title: t('edit'),
-            icon: <IoPencilOutline />,
-            action: () => setIsEditDialogOpen(true),
-        },
-        isAdmin && {
-            title: t('delete'),
-            icon: <IoTrashOutline />,
-            action: () => setIsDeleteDialogOpen(true),
-            color: '#e82c2c',
-        },
-    ].filter(Boolean) as MenuAction[]
+            isAdmin && {
+                title: t('delete'),
+                icon: <IoTrashOutline />,
+                action: () => setDeleteDialogOpen(true),
+                color: '#e82c2c',
+            },
+        ]
 
-    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
-    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
-
-    if (!(isAdmin || isAssignee)) return
+        return list.filter(Boolean) as MenuAction[]
+    }, [task.status, isAdmin, task.requires_review, t])
 
     return (
         <>
             <Menu actions={actions} position="left">
                 <IoEllipsisVerticalSharp size="1.2em" />
             </Menu>
+
             <DialogWindow
                 icon={<IoTrashOutline />}
                 description={t('delete_task_dialog_desc')}
                 isOpen={isDeleteDialogOpen}
-                close={() => setIsDeleteDialogOpen(false)}
-                onSuccess={() => deleteTask({ id: task.id })}
+                close={() => setDeleteDialogOpen(false)}
+                onSuccess={() => deleteTask({ id: [task.id] })}
                 successButtonText={t('delete')}
                 isLoading={isDeleting}
                 closeOnSuccess
             />
+
             <AddTaskDialog
                 icon={<IoPencilOutline />}
                 title={t('edit_task')}
                 open={isEditDialogOpen}
-                setOpen={setIsEditDialogOpen}
+                setOpen={setEditDialogOpen}
                 onSuccess={updateTask}
                 initialTask={task}
                 successButtonText={t('save')}
