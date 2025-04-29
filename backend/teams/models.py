@@ -40,6 +40,7 @@ class Task(models.Model):
     assignee = models.ForeignKey(Member, related_name='assigned_tasks', null=True, on_delete=models.SET_NULL)
     creator = models.ForeignKey(Member, related_name='created_tasks', null=True, on_delete=models.SET_NULL)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     team = models.ForeignKey(Team, related_name="tasks", on_delete=models.CASCADE)
 
     def __str__(self):

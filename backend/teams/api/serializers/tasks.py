@@ -38,6 +38,8 @@ class TaskSerializer(serializers.Serializer):
     assignee = serializers.SerializerMethodField()
     attachments = serializers.SerializerMethodField()
     messages_count = serializers.SerializerMethodField()
+    created_at = serializers.DateTimeField()
+    updated_at = serializers.DateTimeField()
 
     def get_tag(self, task):
         if task.tag is None:
@@ -61,6 +63,13 @@ class TaskSerializer(serializers.Serializer):
 
     def get_messages_count(self, task):
         return 0
+
+
+class TaskDeleteSerializer(serializers.Serializer):
+    id = serializers.ListField(
+        child=serializers.IntegerField(), required=False
+    )
+    status = serializers.CharField(required=False)
 
 
 class TagCreateUpdateSerializer(serializers.Serializer):
