@@ -98,10 +98,12 @@ export const useTeam = (slug: string) => {
 export const useUpdateTeam = (id: number) => {
     const api = useAxios()
     const queryClient = useQueryClient()
-    return useMutation({
-        mutationFn: async (
-            data: Partial<Team>
-        ): Promise<AxiosResponse<Team>> => {
+    return useMutation<
+        AxiosResponse<Team>,
+        AxiosError<ValidationErrors>,
+        Partial<Team>
+    >({
+        mutationFn: async (data) => {
             return await api.patch(`${prefix}/teams/${id}/`, data)
         },
         onSuccess: (res) => {

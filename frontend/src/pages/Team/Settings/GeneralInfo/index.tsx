@@ -15,18 +15,19 @@ import { objectsDifference } from '../../../../utils'
 import useInput from '../../../../hooks/useInput'
 import TeamContext, { ITeamContext } from '../../../../contexts/TeamContext'
 
-const Index = (): React.ReactElement => {
+const GeneralInfo = (): React.ReactElement => {
     const { t } = useTranslation()
     const { teamSlug } = useParams()
     const { team: contextTeam } = useContext(TeamContext) as ITeamContext
     const [hasChanges, setHasChanges] = useState<boolean>(false)
-    const name = useInput<string>('', { isEmpty: false })
-    const description = useInput<string>('')
+    const name = useInput('', { isEmpty: false })
+    const description = useInput('')
     const { data: team, isLoading } = useTeam(teamSlug!)
     const {
         mutate: updateTeam,
         mutateAsync: updateTeamAsync,
         isPending: mutationLoading,
+        error,
     } = useUpdateTeam(contextTeam!.id)
 
     const formData = {
@@ -75,11 +76,17 @@ const Index = (): React.ReactElement => {
                             updateTeam(objectsDifference(team, formData))
                         }}
                     >
-                        <Input instance={name} title={t('team_name')} must />
+                        <Input
+                            instance={name}
+                            title={t('team_name')}
+                            must
+                            errors={error?.response?.data?.title}
+                        />
                         <TextField
                             instance={description}
                             title={t('description')}
                             minHeight={120}
+                            errors={error?.response?.data?.description}
                         />
                         <Button
                             isLoading={mutationLoading}
@@ -95,4 +102,4 @@ const Index = (): React.ReactElement => {
     )
 }
 
-export default Index
+export default GeneralInfo
