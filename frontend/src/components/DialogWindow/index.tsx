@@ -174,6 +174,8 @@ const DialogWindow = ({
                                     style={successButtonStyle}
                                     action={handleSubmit}
                                     isLoading={isLoading}
+                                    disabled={disabled}
+                                    className="disabled:!bg-gray-200 disabled:dark:!bg-slate-900"
                                 >
                                     {isLoading
                                         ? t('loading')
