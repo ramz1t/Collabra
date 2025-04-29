@@ -22,7 +22,7 @@ class TeamMixin(GenericViewSet):
 class MemberMixin(GenericViewSet):
     pagination_class = CustomPagination
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    search_fields = ["user__first_name", "user__last_name", "user__email"]
+    search_fields = ["user__first_name", "user__last_name", "user__email", "status"]
     filterset_fields = ["is_admin"]
     ordering = ["user__first_name", "user__last_name"]
 
@@ -30,10 +30,10 @@ class MemberMixin(GenericViewSet):
 class TaskMixin(GenericViewSet):
     pagination_class = CustomPagination
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    search_fields = ["title"]
-    ordering_fields = ["title", "id", "-id"]
+    search_fields = ["title", "description"]
+    ordering_fields = ["title", "id", "-id", "updated_at", "-updated_at"]
     filterset_fields = ["status", "tag"]
-    ordering = ["-id"]
+    ordering = ["-updated_at"]
 
     def get_queryset(self):
         queryset = super().get_queryset()
