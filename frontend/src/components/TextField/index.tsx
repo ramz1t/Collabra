@@ -25,6 +25,7 @@ function TextField({
     hint,
     onChange,
     minHeight,
+    errors,
 }: TextFieldProps): React.ReactElement {
     const textareaRef = useRef<HTMLTextAreaElement>(null)
     const id = useId()
@@ -85,10 +86,18 @@ function TextField({
                         style={{ minHeight: minHeight || 120 }}
                     />
                 </div>
-                {hint && (
-                    <p className="pl-2 text-gray-400 dark:text-gray-500 text-xs pt-1">
-                        {hint}
-                    </p>
+                {errors?.length ? (
+                    <div className="text-red-500 text-xs pl-1.5 pt-1">
+                        {errors.map((error, key) => (
+                            <p key={key}>{error}</p>
+                        ))}
+                    </div>
+                ) : (
+                    hint && (
+                        <p className="pl-1.5 text-gray-400 dark:text-gray-500 text-xs pt-1">
+                            {hint}
+                        </p>
+                    )
                 )}
             </div>
         </div>
