@@ -64,7 +64,7 @@ const AssigneeSelector = ({ assignee, setAssignee }: AssigneeSelectorProps) => {
                 ) : (
                     <Button
                         action={() => setOpen(true)}
-                        className="text-accent dark:text-accent-dark font-semibold"
+                        className="text-accent dark:text-accent-dark font-semibold after:content-['*'] after:text-red-500 dark:after:text-red-700 after:-translate-x-2"
                     >
                         {t('select_assignee')}
                     </Button>
