@@ -47,14 +47,26 @@ export const error = (text: string): void => {
     })
 }
 
+// A function returning true if lhs and rhs are the same
+// Used in objectsDifference to determine changed fields
+type Comparator = (lhs: any, rhs: any) => boolean
+
 export const objectsDifference = (
     base: Record<string, any> | undefined | null,
-    changed: Record<string, any> | undefined | null
+    changed: Record<string, any> | undefined | null,
+    comparators: Record<string, Comparator> = {}
 ): Record<string, any> => {
     if (!base || !changed) return {}
-    const changedFields = Object.entries(changed).filter(
-        ([key, value]) => JSON.stringify(value) !== JSON.stringify(base[key])
-    )
+
+    const changedFields = Object.entries(changed).filter(([key, value]) => {
+        const baseValue = base[key]
+        const comparator = comparators[key]
+        if (comparator) {
+            return !comparator(baseValue, value)
+        }
+        return JSON.stringify(baseValue) !== JSON.stringify(value)
+    })
+
     return Object.fromEntries(changedFields)
 }
 
