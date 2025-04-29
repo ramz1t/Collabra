@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { useTask } from '../../../../../api/tasks'
-import { Avatar, TaskTag } from '../../../../../components'
+import { Avatar, RichDescription, TaskTag } from '../../../../../components'
 import {
     IoCalendarNumberOutline,
     IoCheckmarkDoneOutline,
@@ -16,6 +16,7 @@ import TaskSteps from '../TaskSteps'
 import TaskMenu from '../TaskMenu'
 import { getStatusColor } from '../../../../../utils'
 import TaskDeadline from '../TaskDeadline'
+import TaskDetailInfoCell from './TaskDetailInfoCell'
 
 const TaskDetails = () => {
     const { t, i18n } = useTranslation()
@@ -24,7 +25,7 @@ const TaskDetails = () => {
 
     if (!task) return 'task not found'
     return (
-        <div className="p-5 md:p-10 grid md:grid-cols-[1fr_1fr] gap-10">
+        <div className="p-5 md:p-10 grid md:grid-cols-[3fr_2fr] gap-10">
             <div className="grid gap-5 md:gap-10 dark:border-slate-700 rounded-2xl">
                 <div className="flex items-center justify-between">
                     <h1 className="text-3xl font-semibold flex items-center justify-between">
@@ -32,73 +33,81 @@ const TaskDetails = () => {
                     </h1>
                     <TaskMenu task={task} />
                 </div>
+                <div className="grid gap-3 md:gap-7">
+                    <TaskDetailInfoCell
+                        icon={<FaRegDotCircle />}
+                        title={t('status')}
+                    >
+                        <div className="flex items-center gap-3">
+                            <span
+                                className={cn(
+                                    'size-4 rounded-full inline-block'
+                                )}
+                                style={{
+                                    backgroundColor: getStatusColor(
+                                        task.status
+                                    ),
+                                }}
+                            ></span>
+                            {t(task.status)}
+                        </div>
+                    </TaskDetailInfoCell>
 
-                <div className="flex flex-col md:grid grid-cols-[1fr_3fr] gap-3 md:gap-7 place-items-start max-md:[&>*:nth-child(even)]:mb-4 max-md:[&>*:last-child]:!mb-0">
-                    <div className="flex items-center text-gray-600 dark:text-gray-400 font-semibold gap-3">
-                        <FaRegDotCircle />
-                        {t('status')}
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <span
-                            className={cn('size-4 rounded-full inline-block')}
-                            style={{
-                                backgroundColor: getStatusColor(task.status),
-                            }}
-                        ></span>
-                        {t(task.status)}
-                    </div>
+                    <TaskDetailInfoCell
+                        icon={<IoCalendarNumberOutline />}
+                        title={t('due_date')}
+                    >
+                        <TaskDeadline date={task.deadline} />
+                    </TaskDetailInfoCell>
 
-                    <div className="flex items-center text-gray-600 dark:text-gray-400 font-semibold gap-3">
-                        <IoCalendarNumberOutline />
-                        {t('due_date')}
-                    </div>
-                    <TaskDeadline date={task.deadline} />
+                    <TaskDetailInfoCell
+                        icon={<IoPricetagOutline />}
+                        title={t('tag')}
+                        selfCenter
+                    >
+                        <TaskTag tag={task.tag} />
+                    </TaskDetailInfoCell>
 
-                    <div className="flex items-center text-gray-600 dark:text-gray-400 font-semibold gap-3 self-center">
-                        <IoPricetagOutline />
-                        {t('tag')}
-                    </div>
-                    <TaskTag tag={task.tag} />
+                    <TaskDetailInfoCell
+                        icon={<IoPersonOutline />}
+                        title={t('assignee')}
+                        selfCenter
+                    >
+                        <div className="flex items-center whitespace-nowrap gap-3">
+                            <Avatar user={task.assignee.user} />
+                            {task.assignee.user.first_name}{' '}
+                            {task.assignee.user.last_name}
+                        </div>
+                    </TaskDetailInfoCell>
 
-                    <div className="flex items-center text-gray-600 dark:text-gray-400 font-semibold gap-3 self-center">
-                        <IoPersonOutline />
-                        {t('assignee')}
-                    </div>
-                    <div className="flex items-center whitespace-nowrap gap-3">
-                        <Avatar user={task.assignee.user} />
-                        {task.assignee.user.first_name}{' '}
-                        {task.assignee.user.last_name}
-                    </div>
+                    <TaskDetailInfoCell
+                        icon={<IoDocumentAttachOutline />}
+                        title={t('attachments')}
+                    >
+                        <ul>
+                            {task.attachments.length > 0
+                                ? 'list'
+                                : t('no_attachments')}
+                        </ul>
+                    </TaskDetailInfoCell>
 
-                    <div className="flex items-center text-gray-600 dark:text-gray-400 font-semibold gap-2">
-                        <IoDocumentAttachOutline />
-                        {t('attachments')}
-                    </div>
-                    <ul>
-                        {task.attachments.length > 0
-                            ? 'list'
-                            : t('no_attachments')}
-                    </ul>
+                    <TaskDetailInfoCell
+                        icon={<IoText />}
+                        title={t('description')}
+                    >
+                        <RichDescription text={task.description} />
+                    </TaskDetailInfoCell>
 
-                    <div className="flex items-center text-gray-600 dark:text-gray-400 font-semibold gap-2">
-                        <IoText />
-                        {t('description')}
-                    </div>
-                    <p>{task.description}</p>
-
-                    <div className="flex items-center text-gray-600 dark:text-gray-400 font-semibold gap-2">
-                        <IoCheckmarkDoneOutline />
-                        {t('subtasks')}
-                    </div>
-                    {task.steps.length > 0 ? (
-                        <TaskSteps
-                            taskId={task.id}
-                            steps={task.steps}
-                            isOpen={true}
-                        />
-                    ) : (
-                        <p>{t('no_subtasks')}</p>
-                    )}
+                    <TaskDetailInfoCell
+                        icon={<IoCheckmarkDoneOutline />}
+                        title={t('subtasks')}
+                    >
+                        {task.steps.length > 0 ? (
+                            <TaskSteps taskId={task.id} steps={task.steps} />
+                        ) : (
+                            <p>{t('no_subtasks')}</p>
+                        )}
+                    </TaskDetailInfoCell>
                 </div>
             </div>
         </div>
