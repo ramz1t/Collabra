@@ -11,7 +11,7 @@ export const useUser = (userId: string | number) => {
     return useQuery({
         queryKey: ['user', { userId: userId }],
         queryFn: async (): Promise<User> => {
-            const res = await api.get(`${prefix}/users/${userId}`)
+            const res = await api.get(`${prefix}/users/${userId}/`)
             return res.data
         },
     })

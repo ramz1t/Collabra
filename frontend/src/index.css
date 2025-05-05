@@ -4,12 +4,19 @@
 
 @font-face {
     font-family: 'primary';
-    src: url('/fonts/primary.ttf');
+    src: url('/collabra/fonts/primary.ttf');
 }
 
 /** {*/
 /*    outline: 1px solid red;*/
 /*}*/
+
+@media (prefers-reduced-motion) {
+    * {
+        transition: none !important;
+    }
+}
+
 
 @keyframes appear {
     from {

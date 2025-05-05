@@ -5,10 +5,10 @@ export const prefix: string = '/api/v1'
 
 export const useCheckConnection = () => {
     const api = useAxios()
-    return useQuery({
+    return useQuery<boolean>({
         queryKey: ['connection'],
-        queryFn: async (): Promise<boolean> => {
-            const res = await api.get(`${prefix}/smoke`)
+        queryFn: async () => {
+            const res = await api.get(`${prefix}/smoke/`)
             return res.status === 200
         },
     })

@@ -18,7 +18,7 @@ export const useTasks = (teamSlug: string, params?: Record<string, any>) => {
         queryKey: ['tasks', { teamSlug, ...params }],
         queryFn: async ({ pageParam }): Promise<PaginatedResponse<Task>> => {
             const response = await api.get(
-                `${prefix}/teams/${teamSlug}/tasks`,
+                `${prefix}/teams/${teamSlug}/tasks/`,
                 {
                     params: { ...params, page: pageParam },
                 }
@@ -39,7 +39,7 @@ export const useTask = (teamSlug: string, taskId: number) => {
         queryKey: ['task', { id: taskId }],
         queryFn: async (): Promise<Task> => {
             const { data } = await api.get(
-                `${prefix}/teams/${teamSlug}/tasks/${taskId}`
+                `${prefix}/teams/${teamSlug}/tasks/${taskId}/`
             )
             return data
         },

@@ -27,9 +27,12 @@ scan({
     enabled: true,
 })
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const root = document.getElementById('root')
+if (!root) throw 'No root set up in DOM'
+
+ReactDOM.createRoot(root).render(
     <React.StrictMode>
-        <BrowserRouter>
+        <BrowserRouter basename="/collabra/">
             <QueryClientProvider client={queryClient}>
                 <TeamProvider>
                     <AuthProvider>

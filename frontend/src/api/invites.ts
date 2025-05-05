@@ -10,7 +10,7 @@ export const useUsersToInvite = (teamId: number, info: string) => {
         queryKey: ['users-to-invite', { team: teamId, info: info }],
         queryFn: async (): Promise<Invitee[]> => {
             const res = await api.get(
-                `${prefix}/teams/${teamId}/get-users-to-invite/${info}`
+                `${prefix}/teams/${teamId}/get-users-to-invite/${info}/`
             )
             return res.data
         },
@@ -65,7 +65,9 @@ export const useTeamInvites = (teamId: number) => {
     return useQuery({
         queryKey: ['team-invites', { team: teamId }],
         queryFn: async (): Promise<TeamInvitesData> => {
-            const res = await api.get(`${prefix}/teams/${teamId}/get-join-keys`)
+            const res = await api.get(
+                `${prefix}/teams/${teamId}/get-join-keys/`
+            )
             return res.data
         },
     })
@@ -99,7 +101,7 @@ export const useJoinInfo = (teamSlug: string) => {
     return useQuery({
         queryKey: ['join-info', { teamSlug: teamSlug }],
         queryFn: async (): Promise<Team> => {
-            const res = await api.get(`${prefix}/teams/${teamSlug}/join-info`)
+            const res = await api.get(`${prefix}/teams/${teamSlug}/join-info/`)
             return res.data
         },
     })

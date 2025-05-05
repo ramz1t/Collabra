@@ -71,7 +71,7 @@ export const useTeams = (params: SearchParams) => {
     return useInfiniteQuery({
         queryKey: ['teams', params],
         queryFn: async ({ pageParam }): Promise<PaginatedResponse<Team>> => {
-            const res = await api.get(`${prefix}/teams`, {
+            const res = await api.get(`${prefix}/teams/`, {
                 params: { ...params, page: pageParam },
             })
             return res.data
@@ -89,7 +89,7 @@ export const useTeam = (slug: string) => {
     return useQuery({
         queryKey: ['team', { slug: slug }],
         queryFn: async (): Promise<Team> => {
-            const res = await api.get(`${prefix}/teams/${slug}`)
+            const res = await api.get(`${prefix}/teams/${slug}/`)
             return res.data
         },
     })
@@ -181,7 +181,7 @@ export const useTeamMembers = (teamId: number, params: SearchParams) => {
         queryKey: ['team-members', { teamId, ...params }],
         queryFn: async ({ pageParam }): Promise<PaginatedResponse<Member>> => {
             const response = await api.get(
-                `${prefix}/teams/${teamId}/members`,
+                `${prefix}/teams/${teamId}/members/`,
                 {
                     params: { ...params, page: pageParam },
                 }

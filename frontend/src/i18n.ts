@@ -10,6 +10,9 @@ i18n.use(backend)
         interpolation: {
             escapeValue: false,
         },
+        backend: {
+            loadPath: '/collabra/locales/{{lng}}/{{ns}}.json',
+        },
     })
 
 export default i18n

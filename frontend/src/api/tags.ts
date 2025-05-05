@@ -9,7 +9,7 @@ export const useTags = (teamSlug: string) => {
     return useQuery<Tag[]>({
         queryKey: ['tags', teamSlug],
         queryFn: async () => {
-            const { data } = await api.get(`${prefix}/teams/${teamSlug}/tags`)
+            const { data } = await api.get(`${prefix}/teams/${teamSlug}/tags/`)
             return data
         },
     })
