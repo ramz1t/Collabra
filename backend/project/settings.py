@@ -20,7 +20,7 @@ else:
     SECRET_KEY = os.getenv("SECRET_KEY")
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ["http://localhost:8241"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:8241", "http://localhost"]
 
 
 INSTALLED_APPS = [
@@ -50,21 +50,23 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "project.urls"
 
+FORCE_SCRIPT_NAME = '/collabra'
 
-DATA_URL = "data/"
+DATA_URL = "/collabra/data/"
 DATA_ROOT = os.path.join(BASE_DIR, "core", "data")
 
-STATIC_URL = "static/"
+STATIC_URL = "/collabra/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "core", "static"),
 ]
 
+MEDIA_URL = "/collabra/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "core", "data", "media")
+
 TEMPLATES_DIR = os.path.join(BASE_DIR, "core", "templates")
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "core", "data", "media")
 
 TEMPLATES = [
     {
