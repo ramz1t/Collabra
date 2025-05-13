@@ -181,6 +181,7 @@ const PersonalInfo = (): React.ReactElement => {
                             instance={bio}
                             title={t('bio')}
                             minHeight={180}
+                            errors={error?.response?.data?.description}
                         />
                         <div>
                             <p className="pl-1 mb-1">{t('links')}</p>
