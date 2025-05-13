@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useRef } from 'react'
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { Button } from '../index'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -9,6 +9,7 @@ import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from '../../../tailwind.config'
 import cn from 'classnames'
 import { createPortal } from 'react-dom'
+import { IoExpandOutline, IoContractOutline } from 'react-icons/io5'
 
 export interface DialogWindowProps {
     icon?: React.ReactElement | React.ReactNode
@@ -28,6 +29,8 @@ export interface DialogWindowProps {
     disabled?: boolean
     children?: React.ReactNode
     isCover?: boolean
+    className?: string
+    expandable?: boolean
 }
 
 const DialogWindow = ({
@@ -48,11 +51,14 @@ const DialogWindow = ({
     disabled,
     children,
     isCover,
+    className,
+    expandable,
 }: DialogWindowProps): React.ReactElement => {
     const { t } = useTranslation()
     const { isTablet } = useScreenSize()
     const fullConfig = resolveConfig(tailwindConfig)
     const dialogRef = useRef<HTMLDivElement>(null)
+    const [isFullscreen, setIsFullscreen] = useState(false)
 
     useEffect(() => {
         if (isOpen) {
@@ -107,6 +113,7 @@ const DialogWindow = ({
             result.then(() => closeOnSuccess && close())
         } else {
             closeOnSuccess && close()
+            setIsFullscreen(false)
         }
     }, [onSuccess, disabled, closeOnSuccess])
 
@@ -130,12 +137,33 @@ const DialogWindow = ({
                         transition={{ duration: duration / 1000 }}
                         className={cn(
                             isCover
-                                ? 'max-md:max-h-slot max-md:min-h-slot md:rounded-lg'
-                                : 'rounded-lg max-md:w-11/12',
-                            'max-md:min-h-full md:max-h-[90dvh] bg-white dark:bg-slate-900 overflow-y-auto max-w-2xl w-full shadow-2xl overflow-hidden flex flex-col'
+                                ? 'max-md:max-h-dvh max-md:min-h-dvh'
+                                : 'max-md:max-h-[80dvh] max-md:w-11/12',
+                            isFullscreen
+                                ? 'md:max-h-dvh md:min-h-dvh min-w-[100dvw]'
+                                : 'md:max-h-[90dvh] max-w-2xl',
+                            (isCover && !isTablet) || isFullscreen
+                                ? 'rounded-none'
+                                : 'rounded-lg',
+                            'relative bg-white dark:bg-slate-900 overflow-y-auto w-full shadow-2xl overflow-hidden flex flex-col',
+                            className
                         )}
                         ref={dialogRef}
                     >
+                        {isTablet && expandable && (
+                            <Button
+                                className="absolute top-5 right-5 text-black z-[999] text-lg"
+                                action={() =>
+                                    setIsFullscreen((prevState) => !prevState)
+                                }
+                            >
+                                {isFullscreen ? (
+                                    <IoContractOutline />
+                                ) : (
+                                    <IoExpandOutline />
+                                )}
+                            </Button>
+                        )}
                         <div
                             className={cn(
                                 isCover && 'max-md:pt-3',
@@ -162,7 +190,10 @@ const DialogWindow = ({
                         <div className="flex items-center px-5 py-3 bg-gray-100 dark:bg-slate-800 gap-3 w-full sticky z-40 bottom-0">
                             {extraButtons}
                             <Button
-                                action={close}
+                                action={() => {
+                                    close()
+                                    setIsFullscreen(false)
+                                }}
                                 className="ml-auto min-h-10 bg-white dark:bg-slate-700 transiton-all duration-75 rounded-md px-3 border border-slate-400 dark:border-slate-600"
                             >
                                 {closeButtonText
