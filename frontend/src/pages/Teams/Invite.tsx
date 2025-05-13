@@ -42,7 +42,7 @@ const InvitePage = (): React.ReactElement => {
     const navigate = useNavigate()
 
     return (
-        <div className="grid place-items-center">
+        <div className="grid place-items-center grow">
             {team && (
                 <div className="border dark:border-slate-700 rounded-2xl p-10 md:shadow-2xl max-md:mt-5 flex flex-col md:flex-row gap-10 bg-white dark:bg-gray-900 max-w-xl">
                     <TeamImage size="grid" team={team} />

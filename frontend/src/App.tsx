@@ -24,7 +24,7 @@ const App = () => {
             <Navbar />
             <div className="md:ml-nav max-md:mt-nav grow flex flex-col">
                 <InfoHeader />
-                <div className="grow grid">
+                <div className="grow flex flex-col">
                     <Suspense>
                         <Routes>
                             <Route path="/" element={<Landing />} />
