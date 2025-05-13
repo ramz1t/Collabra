@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 
+const APP_STORAGE_KEY = import.meta.env.VITE_APP_NAME
+
 const getSavedValue = <T>(key: string, initialValue: T): T => {
     const localStorageValue = localStorage.getItem(key)
     if (localStorageValue !== null) {
@@ -12,28 +14,29 @@ const getSavedValue = <T>(key: string, initialValue: T): T => {
 }
 
 const useLocalStorage = <T>(key: string, initialValue: T) => {
+    const storageKey = `${APP_STORAGE_KEY}_${key}`
     const [value, setValue] = useState<T | null>(() => {
-        return getSavedValue<T>(key, initialValue)
+        return getSavedValue<T>(storageKey, initialValue)
     })
 
     useEffect(() => {
         if (value === null) {
-            localStorage.removeItem(key)
+            localStorage.removeItem(storageKey)
         } else {
-            localStorage.setItem(key, JSON.stringify(value))
+            localStorage.setItem(storageKey, JSON.stringify(value))
         }
         window.dispatchEvent(
-            new CustomEvent('storage', { detail: { key, value } })
+            new CustomEvent('storage', { detail: { storageKey, value } })
         )
     }, [value, key])
 
     const listener = useCallback(
         (e: CustomEvent) => {
-            if (e.detail.key === key) {
+            if (e.detail.key === storageKey) {
                 setValue(e.detail.value)
             }
         },
-        [key]
+        [storageKey]
     )
 
     useEffect(() => {
