@@ -48,14 +48,6 @@ const useAxios = () => {
 
         const data = (await response.json()) as AuthTokens
 
-        localStorage.setItem(
-            'authTokens',
-            JSON.stringify({
-                access: data.access,
-                refresh: authTokens.refresh,
-            })
-        )
-
         setAuthTokens({ ...authTokens, access: data.access })
 
         req.headers.Authorization = `Bearer ${data.access}`
