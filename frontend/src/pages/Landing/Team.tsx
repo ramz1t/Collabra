@@ -21,7 +21,7 @@ const Team = (): React.ReactElement => {
                     href: 'https://www.instagram.com/timurram007/',
                 },
             ],
-            image: '/images/timur.jpg',
+            image: '/collabra/images/timur.jpg',
         },
         {
             name: 'Alex Zavadsky',
@@ -38,7 +38,7 @@ const Team = (): React.ReactElement => {
                     href: 'https://www.instagram.com/alex.zavadskiy/',
                 },
             ],
-            image: '/images/alex.jpg',
+            image: '/collabra/images/alex.jpg',
         },
         // {
         //     name: 'Leonid Prokopev',
