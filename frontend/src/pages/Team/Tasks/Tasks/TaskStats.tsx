@@ -6,6 +6,7 @@ import {
 import { Task } from '../../../../types'
 
 const TaskStats = ({ task }: { task: Task }) => {
+    return null
     return (
         <div className="flex gap-3">
             <Link
@@ -15,13 +16,13 @@ const TaskStats = ({ task }: { task: Task }) => {
                 <IoChatboxEllipsesOutline />
                 {task.messages_count}
             </Link>
-            {/*<Link*/}
-            {/*    to={`${task.id}`}*/}
-            {/*    className="flex text-gray-400 dark:text-gray-500 items-center gap-1.5 font-semibold hover:text-gray-500 transition-all duration-75"*/}
-            {/*>*/}
-            {/*    <IoDocumentAttachOutline />*/}
-            {/*    {task.attachments.length}*/}
-            {/*</Link>*/}
+            <Link
+                to={`${task.id}`}
+                className="flex text-gray-400 dark:text-gray-500 items-center gap-1.5 font-semibold hover:text-gray-500 transition-all duration-75"
+            >
+                <IoDocumentAttachOutline />
+                {task.attachments.length}
+            </Link>
         </div>
     )
 }
