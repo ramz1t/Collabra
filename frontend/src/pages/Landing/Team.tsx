@@ -8,7 +8,7 @@ const Team = (): React.ReactElement => {
     const people = [
         {
             name: 'Timur Ramazanov',
-            role: 'Designer, Frontend Developer',
+            role: 'Designer, Frontend Developer, Backend Developer, DevOps',
             location: 'Malmö, Sweden',
             flag: '🇸🇪',
             links: [
