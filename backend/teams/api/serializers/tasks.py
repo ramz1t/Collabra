@@ -17,8 +17,8 @@ class TaskStepListSerializer(serializers.Serializer):
 
 
 class TaskCreateSerializer(serializers.Serializer):
-    title = serializers.CharField()
-    description = serializers.CharField()
+    title = serializers.CharField(max_length=150)
+    description = serializers.CharField(max_length=750)
     requires_review = serializers.BooleanField()
     tag = serializers.IntegerField(allow_null=True)
     status = serializers.CharField()
