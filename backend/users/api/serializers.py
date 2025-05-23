@@ -125,6 +125,7 @@ class UserRetrieveSerializer(serializers.Serializer):
     timezone = TimeZoneSerializerField(use_pytz=True)
     links = serializers.SerializerMethodField()
     date_joined = serializers.DateTimeField()
+    is_demo = serializers.BooleanField()
 
     def get_generated_avatar(self, obj):
         serializer = GeneratedAvatarSerializer(instance=obj.generated_avatar)

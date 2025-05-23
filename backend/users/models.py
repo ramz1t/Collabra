@@ -56,6 +56,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name="date joined", default=djangotimezone.now
     )
     is_staff = models.BooleanField(default=False)
+    is_demo = models.BooleanField(default=False)
 
     objects = CustomUserManager()
 
