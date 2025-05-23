@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { Button, Form, Input } from '../../components/index'
 import { useTranslation } from 'react-i18next'
 import useInput from '../../hooks/useInput'
@@ -14,6 +14,14 @@ const Login = (): React.ReactElement => {
     const { loginUser } = useContext(AuthContext) as IAuthContext
     const [searchParams, _] = useSearchParams()
 
+    const loginCallback = useCallback(() => {
+        loginUser({
+            email: email.value,
+            password: password.value,
+            redirectFrom: searchParams.get('redirectFrom'),
+        })
+    }, [email, password, searchParams])
+
     return (
         <div className="flex flex-col items-center mt-5 p-5">
             <Helmet>
@@ -21,13 +29,7 @@ const Login = (): React.ReactElement => {
             </Helmet>
             <Form
                 className="w-full md:max-w-96 mt-10 md:mt-20"
-                onSubmit={() => {
-                    loginUser({
-                        email: email.value,
-                        password: password.value,
-                        redirectFrom: searchParams.get('redirectFrom'),
-                    })
-                }}
+                onSubmit={loginCallback}
             >
                 <div>
                     <p className="font-bold text-2xl text-gray-900 dark:text-gray-100">
