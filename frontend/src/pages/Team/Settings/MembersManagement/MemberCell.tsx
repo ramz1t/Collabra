@@ -9,7 +9,7 @@ import {
 } from '../../../../components'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
-import { IoPencil, IoChevronForward, IoCheckmark } from 'react-icons/io5'
+import { IoChevronForward, IoCheckmark } from 'react-icons/io5'
 import React, { memo, useContext, useState } from 'react'
 import MemberCellInfo from './MemberCellInfo'
 import useProfilePath from '../../../../hooks/useProfilePath'
@@ -90,7 +90,7 @@ const MemberCell = ({
                 </Button>
             )}
             <DialogWindow
-                icon={<IoPencil />}
+                icon={<Avatar user={member.user} />}
                 title={`${member.user.first_name} ${member.user.last_name}`}
                 isOpen={dialogOpen}
                 isLoading={isSaving}
