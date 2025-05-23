@@ -1,4 +1,4 @@
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
@@ -46,3 +46,7 @@ class TaskMixin(GenericViewSet):
 class TagMixin(GenericViewSet):
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     ordering = ["title"]
+
+
+class StatsMixin(GenericViewSet):
+    permission_classes = (IsAuthenticated,)

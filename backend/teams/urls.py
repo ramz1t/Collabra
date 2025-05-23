@@ -1,5 +1,6 @@
 from django.urls import path
 
+from .api.views.stats import StatsViewSet
 from .api.views.teams import TeamViewSet
 from .api.views.members import MemberViewSet
 
@@ -13,6 +14,7 @@ urlpatterns = [
     ),
     path("<str:slug>/", TeamViewSet.as_view({"get": "retrieve"})),
     path("<str:slug>/join-info/", TeamViewSet.as_view({"get": "retrieve_short"})),
+    path("<str:slug>/stats/", StatsViewSet.as_view({"get": "retrieve"})),
     path("<int:pk>/get-join-keys/", TeamViewSet.as_view({"get": "get_join_keys"})),
     path(
         "<int:pk>/refresh-join-keys/",

@@ -96,6 +96,10 @@ def get_tasks(**fields) -> QuerySet[Task]:
     return Task.objects.filter(**fields)
 
 
+def get_tasks_count(team: Team, **fields) -> int:
+    return Task.objects.filter(team=team, **fields).count()
+
+
 def get_task_or_404(**fields) -> Task:
     return get_object_or_404(Task, **fields)
 
