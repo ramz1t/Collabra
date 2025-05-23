@@ -26,9 +26,9 @@ const useLocalStorage = <T>(key: string, initialValue: T) => {
             localStorage.setItem(storageKey, JSON.stringify(value))
         }
         window.dispatchEvent(
-            new CustomEvent('storage', { detail: { storageKey, value } })
+            new CustomEvent('storage', { detail: { key: storageKey, value } })
         )
-    }, [value, key])
+    }, [value, storageKey])
 
     const listener = useCallback(
         (e: CustomEvent) => {
