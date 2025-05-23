@@ -62,13 +62,13 @@ class UserCreateUpdateBaseSerializer(serializers.Serializer):
 
     def validate_first_name(self, first_name):
         if not self._validate_name(first_name):
-            raise ValidationError(_("Name must contain only Latin letters or spaces"))
+            raise ValidationError(_("Name must contain only Latin letters A-Z or spaces"))
         return first_name.capitalize()
 
     def validate_last_name(self, last_name):
         if not self._validate_name(last_name):
             raise ValidationError(
-                _("Surname must contain only Latin letters or spaces")
+                _("Surname must contain only Latin letters A-Z or spaces")
             )
         return last_name.capitalize()
 
@@ -83,6 +83,7 @@ class UserUpdateSerializer(UserCreateUpdateBaseSerializer):
     last_name = serializers.CharField(min_length=1, max_length=50, required=False)
     email = serializers.EmailField(min_length=5, max_length=254, required=False)
     username = serializers.CharField(min_length=5, max_length=50, required=False)
+    description = serializers.CharField(max_length=500, required=False, allow_null=True, allow_blank=True)
 
     def validate_username(self, username):
         prepared_username = username.replace(" ", "_").replace("-", "_").lower()
