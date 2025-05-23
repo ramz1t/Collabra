@@ -15,7 +15,7 @@ import {
     PaginatedResponse,
     SearchParams,
     Team,
-    User,
+    TeamStats,
     ValidationErrors,
 } from '../types'
 
@@ -90,6 +90,17 @@ export const useTeam = (slug: string) => {
         queryKey: ['team', { slug: slug }],
         queryFn: async (): Promise<Team> => {
             const res = await api.get(`${prefix}/teams/${slug}/`)
+            return res.data
+        },
+    })
+}
+
+export const useTeamStats = (slug: string) => {
+    const api = useAxios()
+    return useQuery({
+        queryKey: ['teamStats', { slug: slug }],
+        queryFn: async (): Promise<TeamStats> => {
+            const res = await api.get(`${prefix}/teams/${slug}/stats/`)
             return res.data
         },
     })

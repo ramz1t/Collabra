@@ -46,6 +46,13 @@ export interface Team {
     member_status: string
 }
 
+export interface TeamStats {
+    total: number
+    complete: number
+    to_review: number
+    assigned: number
+}
+
 export interface Invitee extends User {
     is_invited: boolean
     is_member: boolean

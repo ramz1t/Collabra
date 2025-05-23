@@ -75,6 +75,10 @@ export const useCreateTask = (teamSlug: string, status: string) => {
                 ...previousData,
                 pages: updatedPages,
             })
+
+            queryClient.invalidateQueries({
+                queryKey: ['teamStats', { slug: teamSlug }],
+            } as InvalidateQueryFilters)
         },
     })
 }
@@ -97,6 +101,10 @@ export const useUpdateTask = (teamSlug: string, taskId: number) => {
             await queryClient.invalidateQueries({
                 queryKey: ['tasks', { teamSlug }],
             } as InvalidateQueryFilters)
+
+            queryClient.invalidateQueries({
+                queryKey: ['teamStats', { slug: teamSlug }],
+            } as InvalidateQueryFilters)
         },
     })
 }
@@ -111,6 +119,10 @@ export const useDeleteTasks = (teamSlug: string) => {
         onSuccess: () => {
             queryClient.invalidateQueries('task' as InvalidateQueryFilters)
             queryClient.invalidateQueries('tasks' as InvalidateQueryFilters)
+            queryClient.invalidateQueries({
+                queryKey: ['teamStats', { slug: teamSlug }],
+            } as InvalidateQueryFilters)
+
             navigate(`/teams/${teamSlug}/tasks`)
         },
     })

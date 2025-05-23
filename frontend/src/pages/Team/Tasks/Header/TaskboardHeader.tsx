@@ -1,5 +1,5 @@
 import { TeamImage } from '../../../../components'
-import { useTeam } from '../../../../api/team'
+import { useTeam, useTeamStats } from '../../../../api/team'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import TaskboardHeaderLink from './TaskboardHeaderLink'
@@ -7,6 +7,7 @@ import TaskboardHeaderViewOption from './TaskboardHeaderViewOption'
 import useLocalStorage from '../../../../hooks/useLocalStorage'
 import { IoReorderFourOutline } from 'react-icons/io5'
 import { BsColumnsGap } from 'react-icons/bs'
+import { useMemo } from 'react'
 
 const TaskboardHeader = () => {
     const { teamSlug } = useParams()
@@ -16,6 +17,15 @@ const TaskboardHeader = () => {
         'tasksViewOption',
         'board'
     )
+    const { data: stats, isLoading: statsLoading } = useTeamStats(teamSlug!)
+
+    const donePercent = useMemo(() => {
+        const done = stats?.complete
+        const total = stats?.total
+
+        if (!done || !total) return 0
+        return (done / total) * 100
+    }, [stats])
 
     if (!team) return
     return (
@@ -27,12 +37,12 @@ const TaskboardHeader = () => {
                     <div className="flex items-center gap-3">
                         <div className="w-[35vw] md:w-64 bg-gray-100 dark:bg-slate-700 h-2 rounded-full mt-1">
                             <div
-                                style={{ width: `${37}%` }}
-                                className="rounded-full bg-accent dark:bg-accent-dark h-full"
+                                style={{ width: `${donePercent}%` }}
+                                className="rounded-full bg-accent dark:bg-accent-dark h-full transition-all"
                             ></div>
                         </div>
                         <p className="text-gray-600 dark:text-gray-400 text-sm">
-                            37% completed
+                            {donePercent}% completed
                         </p>
                     </div>
                 </div>
