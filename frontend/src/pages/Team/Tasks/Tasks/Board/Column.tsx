@@ -9,7 +9,7 @@ import TaskCard from './Card'
 import { useState } from 'react'
 import { useDeleteTasks, useTasks } from '../../../../../api/tasks'
 import { useParams } from 'react-router-dom'
-import AddNewTaskButton from '../AddNewTaskButton'
+import AddNewTaskButton from '../Create/AddNewTaskButton'
 import Menu, { MenuAction } from '../../../../../components/Menu'
 import {
     LuPanelRightClose,
@@ -18,6 +18,7 @@ import {
 } from 'react-icons/lu'
 import { getStatusColor } from '../../../../../utils'
 import useIsAllowed, { UserRole } from '../../../../../hooks/useIsAllowed'
+import useLocalStorage from '../../../../../hooks/useLocalStorage'
 
 export interface ColumnProps {
     status: string
@@ -29,13 +30,14 @@ export interface ColumnProps {
 const Column = ({ canAdd = true, status, moveColumn, index }: ColumnProps) => {
     const [addNewTaskOpen, setAddNewTaskOpen] = useState(false)
     const { teamSlug } = useParams()
+    const [orderBy] = useLocalStorage(status + '_orderBy', 'modified_at')
     const {
         data: tasks,
         isLoading,
         hasNextPage,
         fetchNextPage,
         isFetching,
-    } = useTasks(teamSlug!, { status: status })
+    } = useTasks(teamSlug!, { status: status, ordering: orderBy })
     const { t } = useTranslation()
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
     const { mutate: deleteTasks } = useDeleteTasks(teamSlug!)
@@ -95,7 +97,7 @@ const Column = ({ canAdd = true, status, moveColumn, index }: ColumnProps) => {
             {!isLoading && tasks && (
                 <ul className="grid gap-3">
                     {tasks.map((task) => (
-                        <TaskCard view={'board'} task={task} key={task.id} />
+                        <TaskCard task={task} key={task.id} />
                     ))}
                     <LoadMoreMarker
                         isFetching={isFetching}

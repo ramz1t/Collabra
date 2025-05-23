@@ -47,8 +47,8 @@ const TaskboardHeader = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex items-center justify-between max-md:pr-2">
-                <div className="flex">
+            <div className="flex items-center justify-between max-md:pr-2 max-w-screen">
+                <div className="flex overflow-x-auto">
                     <TaskboardHeaderLink
                         title={t('tasks')}
                         to={`/teams/${teamSlug}/tasks`}
@@ -61,8 +61,12 @@ const TaskboardHeader = () => {
                         title={t('files')}
                         to={`/teams/${teamSlug}/tasks/files`}
                     />
+                    <TaskboardHeaderLink
+                        title={t('view_settings')}
+                        to={`/teams/${teamSlug}/tasks/settings`}
+                    />
                 </div>
-                <div className="flex md:mb-2">
+                <div className="flex md:mb-2 ml-2">
                     <TaskboardHeaderViewOption
                         icon={<BsColumnsGap />}
                         title={t('board')}

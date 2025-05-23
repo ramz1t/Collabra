@@ -1,7 +1,7 @@
 import React, { SetStateAction } from 'react'
 import cn from 'classnames'
-import { Button, LoadingState, TaskTag } from '../../../../components'
-import { useTags } from '../../../../api/tags'
+import { Button, LoadingState, TaskTag } from '../../../../../components'
+import { useTags } from '../../../../../api/tags'
 import { useParams } from 'react-router-dom'
 
 interface TagSelectorProps {

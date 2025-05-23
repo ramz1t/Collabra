@@ -3,6 +3,7 @@ import TaskboardHeader from './Header/TaskboardHeader'
 import { Route, Routes } from 'react-router-dom'
 import TasksContainer from './Tasks/Container'
 import TaskDetails from './Tasks/Detail'
+import TaskViewSettings from './Tasks/Settings'
 
 const Tasks = (): React.ReactElement => {
     return (
@@ -13,6 +14,7 @@ const Tasks = (): React.ReactElement => {
                 <Route path=":taskId" element={<TaskDetails />} />
                 <Route path="calendar" element="tasks calendar view" />
                 <Route path="files" element="files view" />
+                <Route path="settings" element={<TaskViewSettings />} />
             </Routes>
         </div>
     )

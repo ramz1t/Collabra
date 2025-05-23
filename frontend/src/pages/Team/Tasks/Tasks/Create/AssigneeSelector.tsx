@@ -1,4 +1,4 @@
-import { Member } from '../../../../types'
+import { Member } from '../../../../../types'
 import React, { SetStateAction, useCallback, useContext, useState } from 'react'
 import {
     Avatar,
@@ -7,11 +7,11 @@ import {
     LoadMoreMarker,
     SearchBar,
     SmoothContainer,
-} from '../../../../components'
-import { useTeamMembers } from '../../../../api/team'
-import TeamContext, { ITeamContext } from '../../../../contexts/TeamContext'
+} from '../../../../../components'
+import { useTeamMembers } from '../../../../../api/team'
+import TeamContext, { ITeamContext } from '../../../../../contexts/TeamContext'
 import { useTranslation } from 'react-i18next'
-import useInput from '../../../../hooks/useInput'
+import useInput from '../../../../../hooks/useInput'
 import cn from 'classnames'
 import { TbArrowsDiagonalMinimize2 } from 'react-icons/tb'
 

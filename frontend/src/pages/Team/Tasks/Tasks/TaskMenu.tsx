@@ -13,7 +13,7 @@ import {
 } from 'react-icons/io5'
 import { useContext, useState, useMemo } from 'react'
 import { DialogWindow } from '../../../../components'
-import AddTaskDialog from './AddTaskDialog'
+import AddTaskDialog from './Create/AddTaskDialog'
 import { useDeleteTasks, useUpdateTask } from '../../../../api/tasks'
 import { useParams } from 'react-router-dom'
 import useIsAllowed, { UserRole } from '../../../../hooks/useIsAllowed'

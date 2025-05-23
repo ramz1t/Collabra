@@ -33,6 +33,7 @@ import FireIcon from './FireIcon'
 import TaskTag from './TaskTag'
 import RichDescription from './RichDescription'
 import SmoothContainer from './SmoothContainer'
+import DemoControls from './DemoControls/DemoControls'
 
 export {
     PrivateRoute,
@@ -70,4 +71,5 @@ export {
     TaskTag,
     RichDescription,
     SmoothContainer,
+    DemoControls,
 }

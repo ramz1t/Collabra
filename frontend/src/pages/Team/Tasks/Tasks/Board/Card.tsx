@@ -4,10 +4,13 @@ import {
     IoCheckmark,
     IoCheckmarkDoneOutline,
     IoChevronDown,
+    IoPerson,
+    IoPersonOutline,
 } from 'react-icons/io5'
 import {
     Avatar,
     DialogWindow,
+    FireIcon,
     RichDescription,
     SmoothContainer,
     TaskTag,
@@ -21,10 +24,11 @@ import TaskMenu from '../TaskMenu'
 import useProfilePath from '../../../../../hooks/useProfilePath'
 import TeamContext, { ITeamContext } from '../../../../../contexts/TeamContext'
 import { useTranslation } from 'react-i18next'
+import useLocalStorage from '../../../../../hooks/useLocalStorage'
+import AuthContext, { IAuthContext } from '../../../../../contexts/AuthContext'
 
 interface CardProps {
     task: Task
-    view: string
 }
 
 const StepsProgress = ({
@@ -60,7 +64,8 @@ const StepsProgress = ({
             <SmoothContainer
                 duration={200}
                 isOpen={isOpen && parentOpen}
-                className={cn(isOpen ? 'pt-4' : 'pt-0')}
+                openedClassName="pt-4"
+                closedClassName="pt-0"
             >
                 <TaskSteps
                     taskId={task.id}
@@ -74,9 +79,16 @@ const StepsProgress = ({
 }
 
 const TaskCard = ({ task }: CardProps) => {
-    const [isOpen, setIsOpen] = useState(task.status !== 'done')
+    const [cardStyle] = useLocalStorage('cardStyle', 'expanded')
+    const [isOpen, setIsOpen] = useState(
+        task.status !== 'done' && cardStyle === 'expanded'
+    )
     const [isDescriptionOpen, setIsDescriptionOpen] = useState(false)
     const { t } = useTranslation()
+    const { user } = useContext(AuthContext) as IAuthContext
+
+    const isAssignee = task.assignee.user.id === user?.user_id
+    const isDeadline = false
 
     const openTransitionDuration = 200
 
@@ -92,10 +104,9 @@ const TaskCard = ({ task }: CardProps) => {
             {/* TAG AND MENU */}
             <SmoothContainer
                 isOpen={isOpen}
-                className={cn(
-                    'flex items-center duration-[--card-ms] pl-4 pr-1.5',
-                    isOpen ? 'pt-4' : 'pt-0'
-                )}
+                className="flex items-center duration-[--card-ms] pl-4 pr-1.5"
+                openedClassName="pt-4"
+                closedClassName="pt-0"
                 duration={openTransitionDuration}
             >
                 <TaskTag tag={task.tag} />
@@ -107,13 +118,35 @@ const TaskCard = ({ task }: CardProps) => {
             {/* TITLE AND EXPAND BUTTON */}
             <div
                 className={cn(
-                    'flex items-center gap-2 pl-4 pr-1.5 hover:cursor-pointer duration-[--card-ms]',
+                    'flex items-center pl-3.5 pr-1.5 hover:cursor-pointer duration-[--card-ms]',
                     isOpen ? 'py-4' : 'py-1.5'
                 )}
                 onClick={() => setIsOpen((prev) => !prev)}
             >
+                {(isAssignee || isDeadline) && (
+                    <SmoothContainer
+                        duration={openTransitionDuration}
+                        vertical={false}
+                        isOpen={!isOpen}
+                        openedClassName="mr-3.5 min-w-3"
+                        closedClassName="mr-0 min-w-0"
+                        className="flex flex-col items-center flex-shrink-0"
+                    >
+                        {isDeadline && (
+                            <span className="min-w-4 flex-shrink-0 scale-75">
+                                <FireIcon />
+                            </span>
+                        )}
+                        {isAssignee && (
+                            <IoPerson
+                                size={'0.8em'}
+                                className="flex-shrink-0"
+                            />
+                        )}
+                    </SmoothContainer>
+                )}
                 {task.status === 'done' && (
-                    <span className="text-green-600 text-xl">
+                    <span className="text-green-600 text-xl pr-2">
                         <IoCheckmark />
                     </span>
                 )}
@@ -125,7 +158,7 @@ const TaskCard = ({ task }: CardProps) => {
                 </Link>
                 <span
                     className={cn(
-                        'text-xl duration-[--card-ms] size-10 flex justify-center items-center ml-auto',
+                        'text-xl duration-[--card-ms] size-10 flex justify-center items-center ml-auto px-2',
                         isOpen ? 'rotate-180' : null
                     )}
                 >
@@ -137,12 +170,9 @@ const TaskCard = ({ task }: CardProps) => {
             <SmoothContainer
                 isOpen={isOpen}
                 duration={openTransitionDuration}
-                className={cn(
-                    'px-4',
-                    isOpen
-                        ? 'pb-4 border-b dark:border-b-slate-700'
-                        : 'pb-0 border-0'
-                )}
+                className="px-4"
+                openedClassName="pb-4 border-b dark:border-b-slate-700"
+                closedClassName="pb-0 border-0"
             >
                 <p
                     className="text-gray-500 dark:text-gray-400 text-sm line-clamp-3 hover:cursor-help"
@@ -166,10 +196,9 @@ const TaskCard = ({ task }: CardProps) => {
             <SmoothContainer
                 isOpen={isOpen}
                 duration={openTransitionDuration}
-                className={cn(
-                    'px-4 flex items-center gap-3.5',
-                    isOpen ? 'py-4' : 'py-0'
-                )}
+                className="px-4 flex items-center gap-3.5"
+                openedClassName="py-4"
+                closedClassName="py-0"
             >
                 <Link
                     to={useProfilePath(task.assignee.user.id)}

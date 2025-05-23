@@ -4,7 +4,7 @@ import TaskRow from './Row'
 import { useTranslation } from 'react-i18next'
 import TasksFilter from './TasksFilter'
 import { useState } from 'react'
-import AddNewTaskButton from '../AddNewTaskButton'
+import AddNewTaskButton from '../Create/AddNewTaskButton'
 import { LoadMoreMarker } from '../../../../../components'
 
 const List = () => {

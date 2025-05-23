@@ -11,7 +11,7 @@ import { IoChevronDown, IoFilter } from 'react-icons/io5'
 import useScreenSize from '../../../../../hooks/useScreenSize'
 import cn from 'classnames'
 import FireIcon from '../../../../../components/FireIcon'
-import TagSelector from '../TagSelector'
+import TagSelector from '../Create/TagSelector'
 import { getStatusColor } from '../../../../../utils'
 
 const TasksFilter = ({

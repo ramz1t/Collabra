@@ -7,7 +7,7 @@ import {
     useQuery,
     useQueryClient,
 } from '@tanstack/react-query'
-import { Member, PaginatedResponse, SearchParams, Tag, Task } from '../types'
+import { PaginatedResponse, Task } from '../types'
 import { prefix } from './index'
 import { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -55,7 +55,13 @@ export const useCreateTask = (teamSlug: string, status: string) => {
             return api.post(`${prefix}/teams/${teamSlug}/tasks/`, data)
         },
         onSuccess: (res) => {
-            const queryKey = ['tasks', { teamSlug, status }]
+            const columnOrdering = JSON.parse(
+                localStorage.getItem(`collabra_${res.data.status}_orderBy`)!
+            )
+            const queryKey = [
+                'tasks',
+                { teamSlug, status, ordering: columnOrdering },
+            ]
             const previousData =
                 queryClient.getQueryData<InfiniteData<PaginatedResponse<Task>>>(
                     queryKey

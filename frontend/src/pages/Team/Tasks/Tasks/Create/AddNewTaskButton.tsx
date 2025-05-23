@@ -1,10 +1,10 @@
-import { Button } from '../../../../components'
+import { Button } from '../../../../../components'
 import { IoAdd } from 'react-icons/io5'
 import AddTaskDialog from './AddTaskDialog'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { getStatusColor } from '../../../../utils'
-import { useCreateTask } from '../../../../api/tasks'
+import { getStatusColor } from '../../../../../utils'
+import { useCreateTask } from '../../../../../api/tasks'
 import { useParams } from 'react-router-dom'
 
 const AddNewTaskButton = ({ status }: { status: string }) => {
