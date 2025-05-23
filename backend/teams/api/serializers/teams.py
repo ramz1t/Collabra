@@ -53,7 +53,7 @@ class TeamShortRetrieveSerializer(serializers.Serializer):
 class TeamCreateUpdateSerializer(serializers.Serializer):
     image = serializers.ImageField(required=False, allow_null=True)
     description = serializers.CharField(
-        max_length=1000, required=False, allow_null=True
+        max_length=1000, required=False, allow_null=True, allow_blank=True
     )
 
     def validate_title(self, title):
