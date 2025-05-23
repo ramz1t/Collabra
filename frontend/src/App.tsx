@@ -15,6 +15,7 @@ import {
     CookiesModal,
     InfoHeader,
     NotFoundRoute,
+    DemoControls,
 } from './components'
 import { Suspense } from 'react'
 
@@ -24,6 +25,7 @@ const App = () => {
             <Navbar />
             <div className="md:ml-nav max-md:mt-nav grow flex flex-col">
                 <InfoHeader />
+                <DemoControls />
                 <div className="grow flex flex-col">
                     <Suspense>
                         <Routes>

@@ -22,6 +22,7 @@ export interface User {
     timezone: string
     links: string[]
     date_joined: string
+    is_demo: boolean
 }
 
 export interface Member {

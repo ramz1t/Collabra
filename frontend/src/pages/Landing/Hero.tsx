@@ -1,12 +1,21 @@
-import React, { useContext } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import AuthContext, { IAuthContext } from '../../contexts/AuthContext.js'
-import { Button } from '../../components'
+import { Button, DialogWindow } from '../../components'
 import { IoArrowForward } from 'react-icons/io5'
+import { PiBinocularsBold } from 'react-icons/pi'
 
 const Hero = (): React.ReactElement => {
     const { t } = useTranslation()
-    const { user } = useContext(AuthContext) as IAuthContext
+    const { user, loginUser } = useContext(AuthContext) as IAuthContext
+    const [demoDialogOpen, setDemoDialogOpen] = useState(false)
+
+    const startDemo = useCallback(() => {
+        loginUser({
+            email: 'demo@collabra.com',
+            password: '12345678',
+        })
+    }, [loginUser])
 
     return (
         <div className="relative isolate md:pt-7 lg:px-8">
@@ -21,13 +30,35 @@ const Hero = (): React.ReactElement => {
                         veniam occaecat fugiat aliqua.
                     </p>
                     <div className="mt-10 max-md:flex-col gap-y-6 flex items-center justify-center gap-x-6">
-                        <Button
-                            to={user ? '/teams' : '/login'}
-                            style="primary"
-                            className="text-sm"
+                        {user ? (
+                            <Button
+                                to="/teams"
+                                style="primary"
+                                className="text-sm"
+                            >
+                                {t('open_teams')}
+                            </Button>
+                        ) : (
+                            <Button
+                                action={() => setDemoDialogOpen(true)}
+                                style="primary"
+                                className="text-sm"
+                            >
+                                <PiBinocularsBold />
+                                {t('demo_mode')}
+                            </Button>
+                        )}
+                        <DialogWindow
+                            isOpen={demoDialogOpen}
+                            close={() => setDemoDialogOpen(false)}
+                            icon={<PiBinocularsBold />}
+                            title={t('demo_mode')}
+                            successButtonText={t('start')}
+                            successButtonStyle="primary"
+                            onSuccess={startDemo}
                         >
-                            {user ? t('open_teams') : t('get_started')}
-                        </Button>
+                            {t('demo_mode_desc')}
+                        </DialogWindow>
                         <Button
                             to="https://github.com/alexzawadsky/Collabra"
                             className="font-semibold text-sm text-gray-600 dark:text-gray-400"
