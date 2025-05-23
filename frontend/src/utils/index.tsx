@@ -13,10 +13,12 @@ export const getCookie = (name: string): string | undefined => {
 }
 
 export const isDarkMode = (): boolean => {
-    const themeSettingSavedValue = localStorage.getItem('themeSetting') || ''
+    const themeSettingSavedValue = JSON.parse(
+        localStorage.getItem('collabra_themeSetting') || ''
+    )
     return (
-        JSON.parse(themeSettingSavedValue) === 'dark' ||
-        (JSON.parse(themeSettingSavedValue) === 'auto' &&
+        themeSettingSavedValue === 'dark' ||
+        (themeSettingSavedValue === 'auto' &&
             window.matchMedia('(prefers-color-scheme: dark)').matches)
     )
 }

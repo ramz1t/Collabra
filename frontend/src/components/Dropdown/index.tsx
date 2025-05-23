@@ -1,11 +1,4 @@
-import React, {
-    useEffect,
-    useRef,
-    useState,
-    useCallback,
-    useMemo,
-    memo,
-} from 'react'
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import useScreenSize from '../../hooks/useScreenSize'
 import { Button } from '../index'
@@ -147,4 +140,4 @@ const Dropdown = <T,>({
     )
 }
 
-export default memo(Dropdown)
+export default Dropdown
