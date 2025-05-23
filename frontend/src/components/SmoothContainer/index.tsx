@@ -7,6 +7,8 @@ interface SmoothContainerProps {
     vertical?: boolean
     duration?: number
     className?: string
+    openedClassName?: string
+    closedClassName?: string
 }
 
 const SmoothContainer = ({
@@ -15,6 +17,8 @@ const SmoothContainer = ({
     vertical = true,
     duration = 150,
     className,
+    openedClassName,
+    closedClassName,
 }: SmoothContainerProps) => {
     const containerStyle = useMemo(() => {
         if (vertical) {
@@ -40,6 +44,7 @@ const SmoothContainer = ({
                 className={cn(
                     'transition-all overflow-hidden duration-[--duration]',
                     isOpen ? 'opacity-100' : 'opacity-0',
+                    isOpen ? openedClassName : closedClassName,
                     className
                 )}
                 aria-hidden={!isOpen}
