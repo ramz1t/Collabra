@@ -145,7 +145,7 @@ const ImageEditor = ({
                         </label>
                         <div className="flex divide-x">
                             <Button
-                                className="grow border-y border-accent dark:border-accent-dark !h-8 hover:bg-accent/5 dark:hover:bg-accent-dark/10 text-accent dark:text-accent-dark   border-l rounded-l-md"
+                                className="grow border-y border-accent dark:border-accent-dark !h-8 hover:bg-accent/5 dark:hover:bg-accent-dark/10 text-accent dark:text-accent-dark !rounded-r-none border-l rounded-l-md"
                                 action={() =>
                                     setRotation((prevState) => prevState + 90)
                                 }
@@ -153,13 +153,13 @@ const ImageEditor = ({
                                 <BsArrowClockwise />
                             </Button>
                             <Button
-                                className="grow border-y border-accent dark:border-accent-dark !h-8 hover:bg-accent/5 dark:hover:bg-accent-dark/10 text-accent dark:text-accent-dark  "
+                                className="grow border-y border-accent dark:border-accent-dark !h-8 hover:bg-accent/5 dark:hover:bg-accent-dark/10 text-accent dark:text-accent-dark !rounded-none"
                                 action={() => setRotation(0)}
                             >
                                 {t('reset')}
                             </Button>
                             <Button
-                                className="grow border-y border-accent dark:border-accent-dark !h-8 hover:bg-accent/5 dark:hover:bg-accent-dark/10 text-accent dark:text-accent-dark   !border-r rounded-r-md"
+                                className="grow border-y border-accent dark:border-accent-dark !h-8 hover:bg-accent/5 dark:hover:bg-accent-dark/10 text-accent dark:text-accent-dark !rounded-l-none !border-r rounded-r-md"
                                 action={() =>
                                     setRotation((prevState) => prevState - 90)
                                 }
