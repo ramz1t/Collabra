@@ -6,14 +6,15 @@ import useInput from '../../hooks/useInput'
 import AuthContext, { IAuthContext } from '../../contexts/AuthContext'
 import SocialLogin from './SocialLogin'
 import { Helmet } from 'react-helmet-async'
+import { ValidationErrors } from '../../types'
 
 const Register = (): React.ReactElement => {
     const { t } = useTranslation()
-    const email = useInput<string>('')
-    const password = useInput<string>('')
-    const firstName = useInput<string>('')
-    const lastName = useInput<string>('')
-    const [error, setError] = useState<string>()
+    const email = useInput('')
+    const password = useInput('')
+    const firstName = useInput('')
+    const lastName = useInput('')
+    const [error, setError] = useState<ValidationErrors | undefined>()
     const { registerUser } = useContext(AuthContext) as IAuthContext
 
     return (
@@ -49,10 +50,25 @@ const Register = (): React.ReactElement => {
                         </Link>
                     </p>
                 </div>
-                <Input title={t('first_name')} instance={firstName} autoRef />
-                <Input title={t('last_name')} instance={lastName} />
-                <Input title={t('email')} instance={email} type="email" />
                 <Input
+                    errors={error?.first_name}
+                    title={t('first_name')}
+                    instance={firstName}
+                    autoRef
+                />
+                <Input
+                    errors={error?.last_name}
+                    title={t('last_name')}
+                    instance={lastName}
+                />
+                <Input
+                    errors={error?.email}
+                    title={t('email')}
+                    instance={email}
+                    type="email"
+                />
+                <Input
+                    errors={error?.password}
                     title={t('password')}
                     instance={password}
                     type="password"

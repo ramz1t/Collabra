@@ -15,7 +15,7 @@ import { QueryClient, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import TeamContext, { ITeamContext } from './TeamContext'
 import useLocalStorage from '../hooks/useLocalStorage'
-import { AuthTokens, TokenUser } from '../types'
+import { AuthTokens, TokenUser, ValidationErrors } from '../types'
 
 interface ILoginUserFunc {
     ({
@@ -37,7 +37,7 @@ export interface IAuthContext {
     authTokens: AuthTokens | null
     registerUser(
         data: Record<string, any>,
-        setError: React.Dispatch<SetStateAction<string | undefined>>
+        setError: React.Dispatch<SetStateAction<ValidationErrors | undefined>>
     ): void
     setAuthTokens: Dispatch<SetStateAction<AuthTokens | null>>
     logoutUser(): void
@@ -85,7 +85,6 @@ export const AuthProvider = ({
     const authWithTokens = useCallback(
         (tokens: AuthTokens, redirectFrom?: string | null) => {
             setAuthTokens(tokens)
-            localStorage.setItem('authTokens', JSON.stringify(tokens))
             navigate(redirectFrom || '/teams')
         },
         [navigate, setAuthTokens]
@@ -133,7 +132,7 @@ export const AuthProvider = ({
                     setError?.(data.detail)
                 }
             } catch (err) {
-                error('Network error')
+                error(t('Network error'))
                 setError?.('Network error')
             }
         },
@@ -143,7 +142,7 @@ export const AuthProvider = ({
     const registerUser = useCallback(
         async (
             user: Record<string, string>,
-            setError: (value: string | undefined) => void
+            setError: (value: ValidationErrors) => void
         ) => {
             try {
                 const res = await fetch(`${apiBaseUrl}/api/v1/users/`, {
@@ -161,10 +160,10 @@ export const AuthProvider = ({
                     success(data.message)
                     authWithTokens(data, '/users/me/settings')
                 } else {
-                    setError(data.detail || 'Registration failed')
+                    setError(data as ValidationErrors)
                 }
             } catch (err) {
-                setError('Network error')
+                error(t('Network error'))
             }
         },
         [authWithTokens, i18n.resolvedLanguage]
