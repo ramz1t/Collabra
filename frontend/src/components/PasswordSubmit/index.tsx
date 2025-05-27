@@ -27,18 +27,20 @@ const PasswordSubmit = ({
     autoRef = false,
 }: PasswordSubmitProps): React.ReactElement => {
     const password = useInput('')
-    const [isError, setIsError] = useState(false)
+    const [errors, setErrors] = useState([])
     const { t } = useTranslation()
     return (
         <Form
             onSubmit={() => {
-                setIsError(false)
+                setErrors([])
                 submitFn(
                     { ...submitData, password: password.value },
                     {
                         ...options,
                         onError: (err: any) => {
-                            setIsError(true)
+                            if (err?.response?.status === 400) {
+                                setErrors(err?.response?.data?.password)
+                            }
                             if (typeof options?.onError === 'function') {
                                 options.onError(err)
                             }
@@ -55,7 +57,7 @@ const PasswordSubmit = ({
                 hint={t('pass_to_submit', {
                     action: actionText?.toLowerCase(),
                 })}
-                errors={isError ? [t('wrong_password')] : []}
+                errors={errors}
             />
             <Button
                 style="destructive"
