@@ -5,7 +5,7 @@ import {
     SettingsSection,
     TaskTag,
 } from '../../../../components'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { hexToRGBA } from '../../../../utils'
 import { IoAdd } from 'react-icons/io5'
 import { useCreateTag, useTags } from '../../../../api/tags'
@@ -17,8 +17,21 @@ const TeamTags = (): React.ReactElement => {
     const [newTag, setNewTag] = useState('')
     const initialColor = '#5b5b5b'
     const [color, setColor] = useState(initialColor)
-    const { mutate: createTag } = useCreateTag(teamSlug!)
+    const { mutate: createTag, isPending } = useCreateTag(teamSlug!)
     const { data: tags, isLoading } = useTags(teamSlug!)
+
+    const createTagCallback = useCallback(() => {
+        if (newTag.trim() === '') return
+        createTag(
+            { title: newTag.trim(), color: color },
+            {
+                onSuccess: (res) => {
+                    setColor(initialColor)
+                    setNewTag('')
+                },
+            }
+        )
+    }, [newTag, createTag, setColor, setNewTag, color])
 
     return (
         <SettingsSection
@@ -57,19 +70,9 @@ const TeamTags = (): React.ReactElement => {
                         onChange={(e) => setNewTag(e.target.value)}
                     />
                     <Button
-                        className="min-w-8 h-full !text-[--accent]"
-                        action={() => {
-                            if (newTag.trim() === '') return
-                            createTag(
-                                { title: newTag.trim(), color: color },
-                                {
-                                    onSuccess: (res) => {
-                                        setColor(initialColor)
-                                        setNewTag('')
-                                    },
-                                }
-                            )
-                        }}
+                        className="min-w-8 min-h-8 !rounded-full disabled:!bg-transparent !text-[--accent]"
+                        action={createTagCallback}
+                        disabled={isPending}
                     >
                         <IoAdd size="1.3em" />
                     </Button>
