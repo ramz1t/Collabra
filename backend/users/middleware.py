@@ -17,7 +17,7 @@ class DemoModeMiddleware:
         if request.method != 'GET' and getattr(request.user, 'is_demo', False):
             return JsonResponse(
                 {"detail": _("You can't change data in demo mode.")},
-                status=401
+                status=403
             )
 
         return self.get_response(request)
