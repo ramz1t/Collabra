@@ -1,6 +1,13 @@
 import React from 'react'
 import TeamCard from './TeamCard.js'
-import { Button, Dropdown, LoadMoreMarker, SearchBar } from '../../components'
+import {
+    Button,
+    Dropdown,
+    LoadingState,
+    LoadMoreMarker,
+    NoResults,
+    SearchBar,
+} from '../../components'
 import {
     IoDuplicateOutline,
     IoReorderFourOutline,
@@ -30,9 +37,9 @@ const TeamsList = () => {
         id: { title: t('older_first'), icon: <IoArrowUp /> },
         title: { title: t('alphabetical'), icon: <IoText /> },
     }
-    const search = useInput<string>('', {}, 250)
+    const search = useInput('', {}, 250)
     const [sortBy, setSortBy] = useLocalStorage<OrderingKey>(
-        'teamsOrdering',
+        'teams_orderBy',
         '-id'
     )
     const {
@@ -41,6 +48,7 @@ const TeamsList = () => {
         isFetchingNextPage,
         hasNextPage,
         error,
+        isLoading,
     } = useTeams({
         search: search.value.trim() || null,
         ordering: sortBy!,
@@ -49,7 +57,7 @@ const TeamsList = () => {
     const [isList, setIsList] = useLocalStorage('displayTeamsInList', true)
 
     return (
-        <div>
+        <>
             <Helmet>
                 <title>{t('title_teams')} | Collabra</title>
             </Helmet>
@@ -124,15 +132,34 @@ const TeamsList = () => {
             </div>
             <ul
                 className={cn(
-                    'pb-5 px-5',
+                    'pb-5 px-5 flex flex-col justify-start grow',
                     isTablet && isList
                         ? 'rounded-lg overflow-hidden'
                         : 'grid max-md:gap-3 md:grid-cols-2 xl:grid-cols-3'
                 )}
             >
-                {teams?.map((team, key: number) => (
-                    <TeamCard key={key} team={team} isList={isList!} />
-                ))}
+                {isLoading ? (
+                    <LoadingState
+                        titleKey={'loading_teams'}
+                        className="col-span-full"
+                    />
+                ) : teams?.length ? (
+                    teams.map((team, key: number) => (
+                        <TeamCard key={key} team={team} isList={isList!} />
+                    ))
+                ) : (
+                    <NoResults
+                        title={t('no_teams')}
+                        description={t('no_teams_created')}
+                        input={search}
+                        onReset={
+                            search.value.trim().length > 0
+                                ? () => search.clear()
+                                : undefined
+                        }
+                        onResetText={t('clear_search')}
+                    />
+                )}
                 <LoadMoreMarker
                     error={error}
                     isFetching={isFetchingNextPage}
@@ -140,7 +167,7 @@ const TeamsList = () => {
                     fetch={fetchNextPage}
                 />
             </ul>
-        </div>
+        </>
     )
 }
 
