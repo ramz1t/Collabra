@@ -20,11 +20,12 @@ const TaskboardHeader = () => {
     const { data: stats, isLoading: statsLoading } = useTeamStats(teamSlug!)
 
     const donePercent = useMemo(() => {
-        const done = stats?.complete
+        const done = stats?.done
         const total = stats?.total
 
         if (!done || !total) return 0
-        return (done / total) * 100
+        const percentage = (done / total) * 100
+        return Math.round(percentage)
     }, [stats])
 
     if (!team) return

@@ -49,8 +49,10 @@ export interface Team {
 
 export interface TeamStats {
     total: number
-    complete: number
-    to_review: number
+    to_do: number
+    in_progress: number
+    need_review: number
+    done: number
     assigned: number
 }
 
