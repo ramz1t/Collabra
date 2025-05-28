@@ -98,7 +98,7 @@ export const useTeam = (slug: string) => {
 export const useTeamStats = (slug: string) => {
     const api = useAxios()
     return useQuery({
-        queryKey: ['teamStats', { slug: slug }],
+        queryKey: ['teamStats', { teamSlug: slug }],
         queryFn: async (): Promise<TeamStats> => {
             const res = await api.get(`${prefix}/teams/${slug}/stats/`)
             return res.data

@@ -2,6 +2,7 @@ import useAxios from '../hooks/useAxios'
 import {
     InfiniteData,
     InvalidateQueryFilters,
+    QueryClient,
     useInfiniteQuery,
     useMutation,
     useQuery,
@@ -11,6 +12,22 @@ import { PaginatedResponse, Task } from '../types'
 import { prefix } from './index'
 import { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
+import qs from 'qs'
+
+export const invalidateTasks = async (queryClient: QueryClient) => {
+    await queryClient.invalidateQueries({
+        queryKey: ['tasks'],
+    } as InvalidateQueryFilters)
+}
+
+export const invalidateTeamStats = async (
+    teamSlug: string,
+    queryClient: QueryClient
+) => {
+    await queryClient.invalidateQueries({
+        queryKey: ['teamStats', { teamSlug }],
+    })
+}
 
 export const useTasks = (teamSlug: string, params?: Record<string, any>) => {
     const api = useAxios()
@@ -21,6 +38,12 @@ export const useTasks = (teamSlug: string, params?: Record<string, any>) => {
                 `${prefix}/teams/${teamSlug}/tasks/`,
                 {
                     params: { ...params, page: pageParam },
+                    paramsSerializer: (params) =>
+                        qs.stringify(params, {
+                            arrayFormat: 'repeat',
+                            skipNulls: false,
+                            strictNullHandling: true,
+                        }),
                 }
             )
             return response.data
@@ -46,7 +69,11 @@ export const useTask = (teamSlug: string, taskId: number) => {
     })
 }
 
-export const useCreateTask = (teamSlug: string, status: string) => {
+export const useCreateTask = (
+    teamSlug: string,
+    status: string,
+    withForceReload: boolean
+) => {
     const api = useAxios()
     const queryClient = useQueryClient()
 
@@ -54,7 +81,7 @@ export const useCreateTask = (teamSlug: string, status: string) => {
         mutationFn: (data: Partial<Task>): Promise<AxiosResponse<Task>> => {
             return api.post(`${prefix}/teams/${teamSlug}/tasks/`, data)
         },
-        onSuccess: (res) => {
+        onSuccess: async (res) => {
             const columnOrdering = JSON.parse(
                 localStorage.getItem(`collabra_${res.data.status}_orderBy`)!
             )
@@ -67,24 +94,26 @@ export const useCreateTask = (teamSlug: string, status: string) => {
                     queryKey
                 )
 
-            if (!previousData) return
+            // Data update for board view
+            if (previousData) {
+                const updatedPages = [...previousData.pages]
+                const lastPageIndex = updatedPages.length - 1
 
-            const updatedPages = [...previousData.pages]
-            const lastPageIndex = updatedPages.length - 1
+                updatedPages[lastPageIndex] = {
+                    ...updatedPages[lastPageIndex],
+                    results: [res.data, ...updatedPages[lastPageIndex].results],
+                }
 
-            updatedPages[lastPageIndex] = {
-                ...updatedPages[lastPageIndex],
-                results: [res.data, ...updatedPages[lastPageIndex].results],
+                queryClient.setQueryData(queryKey, {
+                    ...previousData,
+                    pages: updatedPages,
+                })
             }
 
-            queryClient.setQueryData(queryKey, {
-                ...previousData,
-                pages: updatedPages,
-            })
+            // Data update for list view
+            if (withForceReload) await invalidateTasks(queryClient)
 
-            queryClient.invalidateQueries({
-                queryKey: ['teamStats', { slug: teamSlug }],
-            } as InvalidateQueryFilters)
+            await invalidateTeamStats(teamSlug, queryClient)
         },
     })
 }
@@ -104,13 +133,8 @@ export const useUpdateTask = (teamSlug: string, taskId: number) => {
                 updatedTask
             )
 
-            await queryClient.invalidateQueries({
-                queryKey: ['tasks', { teamSlug }],
-            } as InvalidateQueryFilters)
-
-            queryClient.invalidateQueries({
-                queryKey: ['teamStats', { slug: teamSlug }],
-            } as InvalidateQueryFilters)
+            await invalidateTeamStats(teamSlug, queryClient)
+            await invalidateTasks(queryClient)
         },
     })
 }
@@ -122,12 +146,12 @@ export const useDeleteTasks = (teamSlug: string) => {
     return useMutation({
         mutationFn: (data: Record<string, any>) =>
             api.delete(`${prefix}/teams/${teamSlug}/tasks/`, { data: data }),
-        onSuccess: () => {
-            queryClient.invalidateQueries('task' as InvalidateQueryFilters)
-            queryClient.invalidateQueries('tasks' as InvalidateQueryFilters)
-            queryClient.invalidateQueries({
-                queryKey: ['teamStats', { slug: teamSlug }],
-            } as InvalidateQueryFilters)
+        onSuccess: async () => {
+            await queryClient.invalidateQueries(
+                'task' as InvalidateQueryFilters
+            )
+            await invalidateTeamStats(teamSlug, queryClient)
+            await invalidateTasks(queryClient)
 
             navigate(`/teams/${teamSlug}/tasks`)
         },
