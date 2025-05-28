@@ -110,3 +110,39 @@ export const getStatusColor = (status: string) => {
     }
     return colors[status] || defaultColor
 }
+
+export const getScrollableParent = (
+    element: HTMLElement | null
+): HTMLElement[] => {
+    const scrollableParents: HTMLElement[] = []
+    if (!element) return scrollableParents
+
+    let parent = element.parentElement
+
+    while (parent) {
+        const style = window.getComputedStyle(parent)
+        const overflowY = style.overflowY
+        const overflowX = style.overflowX
+
+        const isScrollableY =
+            (overflowY === 'auto' || overflowY === 'scroll') &&
+            parent.scrollHeight > parent.clientHeight
+        const isScrollableX =
+            (overflowX === 'auto' || overflowX === 'scroll') &&
+            parent.scrollWidth > parent.clientWidth
+
+        if (isScrollableY || isScrollableX) {
+            scrollableParents.push(parent)
+        }
+
+        parent = parent.parentElement
+    }
+
+    // document.scrollingElement as a fallback
+    const rootScroller = document.scrollingElement as HTMLElement
+    if (!scrollableParents.includes(rootScroller)) {
+        scrollableParents.push(rootScroller)
+    }
+
+    return scrollableParents
+}
