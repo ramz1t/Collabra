@@ -9,8 +9,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { createPortal } from 'react-dom'
 import useScreenSize from '../../hooks/useScreenSize'
 import { Button } from '../index'
-import { useTranslation } from 'react-i18next'
 import cn from 'classnames'
+import { getScrollableParent } from '../../utils'
 
 export interface MenuAction {
     title: string
@@ -37,19 +37,33 @@ const Menu = ({
     const [coords, setCoords] = useState({ top: 0, left: 0 })
     const btnRef = useRef<HTMLButtonElement>(null)
     const menuRef = useRef<HTMLUListElement>(null)
+    const [placement, setPlacement] = useState<'bottom' | 'top'>('bottom')
+
     const { isTablet } = useScreenSize()
 
     const updatePosition = useCallback(() => {
         if (!(btnRef.current && menuRef.current)) return
         const rect = btnRef.current.getBoundingClientRect()
+        const menuHeight = menuRef.current.offsetHeight
         const menuWidth = menuRef.current.offsetWidth
-        setCoords({
-            top: rect.bottom + window.scrollY,
-            left:
-                rect.left +
-                (position === 'left' ? rect.width : 0) -
-                (position === 'left' ? menuWidth : 0),
-        })
+
+        const spaceBelow = window.innerHeight - rect.bottom
+        const spaceAbove = rect.top
+
+        const shouldFlipVertical =
+            spaceBelow < menuHeight && spaceAbove > menuHeight
+        setPlacement(shouldFlipVertical ? 'top' : 'bottom')
+
+        const top = shouldFlipVertical
+            ? rect.top + window.scrollY - menuHeight
+            : rect.bottom + window.scrollY
+
+        const left =
+            rect.left +
+            (position === 'left' ? rect.width : 0) -
+            (position === 'left' ? menuWidth : 0)
+
+        setCoords({ top, left })
     }, [position])
 
     useLayoutEffect(() => {
@@ -74,15 +88,26 @@ const Menu = ({
             setIsOpen(false)
         }
 
+        const scrollableParents = getScrollableParent(btnRef.current)
+
         window.addEventListener('click', handleClickOutside)
-        window.addEventListener('scroll', handleScroll)
         window.addEventListener('resize', updatePosition)
+        window.addEventListener('scroll', handleScroll)
+
+        scrollableParents.forEach((el) =>
+            el.addEventListener('scroll', handleScroll, { passive: true })
+        )
+
         return () => {
             window.removeEventListener('click', handleClickOutside)
-            window.removeEventListener('scroll', handleScroll)
             window.removeEventListener('resize', updatePosition)
+            window.removeEventListener('scroll', handleScroll)
+
+            scrollableParents.forEach((el) =>
+                el.removeEventListener('scroll', handleScroll)
+            )
         }
-    }, [])
+    }, [updatePosition])
 
     if (actions.length === 0) return null
 
@@ -109,8 +134,12 @@ const Menu = ({
                             className={cn(
                                 'absolute z-50 border dark:border-0 divide-y dark:divide-gray-700 min-w-20 bg-white/70 dark:bg-white/5 backdrop-blur-2xl rounded-lg overflow-hidden drop-shadow-xl grid',
                                 position === 'left'
-                                    ? 'origin-top-right'
-                                    : 'origin-top-left'
+                                    ? placement === 'top'
+                                        ? 'origin-bottom-right'
+                                        : 'origin-top-right'
+                                    : placement === 'top'
+                                      ? 'origin-bottom-left'
+                                      : 'origin-top-left'
                             )}
                             style={{
                                 position: 'absolute',
