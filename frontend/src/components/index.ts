@@ -34,6 +34,7 @@ import TaskTag from './TaskTag'
 import RichDescription from './RichDescription'
 import SmoothContainer from './SmoothContainer'
 import DemoControls from './DemoControls/DemoControls'
+import NoResults from './NoResults'
 
 export {
     PrivateRoute,
@@ -72,4 +73,5 @@ export {
     RichDescription,
     SmoothContainer,
     DemoControls,
+    NoResults,
 }
