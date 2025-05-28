@@ -5,6 +5,8 @@ import cn from 'classnames'
 // All loading messages' variants
 // Needed for auto-parser
 // t('loading_team_space')
+// t('loading_teams')
+// t('loading_tasks')
 
 export interface LoadingStateProps {
     titleKey?: string
