@@ -19,6 +19,8 @@ import {
 import { getStatusColor } from '../../../../../utils'
 import useIsAllowed, { UserRole } from '../../../../../hooks/useIsAllowed'
 import useLocalStorage from '../../../../../hooks/useLocalStorage'
+import { useTeamStats } from '../../../../../api/team'
+import { TeamStats } from '../../../../../types'
 
 export interface ColumnProps {
     status: string
@@ -38,6 +40,7 @@ const Column = ({ canAdd = true, status, moveColumn, index }: ColumnProps) => {
         fetchNextPage,
         isFetching,
     } = useTasks(teamSlug!, { status: status, ordering: orderBy })
+    const { data: stats, isLoading: statsLoading } = useTeamStats(teamSlug!)
     const { t } = useTranslation()
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
     const { mutate: deleteTasks } = useDeleteTasks(teamSlug!)
@@ -78,7 +81,7 @@ const Column = ({ canAdd = true, status, moveColumn, index }: ColumnProps) => {
                 {marker}
                 <p className="font-semibold text-lg">{t(status)}</p>
                 <span className="bg-white dark:bg-slate-800 rounded-full px-5 font-bold py-1 shadow-md">
-                    {tasks?.length ?? 0}
+                    {stats?.[status as keyof TeamStats] ?? 0}
                 </span>
                 <Menu actions={menuActions} className="ml-auto" position="left">
                     <IoEllipsisVerticalSharp size="1.2em" />
