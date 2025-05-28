@@ -6,17 +6,33 @@ import { useTranslation } from 'react-i18next'
 import { getStatusColor } from '../../../../../utils'
 import { useCreateTask } from '../../../../../api/tasks'
 import { useParams } from 'react-router-dom'
+import cn from 'classnames'
 
-const AddNewTaskButton = ({ status }: { status: string }) => {
+const AddNewTaskButton = ({
+    status,
+    className,
+    withForceReload = false,
+}: {
+    status: string
+    className?: string
+    withForceReload?: boolean
+}) => {
     const { t } = useTranslation()
     const [addNewTaskOpen, setAddNewTaskOpen] = useState(false)
     const { teamSlug } = useParams()
-    const { mutate: createTask } = useCreateTask(teamSlug!, status)
+    const { mutate: createTask } = useCreateTask(
+        teamSlug!,
+        status,
+        withForceReload
+    )
     return (
         <>
             <Button
                 action={() => setAddNewTaskOpen(true)}
-                className="py-3 w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-accent dark:text-accent-dark font-semibold"
+                className={cn(
+                    'py-3 px-5 w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-lg text-accent dark:text-accent-dark font-semibold',
+                    className
+                )}
             >
                 <IoAdd size={'1.2em'} />
                 {t('add_new_task')}
