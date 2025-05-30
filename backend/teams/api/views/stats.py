@@ -14,8 +14,10 @@ class StatsViewSet(mixins.StatsMixin):
 
         stats = {
             "total": selectors.get_tasks_count(team),
-            "complete": selectors.get_tasks_count(team, status="done"),
-            "to_review": selectors.get_tasks_count(team, status="need_review"),
+            "to_do": selectors.get_tasks_count(team, status="to_do"),
+            "in_progress": selectors.get_tasks_count(team, status="in_progress"),
+            "need_review": selectors.get_tasks_count(team, status="need_review"),
+            "done": selectors.get_tasks_count(team, status="done"),
             "assigned": selectors.get_tasks_count(team, assignee__user=request.user),
         }
 
