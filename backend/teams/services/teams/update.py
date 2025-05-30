@@ -12,7 +12,7 @@ User = get_user_model()
 
 
 def update_team(team: Team, **fields) -> Team:
-    image: Optional[File] = fields.pop("image", team.image)
+    image: Optional[File] = fields.pop("image", None)
     if image is not None:
         image = prepare_icon(image, slugify(team.title))
 
