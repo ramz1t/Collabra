@@ -67,7 +67,6 @@ const TeamsList = () => {
                     <div className="flex items-center gap-3">
                         <p className="font-semibold">{t('sort_by')}</p>
                         <Dropdown<SortingOption>
-                            title={t('sort_by')}
                             selected={sortBy!}
                             setSelected={setSortBy}
                             values={teamsSortingOptions}
@@ -85,6 +84,7 @@ const TeamsList = () => {
                                     {option.title}
                                 </Button>
                             )}
+                            position={isTablet ? 'right' : 'left'}
                         />
                     </div>
                     {isTablet && (

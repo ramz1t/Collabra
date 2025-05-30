@@ -43,7 +43,7 @@ const TaskboardHeader = () => {
                             ></div>
                         </div>
                         <p className="text-gray-600 dark:text-gray-400 text-sm">
-                            {donePercent}% completed
+                            {donePercent}% {t('completed')}
                         </p>
                     </div>
                 </div>

@@ -10,7 +10,7 @@ import { useState } from 'react'
 import { useDeleteTasks, useTasks } from '../../../../../api/tasks'
 import { useParams } from 'react-router-dom'
 import AddNewTaskButton from '../Create/AddNewTaskButton'
-import Menu, { MenuAction } from '../../../../../components/Menu'
+import { Menu } from '../../../../../components'
 import {
     LuPanelRightClose,
     LuPanelRightOpen,
@@ -20,7 +20,7 @@ import { getStatusColor } from '../../../../../utils'
 import useIsAllowed, { UserRole } from '../../../../../hooks/useIsAllowed'
 import useLocalStorage from '../../../../../hooks/useLocalStorage'
 import { useTeamStats } from '../../../../../api/team'
-import { TeamStats } from '../../../../../types'
+import { MenuAction, TeamStats } from '../../../../../types'
 
 export interface ColumnProps {
     status: string
@@ -83,8 +83,15 @@ const Column = ({ canAdd = true, status, moveColumn, index }: ColumnProps) => {
                 <span className="bg-white dark:bg-slate-800 rounded-full px-5 font-bold py-1 shadow-md">
                     {stats?.[status as keyof TeamStats] ?? 0}
                 </span>
-                <Menu actions={menuActions} className="ml-auto" position="left">
-                    <IoEllipsisVerticalSharp size="1.2em" />
+                <Menu
+                    actions={menuActions}
+                    className="ml-auto mr-1.5"
+                    position="left"
+                >
+                    <IoEllipsisVerticalSharp
+                        size="1.2em"
+                        className="min-w-10"
+                    />
                 </Menu>
                 <DialogWindow
                     isOpen={isDeleteDialogOpen}

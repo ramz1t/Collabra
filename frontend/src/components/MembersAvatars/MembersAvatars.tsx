@@ -1,13 +1,14 @@
 import { Avatar } from '../index'
 import React from 'react'
 import { User } from '../../types'
+import { AvatarProps } from '../Avatar'
 
 const MembersAvatars = ({
     users,
     size,
 }: {
     users: User[]
-    size?: string
+    size?: AvatarProps['size']
 }): React.ReactElement => {
     const placeholderUser = {
         id: 1,
@@ -24,6 +25,7 @@ const MembersAvatars = ({
         timezone: '',
         links: [],
         date_joined: '',
+        is_demo: false,
     }
 
     return (

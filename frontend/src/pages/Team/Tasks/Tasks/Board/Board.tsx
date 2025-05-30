@@ -36,7 +36,7 @@ const Board = () => {
     )
 
     return (
-        <div className="bg-gray-100 dark:bg-slate-900 grow grid grid-cols-[1fr_1fr_1fr_1fr] p-5 gap-5 items-start max-w-screen md:max-w-slot overflow-x-auto">
+        <div className="bg-gray-100 dark:bg-gray-900 grow grid grid-cols-[1fr_1fr_1fr_1fr] p-5 gap-5 items-start max-w-screen md:max-w-slot overflow-x-auto">
             {columns?.map((col, key) => (
                 <Column
                     key={col.status}

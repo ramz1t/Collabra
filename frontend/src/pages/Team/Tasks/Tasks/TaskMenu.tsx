@@ -1,5 +1,4 @@
-import { Task } from '../../../../types'
-import Menu, { MenuAction } from '../../../../components/Menu'
+import { Task, MenuAction } from '../../../../types'
 import { useTranslation } from 'react-i18next'
 import {
     IoCheckmarkCircleOutline,
@@ -12,7 +11,7 @@ import {
     IoTrashOutline,
 } from 'react-icons/io5'
 import { useContext, useState, useMemo } from 'react'
-import { DialogWindow } from '../../../../components'
+import { DialogWindow, Menu } from '../../../../components'
 import AddTaskDialog from './Create/AddTaskDialog'
 import { useDeleteTasks, useUpdateTask } from '../../../../api/tasks'
 import { useParams } from 'react-router-dom'
@@ -89,7 +88,7 @@ const TaskMenu = ({ task }: { task: Task }) => {
     return (
         <>
             <Menu actions={actions} position="left">
-                <IoEllipsisVerticalSharp size="1.2em" />
+                <IoEllipsisVerticalSharp size="1.2em" className="min-w-10" />
             </Menu>
 
             <DialogWindow

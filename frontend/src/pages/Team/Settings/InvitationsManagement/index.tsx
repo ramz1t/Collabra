@@ -12,7 +12,7 @@ import TeamContext, { ITeamContext } from '../../../../contexts/TeamContext'
 
 const InvitationsManagement = (): React.ReactElement => {
     const { t } = useTranslation()
-    const userInfo = useInput<string>('', {}, 250)
+    const userInfo = useInput('', {}, 250)
     const { teamSlug } = useParams()
     const { team } = useContext(TeamContext) as ITeamContext
     const { data: teamInvitesData, isLoading } = useTeamInvites(team!.id)
