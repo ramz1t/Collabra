@@ -27,7 +27,7 @@ import Checkbox from './Checkbox'
 import InfoHeader from './InfoHeader'
 import LoadMoreMarker from './LoadMoreMarker'
 import TextField from './TextField'
-import Dropdown from './Dropdown'
+import Dropdown from './Menus/Dropdown'
 import NotFoundRoute from './NotFoundRoute'
 import FireIcon from './FireIcon'
 import TaskTag from './TaskTag'
@@ -35,6 +35,7 @@ import RichDescription from './RichDescription'
 import SmoothContainer from './SmoothContainer'
 import DemoControls from './DemoControls/DemoControls'
 import NoResults from './NoResults'
+import Menu from './Menus/Menu'
 
 export {
     PrivateRoute,
@@ -74,4 +75,5 @@ export {
     SmoothContainer,
     DemoControls,
     NoResults,
+    Menu,
 }

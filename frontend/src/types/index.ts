@@ -120,3 +120,13 @@ export interface Task {
 }
 
 export type ValidationErrors = Record<string, string[]>
+
+export type MenuPosition = 'left' | 'right'
+
+export interface MenuAction {
+    title: string
+    icon: React.ReactNode
+    action(): void
+    color?: string
+    disabled?: boolean
+}
