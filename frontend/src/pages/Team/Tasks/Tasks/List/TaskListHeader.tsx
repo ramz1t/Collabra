@@ -1,15 +1,17 @@
-// TaskListHeader.tsx
 import { useTranslation } from 'react-i18next'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import useInput from '../../../../../hooks/useInput'
 import AddNewTaskButton from '../Create/AddNewTaskButton'
-import { Button, SearchBar } from '../../../../../components'
+import { Button, SearchBar, Spacer } from '../../../../../components'
 import cn from 'classnames'
 import { IoFilter } from 'react-icons/io5'
 import TaskFiltersPanel from './TaskFiltersPanel'
-import { STATUSES, DEFAULT_PAGE_SIZE } from '../../../../../utils/constants'
+import { DEFAULT_PAGE_SIZE, StorageKey } from '../../../../../utils/constants'
 import { AnimatePresence, motion } from 'framer-motion'
 import useScreenSize from '../../../../../hooks/useScreenSize'
+import TasksOrderByDropdown from '../TasksOrderByDropdown'
+import useLocalStorage from '../../../../../hooks/useLocalStorage'
+import { OrderingKey } from '../../../../../types'
 
 const TaskListHeader = ({
     setFilters,
@@ -26,6 +28,11 @@ const TaskListHeader = ({
     const [isDeadlineSoon, setIsDeadlineSoon] = useState(false)
     const [selectedTag, setSelectedTag] = useState<number | null | undefined>()
 
+    const [ordering] = useLocalStorage<OrderingKey>(
+        StorageKey.ORDER_BY('tasksList'),
+        'modified_at'
+    )
+
     const panelRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
@@ -35,8 +42,9 @@ const TaskListHeader = ({
             is_deadline_soon: isDeadlineSoon,
             tag: selectedTag,
             page_size: DEFAULT_PAGE_SIZE,
+            ordering: ordering,
         })
-    }, [title.value, checkedStatuses, isDeadlineSoon, selectedTag])
+    }, [title.value, checkedStatuses, isDeadlineSoon, selectedTag, ordering])
 
     const clearFilters = useCallback(() => {
         title.clear()
@@ -80,9 +88,10 @@ const TaskListHeader = ({
         <div className="flex gap-3 relative">
             <AddNewTaskButton
                 status="to_do"
-                className="max-h-10 max-w-fit mr-auto"
+                className="max-h-10 max-w-fit"
                 withForceReload
             />
+            <Spacer />
             {activeFilterCount > 0 && isTablet && (
                 <Button
                     className="min-h-10"
@@ -137,6 +146,7 @@ const TaskListHeader = ({
                     )}
                 </AnimatePresence>
             </div>
+            <TasksOrderByDropdown status="tasksList" />
             {isTablet && (
                 <SearchBar
                     placeholder={t('title')}

@@ -8,13 +8,14 @@ import useLocalStorage from '../../../../hooks/useLocalStorage'
 import { IoReorderFourOutline } from 'react-icons/io5'
 import { BsColumnsGap } from 'react-icons/bs'
 import { useMemo } from 'react'
+import { StorageKey } from '../../../../utils/constants'
 
 const TaskboardHeader = () => {
     const { teamSlug } = useParams()
     const { data: team, isLoading } = useTeam(teamSlug!)
     const { t } = useTranslation()
     const [viewOption, setViewOption] = useLocalStorage(
-        'tasksViewOption',
+        StorageKey.TASKS_VIEW_OPTION,
         'board'
     )
     const { data: stats, isLoading: statsLoading } = useTeamStats(teamSlug!)

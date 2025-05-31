@@ -17,10 +17,11 @@ import {
     LuRectangleVertical,
 } from 'react-icons/lu'
 import { getStatusColor } from '../../../../../utils'
-import useIsAllowed, { UserRole } from '../../../../../hooks/useIsAllowed'
+import useIsAllowed from '../../../../../hooks/useIsAllowed'
 import useLocalStorage from '../../../../../hooks/useLocalStorage'
 import { useTeamStats } from '../../../../../api/team'
 import { MenuAction, TeamStats } from '../../../../../types'
+import { StorageKey, UserRole } from '../../../../../utils/constants'
 
 export interface ColumnProps {
     status: string
@@ -30,9 +31,12 @@ export interface ColumnProps {
 }
 
 const Column = ({ canAdd = true, status, moveColumn, index }: ColumnProps) => {
-    const [addNewTaskOpen, setAddNewTaskOpen] = useState(false)
     const { teamSlug } = useParams()
-    const [orderBy] = useLocalStorage(status + '_orderBy', 'modified_at')
+    const [orderBy] = useLocalStorage(
+        // @ts-ignore
+        StorageKey.ORDER_BY(status),
+        'modified_at'
+    )
     const {
         data: tasks,
         isLoading,

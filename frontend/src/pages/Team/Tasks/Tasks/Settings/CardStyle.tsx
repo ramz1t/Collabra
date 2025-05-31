@@ -3,10 +3,14 @@ import { useTranslation } from 'react-i18next'
 import useLocalStorage from '../../../../../hooks/useLocalStorage'
 import { useUser } from '../../../../../api/user'
 import RadioButton from '../../../../../components/RadioButton'
+import { StorageKey } from '../../../../../utils/constants'
 
 const CardStyle = () => {
     const { t } = useTranslation()
-    const [cardStyle, setCardStyle] = useLocalStorage('cardStyle', 'expanded')
+    const [cardStyle, setCardStyle] = useLocalStorage(
+        StorageKey.CARD_STYLE,
+        'expanded'
+    )
     const { data: user } = useUser('me')
 
     if (!user) return

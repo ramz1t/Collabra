@@ -24,6 +24,7 @@ import useLocalStorage from '../../hooks/useLocalStorage'
 import useScreenSize from '../../hooks/useScreenSize'
 import { Helmet } from 'react-helmet-async'
 import { OrderingKey } from '../../types'
+import { StorageKey } from '../../utils/constants'
 
 interface SortingOption {
     title: string
@@ -39,7 +40,7 @@ const TeamsList = () => {
     }
     const search = useInput('', {}, 250)
     const [sortBy, setSortBy] = useLocalStorage<OrderingKey>(
-        'teams_orderBy',
+        StorageKey.ORDER_BY('teams'),
         '-id'
     )
     const {
@@ -54,7 +55,10 @@ const TeamsList = () => {
         ordering: sortBy!,
     })
     const { isTablet } = useScreenSize()
-    const [isList, setIsList] = useLocalStorage('displayTeamsInList', true)
+    const [isList, setIsList] = useLocalStorage(
+        StorageKey.DISPLAY_TEAMS_IN_LIST,
+        true
+    )
 
     return (
         <>

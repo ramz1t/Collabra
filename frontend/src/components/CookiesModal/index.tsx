@@ -3,15 +3,19 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '../index'
 import cookie from '../../assets/images/cookie-icon.svg'
 import React, { memo } from 'react'
+import { StorageKey } from '../../utils/constants'
 
 const CookiesModal = (): React.ReactElement | undefined => {
     const [isAccepted, setIsAccepted] = useLocalStorage<boolean>(
-        'cookiesAccepted',
+        StorageKey.COOKIES_ACCEPTED,
         false
     )
-    const [cookiesSettingSaved, setCookiesSettingSaved] =
-        useLocalStorage<boolean>('cookiesSettingSaved', false)
+    const [cookiesSettingSaved, setCookiesSettingSaved] = useLocalStorage(
+        StorageKey.COOKIES_SETTINGS_SAVED,
+        false
+    )
     const { t } = useTranslation()
+
     if (isAccepted || cookiesSettingSaved) return
     return (
         <div className="bg-white dark:bg-gray-900 py-2 px-3 rounded-md shadow-md flex flex-col md:flex-row gap-3 items-end md:items-center border dark:border-slate-600">

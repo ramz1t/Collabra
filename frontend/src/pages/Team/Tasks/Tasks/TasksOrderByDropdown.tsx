@@ -4,6 +4,7 @@ import { Button, Dropdown } from '../../../../components'
 import { useTranslation } from 'react-i18next'
 import React from 'react'
 import { IoArrowDown, IoArrowUp, IoText } from 'react-icons/io5'
+import { StorageKey } from '../../../../utils/constants'
 
 interface SortingOption {
     title: string
@@ -13,7 +14,8 @@ interface SortingOption {
 const TasksOrderByDropdown = ({ status }: { status: string }) => {
     const { t } = useTranslation()
     const [value, setValue] = useLocalStorage<OrderingKey>(
-        status + '_orderBy',
+        // @ts-ignore
+        StorageKey.ORDER_BY(status),
         'modified_at'
     )
     const teamsSortingOptions: Record<string, SortingOption> = {
@@ -25,7 +27,6 @@ const TasksOrderByDropdown = ({ status }: { status: string }) => {
 
     return (
         <Dropdown<SortingOption>
-            title={`${t(status)} - ${t('order_by')}`}
             selected={value!}
             setSelected={setValue}
             values={teamsSortingOptions}

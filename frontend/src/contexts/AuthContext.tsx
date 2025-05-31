@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next'
 import TeamContext, { ITeamContext } from './TeamContext'
 import useLocalStorage from '../hooks/useLocalStorage'
 import { AuthTokens, TokenUser, ValidationErrors } from '../types'
+import { StorageKey } from '../utils/constants'
 
 interface ILoginUserFunc {
     ({
@@ -58,7 +59,7 @@ export const AuthProvider = ({
     const { setTeam } = useContext(TeamContext) as ITeamContext
 
     const [authTokens, setAuthTokens] = useLocalStorage<AuthTokens | null>(
-        'authTokens',
+        StorageKey.AUTH_TOKENS,
         null
     )
 
@@ -74,11 +75,11 @@ export const AuthProvider = ({
     const [user, setUser] = useState<TokenUser | null>(decodedUser)
 
     const [, setCookiesAccepted] = useLocalStorage<boolean>(
-        'cookiesAccepted',
+        StorageKey.COOKIES_ACCEPTED,
         false
     )
     const [, setCookiesSettingSaved] = useLocalStorage<boolean>(
-        'cookiesSettingSaved',
+        StorageKey.COOKIES_SETTINGS_SAVED,
         false
     )
 

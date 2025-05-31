@@ -19,21 +19,20 @@ import React, { memo, useContext, useState } from 'react'
 import cn from 'classnames'
 import { Link } from 'react-router-dom'
 import TaskStats from '../TaskStats'
-import TaskSteps from '../TaskSteps'
 import TaskMenu from '../TaskMenu'
 import useProfilePath from '../../../../../hooks/useProfilePath'
-import TeamContext, { ITeamContext } from '../../../../../contexts/TeamContext'
 import { useTranslation } from 'react-i18next'
 import useLocalStorage from '../../../../../hooks/useLocalStorage'
 import AuthContext, { IAuthContext } from '../../../../../contexts/AuthContext'
 import StepsProgress from '../StepsProgress'
+import { StorageKey } from '../../../../../utils/constants'
 
 interface CardProps {
     task: Task
 }
 
 const TaskCard = ({ task }: CardProps) => {
-    const [cardStyle] = useLocalStorage('cardStyle', 'expanded')
+    const [cardStyle] = useLocalStorage(StorageKey.CARD_STYLE, 'expanded')
     const [isOpen, setIsOpen] = useState(
         task.status !== 'done' && cardStyle === 'expanded'
     )

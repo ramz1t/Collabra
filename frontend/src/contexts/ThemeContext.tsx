@@ -7,6 +7,7 @@ import React, {
 import useLocalStorage from '../hooks/useLocalStorage.js'
 import resolveConfig from 'tailwindcss/resolveConfig'
 import twConfig from '../../tailwind.config'
+import { StorageKey } from '../utils/constants'
 
 type TailwindConfigType = ReturnType<typeof resolveConfig>
 
@@ -26,7 +27,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
     const [isDark, setIsDark] = useState<boolean>(mediaQuery.matches)
     const [themeSetting, setThemeSetting] = useLocalStorage<string>(
-        'themeSetting',
+        StorageKey.THEME_SETTING,
         'auto'
     )
     const html = document.querySelector('html')!

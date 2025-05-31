@@ -11,6 +11,7 @@ import cn from 'classnames'
 import { createPortal } from 'react-dom'
 import { IoExpandOutline, IoContractOutline } from 'react-icons/io5'
 import useLocalStorage from '../../hooks/useLocalStorage'
+import { StorageKey } from '../../utils/constants'
 
 export interface DialogWindowProps {
     icon?: React.ReactElement | React.ReactNode
@@ -60,7 +61,7 @@ const DialogWindow = ({
     const fullConfig = resolveConfig(tailwindConfig)
     const dialogRef = useRef<HTMLDivElement>(null)
     const [isFullscreen, setIsFullscreen] = useLocalStorage(
-        'dialogFullScreen',
+        StorageKey.DIALOG_FULLSCREEN,
         false
     )
 

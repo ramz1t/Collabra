@@ -1,23 +1,13 @@
 import Column from './Column'
 import useLocalStorage from '../../../../../hooks/useLocalStorage'
 import { useCallback } from 'react'
-
-type ColumnType = {
-    status: string
-    canAdd: boolean
-}
-
-const initialColumns: ColumnType[] = [
-    { status: 'to_do', canAdd: true },
-    { status: 'in_progress', canAdd: true },
-    { status: 'need_review', canAdd: false },
-    { status: 'done', canAdd: false },
-]
+import { StorageKey, TASKBOARD_INIT_COLS } from '../../../../../utils/constants'
+import { ColumnType } from '../../../../../types'
 
 const Board = () => {
     const [columns, setColumns] = useLocalStorage<ColumnType[]>(
-        'taskboardColsPosition',
-        initialColumns
+        StorageKey.TASKBOARD_COLS_POSITION,
+        TASKBOARD_INIT_COLS
     )
 
     const moveColumn = useCallback(
