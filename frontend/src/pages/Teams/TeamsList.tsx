@@ -7,6 +7,7 @@ import {
     LoadMoreMarker,
     NoResults,
     SearchBar,
+    SortingDropdown,
 } from '../../components'
 import {
     IoDuplicateOutline,
@@ -33,11 +34,6 @@ interface SortingOption {
 
 const TeamsList = () => {
     const { t } = useTranslation()
-    const teamsSortingOptions: Record<string, SortingOption> = {
-        '-id': { title: t('newer_first'), icon: <IoArrowDown /> },
-        id: { title: t('older_first'), icon: <IoArrowUp /> },
-        title: { title: t('alphabetical'), icon: <IoText /> },
-    }
     const search = useInput('', {}, 250)
     const [sortBy, setSortBy] = useLocalStorage<OrderingKey>(
         StorageKey.ORDER_BY('teams'),
@@ -70,24 +66,9 @@ const TeamsList = () => {
                     <h1 className="font-bold text-3xl mr-auto">{t('teams')}</h1>
                     <div className="flex items-center gap-3">
                         <p className="font-semibold">{t('sort_by')}</p>
-                        <Dropdown<SortingOption>
-                            selected={sortBy!}
-                            setSelected={setSortBy}
-                            values={teamsSortingOptions}
-                            renderOption={(option, isSelected) => (
-                                <div className="flex items-center w-full gap-3 md:gap-8">
-                                    {option.title}
-                                    <span className="max-md:order-first md:ml-auto">
-                                        {option.icon}
-                                    </span>
-                                </div>
-                            )}
-                            renderSelected={(option) => (
-                                <Button className="bg-gray-100 dark:bg-slate-800 min-h-10 min-w-10 px-3 rounded-md">
-                                    {option.icon}
-                                    {option.title}
-                                </Button>
-                            )}
+                        <SortingDropdown
+                            storageKey="teams"
+                            sortingOptions={['title', 'id', '-id']}
                             position={isTablet ? 'right' : 'left'}
                         />
                     </div>

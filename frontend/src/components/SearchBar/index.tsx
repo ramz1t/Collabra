@@ -8,7 +8,7 @@ import React from 'react'
 
 export interface SearchBarProps {
     placeholder?: string
-    inputInstance: IInputInstance<string>
+    inputInstance: IInputInstance
     className?: string
     title?: string
 }

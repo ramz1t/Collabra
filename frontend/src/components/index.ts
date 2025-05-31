@@ -36,6 +36,7 @@ import SmoothContainer from './SmoothContainer'
 import DemoControls from './DemoControls/DemoControls'
 import NoResults from './NoResults'
 import Menu from './Menus/Menu'
+import SortingDropdown from './SortingDropdown'
 
 export {
     PrivateRoute,
@@ -76,4 +77,5 @@ export {
     DemoControls,
     NoResults,
     Menu,
+    SortingDropdown,
 }

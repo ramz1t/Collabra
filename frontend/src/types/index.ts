@@ -135,3 +135,8 @@ export interface ColumnType {
     status: string
     canAdd: boolean
 }
+
+export interface SortingOption {
+    title: string
+    icon: React.ReactNode
+}

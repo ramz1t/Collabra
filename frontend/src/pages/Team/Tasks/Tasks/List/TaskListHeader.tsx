@@ -2,14 +2,18 @@ import { useTranslation } from 'react-i18next'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import useInput from '../../../../../hooks/useInput'
 import AddNewTaskButton from '../Create/AddNewTaskButton'
-import { Button, SearchBar, Spacer } from '../../../../../components'
+import {
+    Button,
+    SearchBar,
+    SortingDropdown,
+    Spacer,
+} from '../../../../../components'
 import cn from 'classnames'
 import { IoFilter } from 'react-icons/io5'
 import TaskFiltersPanel from './TaskFiltersPanel'
 import { DEFAULT_PAGE_SIZE, StorageKey } from '../../../../../utils/constants'
 import { AnimatePresence, motion } from 'framer-motion'
 import useScreenSize from '../../../../../hooks/useScreenSize'
-import TasksOrderByDropdown from '../TasksOrderByDropdown'
 import useLocalStorage from '../../../../../hooks/useLocalStorage'
 import { OrderingKey } from '../../../../../types'
 
@@ -146,7 +150,10 @@ const TaskListHeader = ({
                     )}
                 </AnimatePresence>
             </div>
-            <TasksOrderByDropdown status="tasksList" />
+            <SortingDropdown
+                storageKey="tasksList"
+                sortingOptions={['title', '-id', 'id', 'modified_at']}
+            />
             {isTablet && (
                 <SearchBar
                     placeholder={t('title')}

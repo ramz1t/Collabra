@@ -1,6 +1,5 @@
-import { SettingsSection } from '../../../../../components'
+import { SettingsSection, SortingDropdown } from '../../../../../components'
 import { useTranslation } from 'react-i18next'
-import TasksOrderByDropdown from '../TasksOrderByDropdown'
 import { getStatusColor } from '../../../../../utils'
 
 const TasksSorting = () => {
@@ -24,7 +23,15 @@ const TasksSorting = () => {
                             ></span>
                             {t(status)}
                         </p>
-                        <TasksOrderByDropdown status={status} />
+                        <SortingDropdown
+                            storageKey={status}
+                            sortingOptions={[
+                                'title',
+                                'id',
+                                '-id',
+                                'modified_at',
+                            ]}
+                        />
                     </div>
                 ))}
             </div>
