@@ -10,6 +10,7 @@ import tailwindConfig from '../../../tailwind.config'
 import cn from 'classnames'
 import { createPortal } from 'react-dom'
 import { IoExpandOutline, IoContractOutline } from 'react-icons/io5'
+import useLocalStorage from '../../hooks/useLocalStorage'
 
 export interface DialogWindowProps {
     icon?: React.ReactElement | React.ReactNode
@@ -58,7 +59,10 @@ const DialogWindow = ({
     const { isTablet } = useScreenSize()
     const fullConfig = resolveConfig(tailwindConfig)
     const dialogRef = useRef<HTMLDivElement>(null)
-    const [isFullscreen, setIsFullscreen] = useState(false)
+    const [isFullscreen, setIsFullscreen] = useLocalStorage(
+        'dialogFullScreen',
+        false
+    )
 
     useEffect(() => {
         if (isOpen) {
@@ -113,7 +117,6 @@ const DialogWindow = ({
             result.then(() => closeOnSuccess && close())
         } else {
             closeOnSuccess && close()
-            setIsFullscreen(false)
         }
     }, [onSuccess, disabled, closeOnSuccess])
 
@@ -152,7 +155,7 @@ const DialogWindow = ({
                     >
                         {isTablet && expandable && (
                             <Button
-                                className="absolute top-5 right-5 text-black z-[999] text-lg"
+                                className="absolute top-5 right-5 text-black dark:text-white z-[999] text-lg"
                                 action={() =>
                                     setIsFullscreen((prevState) => !prevState)
                                 }
@@ -190,10 +193,7 @@ const DialogWindow = ({
                         <div className="flex items-center px-5 py-3 bg-gray-100 dark:bg-slate-800 gap-3 w-full sticky z-40 bottom-0">
                             {extraButtons}
                             <Button
-                                action={() => {
-                                    close()
-                                    setIsFullscreen(false)
-                                }}
+                                action={close}
                                 className="ml-auto min-h-10 bg-white dark:bg-slate-700 transiton-all duration-75 rounded-md px-3 border border-slate-400 dark:border-slate-600"
                             >
                                 {closeButtonText
