@@ -1,12 +1,6 @@
 import { useContext } from 'react'
 import TeamContext, { ITeamContext } from '../contexts/TeamContext'
 
-const UserRole = {
-    MEMBER: 'member',
-    ADMIN: 'admin',
-    OWNER: 'owner',
-}
-
 const useIsAllowed = (allowedRoles: string[] = []): boolean => {
     const { team } = useContext(TeamContext) as ITeamContext
     if (!team || !allowedRoles.length) return true
@@ -22,4 +16,3 @@ const useIsAllowed = (allowedRoles: string[] = []): boolean => {
 }
 
 export default useIsAllowed
-export { UserRole }

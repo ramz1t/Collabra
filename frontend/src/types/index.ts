@@ -130,3 +130,8 @@ export interface MenuAction {
     color?: string
     disabled?: boolean
 }
+
+export interface ColumnType {
+    status: string
+    canAdd: boolean
+}

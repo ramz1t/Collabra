@@ -52,6 +52,7 @@ const StatusDropdown = ({ task }: { task: Task }) => {
             )}
             selected={task.status}
             setSelected={handleStatusChange}
+            verticalPositionOffset={0}
         />
     )
 }

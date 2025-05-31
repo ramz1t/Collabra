@@ -1,10 +1,11 @@
 import useLocalStorage from '../../../../hooks/useLocalStorage'
 import Board from './Board/Board'
 import List from './List/List'
+import { StorageKey } from '../../../../utils/constants'
 
 const TasksContainer = () => {
     const [viewOption, setViewOption] = useLocalStorage(
-        'tasksViewOption',
+        StorageKey.TASKS_VIEW_OPTION,
         'board'
     )
 

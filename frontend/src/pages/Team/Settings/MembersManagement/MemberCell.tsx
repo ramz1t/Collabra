@@ -13,7 +13,7 @@ import { IoChevronForward, IoCheckmark } from 'react-icons/io5'
 import React, { memo, useContext, useState } from 'react'
 import MemberCellInfo from './MemberCellInfo'
 import useProfilePath from '../../../../hooks/useProfilePath'
-import { UserRole } from '../../../../hooks/useIsAllowed'
+import { UserRole } from '../../../../utils/constants'
 import TeamContext, { ITeamContext } from '../../../../contexts/TeamContext'
 import {
     useDeleteMembers,

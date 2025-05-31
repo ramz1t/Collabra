@@ -15,8 +15,9 @@ import { DialogWindow, Menu } from '../../../../components'
 import AddTaskDialog from './Create/AddTaskDialog'
 import { useDeleteTasks, useUpdateTask } from '../../../../api/tasks'
 import { useParams } from 'react-router-dom'
-import useIsAllowed, { UserRole } from '../../../../hooks/useIsAllowed'
+import useIsAllowed from '../../../../hooks/useIsAllowed'
 import AuthContext, { IAuthContext } from '../../../../contexts/AuthContext'
+import { UserRole } from '../../../../utils/constants'
 
 const TaskMenu = ({ task }: { task: Task }) => {
     const { t } = useTranslation()

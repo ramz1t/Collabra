@@ -6,7 +6,7 @@ import { Button } from '../index'
 import { IoArrowBack } from 'react-icons/io5'
 import noAccess from '../../assets/images/no-access.svg'
 
-const PrivateRoute = ({ children }: { children?: JSX.Element[] }) => {
+const PrivateRoute = ({ children }: { children?: React.ReactNode }) => {
     const { user } = useContext(AuthContext) as IAuthContext
     const { t } = useTranslation()
 
