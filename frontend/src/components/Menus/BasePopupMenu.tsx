@@ -12,6 +12,7 @@ type BasePopupMenuProps = {
     buttonContent: React.ReactNode
     menuContent: React.ReactNode
     onOpenChange?: (open: boolean) => void
+    verticalPositionOffset?: number
 }
 
 const BasePopupMenu = ({
@@ -20,13 +21,15 @@ const BasePopupMenu = ({
     buttonContent,
     menuContent,
     onOpenChange,
+    verticalPositionOffset,
 }: BasePopupMenuProps) => {
     const btnRef = useRef<HTMLButtonElement>(null)
     const menuRef = useRef<HTMLUListElement>(null)
     const { coords, placement, isOpen, setIsOpen, updatePosition } = useMenu(
         btnRef,
         menuRef,
-        position
+        position,
+        verticalPositionOffset
     )
 
     return (

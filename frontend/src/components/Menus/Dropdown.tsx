@@ -13,6 +13,7 @@ type DropdownProps<T> = {
     notSelectedPlaceholder?: React.ReactNode
     position?: 'left' | 'right'
     className?: string
+    verticalPositionOffset?: number
 }
 
 const Dropdown = <T,>({
@@ -25,6 +26,7 @@ const Dropdown = <T,>({
     notSelectedPlaceholder,
     position,
     className,
+    verticalPositionOffset = 8,
 }: DropdownProps<T>) => {
     const { t } = useTranslation()
     const selectedValue = selected ? values[selected] : null
@@ -65,6 +67,7 @@ const Dropdown = <T,>({
                     : notSelectedPlaceholder ?? t('select')
             }
             menuContent={menuContent}
+            verticalPositionOffset={verticalPositionOffset}
         />
     )
 }

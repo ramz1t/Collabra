@@ -7,9 +7,16 @@ interface MenuProps {
     children: React.ReactNode
     className?: string
     position?: 'left' | 'right'
+    verticalPositionOffset?: number
 }
 
-const Menu = ({ actions, children, className, position }: MenuProps) => {
+const Menu = ({
+    actions,
+    children,
+    className,
+    position,
+    verticalPositionOffset = 0,
+}: MenuProps) => {
     if (actions.length === 0) return null
 
     const menuContent = (
@@ -35,6 +42,7 @@ const Menu = ({ actions, children, className, position }: MenuProps) => {
             className={className}
             buttonContent={children}
             menuContent={menuContent}
+            verticalPositionOffset={verticalPositionOffset}
         />
     )
 }

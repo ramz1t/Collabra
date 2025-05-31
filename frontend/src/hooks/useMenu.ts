@@ -5,7 +5,8 @@ import { MenuPosition } from '../types'
 const useMenu = (
     btnRef: React.RefObject<HTMLButtonElement>,
     menuRef: React.RefObject<HTMLUListElement>,
-    position: MenuPosition
+    position: MenuPosition,
+    verticalPositionOffset: number = 0
 ) => {
     const [isOpen, setIsOpen] = useState(false)
     const [coords, setCoords] = useState({ top: 0, left: 0 })
@@ -14,7 +15,7 @@ const useMenu = (
     const updatePosition = useCallback(() => {
         if (!(btnRef.current && menuRef.current)) return
         const rect = btnRef.current.getBoundingClientRect()
-        const menuHeight = menuRef.current.offsetHeight
+        const menuHeight = menuRef.current.offsetHeight + verticalPositionOffset
         const menuWidth = menuRef.current.offsetWidth
 
         const spaceBelow = window.innerHeight - rect.bottom
@@ -25,8 +26,8 @@ const useMenu = (
         setPlacement(shouldFlipVertical ? 'top' : 'bottom')
 
         const top = shouldFlipVertical
-            ? rect.top + window.scrollY - menuHeight
-            : rect.bottom + window.scrollY
+            ? rect.top + window.scrollY - menuHeight - verticalPositionOffset
+            : rect.bottom + window.scrollY + verticalPositionOffset
 
         const left =
             rect.left +
