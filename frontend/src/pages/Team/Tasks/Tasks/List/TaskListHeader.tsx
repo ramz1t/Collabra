@@ -89,7 +89,7 @@ const TaskListHeader = ({
     }, [filtersOpen])
 
     return (
-        <div className="flex gap-3 relative">
+        <div className="flex gap-3 relative flex-wrap">
             <AddNewTaskButton
                 status="to_do"
                 className="max-h-10 max-w-fit"

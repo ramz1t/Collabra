@@ -1,20 +1,25 @@
 import { useTranslation } from 'react-i18next'
 import React from 'react'
+import { ResizableColumns } from '../../../../../components'
 
 const TaskListUlHeader = () => {
     const { t } = useTranslation()
     return (
-        <div className="max-md: hidden md:grid lg:grid-cols-[2fr_2fr] gap-4 xl:gap-10 px-5 pr-1.5 py-2 font-bold text-sm bg-white dark:bg-gray-900 sticky top-0">
-            <div className="grid grid-cols-[130px_1fr] gap-3">
-                <p>{t('tag')}</p>
-                <p>{t('title')}</p>
-            </div>
-            <div className="grid grid-cols-[1fr_1fr_1fr_40px]">
-                <p>{t('status')}</p>
-                <p>{t('assignee')}</p>
-                <p>{t('steps')}</p>
-            </div>
-        </div>
+        <ResizableColumns
+            containerName="taskRow-cols"
+            className="font-bold text-sm min-h-7 sticky top-0 bg-white dark:bg-slate-800 min-w-[900px]"
+            cellClassName="px-2 py-1"
+            minWidth={60}
+            initialWidths="1fr_4fr_1fr_1fr_1fr_1fr"
+        >
+            <p>{t('tag')}</p>
+            <p>{t('title')}</p>
+            <p>{t('status')}</p>
+            <p>{t('assignee')}</p>
+            <p>{t('deadline')}</p>
+            <p>{t('steps')}</p>
+            <span></span>
+        </ResizableColumns>
     )
 }
 

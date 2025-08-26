@@ -24,9 +24,9 @@ const List = () => {
     const { t } = useTranslation()
 
     return (
-        <div className="grow p-5 flex flex-col gap-5">
+        <div className="grow p-5 flex flex-col gap-5 max-w-screen md:max-w-slot">
             <TaskListHeader setFilters={setFilters} />
-            <ul className="flex flex-col md:max-lg:mt-5 rounded-lg border dark:border-slate-700 overflow-scroll min-h-[calc(100dvh-327px)] max-h-[calc(100dvh-327px)] md:min-h-[calc(100dvh-265px)] md:max-h-[calc(100dvh-265px)]">
+            <ul className="flex flex-col rounded-lg border dark:border-slate-700 overflow-scroll min-h-[calc(100dvh-327px)] max-h-[calc(100dvh-327px)] md:min-h-[calc(100dvh-265px)] md:max-h-[calc(100dvh-265px)] overflow-x-auto">
                 <TaskListUlHeader />
                 {isLoading ? (
                     <LoadingState titleKey={'loading_tasks'} />
