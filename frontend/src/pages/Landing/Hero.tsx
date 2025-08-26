@@ -60,7 +60,7 @@ const Hero = (): React.ReactElement => {
                             {t('demo_mode_desc')}
                         </DialogWindow>
                         <Button
-                            to="https://github.com/alexzawadsky/Collabra"
+                            to="https://github.com/ramz1t/Collabra"
                             className="font-semibold text-sm text-gray-600 dark:text-gray-400"
                             target="_blank"
                         >
