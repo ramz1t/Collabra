@@ -91,7 +91,7 @@ class TeamViewSet(mixins.TeamMixin):
         if not selectors.is_user_admin_by_team(request.user, team):
             raise PermissionDenied()
 
-        serializer = serializers.JoinKeysRetrieveSerializer(instance=team)
+        serializer = serializers.JoinKeysRetrieveSerializer(instance=team, context={"user": request.user})
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 

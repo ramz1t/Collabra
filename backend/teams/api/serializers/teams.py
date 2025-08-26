@@ -76,9 +76,15 @@ class TeamDeleteSerializer(serializers.Serializer):
 
 
 class JoinKeysRetrieveSerializer(serializers.Serializer):
-    join_key_common = serializers.CharField()
+    join_key_common = serializers.SerializerMethodField()
     join_key_selective = serializers.CharField()
     invited_people = serializers.SerializerMethodField()
+
+    def get_join_key_common(self, team):
+        if self.context["user"].is_demo:
+            return "nice-try-but-you-cant-join-demo-team"
+
+        return team.join_key_common
 
     def get_invited_people(self, team):
         return InvitedUserListSerializer(team.invited_people, many=True).data
