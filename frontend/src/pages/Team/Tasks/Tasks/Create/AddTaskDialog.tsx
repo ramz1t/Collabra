@@ -57,6 +57,7 @@ const AddTaskDialog = ({
     const [assignee, setAssignee] = useState<Member | null>(
         initialTask?.assignee ?? null
     )
+    const deadline = useInput(initialTask?.deadline ?? '')
 
     const addStep = useCallback(() => {
         const nextStepValue = nextStep.value.trim()
@@ -79,6 +80,7 @@ const AddTaskDialog = ({
         setRequiresReview(false)
         setSteps([])
         setAssignee(null)
+        deadline.clear
     }, [
         title,
         description,
@@ -86,6 +88,7 @@ const AddTaskDialog = ({
         setRequiresReview,
         setSteps,
         setAssignee,
+        deadline,
     ])
 
     const closeForm = useCallback(() => {
@@ -101,6 +104,7 @@ const AddTaskDialog = ({
             tag: selectedTag,
             steps,
             assignee: assignee?.id,
+            deadline: deadline.value,
         }),
         [
             title.value,
@@ -109,6 +113,7 @@ const AddTaskDialog = ({
             selectedTag,
             steps,
             assignee,
+            deadline,
         ]
     )
 
@@ -208,6 +213,7 @@ const AddTaskDialog = ({
                         ))}
                     </ul>
                 )}
+                <Input instance={deadline} title={t('deadline')} type="date" />
                 <AssigneeSelector
                     assignee={assignee}
                     setAssignee={setAssignee}
