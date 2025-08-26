@@ -32,7 +32,7 @@ const StatusDropdown = ({ task }: { task: Task }) => {
                 <div className="flex items-center justify-between gap-3 w-full">
                     {t(status)}
                     <span
-                        className={cn('size-4 rounded-full inline-block')}
+                        className="size-4 rounded-full inline-block"
                         style={{
                             backgroundColor: getStatusColor(status),
                         }}
@@ -42,7 +42,7 @@ const StatusDropdown = ({ task }: { task: Task }) => {
             renderSelected={(status) => (
                 <div className="flex items-center gap-3">
                     <span
-                        className={cn('size-4 rounded-full inline-block')}
+                        className="size-4 rounded-full inline-block  transition-colors"
                         style={{
                             backgroundColor: getStatusColor(status),
                         }}
