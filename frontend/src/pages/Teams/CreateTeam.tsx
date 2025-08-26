@@ -3,6 +3,7 @@ import { BackButton, Button, Form, Input, TeamImage } from '../../components'
 import { useTranslation } from 'react-i18next'
 import { useCreateTeam } from '../../api/team'
 import React, { memo } from 'react'
+import teamImg from '../../assets/images/team_ill.png'
 
 const CreateTeam = (): React.ReactElement => {
     const { t } = useTranslation()
@@ -12,7 +13,7 @@ const CreateTeam = (): React.ReactElement => {
                 <BackButton text={t('teams')} />
                 <CreateTeamForm />
             </div>
-            <img src={'/images/team_ill.png'} />
+            <img src={teamImg} />
         </div>
     )
 }
