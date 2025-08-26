@@ -37,6 +37,7 @@ import DemoControls from './DemoControls/DemoControls'
 import NoResults from './NoResults'
 import Menu from './Menus/Menu'
 import SortingDropdown from './SortingDropdown'
+import ResizableColumns from './ResizableColumns'
 
 export {
     PrivateRoute,
@@ -78,4 +79,5 @@ export {
     NoResults,
     Menu,
     SortingDropdown,
+    ResizableColumns,
 }
