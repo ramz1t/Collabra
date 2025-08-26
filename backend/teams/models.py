@@ -34,7 +34,7 @@ class Task(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     status = models.CharField(max_length=64, choices=settings.STATUS_CHOICES)
-    deadline = models.DateTimeField(null=True)
+    deadline = models.DateField(null=True)
     requires_review = models.BooleanField(default=False)
     tag = models.ForeignKey("TaskTag", null=True, on_delete=models.SET_NULL)
     assignee = models.ForeignKey(Member, related_name='assigned_tasks', null=True, on_delete=models.SET_NULL)

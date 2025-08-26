@@ -32,7 +32,7 @@ class TaskSerializer(serializers.Serializer):
     description = serializers.CharField()
     requires_review = serializers.BooleanField()
     tag = serializers.SerializerMethodField()
-    deadline = serializers.DateTimeField()
+    deadline = serializers.DateField()
     status = serializers.CharField()
     steps = serializers.SerializerMethodField()
     assignee = serializers.SerializerMethodField()
