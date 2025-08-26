@@ -84,7 +84,7 @@ const ResizableColumns = ({
     return (
         <div
             ref={containerRef}
-            className={cn('flex w-full overflow-hidden', className)}
+            className={cn('flex w-full overflow-x-hidden', className)}
         >
             {childArray.map((child, i) => (
                 <React.Fragment key={i}>
@@ -97,8 +97,11 @@ const ResizableColumns = ({
                     {i < childArray.length - 1 && (
                         <div
                             onMouseDown={(e) => startResizing(i, e)}
-                            className="w-0.5 rounded-full cursor-col-resize hover:bg-gray-500 relative after:absolute after:-inset-2"
-                        />
+                            className="relative flex justify-center cursor-col-resize group"
+                        >
+                            <div className="absolute -left-2 -right-2 top-0 bottom-0" />
+                            <div className="w-0.5 rounded-full group-hover:bg-gray-600" />
+                        </div>
                     )}
                 </React.Fragment>
             ))}

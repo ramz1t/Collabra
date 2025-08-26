@@ -17,7 +17,7 @@ import TaskDeadline from '../TaskDeadline'
 
 const TaskRow = ({ task }: { task: Task }) => {
     return (
-        <li className="odd:bg-gray-50/50 bg-gray-100/50 dark:bg-gray-800/[.5] odd:dark:bg-gray-900 min-w-[900px] overflow-x-auto min-h-14">
+        <li className="odd:bg-gray-50/50 bg-gray-100/50 dark:bg-gray-800/[.5] odd:dark:bg-gray-900 min-w-[900px]">
             <ResizableColumns
                 containerName="taskRow-cols"
                 cellClassName="px-2"
