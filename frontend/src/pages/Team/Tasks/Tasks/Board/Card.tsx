@@ -129,7 +129,7 @@ const TaskCard = ({ task }: CardProps) => {
             >
                 <p
                     className={cn(
-                        task.steps.length > 0 ? 'mb-3' : '',
+                        task.steps_count > 0 ? 'mb-3' : '',
                         'text-gray-500 dark:text-gray-400 text-sm line-clamp-3 hover:cursor-help'
                     )}
                     onClick={() => setIsDescriptionOpen(true)}

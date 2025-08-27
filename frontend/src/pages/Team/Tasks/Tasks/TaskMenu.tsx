@@ -4,6 +4,7 @@ import {
     IoCheckmarkCircleOutline,
     IoEllipsisVerticalSharp,
     IoFlaskOutline,
+    IoListOutline,
     IoPauseOutline,
     IoPencilOutline,
     IoPlayBackOutline,
@@ -74,6 +75,11 @@ const TaskMenu = ({ task }: { task: Task }) => {
                 title: t('edit'),
                 icon: <IoPencilOutline />,
                 action: () => setEditDialogOpen(true),
+            },
+            isAdmin && {
+                title: task.steps_count > 0 ? t('edit_steps') : t('add_steps'),
+                icon: <IoListOutline />,
+                action: () => console.log('open edit steps dialog'),
             },
             isAdmin && {
                 title: t('delete'),

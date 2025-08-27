@@ -1,37 +1,38 @@
-import React, { useState, useCallback, SetStateAction } from 'react'
+import React, { useState, useCallback, SetStateAction, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import cn from 'classnames'
 import { Checkbox } from '../../../../components'
-import { useToggleStep } from '../../../../api/tasks'
-import { Step } from '../../../../types'
+import { useSteps, useToggleStep } from '../../../../api/steps'
+import { Step, Task } from '../../../../types'
 
 interface TaskStepsProps {
-    taskId: number
-    steps: Step[]
+    task: Task
     setDoneCounter?: React.Dispatch<SetStateAction<number>>
     disabled?: boolean
     className?: string
 }
 
 const TaskSteps: React.FC<TaskStepsProps> = ({
-    taskId,
-    steps,
+    task,
     setDoneCounter,
     disabled,
     className,
 }) => {
-    const [stepsState, setStepsState] = useState(steps)
     const { teamSlug } = useParams()
-    const { mutate: toggleStep } = useToggleStep(teamSlug!, taskId)
+    const { data: steps, isLoading } = useSteps(teamSlug!, task.id)
+    const [stepsState, setStepsState] = useState<Step[] | undefined>(steps)
+    const { mutate: toggleStep } = useToggleStep(teamSlug!, task.id)
 
     const handleToggle = useCallback(
         (index: number) => {
+            if (!stepsState) return
             const step = stepsState[index]
             toggleStep(step.id, {
-                onSuccess: () => {
+                onSuccess: (res) => {
                     setStepsState((prev) => {
+                        if (!prev) return
                         const next = prev.map((s, i) =>
-                            i === index ? { ...s, is_done: !s.is_done } : s
+                            i === index ? { ...s, is_done: res.data.value } : s
                         )
                         setDoneCounter?.(next.filter((s) => s.is_done).length)
                         return next
@@ -42,6 +43,14 @@ const TaskSteps: React.FC<TaskStepsProps> = ({
         [stepsState, toggleStep, setDoneCounter]
     )
 
+    useEffect(() => {
+        setStepsState(steps)
+        if (steps !== undefined && setDoneCounter) {
+            setDoneCounter(steps.filter((s) => s.is_done).length)
+        }
+    }, [steps])
+
+    if (isLoading || !stepsState) return
     return (
         <ul className={cn('grid gap-2.5', className)}>
             {stepsState.map((step, index) => (

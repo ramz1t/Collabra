@@ -109,7 +109,7 @@ export interface Task {
     id: number
     title: string
     description: string
-    steps: Step[]
+    steps_count: number
     deadline: string | null
     messages_count: number
     attachments: File[]

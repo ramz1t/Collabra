@@ -4,7 +4,7 @@ import React from 'react'
 const FireIcon = () => {
     return (
         <>
-            <svg width="0" height="0">
+            <svg width="0" height="0" className="absolute">
                 <linearGradient
                     id="fire-gradient"
                     x1="0%"

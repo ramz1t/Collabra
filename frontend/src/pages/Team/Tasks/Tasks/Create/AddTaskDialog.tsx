@@ -45,9 +45,7 @@ const AddTaskDialog = ({
         isEmpty: true,
     })
     const nextStep = useInput('')
-    const [steps, setSteps] = useState<string[]>(
-        initialTask?.steps.map((step) => step.title) ?? []
-    )
+    const [steps, setSteps] = useState<string[]>([])
     const [requiresReview, setRequiresReview] = useState(
         initialTask?.requires_review ?? false
     )
@@ -185,33 +183,37 @@ const AddTaskDialog = ({
                     title={t('description')}
                     instance={description}
                 />
-                <div className="flex items-end gap-3">
-                    <Input title={t('subtasks')} instance={nextStep} />
-                    <Button
-                        action={addStep}
-                        className="min-w-10 !p-0"
-                        style="primary"
-                    >
-                        <IoCheckmark />
-                    </Button>
-                </div>
-                {steps.length > 0 && (
-                    <ul className="flex flex-wrap gap-3">
-                        {steps.map((step, key) => (
-                            <li
-                                className="bg-gray-200 dark:bg-slate-700 flex items-center rounded-full pl-3 w-fit gap-0.5"
-                                key={key}
+                {!isEditMode && (
+                    <>
+                        <div className="flex items-end gap-3">
+                            <Input title={t('subtasks')} instance={nextStep} />
+                            <Button
+                                action={addStep}
+                                className="min-w-10 !p-0"
+                                style="primary"
                             >
-                                {step}
-                                <Button
-                                    className="px-2 hover:bg-gray-300 dark:hover:bg-slate-600 min-h-8 !rounded-full"
-                                    action={() => removeStep(step)}
-                                >
-                                    <IoClose />
-                                </Button>
-                            </li>
-                        ))}
-                    </ul>
+                                <IoCheckmark />
+                            </Button>
+                        </div>
+                        {steps.length > 0 && (
+                            <ul className="flex flex-wrap gap-3">
+                                {steps.map((step, key) => (
+                                    <li
+                                        className="bg-gray-200 dark:bg-slate-700 flex items-center rounded-full pl-3 w-fit gap-0.5"
+                                        key={key}
+                                    >
+                                        {step}
+                                        <Button
+                                            className="px-2 hover:bg-gray-300 dark:hover:bg-slate-600 min-h-8 !rounded-full"
+                                            action={() => removeStep(step)}
+                                        >
+                                            <IoClose />
+                                        </Button>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </>
                 )}
                 <Input instance={deadline} title={t('deadline')} type="date" />
                 <AssigneeSelector

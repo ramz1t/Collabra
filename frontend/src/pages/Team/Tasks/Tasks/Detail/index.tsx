@@ -102,8 +102,8 @@ const TaskDetails = () => {
                         icon={<IoCheckmarkDoneOutline />}
                         title={t('subtasks')}
                     >
-                        {task.steps.length > 0 ? (
-                            <TaskSteps taskId={task.id} steps={task.steps} />
+                        {task.steps_count > 0 ? (
+                            <TaskSteps task={task} />
                         ) : (
                             <p>{t('no_subtasks')}</p>
                         )}

@@ -14,27 +14,25 @@ const StepsProgress = ({
     parentOpen: boolean
 }) => {
     const [isOpen, setIsOpen] = useState(false)
-    const [doneCount, setDoneCount] = useState(
-        task.steps.filter((step) => step.is_done).length
-    )
+    const [doneCount, setDoneCount] = useState(0)
     const { team } = useContext(TeamContext) as ITeamContext
 
     if (!(team?.is_admin || team?.member_id === task.assignee.id)) return
-    if (task.steps.length === 0) return
+    if (task.steps_count === 0) return
 
     return (
         <div>
             <span
                 className={cn(
                     'hover:cursor-pointer rounded-md py-1 pl-2 pr-3 border dark:border-gray-500 text-gray-400 dark:text-gray-500 flex items-center font-semibold gap-2 w-fit transition-all duration-75',
-                    doneCount === task.steps.length
+                    doneCount === task.steps_count
                         ? 'bg-gray-100 dark:bg-slate-700'
                         : 'hover:bg-gray-50 dark:hover:bg-slate-700'
                 )}
                 onClick={() => setIsOpen((prev) => !prev)}
             >
                 <IoCheckmarkDoneOutline size="1.2em" />
-                {doneCount}/{task.steps.length}
+                {doneCount}/{task.steps_count}
             </span>
             <SmoothContainer
                 duration={200}
@@ -43,9 +41,8 @@ const StepsProgress = ({
                 closedClassName="pt-0"
             >
                 <TaskSteps
-                    taskId={task.id}
+                    task={task}
                     disabled={task.status === 'done'}
-                    steps={task.steps}
                     setDoneCounter={setDoneCount}
                 />
             </SmoothContainer>
