@@ -57,7 +57,10 @@ const TaskDetails = () => {
                         icon={<IoCalendarNumberOutline />}
                         title={t('due_date')}
                     >
-                        <TaskDeadline date={task.deadline} />
+                        <div className="flex items-center gap-3">
+                            <TaskDeadline date={task.deadline} /> (
+                            {task.deadline})
+                        </div>
                     </TaskDetailInfoCell>
 
                     <TaskDetailInfoCell
