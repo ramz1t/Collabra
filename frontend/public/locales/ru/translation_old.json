@@ -1,6 +1,24 @@
 {
+  "add_steps": "Добавить",
   "chats": "Чаты",
+  "get_started": "Начать",
+  "mem": "",
+  "members_email": "Почта участника",
+  "new_tag": "Новый тэг",
   "new_translation_to_write": "",
+  "no_deadline": "Нет дедлайна",
+  "order_by": "Сортировать по",
   "profile": "Профиль",
-  "team_settings": "Настройки {{name}}"
+  "stats": "Статистика",
+  "steps": "",
+  "style": "",
+  "style_desc": "",
+  "team_alex_location": "",
+  "team_alex_name": "",
+  "team_alex_role": "",
+  "team_settings": "Настройки {{name}}",
+  "team_timur_location": "",
+  "team_timur_name": "",
+  "team_timur_role": "",
+  "wrong_password": "Неверный пароль"
 }

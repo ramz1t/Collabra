@@ -7,9 +7,9 @@ const Team = (): React.ReactElement => {
     const { t } = useTranslation()
     const people = [
         {
-            name: 'Timur Ramazanov',
-            role: 'Designer, Frontend Developer, Backend Developer, DevOps',
-            location: 'Malmö, Sweden',
+            name: t('our_team_timur_name'),
+            role: t('our_team_timur_role'),
+            location: t('our_team_timur_location'),
             flag: '🇸🇪',
             links: [
                 {
@@ -24,9 +24,9 @@ const Team = (): React.ReactElement => {
             image: '/collabra/images/timur.jpg',
         },
         {
-            name: 'Alex Zavadsky',
-            role: 'Backend Developer, DevOps',
-            location: 'Amsterdam, Netherlands',
+            name: t('our_team_alex_name'),
+            role: t('our_team_alex_role'),
+            location: t('our_team_alex_location'),
             flag: '🇳🇱',
             links: [
                 {
@@ -65,7 +65,7 @@ const Team = (): React.ReactElement => {
                 {t('about_team')}{' '}
                 <a
                     className="hover:underline text-orange-500 decoration-2"
-                    href="https://timur.aboard.ru"
+                    href="https://timur.aboard.ru/grocket/"
                     target="_blank"
                 >
                     Grocket

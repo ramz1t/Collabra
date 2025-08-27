@@ -1,4 +1,8 @@
-import { IoAirplane } from 'react-icons/io5'
+import {
+    IoCalendarOutline,
+    IoFileTrayFullOutline,
+    IoGitMergeOutline,
+} from 'react-icons/io5'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { LiaUsersCogSolid } from 'react-icons/lia'
@@ -12,22 +16,19 @@ const Features = (): React.ReactElement => {
             description: t('team_members_management_desc'),
         },
         {
-            title: 'Push to deploy',
-            icon: <IoAirplane />,
-            description:
-                'Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massanunc massa.',
+            title: t('smart_task_tracking'),
+            icon: <IoFileTrayFullOutline />,
+            description: t('smart_task_tracking_desc'),
         },
         {
-            title: 'Push to deploy',
-            icon: <IoAirplane />,
-            description:
-                'Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massanunc massa.',
+            title: t('collaborative_task_discussions'),
+            icon: <IoGitMergeOutline />,
+            description: t('collaborative_task_discussions_desc'),
         },
         {
-            title: 'Push to deploy',
-            icon: <IoAirplane />,
-            description:
-                'Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massanunc massa.',
+            title: t('custom_dashboard_calendar'),
+            icon: <IoCalendarOutline />,
+            description: t('custom_dashboard_calendar_desc'),
         },
     ]
     return (
@@ -48,7 +49,7 @@ const Features = (): React.ReactElement => {
                     {featuresData.map((feature, key) => {
                         return (
                             <div className="relative pl-16" key={key}>
-                                <dt className="text-base font-semibold leading-7 text-gray-900 dark:text-gray-100">
+                                <dt className="text-lg font-semibold leading-7 text-gray-900 dark:text-gray-100">
                                     <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-accent dark:bg-accent-dark text-white">
                                         {feature.icon}
                                     </div>

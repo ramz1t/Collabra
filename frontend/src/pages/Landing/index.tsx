@@ -9,7 +9,7 @@ import { BackgroundGradient } from '../../components'
 
 const Landing = (): React.ReactElement => {
     return (
-        <div className="mx-auto max-w-7xl px-3 lg:px-8">
+        <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <Helmet>
                 <title>Collabra</title>
             </Helmet>

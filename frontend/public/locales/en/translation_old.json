@@ -1,3 +1,21 @@
 {
-  "new_translation_to_write": "New translation"
+  "add_steps": "Add steps",
+  "get_started": "Get started",
+  "mem": "",
+  "members_email": "Member's email",
+  "new_tag": "New tag",
+  "new_translation_to_write": "New translation",
+  "no_deadline": "No deadline",
+  "order_by": "Order by",
+  "stats": "Stats",
+  "steps": "Steps",
+  "style": "",
+  "style_desc": "",
+  "team_alex_location": "",
+  "team_alex_name": "",
+  "team_alex_role": "",
+  "team_timur_location": "",
+  "team_timur_name": "",
+  "team_timur_role": "",
+  "wrong_password": "Wrong password"
 }
