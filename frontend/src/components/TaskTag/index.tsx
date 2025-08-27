@@ -15,7 +15,7 @@ const TaskTag = ({ tag, canEdit }: { tag: Tag | null; canEdit?: boolean }) => {
 
     if (!tag)
         return (
-            <span className="rounded-full px-3 py-1 font-bold w-fit line-clamp-1 h-fit flex items-center gap-3 bg-gray-100 dark:bg-slate-950">
+            <span className="rounded-full px-3 py-1 font-bold w-fit whitespace-nowrap h-fit flex items-center gap-3 bg-gray-100 dark:bg-slate-950">
                 {t('no_tag')}
             </span>
         )
@@ -23,7 +23,7 @@ const TaskTag = ({ tag, canEdit }: { tag: Tag | null; canEdit?: boolean }) => {
     return (
         <>
             <span
-                className="rounded-full px-3 py-1 font-bold w-fit line-clamp-1 h-fit flex items-center gap-3"
+                className="rounded-full px-3 py-1 font-bold w-fit line-clamp-1 whitespace-nowrap h-fit flex items-center gap-3"
                 style={{
                     color: isDark ? 'white' : hexToRGBA(tag.color),
                     backgroundColor: hexToRGBA(tag.color, isDark ? 1 : 0.2),

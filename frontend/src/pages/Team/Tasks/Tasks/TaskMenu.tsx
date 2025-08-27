@@ -77,7 +77,10 @@ const TaskMenu = ({ task }: { task: Task }) => {
                 action: () => setEditDialogOpen(true),
             },
             isAdmin && {
-                title: task.steps_count > 0 ? t('edit_steps') : t('add_steps'),
+                title:
+                    task.steps_count > 0
+                        ? t('edit_subtasks')
+                        : t('add_subtasks'),
                 icon: <IoListOutline />,
                 action: () => console.log('open edit steps dialog'),
             },

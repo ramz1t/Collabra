@@ -19,6 +19,7 @@ class TaskCreateSerializer(serializers.Serializer):
     status = serializers.CharField()
     steps = serializers.ListField(child=serializers.CharField())
     assignee = serializers.IntegerField()
+    deadline = serializers.DateField(allow_null=True)
 
 
 class TaskSerializer(serializers.Serializer):

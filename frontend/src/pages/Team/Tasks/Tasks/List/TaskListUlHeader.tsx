@@ -17,7 +17,7 @@ const TaskListUlHeader = () => {
             <p>{t('status')}</p>
             <p>{t('assignee')}</p>
             <p>{t('deadline')}</p>
-            <p>{t('steps')}</p>
+            <p>{t('subtasks')}</p>
             <span></span>
         </ResizableColumns>
     )

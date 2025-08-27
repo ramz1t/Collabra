@@ -78,7 +78,7 @@ const AddTaskDialog = ({
         setRequiresReview(false)
         setSteps([])
         setAssignee(null)
-        deadline.clear
+        deadline.clear()
     }, [
         title,
         description,
@@ -102,7 +102,7 @@ const AddTaskDialog = ({
             tag: selectedTag,
             steps,
             assignee: assignee?.id,
-            deadline: deadline.value,
+            deadline: deadline.value.length > 0 ? deadline.value : null,
         }),
         [
             title.value,
