@@ -1,13 +1,8 @@
 from rest_framework import serializers
 
 from .members import ListSerializer as MemberListSerializer
+from .tags import TagListSerializer
 from ...selectors import get_steps
-
-
-class TagListSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    title = serializers.CharField()
-    color = serializers.CharField()
 
 
 class TaskStepListSerializer(serializers.Serializer):
@@ -34,7 +29,7 @@ class TaskSerializer(serializers.Serializer):
     tag = serializers.SerializerMethodField()
     deadline = serializers.DateField()
     status = serializers.CharField()
-    steps = serializers.SerializerMethodField()
+    steps_count = serializers.SerializerMethodField()
     assignee = serializers.SerializerMethodField()
     attachments = serializers.SerializerMethodField()
     messages_count = serializers.SerializerMethodField()
@@ -47,12 +42,11 @@ class TaskSerializer(serializers.Serializer):
         serializer = TagListSerializer(instance=task.tag)
         return serializer.data
 
-    def get_steps(self, task):
+    def get_steps_count(self, task):
         steps = get_steps(task=task)
         if steps is None:
-            return []
-        serializer = TaskStepListSerializer(instance=steps, many=True)
-        return serializer.data
+            return 0
+        return len(steps)
 
     def get_assignee(self, task):
         serializer = MemberListSerializer(instance=task.assignee, context={'team': self.context['team']})
@@ -70,8 +64,3 @@ class TaskDeleteSerializer(serializers.Serializer):
         child=serializers.IntegerField(), required=False
     )
     status = serializers.CharField(required=False)
-
-
-class TagCreateUpdateSerializer(serializers.Serializer):
-    title = serializers.CharField()
-    color = serializers.CharField()
