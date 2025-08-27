@@ -18,16 +18,16 @@ def validate_new_password(field: str, password):
         raise serializers.ValidationError({field, serializer_error})
 
 
-def validate_old_password(user, old_password):
+def validate_old_password(user, old_password, field: str = "old_password"):
     if not user.check_password(old_password):
-        raise ValidationError({"old_password": _("Password is incorrect")})
+        raise ValidationError({field: _("Password is incorrect")})
 
 
 class UserRemoveSerializer(serializers.Serializer):
     password = serializers.CharField(style={"input_type": "password"})
 
     def validate(self, attrs):
-        validate_old_password(self.context["request"].user, attrs["password"])
+        validate_old_password(self.context["request"].user, attrs["password"], field="password")
         return attrs
 
 
@@ -37,7 +37,7 @@ class UserChangePasswordSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         validate_new_password("new_password", attrs["new_password"])
-        validate_old_password(self.context["request"].user, attrs["old_password"])
+        validate_old_password(self.context["request"].user, attrs["old_password"], field="old_password")
         return attrs
 
 

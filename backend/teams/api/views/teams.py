@@ -112,7 +112,7 @@ class TeamViewSet(mixins.TeamMixin):
         ) or selectors.is_user_owner_by_team(team, request.user):
             raise PermissionDenied()
 
-        serializer = serializers.LeaveSerializer(data=request.data,)
+        serializer = serializers.LeaveSerializer(data=request.data, context={"user": request.user})
         serializer.is_valid(raise_exception=True)
 
         exit_team(team, request.user)
