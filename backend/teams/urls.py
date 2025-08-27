@@ -3,6 +3,9 @@ from django.urls import path
 from .api.views.stats import StatsViewSet
 from .api.views.teams import TeamViewSet
 from .api.views.members import MemberViewSet
+from .api.views.tasks import TaskViewSet
+from .api.views.tags import TagViewSet
+from .api.views.steps import StepViewSet
 
 app_name = "teams"
 
@@ -40,4 +43,28 @@ urlpatterns = [
         "<int:team_pk>/members/<int:member_pk>/",
         MemberViewSet.as_view({"patch": "partial_update"}),
     ),
+    path(
+        "<str:slug>/tasks/",
+        TaskViewSet.as_view({"get": "list", "post": "create", "delete": "remove",})
+    ),
+    path(
+        "<str:slug>/tasks/<int:pk>/",
+        TaskViewSet.as_view({"get": "retrieve", "patch": "partial_update"}),
+    ),
+    path(
+        "<str:slug>/tags/",
+        TagViewSet.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
+        "<str:slug>/tags/<int:pk>/",
+        TagViewSet.as_view({"delete": "remove", "patch": "update"}),
+    ),
+    path(
+        "<str:slug>/tasks/<int:task_pk>/steps/",
+        StepViewSet.as_view({"get": "list"})
+    ),
+    path(
+        "<str:slug>/tasks/<int:task_pk>/steps/<int:step_pk>/toggle/",
+        StepViewSet.as_view({"patch": "toggle"})
+    )
 ]
