@@ -16,16 +16,19 @@ class MemberAdmin(admin.ModelAdmin):
     list_filter = ("is_admin",)
     empty_value_display = "-empty-"
 
+
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
     list_display = ("pk", "title", "status", "tag", "team")
     search_fields = ("title",)
     empty_value_display = "-empty-"
 
+
 @admin.register(TaskTag)
 class TagAdmin(admin.ModelAdmin):
     list_display = ("pk", "title", "color")
     search_fields = ("title",)
+
 
 @admin.register(TaskStep)
 class StepAdmin(admin.ModelAdmin):

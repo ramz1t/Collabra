@@ -27,7 +27,7 @@ class Team(models.Model):
     invited_people = models.ManyToManyField(User, related_name="teams_invited_to")
 
     def __str__(self):
-        return f"{self.id}:{self.owner.email}:{self.title}"
+        return f"{self.id}:{self.title}:{self.owner.email}"
 
 
 class Task(models.Model):
@@ -44,7 +44,7 @@ class Task(models.Model):
     team = models.ForeignKey(Team, related_name="tasks", on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.id}:{self.title}:{self.status}:for {self.assignee.id}:by {self.creator}: in {self.team.title}'
+        return f'{self.id}:{self.title}:{self.team.title}'
 
 
 class TaskTag(models.Model):
@@ -53,7 +53,7 @@ class TaskTag(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="tags")
 
     def __str__(self):
-        return f'{self.id}:{self.title}:{self.color}'
+        return f'{self.id}:{self.title}'
 
 
 class TaskStep(models.Model):
@@ -62,4 +62,4 @@ class TaskStep(models.Model):
     task = models.ForeignKey('Task', null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.id}:{self.title}:{self.is_done}:in {self.task.title}'
+        return f'{self.id}:{self.title}:{self.task.title}'
