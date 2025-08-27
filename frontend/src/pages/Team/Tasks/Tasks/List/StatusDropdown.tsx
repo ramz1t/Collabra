@@ -1,16 +1,20 @@
 import { Task } from '../../../../../types'
 import cn from 'classnames'
 import { getStatusColor } from '../../../../../utils'
-import React, { useCallback } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useUpdateTask } from '../../../../../api/tasks'
 import { useParams } from 'react-router-dom'
 import { Dropdown } from '../../../../../components'
+import useIsAllowed from '../../../../../hooks/useIsAllowed'
+import { UserRole } from '../../../../../utils/constants'
+import AuthContext, { IAuthContext } from '../../../../../contexts/AuthContext'
 
 const StatusDropdown = ({ task }: { task: Task }) => {
     const { t } = useTranslation()
     const { teamSlug } = useParams()
     const { mutate: updateTask, isPending } = useUpdateTask(teamSlug!, task.id)
+    const { user } = useContext(AuthContext) as IAuthContext
 
     const handleStatusChange = useCallback(
         (newStatus: string | null) => {
@@ -19,6 +23,9 @@ const StatusDropdown = ({ task }: { task: Task }) => {
         },
         [updateTask, task]
     )
+
+    const isAdmin = useIsAllowed([UserRole.ADMIN, UserRole.OWNER])
+    const isAssignee = task.assignee.user.id === user?.user_id
 
     return (
         <Dropdown
@@ -53,6 +60,7 @@ const StatusDropdown = ({ task }: { task: Task }) => {
             selected={task.status}
             setSelected={handleStatusChange}
             verticalPositionOffset={0}
+            className={!(isAdmin || isAssignee) ? 'pointer-events-none' : ''}
         />
     )
 }
