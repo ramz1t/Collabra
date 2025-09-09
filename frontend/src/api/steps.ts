@@ -1,7 +1,13 @@
 import useAxios from '../hooks/useAxios'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+    InvalidateQueryFilters,
+    useMutation,
+    useQuery,
+    useQueryClient,
+} from '@tanstack/react-query'
 import { prefix } from './index'
-import { Step } from '../types'
+import { Step, ValidationErrors } from '../types'
+import { AxiosError, AxiosResponse } from 'axios'
 
 export const useSteps = (teamSlug: string, taskId: number) => {
     const api = useAxios()
@@ -28,6 +34,29 @@ export const useToggleStep = (teamSlug: string, taskId: number) => {
             queryClient.invalidateQueries({
                 queryKey: ['steps', { team: teamSlug, task: taskId }],
             })
+        },
+    })
+}
+
+export const useEditSteps = (teamSlug: string, taskId: number) => {
+    const api = useAxios()
+    const queryClient = useQueryClient()
+    return useMutation<
+        AxiosResponse<{ steps: Step[] }>,
+        AxiosError<ValidationErrors[]>,
+        any[]
+    >({
+        mutationFn: (steps) =>
+            api.patch(
+                `${prefix}/teams/${teamSlug}/tasks/${taskId}/steps/`,
+                steps
+            ),
+        onSuccess: (res) => {
+            queryClient.setQueryData(
+                ['steps', { team: teamSlug, task: taskId }],
+                res.data.steps
+            )
+            queryClient.invalidateQueries(['tasks'] as InvalidateQueryFilters)
         },
     })
 }

@@ -20,7 +20,7 @@ const AddNewTaskButton = ({
     const { t } = useTranslation()
     const [addNewTaskOpen, setAddNewTaskOpen] = useState(false)
     const { teamSlug } = useParams()
-    const { mutate: createTask } = useCreateTask(
+    const { mutateAsync: createTask, isPending } = useCreateTask(
         teamSlug!,
         status,
         withForceReload
@@ -51,6 +51,7 @@ const AddNewTaskButton = ({
                 status={status}
                 successButtonText={t('create')}
                 clearOnClose
+                isLoading={isPending}
             />
         </>
     )

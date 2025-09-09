@@ -19,6 +19,8 @@ import { useParams } from 'react-router-dom'
 import useIsAllowed from '../../../../hooks/useIsAllowed'
 import AuthContext, { IAuthContext } from '../../../../contexts/AuthContext'
 import { UserRole } from '../../../../utils/constants'
+import ManageSubtasksDialog from './Create/ManageSubtasksDialog'
+import { useEditSteps } from '../../../../api/steps'
 
 const TaskMenu = ({ task }: { task: Task }) => {
     const { t } = useTranslation()
@@ -29,12 +31,16 @@ const TaskMenu = ({ task }: { task: Task }) => {
 
     const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false)
     const [isEditDialogOpen, setEditDialogOpen] = useState(false)
+    const [isSubtasksDialogOpen, setSubtasksDialogOpen] = useState(false)
 
-    const { mutate: updateTask } = useUpdateTask(teamSlug!, task.id)
-    const { mutate: deleteTask, isPending: isDeleting } = useDeleteTasks(
+    const { mutateAsync: updateTask, isPending: isUpdating } = useUpdateTask(
+        teamSlug!,
+        task.id
+    )
+    const { mutateAsync: deleteTask, isPending: isDeleting } = useDeleteTasks(
         teamSlug!
     )
-
+    const editStepsMutation = useEditSteps(teamSlug!, task.id)
     const canSeeMenu = isAdmin || isAssignee
     if (!canSeeMenu) return null
 
@@ -82,7 +88,7 @@ const TaskMenu = ({ task }: { task: Task }) => {
                         ? t('edit_subtasks')
                         : t('add_subtasks'),
                 icon: <IoListOutline />,
-                action: () => console.log('open edit steps dialog'),
+                action: () => setSubtasksDialogOpen(true),
             },
             isAdmin && {
                 title: t('delete'),
@@ -93,7 +99,7 @@ const TaskMenu = ({ task }: { task: Task }) => {
         ]
 
         return list.filter(Boolean) as MenuAction[]
-    }, [task.status, isAdmin, task.requires_review, t])
+    }, [task.status, isAdmin, task.requires_review, t, task.steps_count])
 
     return (
         <>
@@ -120,6 +126,14 @@ const TaskMenu = ({ task }: { task: Task }) => {
                 onSuccess={updateTask}
                 initialTask={task}
                 successButtonText={t('save')}
+                isLoading={isUpdating}
+            />
+
+            <ManageSubtasksDialog
+                task={task}
+                isOpen={isSubtasksDialogOpen}
+                setIsOpen={setSubtasksDialogOpen}
+                mutation={editStepsMutation}
             />
         </>
     )

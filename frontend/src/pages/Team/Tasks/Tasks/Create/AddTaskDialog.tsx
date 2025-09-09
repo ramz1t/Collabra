@@ -26,6 +26,7 @@ interface AddTaskDialogProps {
     status?: string
     clearOnClose?: boolean
     successButtonText: string
+    isLoading: boolean
 }
 
 const AddTaskDialog = ({
@@ -38,6 +39,7 @@ const AddTaskDialog = ({
     status,
     clearOnClose,
     successButtonText,
+    isLoading,
 }: AddTaskDialogProps) => {
     const { t } = useTranslation()
     const title = useInput(initialTask?.title ?? '', { isEmpty: true })
@@ -165,6 +167,7 @@ const AddTaskDialog = ({
             disabled={!canSave}
             isCover
             expandable
+            isLoading={isLoading}
         >
             <Form>
                 <Input must title={t('title')} instance={title} />
