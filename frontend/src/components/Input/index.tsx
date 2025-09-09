@@ -8,6 +8,7 @@ export interface InputProps<TRef> {
     placeholder?: string
     type?: HTMLInputElement['type']
     instance: IInputInstance
+    value?: string
     title?: string
     autoRef?: boolean
     disabled?: boolean
@@ -30,6 +31,7 @@ const Input = ({
     placeholder,
     type,
     instance,
+    value,
     title,
     autoRef,
     disabled,
@@ -102,7 +104,11 @@ const Input = ({
                             id={id}
                             type={type}
                             ref={ref}
-                            value={instance.rawValue as string}
+                            value={
+                                value !== undefined
+                                    ? value
+                                    : (instance.rawValue as string)
+                            }
                             onChange={(e) => {
                                 onChange && onChange(e.target.value)
                                 instance.checkValue(e)
