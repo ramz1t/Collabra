@@ -20,7 +20,7 @@ else:
     SECRET_KEY = os.getenv("SECRET_KEY")
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ["http://localhost:8241", "http://localhost"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:8241", "http://localhost", "https://timur.aboard.ru"]
 
 
 INSTALLED_APPS = [
