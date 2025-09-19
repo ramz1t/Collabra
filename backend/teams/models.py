@@ -59,7 +59,7 @@ class TaskTag(models.Model):
 class TaskStep(models.Model):
     title = models.CharField(max_length=255)
     is_done = models.BooleanField(default=False)
-    task = models.ForeignKey('Task', null=True, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, null=True, on_delete=models.CASCADE,  related_name="steps")
 
     def __str__(self):
         return f'{self.id}:{self.title}:{self.task.title}'

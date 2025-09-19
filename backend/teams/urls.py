@@ -61,7 +61,7 @@ urlpatterns = [
     ),
     path(
         "<str:slug>/tasks/<int:task_pk>/steps/",
-        StepViewSet.as_view({"get": "list"})
+        StepViewSet.as_view({"get": "list", "patch": "update"})
     ),
     path(
         "<str:slug>/tasks/<int:task_pk>/steps/<int:step_pk>/toggle/",

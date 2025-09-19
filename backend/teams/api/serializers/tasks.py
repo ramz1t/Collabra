@@ -11,6 +11,11 @@ class TaskStepListSerializer(serializers.Serializer):
     is_done = serializers.BooleanField()
 
 
+class TaskStepUpdateSerializer(serializers.Serializer):
+    id = serializers.IntegerField(required=False)
+    title = serializers.CharField()
+
+
 class TaskCreateSerializer(serializers.Serializer):
     title = serializers.CharField(max_length=150)
     description = serializers.CharField(max_length=750)

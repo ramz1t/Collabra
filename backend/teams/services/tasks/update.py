@@ -1,3 +1,4 @@
+from django.db import transaction
 from django.utils.translation import gettext_lazy as _
 
 from django.contrib.auth import get_user_model
@@ -33,7 +34,7 @@ def _check_permissions(task: Task, user: User, **fields):
     raise PermissionDenied(_("You do not have permission to modify this task"))
 
 
-
+@transaction.atomic
 def update_task(task: Task, user: User, **fields) -> Task:
     _check_permissions(task, user, **fields)
 
