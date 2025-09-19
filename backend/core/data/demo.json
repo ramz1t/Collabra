@@ -1,0 +1,981 @@
+[
+  {
+    "model": "users.generatedavatar",
+    "pk": 4,
+    "fields": {
+      "first_color": "d4fc79",
+      "second_color": "96e6a1"
+    }
+  },
+  {
+    "model": "users.generatedavatar",
+    "pk": 5,
+    "fields": {
+      "first_color": "d4fc79",
+      "second_color": "96e6a1"
+    }
+  },
+  {
+    "model": "users.generatedavatar",
+    "pk": 6,
+    "fields": {
+      "first_color": "2af598",
+      "second_color": "009efd"
+    }
+  },
+  {
+    "model": "users.generatedavatar",
+    "pk": 7,
+    "fields": {
+      "first_color": "9890e3",
+      "second_color": "b1f4cf"
+    }
+  },
+  {
+    "model": "users.generatedavatar",
+    "pk": 8,
+    "fields": {
+      "first_color": "d4fc79",
+      "second_color": "96e6a1"
+    }
+  },
+  {
+    "model": "users.generatedavatar",
+    "pk": 9,
+    "fields": {
+      "first_color": "f6d365",
+      "second_color": "fda085"
+    }
+  },
+  {
+    "model": "users.generatedavatar",
+    "pk": 10,
+    "fields": {
+      "first_color": "30cfd0",
+      "second_color": "330867"
+    }
+  },
+  {
+    "model": "users.generatedavatar",
+    "pk": 11,
+    "fields": {
+      "first_color": "84fab0",
+      "second_color": "8fd3f4"
+    }
+  },
+  {
+    "model": "users.generatedavatar",
+    "pk": 12,
+    "fields": {
+      "first_color": "84fab0",
+      "second_color": "8fd3f4"
+    }
+  },
+  {
+    "model": "users.generatedavatar",
+    "pk": 13,
+    "fields": {
+      "first_color": "5ee7df",
+      "second_color": "b490ca"
+    }
+  },
+  {
+    "model": "users.generatedavatar",
+    "pk": 14,
+    "fields": {
+      "first_color": "fccb90",
+      "second_color": "d57eeb"
+    }
+  },
+  {
+    "model": "users.generatedavatar",
+    "pk": 15,
+    "fields": {
+      "first_color": "2af598",
+      "second_color": "009efd"
+    }
+  },
+  {
+    "model": "teams.task",
+    "pk": 45,
+    "fields": {
+      "title": "Add conditional logic to survey",
+      "description": "Show additional questions based on the user’s first response",
+      "status": "to_do",
+      "deadline": "2025-09-30",
+      "requires_review": false,
+      "tag": 47,
+      "assignee": 79,
+      "creator": 20,
+      "created_at": "2025-04-24T21:49:05.348Z",
+      "updated_at": "2025-09-09T12:16:29.037Z",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.task",
+    "pk": 46,
+    "fields": {
+      "title": "Add MFA to accounts",
+      "description": "Implement multi-factor authentication option for better security",
+      "status": "done",
+      "deadline": "2025-08-19",
+      "requires_review": true,
+      "tag": 43,
+      "assignee": 20,
+      "creator": 20,
+      "created_at": "2025-04-24T21:50:54.960Z",
+      "updated_at": "2025-08-26T12:28:31.691Z",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.task",
+    "pk": 53,
+    "fields": {
+      "title": "task 1",
+      "description": "desc 1",
+      "status": "done",
+      "deadline": null,
+      "requires_review": false,
+      "tag": 22,
+      "assignee": 70,
+      "creator": 70,
+      "created_at": "2025-04-28T07:03:05.293Z",
+      "updated_at": "2025-05-23T07:00:50.610Z",
+      "team": 58
+    }
+  },
+  {
+    "model": "teams.task",
+    "pk": 54,
+    "fields": {
+      "title": "task 2",
+      "description": "desc 2",
+      "status": "in_progress",
+      "deadline": null,
+      "requires_review": false,
+      "tag": 22,
+      "assignee": 70,
+      "creator": 70,
+      "created_at": "2025-04-28T07:03:18.281Z",
+      "updated_at": "2025-08-25T13:46:17.174Z",
+      "team": 58
+    }
+  },
+  {
+    "model": "teams.task",
+    "pk": 55,
+    "fields": {
+      "title": "task 3",
+      "description": "desc 3",
+      "status": "in_progress",
+      "deadline": null,
+      "requires_review": false,
+      "tag": 22,
+      "assignee": 70,
+      "creator": 70,
+      "created_at": "2025-04-28T07:03:31.436Z",
+      "updated_at": "2025-09-09T08:35:29.355Z",
+      "team": 58
+    }
+  },
+  {
+    "model": "teams.task",
+    "pk": 56,
+    "fields": {
+      "title": "task 4",
+      "description": "desc 4",
+      "status": "done",
+      "deadline": null,
+      "requires_review": false,
+      "tag": 49,
+      "assignee": 70,
+      "creator": 70,
+      "created_at": "2025-04-28T07:03:45.303Z",
+      "updated_at": "2025-05-28T05:50:04.653Z",
+      "team": 58
+    }
+  },
+  {
+    "model": "teams.task",
+    "pk": 59,
+    "fields": {
+      "title": "Reset locked user account",
+      "description": "A user reported being locked out of their account after too many failed login attempts",
+      "status": "in_progress",
+      "deadline": null,
+      "requires_review": false,
+      "tag": 43,
+      "assignee": 73,
+      "creator": 20,
+      "created_at": "2025-04-28T07:28:21.607Z",
+      "updated_at": "2025-04-28T12:46:47.195Z",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.task",
+    "pk": 60,
+    "fields": {
+      "title": "Launch EC2 instance for dev team",
+      "description": "Spin up a new EC2 instance with the dev environment for testing",
+      "status": "in_progress",
+      "deadline": null,
+      "requires_review": false,
+      "tag": 45,
+      "assignee": 65,
+      "creator": 20,
+      "created_at": "2025-04-28T07:29:49.430Z",
+      "updated_at": "2025-05-31T10:59:46.985Z",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.task",
+    "pk": 62,
+    "fields": {
+      "title": "alex",
+      "description": "alex",
+      "status": "need_review",
+      "deadline": null,
+      "requires_review": false,
+      "tag": null,
+      "assignee": 89,
+      "creator": 70,
+      "created_at": "2025-04-28T11:53:54.900Z",
+      "updated_at": "2025-08-25T13:49:33.218Z",
+      "team": 58
+    }
+  },
+  {
+    "model": "teams.task",
+    "pk": 63,
+    "fields": {
+      "title": "Fix signup form error handling",
+      "description": "Error messages aren't showing up properly for invalid inputs",
+      "status": "in_progress",
+      "deadline": "2025-09-07",
+      "requires_review": false,
+      "tag": 47,
+      "assignee": 78,
+      "creator": 20,
+      "created_at": "2025-04-28T12:47:57.931Z",
+      "updated_at": "2025-08-26T12:42:47.476Z",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.task",
+    "pk": 64,
+    "fields": {
+      "title": "Translate contact form to Spanish",
+      "description": "Localize the form fields and validation messages",
+      "status": "to_do",
+      "deadline": null,
+      "requires_review": false,
+      "tag": 47,
+      "assignee": 73,
+      "creator": 20,
+      "created_at": "2025-04-28T12:48:57.253Z",
+      "updated_at": "2025-04-28T12:48:57.253Z",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.task",
+    "pk": 65,
+    "fields": {
+      "title": "Respond to low app store ratings",
+      "description": "Proactively address issues from users who left negative reviews",
+      "status": "done",
+      "deadline": null,
+      "requires_review": false,
+      "tag": 46,
+      "assignee": 73,
+      "creator": 20,
+      "created_at": "2025-04-28T12:49:41.426Z",
+      "updated_at": "2025-08-25T13:30:54.957Z",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.task",
+    "pk": 66,
+    "fields": {
+      "title": "Send overdue invoice reminders",
+      "description": "Notify customers with unpaid invoices after 14 days",
+      "status": "to_do",
+      "deadline": "2025-08-23",
+      "requires_review": false,
+      "tag": 44,
+      "assignee": 79,
+      "creator": 20,
+      "created_at": "2025-04-28T12:50:26.910Z",
+      "updated_at": "2025-08-26T12:38:19.687Z",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.task",
+    "pk": 68,
+    "fields": {
+      "title": "Switch billing provider",
+      "description": "Prepare migration from Stripe to a local payment gateway",
+      "status": "need_review",
+      "deadline": null,
+      "requires_review": true,
+      "tag": 44,
+      "assignee": 65,
+      "creator": 20,
+      "created_at": "2025-04-28T12:51:58.492Z",
+      "updated_at": "2025-04-28T12:52:08.245Z",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.task",
+    "pk": 69,
+    "fields": {
+      "title": "Review IAM roles and permissions",
+      "description": "Check existing roles for over-permissive access and clean them up",
+      "status": "need_review",
+      "deadline": null,
+      "requires_review": true,
+      "tag": 45,
+      "assignee": 20,
+      "creator": 20,
+      "created_at": "2025-04-28T12:52:43.286Z",
+      "updated_at": "2025-05-31T11:08:31.775Z",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.task",
+    "pk": 87,
+    "fields": {
+      "title": "New task",
+      "description": "Desc",
+      "status": "to_do",
+      "deadline": null,
+      "requires_review": false,
+      "tag": 56,
+      "assignee": 91,
+      "creator": 91,
+      "created_at": "2025-05-23T05:20:20.078Z",
+      "updated_at": "2025-05-23T05:20:20.078Z",
+      "team": 65
+    }
+  },
+  {
+    "model": "teams.task",
+    "pk": 94,
+    "fields": {
+      "title": "Send contract for new intern",
+      "description": "Send prepared contract to the intern we interviewed last week",
+      "status": "in_progress",
+      "deadline": "2025-09-27",
+      "requires_review": true,
+      "tag": 43,
+      "assignee": 77,
+      "creator": 20,
+      "created_at": "2025-05-27T14:30:46.366Z",
+      "updated_at": "2025-09-09T12:01:44.418Z",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.tasktag",
+    "pk": 22,
+    "fields": {
+      "title": "Google",
+      "color": "#008f51",
+      "team": 58
+    }
+  },
+  {
+    "model": "teams.tasktag",
+    "pk": 43,
+    "fields": {
+      "title": "Accounts",
+      "color": "#008e00",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.tasktag",
+    "pk": 44,
+    "fields": {
+      "title": "Billing",
+      "color": "#0432ff",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.tasktag",
+    "pk": 45,
+    "fields": {
+      "title": "AWS",
+      "color": "#ff9300",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.tasktag",
+    "pk": 46,
+    "fields": {
+      "title": "Feedback",
+      "color": "#929000",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.tasktag",
+    "pk": 47,
+    "fields": {
+      "title": "Forms",
+      "color": "#942092",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.tasktag",
+    "pk": 48,
+    "fields": {
+      "title": "Onboarding",
+      "color": "#ff0000",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.tasktag",
+    "pk": 49,
+    "fields": {
+      "title": "Pixel",
+      "color": "#ff9300",
+      "team": 58
+    }
+  },
+  {
+    "model": "teams.tasktag",
+    "pk": 53,
+    "fields": {
+      "title": "test",
+      "color": "#5b5b5b",
+      "team": 57
+    }
+  },
+  {
+    "model": "teams.tasktag",
+    "pk": 55,
+    "fields": {
+      "title": "Frontend",
+      "color": "#0096ff",
+      "team": 65
+    }
+  },
+  {
+    "model": "teams.tasktag",
+    "pk": 56,
+    "fields": {
+      "title": "Backend",
+      "color": "#008f51",
+      "team": 65
+    }
+  },
+  {
+    "model": "teams.tasktag",
+    "pk": 61,
+    "fields": {
+      "title": "For testing",
+      "color": "#5b5b5b",
+      "team": 16
+    }
+  },
+  {
+    "model": "teams.taskstep",
+    "pk": 36,
+    "fields": {
+      "title": "Verify user identity via support ticket",
+      "is_done": true,
+      "task": 59
+    }
+  },
+  {
+    "model": "teams.taskstep",
+    "pk": 37,
+    "fields": {
+      "title": "Reset the account status",
+      "is_done": true,
+      "task": 59
+    }
+  },
+  {
+    "model": "teams.taskstep",
+    "pk": 38,
+    "fields": {
+      "title": "Notify the user via email",
+      "is_done": false,
+      "task": 59
+    }
+  },
+  {
+    "model": "teams.taskstep",
+    "pk": 39,
+    "fields": {
+      "title": "Choose AMI and instance type",
+      "is_done": true,
+      "task": 60
+    }
+  },
+  {
+    "model": "teams.taskstep",
+    "pk": 40,
+    "fields": {
+      "title": "Configure security groups",
+      "is_done": false,
+      "task": 60
+    }
+  },
+  {
+    "model": "teams.taskstep",
+    "pk": 41,
+    "fields": {
+      "title": "Send access details to dev team",
+      "is_done": false,
+      "task": 60
+    }
+  },
+  {
+    "model": "teams.taskstep",
+    "pk": 42,
+    "fields": {
+      "title": "Reproduce validation errors",
+      "is_done": true,
+      "task": 63
+    }
+  },
+  {
+    "model": "teams.taskstep",
+    "pk": 43,
+    "fields": {
+      "title": "Update error display component",
+      "is_done": true,
+      "task": 63
+    }
+  },
+  {
+    "model": "teams.taskstep",
+    "pk": 44,
+    "fields": {
+      "title": "Test across browsers",
+      "is_done": false,
+      "task": 63
+    }
+  },
+  {
+    "model": "teams.taskstep",
+    "pk": 45,
+    "fields": {
+      "title": "Export current billing data",
+      "is_done": true,
+      "task": 68
+    }
+  },
+  {
+    "model": "teams.taskstep",
+    "pk": 46,
+    "fields": {
+      "title": "Configure new API integration",
+      "is_done": true,
+      "task": 68
+    }
+  },
+  {
+    "model": "teams.taskstep",
+    "pk": 47,
+    "fields": {
+      "title": "Run parallel test transactions",
+      "is_done": false,
+      "task": 68
+    }
+  },
+  {
+    "model": "users.user",
+    "fields": {
+      "password": "pbkdf2_sha256$720000$ptz1LTwcHedDZxdfHgqlWb$eLEqBKTw/y8gvqzl+QqTW/liu9fDWfAY3LQ+J1EXRVw=",
+      "last_login": null,
+      "is_superuser": false,
+      "avatar": "avatars/goranssonmail.ru.webp",
+      "generated_avatar": 8,
+      "first_name": "John",
+      "last_name": "Goransson",
+      "email": "goransson@mail.ru",
+      "username": "fika_enjoyer",
+      "description": "Senior Viking Developer from Stockholm",
+      "timezone": "Europe/Stockholm",
+      "date_joined": "2024-06-27T11:52:45Z",
+      "is_staff": false,
+      "is_demo": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "fields": {
+      "password": "pbkdf2_sha256$720000$gSGDlgj5nbAG4bwfxHIqAc$QwpcoAurVrNJaHVkQMNwwAzP5Qea/CEILBXXRFB+5DU=",
+      "last_login": null,
+      "is_superuser": false,
+      "avatar": "avatars/sahudmail.ru.webp",
+      "generated_avatar": 9,
+      "first_name": "Ali",
+      "last_name": "Sahud",
+      "email": "sahud@mail.ru",
+      "username": "alisahud77419",
+      "description": null,
+      "timezone": "Asia/Tehran",
+      "date_joined": "2024-06-27T11:54:56.723Z",
+      "is_staff": false,
+      "is_demo": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "fields": {
+      "password": "pbkdf2_sha256$720000$E6VyJkoNXbsTSCFg9Q0pcz$I2BoKOISl4v9HNnY4v99aXhnanfmbEt45Cu26yZvdf0=",
+      "last_login": null,
+      "is_superuser": false,
+      "avatar": "avatars/romanovmail.ru.webp",
+      "generated_avatar": 10,
+      "first_name": "Ivan",
+      "last_name": "Romanov",
+      "email": "romanov@mail.ru",
+      "username": "ivanromanov16836",
+      "description": null,
+      "timezone": null,
+      "date_joined": "2024-06-27T11:58:34.186Z",
+      "is_staff": false,
+      "is_demo": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "fields": {
+      "password": "pbkdf2_sha256$720000$ntscmJp2yIJcuj02DoXF1r$p/wNH4AJrOSzvWUxiTG3gmkyMEGD04qLGijVCOEoU+M=",
+      "last_login": null,
+      "is_superuser": false,
+      "avatar": "",
+      "generated_avatar": 11,
+      "first_name": "Peter",
+      "last_name": "Van der gogh",
+      "email": "vandergogh@mail.ru",
+      "username": "petervandergogh15369",
+      "description": null,
+      "timezone": null,
+      "date_joined": "2024-06-27T12:00:02.825Z",
+      "is_staff": false,
+      "is_demo": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "fields": {
+      "password": "pbkdf2_sha256$720000$E9hSYfPC3owMuOemFTROAr$8AxE2kr7twJtFHIjdMqpFymvldT0mY7v6dhkyzHhHOY=",
+      "last_login": null,
+      "is_superuser": false,
+      "avatar": "",
+      "generated_avatar": 12,
+      "first_name": "Kendall",
+      "last_name": "Appleseed",
+      "email": "appleseed@mail.ru",
+      "username": "kendallappleseed87780",
+      "description": null,
+      "timezone": null,
+      "date_joined": "2024-06-27T12:00:54.396Z",
+      "is_staff": false,
+      "is_demo": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "fields": {
+      "password": "pbkdf2_sha256$720000$hvXBHy6vmogUIFkfgPOtOf$SGwerAMBSVir4pm9r2pjpFWfRMbYFZkybx7d3er+/Jo=",
+      "last_login": null,
+      "is_superuser": false,
+      "avatar": "avatars/melnikmail.ru.webp",
+      "generated_avatar": 13,
+      "first_name": "Ivanka",
+      "last_name": "Melnik",
+      "email": "melnik@mail.ru",
+      "username": "ivankamelnik92213",
+      "description": "",
+      "timezone": "Europe/Helsinki",
+      "date_joined": "2024-06-27T12:01:08Z",
+      "is_staff": false,
+      "is_demo": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "fields": {
+      "password": "pbkdf2_sha256$720000$LRZfeosvYiBUab2OpC3W0e$B5CKqd/s12lxKsFAfK5k1dOGhl3SadezhNApr+jBG5s=",
+      "last_login": null,
+      "is_superuser": false,
+      "avatar": "",
+      "generated_avatar": 15,
+      "first_name": "John",
+      "last_name": "Apple",
+      "email": "demo@collabra.com",
+      "username": "johnapple24094",
+      "description": "",
+      "timezone": null,
+      "date_joined": "2025-05-23T04:44:03Z",
+      "is_staff": false,
+      "is_demo": true,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "teams.member",
+    "pk": 20,
+    "fields": {
+      "user": [
+        "timur@mail.ru"
+      ],
+      "team": 16,
+      "is_admin": true,
+      "status": "PM & Frontend"
+    }
+  },
+  {
+    "model": "teams.member",
+    "pk": 65,
+    "fields": {
+      "user": [
+        "a@a.com"
+      ],
+      "team": 16,
+      "is_admin": true,
+      "status": "Backend & DevOps"
+    }
+  },
+  {
+    "model": "teams.member",
+    "pk": 69,
+    "fields": {
+      "user": [
+        "timur@mail.ru"
+      ],
+      "team": 57,
+      "is_admin": true,
+      "status": null
+    }
+  },
+  {
+    "model": "teams.member",
+    "pk": 70,
+    "fields": {
+      "user": [
+        "timur@mail.ru"
+      ],
+      "team": 58,
+      "is_admin": true,
+      "status": null
+    }
+  },
+  {
+    "model": "teams.member",
+    "pk": 73,
+    "fields": {
+      "user": [
+        "appleseed@mail.ru"
+      ],
+      "team": 16,
+      "is_admin": false,
+      "status": "Intern"
+    }
+  },
+  {
+    "model": "teams.member",
+    "pk": 77,
+    "fields": {
+      "user": [
+        "melnik@mail.ru"
+      ],
+      "team": 16,
+      "is_admin": true,
+      "status": null
+    }
+  },
+  {
+    "model": "teams.member",
+    "pk": 78,
+    "fields": {
+      "user": [
+        "goransson@mail.ru"
+      ],
+      "team": 16,
+      "is_admin": true,
+      "status": "Swedish guy"
+    }
+  },
+  {
+    "model": "teams.member",
+    "pk": 79,
+    "fields": {
+      "user": [
+        "sahud@mail.ru"
+      ],
+      "team": 16,
+      "is_admin": true,
+      "status": null
+    }
+  },
+  {
+    "model": "teams.member",
+    "pk": 89,
+    "fields": {
+      "user": [
+        "a@a.com"
+      ],
+      "team": 58,
+      "is_admin": false,
+      "status": null
+    }
+  },
+  {
+    "model": "teams.member",
+    "pk": 91,
+    "fields": {
+      "user": [
+        "demo@collabra.com"
+      ],
+      "team": 65,
+      "is_admin": true,
+      "status": null
+    }
+  },
+  {
+    "model": "teams.team",
+    "pk": 16,
+    "fields": {
+      "slug": "c",
+      "image": "team_images/lkj.webp",
+      "title": "Collabra Dev Team",
+      "owner": [
+        "timur@mail.ru"
+      ],
+      "description": "Collabra dev team description. Timur and Alexey",
+      "join_key_common": "da571f46-cf92-4adf-88ec-2a56915c3ae0",
+      "join_key_selective": "6dd918d3-9b2a-4004-a131-9abc9a290173",
+      "invited_people": [
+        [
+          "vandergogh@mail.ru"
+        ],
+        [
+          "romanov@mail.ru"
+        ]
+      ]
+    }
+  },
+  {
+    "model": "teams.team",
+    "pk": 57,
+    "fields": {
+      "slug": "react-beta",
+      "image": "team_images/react-beta_bQKivTE.webp",
+      "title": "React Beta",
+      "owner": [
+        "timur@mail.ru"
+      ],
+      "description": "",
+      "join_key_common": "1644f27e-623e-469d-af74-c5d1823ff876",
+      "join_key_selective": "f45bb050-2a21-433d-a2f2-750eca142314",
+      "invited_people": []
+    }
+  },
+  {
+    "model": "teams.team",
+    "pk": 58,
+    "fields": {
+      "slug": "google-hackaton-24",
+      "image": "team_images/google-hackaton-24.webp",
+      "title": "Google Hackaton '24",
+      "owner": [
+        "timur@mail.ru"
+      ],
+      "description": null,
+      "join_key_common": "de932de6-98be-4106-8b51-75bfbabf532f",
+      "join_key_selective": "7e5b82d5-a54f-483e-a673-be5ba12985b1",
+      "invited_people": []
+    }
+  },
+  {
+    "model": "teams.team",
+    "pk": 65,
+    "fields": {
+      "slug": "test-2",
+      "image": "",
+      "title": "test",
+      "owner": [
+        "demo@collabra.com"
+      ],
+      "description": null,
+      "join_key_common": "2b4d8330-1d79-4f0f-bf6a-9d6faf6b2544",
+      "join_key_selective": "88908c98-9393-4d1d-9351-4f0c6fd653c0",
+      "invited_people": []
+    }
+  },
+  {
+    "model": "users.userlink",
+    "pk": 68,
+    "fields": {
+      "link": "https://sweden.se",
+      "user": [
+        "goransson@mail.ru"
+      ]
+    }
+  },
+  {
+    "model": "users.userlink",
+    "pk": 69,
+    "fields": {
+      "link": "https://x.com",
+      "user": [
+        "goransson@mail.ru"
+      ]
+    }
+  },
+  {
+    "model": "users.userlink",
+    "pk": 83,
+    "fields": {
+      "link": "https://youtube.com",
+      "user": [
+        "timur@mail.ru"
+      ]
+    }
+  },
+  {
+    "model": "users.userlink",
+    "pk": 84,
+    "fields": {
+      "link": "https://yandex.ru",
+      "user": [
+        "timur@mail.ru"
+      ]
+    }
+  }
+]
