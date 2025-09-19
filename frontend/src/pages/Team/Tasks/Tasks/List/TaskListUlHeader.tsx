@@ -7,7 +7,7 @@ const TaskListUlHeader = () => {
     return (
         <ResizableColumns
             containerName="taskRow-cols"
-            className="font-bold text-sm min-h-7 sticky top-0 bg-white dark:bg-slate-800 min-w-[900px]"
+            className="font-bold text-sm min-h-7 sticky top-0 z-50 bg-white dark:bg-slate-800 min-w-[900px]"
             cellClassName="px-2 py-1"
             minWidth={60}
             initialWidths="1fr_4fr_1fr_1fr_1fr_1fr"

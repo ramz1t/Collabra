@@ -14,12 +14,9 @@ import { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import qs from 'qs'
 
-export const invalidateTasks = async (
-    teamSlug: string,
-    queryClient: QueryClient
-) => {
+export const invalidateTasks = async (queryClient: QueryClient) => {
     await queryClient.invalidateQueries({
-        queryKey: ['tasks', { teamSlug }],
+        queryKey: ['tasks'],
     } as InvalidateQueryFilters)
 }
 
@@ -114,7 +111,7 @@ export const useCreateTask = (
             }
 
             // Data update for list view
-            if (withForceReload) await invalidateTasks(teamSlug, queryClient)
+            if (withForceReload) await invalidateTasks(queryClient)
 
             await invalidateTeamStats(teamSlug, queryClient)
         },
@@ -137,7 +134,7 @@ export const useUpdateTask = (teamSlug: string, taskId: number) => {
             )
 
             invalidateTeamStats(teamSlug, queryClient)
-            invalidateTasks(teamSlug, queryClient)
+            invalidateTasks(queryClient)
         },
     })
 }
@@ -150,7 +147,7 @@ export const useDeleteTasks = (teamSlug: string) => {
         mutationFn: (data: Record<string, any>) =>
             api.delete(`${prefix}/teams/${teamSlug}/tasks/`, { data: data }),
         onSuccess: async () => {
-            await invalidateTasks(teamSlug, queryClient) // must be updated completely before closing the dialog to prevent loading deleted steps
+            await invalidateTasks(queryClient) // must be updated completely before closing the dialog to prevent loading deleted steps
             queryClient.invalidateQueries('task' as InvalidateQueryFilters) // can be updated in foreground
             invalidateTeamStats(teamSlug, queryClient) // can be updated in foreground
 
