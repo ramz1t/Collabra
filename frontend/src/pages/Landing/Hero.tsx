@@ -19,7 +19,7 @@ const Hero = (): React.ReactElement => {
 
     return (
         <div className="relative isolate md:pt-7 lg:px-8">
-            <div className="mx-auto max-w-2xl py-14 sm:py-48 lg:py-56">
+            <div className="mx-auto max-w-2xl py-14 sm:py-48 lg:py-56 lg:pt-48">
                 <div className="text-center">
                     <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-6xl">
                         {t('hero_title')}
