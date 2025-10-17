@@ -58,8 +58,9 @@ class TagViewSet(mixins.TagMixin):
         tags = self.filter_queryset(selectors.get_tags(team=team))
 
         serializer = serializers.TagListSerializer(tags, many=True)
+        response_data = {"results": serializer.data}
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(response_data, status=status.HTTP_200_OK)
 
     def remove(self, request, slug, pk):
         team = get_team_or_404(slug=slug)

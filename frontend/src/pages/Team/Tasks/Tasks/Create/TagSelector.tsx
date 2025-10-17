@@ -44,7 +44,7 @@ const TagSelector = ({
             {isLoading ? (
                 <LoadingState.TagPill />
             ) : (
-                tags?.map((tag) => (
+                tags?.results.map((tag) => (
                     <li
                         className={cn(
                             'rounded-full transition-all duration-[50ms] outline outline-[--accent] dark:outline-white',

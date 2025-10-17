@@ -83,8 +83,8 @@ const TeamTags = (): React.ReactElement => {
                 <ul className="flex flex-wrap gap-2">
                     {isLoading ? (
                         <LoadingState.TagPill />
-                    ) : tags?.length ? (
-                        tags?.map((tag) => (
+                    ) : tags?.results.length ? (
+                        tags?.results.map((tag) => (
                             <TaskTag tag={tag} canEdit key={tag.id} />
                         ))
                     ) : (

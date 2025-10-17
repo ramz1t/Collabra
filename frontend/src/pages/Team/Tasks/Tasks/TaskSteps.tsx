@@ -20,7 +20,9 @@ const TaskSteps: React.FC<TaskStepsProps> = ({
 }) => {
     const { teamSlug } = useParams()
     const { data: steps, isLoading } = useSteps(teamSlug!, task.id)
-    const [stepsState, setStepsState] = useState<Step[] | undefined>(steps)
+    const [stepsState, setStepsState] = useState<Step[] | undefined>(
+        steps?.results
+    )
     const { mutate: toggleStep } = useToggleStep(teamSlug!, task.id)
 
     const handleToggle = useCallback(
@@ -44,9 +46,9 @@ const TaskSteps: React.FC<TaskStepsProps> = ({
     )
 
     useEffect(() => {
-        setStepsState(steps)
+        setStepsState(steps?.results)
         if (steps !== undefined && setDoneCounter) {
-            setDoneCounter(steps.filter((s) => s.is_done).length)
+            setDoneCounter(steps.results.filter((s) => s.is_done).length)
         }
     }, [steps])
 

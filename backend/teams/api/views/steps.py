@@ -19,7 +19,9 @@ class StepViewSet(viewsets.GenericViewSet):
 
         steps = selectors.get_steps(task=task)
         serializer = serializers.TaskStepListSerializer(instance=steps, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+
+        response_data = {"results": serializer.data}
+        return Response(response_data, status=status.HTTP_200_OK)
 
     def toggle(self, request, slug, task_pk, step_pk):
         team = get_team_or_404(slug=slug)

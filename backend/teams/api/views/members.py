@@ -123,5 +123,6 @@ class MemberViewSet(mixins.MemberMixin):
         serializer = serializers.UserToInviteListSerializer(
             instance=users, many=True, context={"team": team}
         )
+        response_data = {"results": serializer.data}
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(response_data, status=status.HTTP_200_OK)

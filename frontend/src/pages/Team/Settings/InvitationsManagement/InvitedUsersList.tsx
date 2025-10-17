@@ -19,8 +19,8 @@ const FoundInvitees = ({
     const { t } = useTranslation()
     return isLoading
         ? t('loading')
-        : foundUsers?.length
-          ? foundUsers?.map((user) => (
+        : foundUsers?.results.length
+          ? foundUsers?.results.map((user) => (
                 <Invitee user={user} key={user.id} onSuccess={clearSearch} />
             ))
           : t('no_users_found')

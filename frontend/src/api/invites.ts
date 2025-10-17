@@ -8,8 +8,8 @@ export const useUsersToInvite = (teamId: number, info: string) => {
     const api = useAxios()
     return useQuery({
         queryKey: ['users-to-invite', { team: teamId, info: info }],
-        queryFn: async (): Promise<Invitee[]> => {
-            const res = await api.get(
+        queryFn: async () => {
+            const res = await api.get<{ results: Invitee[] }>(
                 `${prefix}/teams/${teamId}/get-users-to-invite/${info}/`
             )
             return res.data

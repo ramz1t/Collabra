@@ -6,7 +6,7 @@ import { AxiosResponse } from 'axios'
 
 export const useTags = (teamSlug: string) => {
     const api = useAxios()
-    return useQuery<Tag[]>({
+    return useQuery<{ results: Tag[] }>({
         queryKey: ['tags', teamSlug],
         queryFn: async () => {
             const { data } = await api.get(`${prefix}/teams/${teamSlug}/tags/`)

@@ -11,7 +11,7 @@ import { AxiosError, AxiosResponse } from 'axios'
 
 export const useSteps = (teamSlug: string, taskId: number) => {
     const api = useAxios()
-    return useQuery<Step[]>({
+    return useQuery<{ results: Step[] }>({
         queryKey: ['steps', { team: teamSlug, task: taskId }],
         queryFn: async () => {
             const { data } = await api.get(

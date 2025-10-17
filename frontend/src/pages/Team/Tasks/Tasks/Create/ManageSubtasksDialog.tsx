@@ -46,7 +46,7 @@ const ManageSubtasksDialog = ({
 
     useEffect(() => {
         if (steps) {
-            setEditableSteps(steps.map((s) => ({ ...s })))
+            setEditableSteps(steps.results.map((s) => ({ ...s })))
         }
     }, [steps])
 
