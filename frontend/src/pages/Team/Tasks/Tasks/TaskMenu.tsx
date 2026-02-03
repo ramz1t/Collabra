@@ -27,7 +27,7 @@ const TaskMenu = ({ task }: { task: Task }) => {
     const { teamSlug } = useParams()
     const { user } = useContext(AuthContext) as IAuthContext
     const isAdmin = useIsAllowed([UserRole.ADMIN, UserRole.OWNER])
-    const isAssignee = user?.user_id === task.assignee.user.id
+    const isAssignee = user?.user_id === task.assignee?.user.id
 
     const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false)
     const [isEditDialogOpen, setEditDialogOpen] = useState(false)

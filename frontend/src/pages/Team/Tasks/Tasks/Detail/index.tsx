@@ -76,11 +76,15 @@ const TaskDetails = () => {
                         title={t('assignee')}
                         selfCenter
                     >
-                        <div className="flex items-center whitespace-nowrap gap-3">
-                            <Avatar user={task.assignee.user} />
-                            {task.assignee.user.first_name}{' '}
-                            {task.assignee.user.last_name}
-                        </div>
+                        {task.assignee ? (
+                            <div className="flex items-center whitespace-nowrap gap-3">
+                                <Avatar user={task.assignee.user} />
+                                {task.assignee.user.first_name}{' '}
+                                {task.assignee.user.last_name}
+                            </div>
+                        ) : (
+                            t('no_assignee')
+                        )}
                     </TaskDetailInfoCell>
 
                     <TaskDetailInfoCell

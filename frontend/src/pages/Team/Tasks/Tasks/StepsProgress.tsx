@@ -17,7 +17,7 @@ const StepsProgress = ({
     const [doneCount, setDoneCount] = useState(0)
     const { team } = useContext(TeamContext) as ITeamContext
 
-    if (!(team?.is_admin || team?.member_id === task.assignee.id)) return
+    if (!(team?.is_admin || team?.member_id === task.assignee?.id)) return
     if (task.steps_count === 0) return
 
     return (

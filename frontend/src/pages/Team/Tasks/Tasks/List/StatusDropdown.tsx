@@ -1,5 +1,4 @@
 import { Task } from '../../../../../types'
-import cn from 'classnames'
 import { getStatusColor } from '../../../../../utils'
 import React, { useCallback, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -25,7 +24,7 @@ const StatusDropdown = ({ task }: { task: Task }) => {
     )
 
     const isAdmin = useIsAllowed([UserRole.ADMIN, UserRole.OWNER])
-    const isAssignee = task.assignee.user.id === user?.user_id
+    const isAssignee = task.assignee?.user.id === user?.user_id
 
     return (
         <Dropdown
