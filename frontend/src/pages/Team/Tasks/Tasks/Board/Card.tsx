@@ -2,10 +2,8 @@ import { Task } from '../../../../../types'
 import {
     IoBookOutline,
     IoCheckmark,
-    IoCheckmarkDoneOutline,
     IoChevronDown,
     IoPerson,
-    IoPersonOutline,
 } from 'react-icons/io5'
 import {
     Avatar,
@@ -40,7 +38,7 @@ const TaskCard = ({ task }: CardProps) => {
     const { t } = useTranslation()
     const { user } = useContext(AuthContext) as IAuthContext
 
-    const isAssignee = task.assignee.user.id === user?.user_id
+    const isAssignee = task.assignee?.user.id === user?.user_id
     const isDeadline = false
 
     const openTransitionDuration = 200
@@ -156,14 +154,16 @@ const TaskCard = ({ task }: CardProps) => {
                 openedClassName="py-4"
                 closedClassName="py-0"
             >
-                <Link
-                    to={useProfilePath(task.assignee.user.id)}
-                    className="flex items-center gap-3 font-semibold text-gray-600 dark:text-gray-400 mr-auto hover:opacity-90 transition-opacity duration-75"
-                >
-                    <Avatar user={task.assignee.user} />
-                    {task.assignee.user.first_name}
-                    {task.assignee.status && ` (${task.assignee.status})`}
-                </Link>
+                {task.assignee && (
+                    <Link
+                        to={useProfilePath(task.assignee.user.id)}
+                        className="flex items-center gap-3 font-semibold text-gray-600 dark:text-gray-400 mr-auto hover:opacity-90 transition-opacity duration-75"
+                    >
+                        <Avatar user={task.assignee.user} />
+                        {task.assignee.user.first_name}
+                        {task.assignee.status && ` (${task.assignee.status})`}
+                    </Link>
+                )}
                 <TaskStats task={task} />
             </SmoothContainer>
         </li>

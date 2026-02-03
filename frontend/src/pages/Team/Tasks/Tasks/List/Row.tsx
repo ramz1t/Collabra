@@ -1,16 +1,10 @@
 import { Task } from '../../../../../types'
 import { Link } from 'react-router-dom'
-import TaskStats from '../TaskStats'
 import { Avatar, ResizableColumns, TaskTag } from '../../../../../components'
-import cn from 'classnames'
-import { useTranslation } from 'react-i18next'
 import TaskMenu from '../TaskMenu'
-import { getStatusColor } from '../../../../../utils'
 import useProfilePath from '../../../../../hooks/useProfilePath'
-import useScreenSize from '../../../../../hooks/useScreenSize'
 import StepsProgress from '../StepsProgress'
 import React from 'react'
-import Row from './Row'
 import RowCell from './RowCell'
 import StatusDropdown from './StatusDropdown'
 import TaskDeadline from '../TaskDeadline'
@@ -38,13 +32,15 @@ const TaskRow = ({ task }: { task: Task }) => {
                     <StatusDropdown task={task} />
                 </RowCell>
                 <RowCell>
-                    <Link
-                        to={useProfilePath(task.assignee.user.id)}
-                        className="flex items-center gap-3 w-fit"
-                    >
-                        <Avatar user={task.assignee.user} />
-                        {task.assignee.user.first_name}
-                    </Link>
+                    {task.assignee && (
+                        <Link
+                            to={useProfilePath(task.assignee.user.id)}
+                            className="flex items-center gap-3 w-fit"
+                        >
+                            <Avatar user={task.assignee.user} />
+                            {task.assignee.user.first_name}
+                        </Link>
+                    )}
                 </RowCell>
                 <RowCell>
                     <TaskDeadline date={task.deadline} />

@@ -113,7 +113,7 @@ export interface Task {
     deadline: string | null
     messages_count: number
     attachments: File[]
-    assignee: Member
+    assignee?: Member
     tag: Tag | null
     status: 'to_do' | 'in_progress' | 'need_review' | 'done'
     requires_review: boolean
