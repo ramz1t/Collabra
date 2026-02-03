@@ -55,6 +55,8 @@ class TaskSerializer(serializers.Serializer):
         return len(steps)
 
     def get_assignee(self, task):
+        if not task.assignee:
+            return None
         serializer = MemberListSerializer(instance=task.assignee, context={'team': self.context['team']})
         return serializer.data
 

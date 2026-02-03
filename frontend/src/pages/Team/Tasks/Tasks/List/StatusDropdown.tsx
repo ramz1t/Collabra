@@ -24,7 +24,7 @@ const StatusDropdown = ({ task }: { task: Task }) => {
     )
 
     const isAdmin = useIsAllowed([UserRole.ADMIN, UserRole.OWNER])
-    const isAssignee = task.assignee?.user.id === user?.user_id
+    const isAssignee = task.assignee?.user?.id === user?.user_id
 
     return (
         <Dropdown
