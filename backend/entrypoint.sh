@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python manage.py migrate
+python manage.py migrate users teams
 
 python manage.py collectstatic --noinput
 
